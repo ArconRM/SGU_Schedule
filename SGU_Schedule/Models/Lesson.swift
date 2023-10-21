@@ -7,39 +7,6 @@
 
 import Foundation
 
-enum LessonType: String, Decodable {
-    case Lecture = "лек."
-    case Practice = "пр."
-    
-    init?(rawValue: String) {
-        if rawValue == "лек." {
-            self = .Lecture
-        } else if rawValue == "пр." {
-            self = .Practice
-        } else {
-            return nil
-        }
-    }
-}
-
-enum WeekType: String, Decodable {
-    case All = ""
-    case Numerator = "Числ."
-    case Denominator = "Знам."
-    
-    init?(rawValue: String) {
-        if rawValue == "чис." {
-            self = .Numerator
-        } else if rawValue == "знам." {
-            self = .Denominator
-        } else {
-            self = .All
-        }
-    }
-}
-
-
-
 public struct Lesson: Hashable, Identifiable, Decodable {
     
     public var id: UUID

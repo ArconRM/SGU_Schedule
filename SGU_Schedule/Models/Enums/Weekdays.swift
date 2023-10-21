@@ -39,12 +39,3 @@ public enum Weekdays: String, CaseIterable {
         }
     }
 }
-
-func getTodaysDay() -> Weekdays {
-    let date = Date()
-    let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "EEEE"
-    let day = dateFormatter.string(from: date)
-    
-    return Weekdays(rawValue: day) ?? .Monday //если будет вс, то ставим пн
-}

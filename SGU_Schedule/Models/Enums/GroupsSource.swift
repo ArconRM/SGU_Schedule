@@ -13,6 +13,8 @@ enum GroupsSource: Int { // костыль
     case CS = 3 // кб
     case MOAIS = 4 // моаис
     case PI = 5 // пи
+    case PO = 6 // по
+    case SAU = 8 // сау
     
     var shortName: String {
         switch self {
@@ -26,6 +28,10 @@ enum GroupsSource: Int { // костыль
             return "МОАИС"
         case .PI:
             return "ПИ"
+        case .PO:
+            return "ПО"
+        case .SAU:
+            return "САУ"
         }
     }
     
@@ -41,6 +47,10 @@ enum GroupsSource: Int { // костыль
             return "Математическое обеспечение и администрирование информационных систем"
         case .PI:
             return "Программная инженерия"
+        case .PO:
+            return "Педагогическое образование"
+        case .SAU:
+            return "Системный анализ и управление"
         }
     }
     
@@ -51,6 +61,8 @@ enum GroupsSource: Int { // костыль
         case "3": self = .CS
         case "4": self = .MOAIS
         case "5": self = .PI
+        case "6": self = .PO
+        case "8": self = .SAU
         default:
             return nil
         }

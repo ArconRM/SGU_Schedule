@@ -1,5 +1,5 @@
 //
-//  ScheduleHTMLEncoder.swift
+//  LessonHTMLParserSGU.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 25.09.2023.
@@ -20,9 +20,8 @@ private enum LessonPropertiesEndpoints: String {
 }
 
 
-struct LessonHTMLParser {
-    
-    func getLessonsByWeekdayFromSource(source html: String, dayNumber: Int, isNumerator: Bool?) throws -> [[Lesson]] {
+struct LessonHTMLParserSGU: LessonHTMLParser {
+    func getLessonsByDayNumberFromSource(source html: String, dayNumber: Int) throws -> [[Lesson]] {
         var result = [[Lesson]]()
         do {
             let doc = try HTML(html: html, encoding: .utf8)
@@ -31,7 +30,7 @@ struct LessonHTMLParser {
             for lessonNumber in 2...9 {
                 var lessonsByNumber: [Lesson] = [] // массив, потому что те, что с подгруппами, будут под одним номером
                 
-                for divClassId1 in 0...15 { // подбор айдишника, ToDo: мб можно изначально понять какие где
+                for divClassId1 in 0...15 { // подбор айдишника
                     for divClassId2 in 0...15 {
                         lesson = decodeLessonFromString(doc: doc,
                                                         lessonNumber: lessonNumber,
@@ -78,12 +77,12 @@ struct LessonHTMLParser {
         let timeStart = String(lessonTimeXpathQueryResult[...4])
         let timeEnd = String(lessonTimeXpathQueryResult[5...])
         
-        let subject = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyType: .Subject)
-        let lectorName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyType: .Lector)
-        let cabinet = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyType: .Cabinet)
-        let lessonType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyType: .LessonType)
-        let weekType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyType: .WeekType)
-        let subgroup = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyType: .Subgroup)
+        let subject = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subject)
+        let lectorName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Lector)
+        let cabinet = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Cabinet)
+        let lessonType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LessonType)
+        let weekType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekType)
+        let subgroup = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subgroup)
         
         let lesson = Lesson(Subject: subject ?? "Error",
                             LectorFullName: lectorName ?? "Error",
@@ -96,18 +95,18 @@ struct LessonHTMLParser {
         return lesson
     }
     
-    private func getValueByXpathQuery(doc: HTMLDocument, baseXpath: String, propertyType: LessonPropertiesEndpoints) -> String? {
-        return doc.xpath(baseXpath + "/" + propertyType.rawValue).first?.text
+    private func getValueByXpathQuery(doc: HTMLDocument, baseXpath: String, propertyEndpoint: LessonPropertiesEndpoints) -> String? {
+        return doc.xpath(baseXpath + "/" + propertyEndpoint.rawValue).first?.text
     }
     
     
     
-    func getWeekLessonsFromSource(source html: String) throws -> [[[Lesson]]] {
+    func getLessonsOnCurrentWeekFromSource(source html: String) throws -> [[[Lesson]]] {
         var result = [[[Lesson]]]()
         
         for dayNumber in 1...6 {
             do {
-                try result.append(getLessonsByWeekdayFromSource(source: html, dayNumber: dayNumber, isNumerator: nil))
+                try result.append(getLessonsByDayNumberFromSource(source: html, dayNumber: dayNumber))
             }
             catch {
                 throw NetworkError.HTMLParserError
@@ -115,23 +114,5 @@ struct LessonHTMLParser {
         }
         
         return result
-    }
-    
-    func decodeLastUpdateDate(source html: String) throws -> Date {
-        do {
-            let doc = try HTML(html: html, encoding: .utf8)
-            let lastUpdateStr = String(doc.xpath("//div[@class='last-update']").first?.text?.dropFirst(22) ?? "01.01.2001")
-            
-            let dateFormatter = DateFormatter()
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-            dateFormatter.dateFormat = "dd'.'MM'.'yyyy'"
-            let date = dateFormatter.date(from: lastUpdateStr)!
-            
-            return date
-        }
-        catch {
-            throw NetworkError.HTMLParserError
-        }
-    }
-    
+    }    
 }

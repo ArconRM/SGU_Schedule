@@ -30,9 +30,9 @@ final class SGU_ScheduleIntegrationTests: XCTestCase {
         
         var dateToCheck = Date.distantFuture
         
-        let networkManager: NetworkManagerWithParsing
-        networkManager = NetworkManagerWithParsingSGU(endPoint: ScheduleURLSource())
-        networkManager.getLastUpdateDate(group: Group(FullNumber: 141)) { result in
+        let networkManager: DateNetworkManager
+        networkManager = DateNetworkManagerWithParsing(urlSource: URLSourceSGU(), dateParser: DateHTMLParserSGU())
+        networkManager.getLastUpdateDate(group: Group(fullNumber: 141), resultQueue: .main) { result in
             switch result {
             case .success(let date):
                 dateToCheck = date
@@ -45,5 +45,24 @@ final class SGU_ScheduleIntegrationTests: XCTestCase {
         wait(for: [didReceiveResponse], timeout: 5)
         
         XCTAssertEqual(dateToCheck, correctDate)
+    }
+    
+    func testNetworkManagerGetCorrectGroupsByYearAndAcademicProgram_shouldBeTrue() throws {
+        let didReceiveResponse = expectation(description: #function)
+        
+        let networkManager: GroupNetworkManager
+        
+        networkManager = GroupNetworkManagerWithParsing(urlSource: URLSourceSGU(), groupsParser: GroupsHTMLParserSGU())
+        networkManager.getGroupsByYearAndAcademicProgram(year: 3, program: .Postgraduade, resultQueue: .main) { result in
+            switch result {
+            case .success(let groups):
+                print(groups)
+            case .failure(let failure):
+                print(failure)
+            }
+            didReceiveResponse.fulfill()
+        }
+        
+        wait(for: [didReceiveResponse], timeout: 5)
     }
 }

@@ -7,9 +7,9 @@
 
 import Foundation
 
-public struct ScheduleURLSource: URLSource {
+public struct URLSourceSGU: URLSource {
     public var baseURLAddress : String {
-        return "https://www.sgu.ru/schedule/knt/do/"
+        return "https://www.sgu.ru/schedule/knt"
     }
     
     public var baseURL: URL {
@@ -17,8 +17,8 @@ public struct ScheduleURLSource: URLSource {
         return url
     }
     
-    public func getFullUrlWithParameter(parameter groupNumber : String) -> URL {
-        return baseURL.appendingPathComponent(groupNumber)
+    public func getUrlWithGroupParameter(parameter groupNumber : String) -> URL {
+        return baseURL.appendingPathComponent("do/" + groupNumber)
     }
     
     public init() { }

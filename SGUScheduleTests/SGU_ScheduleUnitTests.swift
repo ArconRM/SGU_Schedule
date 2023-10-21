@@ -19,15 +19,16 @@ final class SGU_ScheduleUnitTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testNetworkManagerGetsCorrectHTML_shouldBeTrue() throws {
+    func testScheduleNetworkManagerGetsCorrectHTML_shouldBeTrue() throws {
         let didReceiveResponse = expectation(description: #function)
         
         var htmlToCheck = "test initial"
         let correctHtml = try String(contentsOf: URL(string: "https://sgu.ru/schedule/knt/do/141")!, encoding: .utf8) //синхронно для теста
         
-        let networkManager: NetworkManagerWithParsing
-        networkManager = NetworkManagerWithParsingSGU(endPoint: ScheduleURLSource())
-        networkManager.getHTML(group: Group(FullNumber: 141)) { result in
+        let networkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
+                                                              lessonParser: LessonHTMLParserSGU())
+        
+        networkManager.getHTML(group: Group(fullNumber: 141)) { result in
             switch result {
             case .success(let html):
                 htmlToCheck = html
@@ -51,25 +52,44 @@ final class SGU_ScheduleUnitTests: XCTestCase {
         dateFormatter.dateFormat = "dd'.'MM'.'yyyy'"
         let correctDate = dateFormatter.date(from: "22.09.2023")! //ToDo: может быть заmockать нормально
         
-        let htmlParser = LessonHTMLParser()
-        let dateToCheck = try htmlParser.decodeLastUpdateDate(source: sourceHtml)
+        let htmlParser = DateHTMLParserSGU()
+        
+        let dateToCheck = try htmlParser.getLastUpdateDateFromSource(source: sourceHtml)
         
         XCTAssertEqual(correctDate, dateToCheck)
     }
     
     func testHTMLParserScrapsCorrectLessonsForDay_shouldBeTrue() throws { // по-хорошему надо mockать, но нужно тестирование не только декодера, но и согласованности с сайтом
-        let sourceHtml = try String(contentsOf: URL(string: "https://sgu.ru/schedule/knt/do/241")!, encoding: .utf8) //синхронно для теста
+        let sourceHtml = try String(contentsOf: URL(string: "https://sgu.ru/schedule/knt/do/141")!, encoding: .utf8) //синхронно для теста
             
-        let htmlParser = LessonHTMLParser()
-        let lessons = try htmlParser.getLessonsByWeekdayFromSource(source: sourceHtml, dayNumber: 1, isNumerator: true)
+        let htmlParser = LessonHTMLParserSGU()
+        let lessons = try htmlParser.getLessonsByDayNumberFromSource(source: sourceHtml, dayNumber: 1)
         print(lessons)
     }
     
     func testHTMLParserScrapsCorrectLessonsForWeek_shouldBeTrue() throws { // по-хорошему надо mockать, но нужно тестирование не только декодера, но и согласованности с сайтом
         let sourceHtml = try String(contentsOf: URL(string: "https://sgu.ru/schedule/knt/do/141")!, encoding: .utf8) //синхронно для теста
             
-        let htmlParser = LessonHTMLParser()
-        let lessons = try htmlParser.getLessonsByWeekdayFromSource(source: sourceHtml, dayNumber: 1, isNumerator: true)
+        let htmlParser = LessonHTMLParserSGU()
+        let lessons = try htmlParser.getLessonsByDayNumberFromSource(source: sourceHtml, dayNumber: 1)
         print(lessons)
+    }
+    
+//    func testHTMLParserScrapsCorrectGroups_shouldBeTrue() throws {
+//        let urlSource = URLSourceSGU()
+//        let sourceHtml = try String(contentsOf: URL(string: urlSource.baseURLAddress)!, encoding: .utf8)
+//
+//        let parser = GroupsHTMLParserSGU()
+//        let groups = try parser.getAllGroupsFromSource(source: sourceHtml)
+//        print(groups)
+//    }
+    
+    func testHTMLParserScrapsCorrectGroupsByYearAndAcademicProgram_shouldBeTrue() throws {
+        let urlSource = URLSourceSGU()
+        let sourceHtml = try String(contentsOf: URL(string: urlSource.baseURLAddress)!, encoding: .utf8)
+        
+        let parser = GroupsHTMLParserSGU()
+        let groups = try parser.getGroupsByYearAndAcademicProgramFromSource(source: sourceHtml, year: 2, program: .BachelorAndSpeciality)
+        print(groups)
     }
 }

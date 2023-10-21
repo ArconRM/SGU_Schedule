@@ -10,5 +10,5 @@ import Foundation
 public protocol URLSource {
     var baseURLAddress: String { get }
     var baseURL: URL { get }
-    func getFullUrlWithParameter(parameter: String) -> URL
+    func getUrlWithGroupParameter(parameter: String) -> URL
 }

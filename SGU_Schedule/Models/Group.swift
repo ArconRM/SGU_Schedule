@@ -7,19 +7,29 @@
 
 import Foundation
 
-public struct Group {
-//    var Year: Int
-//    var GroupId: Int
-//    var SubgroupNumber: Int
-    var FullNumber: Int
-    var ShortName: String
-    var FullName: String
+public struct Group: Hashable {
+    var academicProgram: AcademicProgram?
+    var fullNumber: Int
+    var shortName: String
+    var fullName: String
     
-public init(FullNumber: Int) {
-        self.FullNumber = FullNumber
+    public init(fullNumber: Int) {
+        self.fullNumber = fullNumber
         
-        let source = GroupsSource(rawValue: self.FullNumber) //костыль, ибо нет списка нормального
-        self.ShortName = source?.shortName ?? "Error"
-        self.FullName = source?.fullName ?? "Error"
+        let source = GroupsSource(rawValue: self.fullNumber) //костыль, ибо нет списка нормального
+        if source != nil {
+            self.shortName = source!.shortName
+            self.fullName = source!.fullName
+            self.academicProgram = .BachelorAndSpeciality
+        } else {
+            self.shortName = String(fullNumber)
+            self.fullName = String(fullNumber) + " группа"
+            
+            if Array(String(fullNumber))[1] == "7" {
+                self.academicProgram = .Masters
+            } else if Array(String(fullNumber))[1] == "9" {
+                self.academicProgram = .Postgraduade
+            }
+        }
     }
 }
