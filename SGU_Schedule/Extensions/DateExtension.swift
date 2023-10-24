@@ -8,6 +8,42 @@
 import Foundation
 
 extension Date {
+    static var currentWeekType: WeekType {
+        get {
+            let calendar = Calendar.current
+            let weekOfYear = calendar.component(.weekOfYear, from: Date())
+            return weekOfYear % 2 == 0 ? .Denumerator : .Numerator
+        }
+    }
+    
+    static var currentWeekDay: Weekdays {
+        get {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            let day = dateFormatter.string(from: date)
+            
+            return Weekdays(rawValue: day) ?? .Monday
+        }
+    }
+    
+    static var currentTime: Date {
+        get {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "HH:mm"
+            
+            let dateString = dateFormatter.string(from: date)
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            return dateFormatter.date(from: dateString) ?? Date.distantPast
+        }
+    }
+    
+    /// Returns true if weekType equals .All or current weekType
+    static func checkIfWeekTypeIsAllOrCurrent(_ weekType: WeekType) -> Bool {
+        return [.All, self.currentWeekType].contains(weekType)
+    }
+    
     func getHoursAndMinutesString() -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -22,29 +58,28 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
-    func getWeekNumber() -> Int {
-        let calendar = Calendar.current
-        let weekOfYear = calendar.component(.weekOfYear, from: Date())
-        return weekOfYear
-    }
+//    static func getCurrentWeekType() -> WeekType {
+//        let calendar = Calendar.current
+//        let weekOfYear = calendar.component(.weekOfYear, from: Date())
+//        return weekOfYear % 2 == 0 ? .Denumerator : .Numerator
+//    }
     
-    /// Returns current weekday, but for Sunday returns Monday
-    static func getTodaysDay() -> Weekdays {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "EEEE"
-        let day = dateFormatter.string(from: date)
-        
-        return Weekdays(rawValue: day) ?? .Monday
-    }
+//    static func getTodaysDay() -> Weekdays {
+//        let date = Date()
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "EEEE"
+//        let day = dateFormatter.string(from: date)
+//        
+//        return Weekdays(rawValue: day) ?? .Monday
+//    }
     
-    static func getTodaysTime() -> Date {
-        let date = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "HH:mm"
-        
-        let dateString = dateFormatter.string(from: date)
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        return dateFormatter.date(from: dateString) ?? Date.distantPast
-    }
+//    static func getTodaysTime() -> Date {
+//        let date = Date()
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "HH:mm"
+//        
+//        let dateString = dateFormatter.string(from: date)
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        return dateFormatter.date(from: dateString) ?? Date.distantPast
+//    }
 }

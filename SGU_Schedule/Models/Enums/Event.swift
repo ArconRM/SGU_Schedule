@@ -6,3 +6,12 @@
 //
 
 import Foundation
+
+
+public protocol Event: Hashable, Identifiable, Decodable {
+    
+    var id: UUID { get set }
+    var title: String { get set }
+    var timeStart: Date { get set }
+    var timeEnd: Date { get set }
+}

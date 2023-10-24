@@ -14,6 +14,7 @@ public enum Weekdays: String, CaseIterable {
     case Thursday = "Чт"
     case Friday = "Пт"
     case Saturday = "Сб"
+    case Sunday = "Вс"
     
     var number: Int {
         switch self {
@@ -23,6 +24,7 @@ public enum Weekdays: String, CaseIterable {
         case .Thursday: return 4
         case .Friday: return 5
         case .Saturday: return 6
+        case .Sunday: return 7
         }
     }
     
@@ -34,6 +36,7 @@ public enum Weekdays: String, CaseIterable {
         case "Thursday": self = .Thursday
         case "Friday": self = .Friday
         case "Saturday": self = .Saturday
+        case "Sunday": self = .Sunday
         default:
             return nil
         }

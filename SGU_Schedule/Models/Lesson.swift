@@ -7,26 +7,26 @@
 
 import Foundation
 
-public struct Lesson: Hashable, Identifiable, Decodable {
+public struct Lesson: Event {
     
     public var id: UUID
-    var subject: String
+    /// subject
+    public var title: String
     var lectorFullName: String
     var lessonType: LessonType
     var weekType: WeekType
     var cabinet: String
-    var subgroup: String
-    var timeStart: Date
-    var timeEnd: Date
+    var subgroup: String?
+    public var timeStart: Date
+    public var timeEnd: Date
     
-    ///Subgroup can be null
-    init(Subject: String, LectorFullName: String, TimeStart: String, TimeEnd: String, LessonType: LessonType, WeekType: WeekType, Subgroup: String?, Cabinet: String) {
+    init(Subject: String, LectorFullName: String, TimeStart: String, TimeEnd: String, LessonType: LessonType, WeekType: WeekType, Subgroup: String? = nil, Cabinet: String) {
         self.id = UUID()
-        self.subject = Subject
+        self.title = Subject
         self.lectorFullName = LectorFullName
         self.lessonType = LessonType
         self.weekType = WeekType
-        self.subgroup = Subgroup ?? ""
+        self.subgroup = Subgroup
         self.cabinet = Cabinet
         
         let dateFormatter = DateFormatter()

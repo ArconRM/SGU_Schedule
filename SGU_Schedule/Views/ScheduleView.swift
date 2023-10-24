@@ -27,7 +27,7 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     }
 }
 
-struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel{
+struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     
     @State var selectedGroup: Group
     
@@ -44,70 +44,79 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel{
                 .font(.system(size: 20, weight: .bold))
                 .padding()
             
-            if viewModel.currentLesson != nil {
-                Text(viewModel.currentLesson!.timeStart.getHoursAndMinutesString() + " - " +
-                     viewModel.currentLesson!.timeEnd.getHoursAndMinutesString() + " " +
-                     viewModel.currentLesson!.subject)
+            if let lesson = viewModel.currentEvent as? Lesson {
+                Text(lesson.timeStart.getHoursAndMinutesString() + " - " +
+                     lesson.timeEnd.getHoursAndMinutesString() + " " +
+                     lesson.title)
                     .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
-                    .bold()
                 
-                Text(viewModel.currentLesson!.lessonType.rawValue)
+                Text(lesson.lessonType.rawValue)
                     .padding(.top, 2)
                     .padding(.bottom, 10)
                     .font(.system(size: 17, weight: .bold))
-                
-                Text(viewModel.currentLesson!.cabinet)
+
+                Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
                     .bold()
+            } else if let timeBreak = viewModel.currentEvent as? TimeBreak {
+                Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
+                     timeBreak.timeEnd.getHoursAndMinutesString())
+                    .font(.system(size: 20, weight: .bold))
+                    .multilineTextAlignment(.center)
+                
+                Text(timeBreak.title)
+                    .font(.system(size: 20, weight: .bold))
+                
             } else {
                 Text("-")
                     .font(.system(size: 20, weight: .bold))
-                    .bold()
             }
             
             Divider()
             
+            Text("Далее:")
+                .font(.system(size: 19, weight: .semibold))
+                .padding()
+            
             HStack {
-                if viewModel.twoNextLessons[0] != nil {
+                if viewModel.nextTwoLessons.count >= 2 {
                     VStack {
-                        Text(viewModel.twoNextLessons[0]!.timeStart.getHoursAndMinutesString() + " - " + viewModel.twoNextLessons[0]!.timeEnd.getHoursAndMinutesString() + " " + viewModel.twoNextLessons[0]!.subject)
-                            .font(.system(size: 18, weight: .bold))
+                        if let nextLesson1 = viewModel.nextTwoLessons[0] {
+                            Text(nextLesson1.timeStart.getHoursAndMinutesString() + "-" +
+                                 nextLesson1.timeEnd.getHoursAndMinutesString() + " " +
+                                 nextLesson1.title)
+                            .font(.system(size: 17, weight: .semibold))
                             .multilineTextAlignment(.center)
-                            .bold()
-                        
-                        Text(viewModel.twoNextLessons[0]!.lessonType.rawValue)
-                            .padding(.top, 2)
-                            .padding(.bottom, 7)
-                            .font(.system(size: 16, weight: .bold))
-                        
-                        Text(viewModel.twoNextLessons[0]!.cabinet)
-                            .font(.system(size: 18, weight: .bold))
-                            .bold()
+                            .padding(.horizontal)
+                            
+                            Text(nextLesson1.cabinet)
+                                .padding()
+                                .font(.system(size: 15, weight: .semibold))
+                                .multilineTextAlignment(.center)
+                        } else {
+                            Text("-")
+                                .font(.system(size: 20, weight: .bold))
+                        }
                     }
-                    .padding(.trailing, 10)
-                }
-                
-                if viewModel.twoNextLessons[1] != nil {
+                    
                     VStack {
-                        Text(viewModel.twoNextLessons[1]!.timeStart.getHoursAndMinutesString() + " - " + viewModel.twoNextLessons[1]!.timeEnd.getHoursAndMinutesString() + " " + viewModel.twoNextLessons[1]!.subject)
-                            .font(.system(size: 18, weight: .bold))
+                        if let nextLesson2 = viewModel.nextTwoLessons[1] {
+                            Text(nextLesson2.timeStart.getHoursAndMinutesString() + "-" +
+                                 nextLesson2.timeEnd.getHoursAndMinutesString() + " " +
+                                 nextLesson2.title)
+                            .font(.system(size: 17, weight: .semibold))
                             .multilineTextAlignment(.center)
-                            .bold()
-                        
-                        Text(viewModel.twoNextLessons[1]!.lessonType.rawValue)
-                            .padding(.top, 2)
-                            .padding(.bottom, 7)
-                            .font(.system(size: 16, weight: .bold))
-                        
-                        Text(viewModel.twoNextLessons[1]!.cabinet)
-                            .font(.system(size: 18, weight: .bold))
-                            .bold()
+                            .padding(.horizontal)
+                            
+                            Text(nextLesson2.cabinet)
+                                .padding()
+                                .font(.system(size: 15, weight: .semibold))
+                                .multilineTextAlignment(.center)
+                        }
                     }
-                    .padding(.leading, 10)
                 }
             }
-            
             Spacer()
         }
     }
@@ -125,7 +134,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @State var selectedGroup: Group
     
     @State var showsAlert = false
-    @State var selectedDay: Weekdays = Date.getTodaysDay()
+    @State var selectedDay: Weekdays = Date.currentWeekDay
     @State var lessonsBySelectedDay = [[Lesson]]()
     
     var body: some View {
@@ -154,7 +163,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 
                 Picker("", selection: $selectedDay) {
-                    ForEach(Weekdays.allCases, id: \.self) { day in
+                    ForEach(Weekdays.allCases.dropLast(), id: \.self) { day in
                         Text(day.rawValue)
                     }
                 }
@@ -177,12 +186,6 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         ForEach(lessonsBySelectedDay, id:\.self) { lessons in
                             ScheduleSubview(lessons: lessons)
                                 .padding(.bottom, 5)
-//                            if lessonsBySelectedDay.last != lessons {
-//                                Rectangle()
-//                                    .fill(.blue)
-//                                    .frame(height: 0.5)
-//                                    .edgesIgnoringSafeArea(.horizontal)
-//                            }
                         }
                         .padding(.bottom, 20)
                     }
@@ -208,7 +211,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     .ignoresSafeArea()
                 } else {
                     LinearGradient(
-                        colors: [.blue.opacity(0.2), .black],
+                        colors: [.blue.opacity(0.15), .black],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -252,6 +255,6 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(selectedGroup: Group(fullNumber: 341), viewModel: ScheduleViewModelWithParsingSGU())
-//            .colorScheme(.dark)
+            .colorScheme(.dark)
     }
 }

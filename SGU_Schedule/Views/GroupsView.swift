@@ -28,7 +28,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     .ignoresSafeArea()
                 } else {
                     LinearGradient(
-                        colors: [.blue.opacity(0.2), .black],
+                        colors: [.blue.opacity(0.15), .black],
+//                        colors: [.gray.opacity(0.2), .black],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )

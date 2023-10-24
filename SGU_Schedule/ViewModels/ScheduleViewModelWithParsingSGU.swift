@@ -9,8 +9,9 @@ import Foundation
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     @Published var lessonsByDays = [[[Lesson]]]()
-    @Published var currentLesson: Lesson? = nil
-    @Published var twoNextLessons: [Lesson?] = [nil, nil]
+    @Published var currentEvent: (any Event)? = nil
+    /// Should always contain two objects
+    @Published var nextTwoLessons: [Lesson?] = [nil, nil]
     
     @Published var updateDate = Date()
     
@@ -55,23 +56,98 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     
     private func setCurrentAndTwoNextLessons() {
-        let currentDayNumber = Date.getTodaysDay().number
-//        let currentDayNumber = 1
-        let currentDate = Date.getTodaysTime()
+        let currentDayNumber = Date.currentWeekDay.number
+        let currentWeekType = Date.currentWeekType
+        let currentTime = Date.currentTime
         let todayLessons = lessonsByDays[currentDayNumber - 1]
         
-        for i in 0...todayLessons.count-1 {
-            let lessons = todayLessons[i]
+        if todayLessons.count == 1 && checkIfTimeIsBetweenTwoTimes(dateStart: todayLessons[0][0].timeStart,
+                                                                   dateMiddle: currentTime,
+                                                                   dateEnd: todayLessons[0][0].timeEnd) {
+            currentEvent = todayLessons[0][0]
+            nextTwoLessons = [nil, nil]
+            return
             
-            if  lessons.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons[0].timeStart, dateMiddle: currentDate, dateEnd: lessons[0].timeEnd) {
-                currentLesson = lessons[0]
-                if todayLessons.count > i + 2 {
-                    twoNextLessons[0] = todayLessons[i+1][0]
-                    twoNextLessons[1] = todayLessons[i+2][0]
-                } else if todayLessons.count == i + 2 {
-                    twoNextLessons[0] = todayLessons.last?[0]
+        } else if todayLessons.count > 1 {
+            for i in 0...todayLessons.count-2 {
+                let lessons1 = todayLessons[i].filter { Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) } //следующая пара (возможно пустая)
+                let lessons2 = todayLessons.suffix(from: i+1) //позаследующая, если пустая - значит дальше ничего с текущим типом недели нет
+                    .filter({ lessons in
+                        for lesson in lessons {
+                            if Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) {
+                                return true
+                            }
+                        }
+                        return false
+                    })
+                    .first { $0.count > 0 } ?? []
+                
+                if lessons1.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons1[0].timeStart,
+                                                                      dateMiddle: currentTime,
+                                                                      dateEnd: lessons1[0].timeEnd) {
+                    var newCurrentLesson = lessons1[0]
+                    if lessons1.count > 1 { //значит есть подгруппы и общего кабинета нет
+                        newCurrentLesson.cabinet = ""
+                    }
+                    
+                    currentEvent = newCurrentLesson
+                    setNextTwoLessons(lessons: todayLessons, from: i)
+                    return
+                    
+                } else if lessons1.count > 0 && lessons2.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons1[0].timeEnd,
+                                                                                                   dateMiddle: currentTime,
+                                                                                                   dateEnd: lessons2[0].timeStart) {
+                    currentEvent = TimeBreak(timeStart: lessons1[0].timeEnd, timeEnd: lessons2[0].timeStart)
+                    setNextTwoLessons(lessons: todayLessons, from: i)
+                    return
                 }
-                break
+                
+                // проверка последнего
+                let lessons = todayLessons.last!.filter { Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
+                
+                if lessons.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons[0].timeStart,
+                                                                     dateMiddle: currentTime,
+                                                                     dateEnd: lessons[0].timeEnd) {
+                    var newCurrentLesson = lessons[0]
+                    if lessons.count > 1 { //значит есть подгруппы и общего кабинета нет
+                        newCurrentLesson.cabinet = ""
+                    }
+                    
+                    currentEvent = newCurrentLesson
+                    nextTwoLessons = [nil, nil]
+                    return
+                }
+            }
+        }
+        
+        currentEvent = nil
+        nextTwoLessons = [nil, nil]
+    }
+    
+    private func setNextTwoLessons(lessons: [[Lesson]], from index: Int) {
+        let lessonsSlice = lessons[(index+1)...]
+        
+        if lessonsSlice.count == 1 {
+            let nextLessons1 = lessonsSlice.first!.filter{ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
+            
+            if nextLessons1.count > 0 {
+                var nextLesson1 = nextLessons1[0]
+                if nextLessons1.count > 1 {
+                    nextLesson1.cabinet = ""
+                }
+                nextTwoLessons = [nextLesson1, nil]
+            }
+            
+        }
+        if lessonsSlice.count > 1 {
+            let nextLessons2 = lessonsSlice.dropFirst().first!.filter{ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
+            
+            if nextLessons2.count > 0 {
+                var nextLesson2 = nextLessons2[0]
+                if nextLessons2.count > 1 {
+                    nextLesson2.cabinet = ""
+                }
+                nextTwoLessons[1] = nextLesson2
             }
         }
     }

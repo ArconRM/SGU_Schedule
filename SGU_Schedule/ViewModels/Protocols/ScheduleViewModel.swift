@@ -9,8 +9,8 @@ import Foundation
 
 public protocol ScheduleViewModel: ObservableObject {
     var lessonsByDays: [[[Lesson]]] { get set }
-    var currentLesson: Lesson? { get set }
-    var twoNextLessons: [Lesson?] { get set }
+    var currentEvent: (any Event)? { get set }
+    var nextTwoLessons: [Lesson?] { get set }
     
     var updateDate: Date { get set }
     

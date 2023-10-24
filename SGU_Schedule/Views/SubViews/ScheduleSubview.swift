@@ -35,15 +35,15 @@ struct ScheduleSubview: View {
                             .opacity(0.7)
                     }
                     
-                    Text(lesson.subject)
+                    Text(lesson.title)
                         .multilineTextAlignment(.center)
                         .font(.custom("arial", size: 17))
                         .bold()
                         .padding(.vertical, 19)
                     
                     HStack {
-                        if lesson.subgroup != "" {
-                            Text("\(lesson.lectorFullName) \n\(lesson.subgroup)")
+                        if lesson.subgroup != nil {
+                            Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
                                 .font(.custom("arial", size: 17))
                                 .italic()
                         } else {
@@ -60,10 +60,12 @@ struct ScheduleSubview: View {
                     }
                 }
                 .foregroundColor(colorScheme == .light ? .black : .white)
-                .padding(20)
-                .background(lesson.lessonType == .Lecture ?
-                            (colorScheme == .light ? .green.opacity(0.2) : .green.opacity(0.2)) :
-                            (.blue.opacity(0.2)))
+                .padding(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 15 : 10)
+                .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+                .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
+                            (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
+                            : .gray.opacity(0.1)
+                )
 //                .cornerRadius(20)
             }
         }
@@ -77,6 +79,8 @@ struct ScheduleSubview: View {
                  y: 0)
         .cornerRadius(20)
     }
+    
+    
 }
 
 struct ScheduleSubview_Previews: PreviewProvider {
@@ -86,8 +90,9 @@ struct ScheduleSubview_Previews: PreviewProvider {
                 .foregroundColor(.blue.opacity(0.07))
                 .ignoresSafeArea()
             VStack {
-                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Subgroup: nil, Cabinet: "12 корпус ауд.303"), Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Practice, WeekType: .All, Subgroup: "под. 3", Cabinet: "12 корпус ауд.303")])
-                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Subgroup: nil, Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Cabinet: "12 корпус ауд.303"), Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Practice, WeekType: .All, Subgroup: "под. 3", Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Denumerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
             }
         }
     }
