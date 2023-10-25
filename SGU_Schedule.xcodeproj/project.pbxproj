@@ -24,6 +24,7 @@
 		BA9D792A2AC21C3B00C36932 /* URLSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D79292AC21C3B00C36932 /* URLSource.swift */; };
 		BA9D792C2AC21DDA00C36932 /* URLSourceSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D792B2AC21DDA00C36932 /* URLSourceSGU.swift */; };
 		BA9D792F2AC33D2E00C36932 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D792E2AC33D2E00C36932 /* NetworkError.swift */; };
+		BAA53E522AE9203A0098F30E /* UIScreenExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA53E512AE920390098F30E /* UIScreenExtension.swift */; };
 		BAAEB3012AD98DCF00E90223 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3002AD98DCF00E90223 /* ScheduleViewModel.swift */; };
 		BAAEB3032AD98EFB00E90223 /* LessonHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3022AD98EFB00E90223 /* LessonHTMLParser.swift */; };
 		BAAEB3062AD992B000E90223 /* DateHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3052AD992B000E90223 /* DateHTMLParser.swift */; };
@@ -80,6 +81,7 @@
 		BA9D79292AC21C3B00C36932 /* URLSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSource.swift; sourceTree = "<group>"; };
 		BA9D792B2AC21DDA00C36932 /* URLSourceSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSourceSGU.swift; sourceTree = "<group>"; };
 		BA9D792E2AC33D2E00C36932 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
+		BAA53E512AE920390098F30E /* UIScreenExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIScreenExtension.swift; sourceTree = "<group>"; };
 		BAAEB3002AD98DCF00E90223 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		BAAEB3022AD98EFB00E90223 /* LessonHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonHTMLParser.swift; sourceTree = "<group>"; };
 		BAAEB3052AD992B000E90223 /* DateHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHTMLParser.swift; sourceTree = "<group>"; };
@@ -328,6 +330,7 @@
 			isa = PBXGroup;
 			children = (
 				BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */,
+				BAA53E512AE920390098F30E /* UIScreenExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -516,6 +519,7 @@
 				BAAEB30E2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift in Sources */,
 				BA9D79172ABB3AD900C36932 /* GroupsView.swift in Sources */,
 				BAAEB3012AD98DCF00E90223 /* ScheduleViewModel.swift in Sources */,
+				BAA53E522AE9203A0098F30E /* UIScreenExtension.swift in Sources */,
 				BADAE1142AB9C0D60079E3D7 /* ScheduleView.swift in Sources */,
 				BAAEB3122AD9A4BE00E90223 /* GroupNetworkManager.swift in Sources */,
 				BA9D791C2ABE2E4700C36932 /* GroupsSource.swift in Sources */,

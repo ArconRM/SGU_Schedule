@@ -127,9 +127,10 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = 680
-    let minHeight: CGFloat = 200
-    let maxHeight: CGFloat = 680
+    @State private var curHeight: CGFloat = UIScreen.screenHeight - 115
+    let minHeight: CGFloat = 250
+    let maxHeight: CGFloat = UIScreen.screenHeight - 115
+//    let maxHeightWithoutCurrentLessonText: CGFloat = 530
     
     @State var selectedGroup: Group
     
@@ -202,7 +203,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
             ZStack {
                 if colorScheme == .light {
                     LinearGradient(
-                        colors: [.blue.opacity(0.15), .white],
+                        colors: [.blue.opacity(0.1), .white],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -234,7 +235,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @State private var prevDragTrans = CGSize.zero
     
     var dragGesture: some Gesture {
-        DragGesture(minimumDistance: 0, coordinateSpace: .global)
+        DragGesture(minimumDistance: 10, coordinateSpace: .global)
             .onChanged { value in
                 let dragAmount = value.translation.height - prevDragTrans.height
                 if curHeight > maxHeight {
@@ -242,7 +243,30 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else if curHeight < minHeight {
                     curHeight = minHeight
                 } else {
-                    curHeight -= dragAmount
+                    if dragAmount > 0 { //вниз
+                        if curHeight == maxHeight {
+                            withAnimation(.easeInOut(duration: 1)) {
+                                curHeight = minHeight
+                            }
+                        } 
+//                        else if curHeight == maxHeightWithoutCurrentLessonText {
+//                            withAnimation(.easeInOut(duration: 1.5)) {
+//                                curHeight = minHeight
+//                            }
+//                        }
+                        
+                    } else { //вверх
+                        if curHeight == minHeight {
+                            withAnimation(.easeInOut(duration: 1)) {
+                                curHeight = maxHeight
+                            }
+                        } 
+//                        else if curHeight == maxHeightWithoutCurrentLessonText {
+//                            withAnimation(.easeInOut(duration: 1.5)) {
+//                                curHeight = maxHeight
+//                            }
+//                        }
+                    }
                 }
                 prevDragTrans = value.translation
             }
@@ -254,7 +278,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(selectedGroup: Group(fullNumber: 341), viewModel: ScheduleViewModelWithParsingSGU())
-            .colorScheme(.dark)
+        ScheduleView(selectedGroup: Group(fullNumber: 141), viewModel: ScheduleViewModelWithParsingSGU())
+//            .colorScheme(.dark)
     }
 }

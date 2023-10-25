@@ -374,8 +374,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "100"
-            endingLineNumber = "100"
+            startingLineNumber = "99"
+            endingLineNumber = "99"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -390,8 +390,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "93"
-            endingLineNumber = "93"
+            startingLineNumber = "92"
+            endingLineNumber = "92"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -406,8 +406,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "84"
+            endingLineNumber = "84"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>

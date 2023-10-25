@@ -29,7 +29,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 } else {
                     LinearGradient(
                         colors: [.blue.opacity(0.15), .black],
-//                        colors: [.gray.opacity(0.2), .black],
                         startPoint: .topLeading,
                         endPoint: .bottomTrailing
                     )
@@ -51,6 +50,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             Text(selectedAcademicProgram.rawValue)
                                 .bold()
                                 .foregroundColor(colorScheme == .light ? .black : .white)
+                                .padding(.vertical, 5)
                         }
                     }
                     .onChange(of: selectedAcademicProgram) { newValue in

@@ -57,7 +57,6 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     private func setCurrentAndTwoNextLessons() {
         let currentDayNumber = Date.currentWeekDay.number
-        let currentWeekType = Date.currentWeekType
         let currentTime = Date.currentTime
         let todayLessons = lessonsByDays[currentDayNumber - 1]
         
@@ -127,7 +126,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     private func setNextTwoLessons(lessons: [[Lesson]], from index: Int) {
         let lessonsSlice = lessons[(index+1)...]
         
-        if lessonsSlice.count == 1 {
+        if lessonsSlice.count >= 1 {
             let nextLessons1 = lessonsSlice.first!.filter{ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
             
             if nextLessons1.count > 0 {
