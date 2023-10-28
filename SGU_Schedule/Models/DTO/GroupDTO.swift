@@ -1,5 +1,5 @@
 //
-//  Group.swift
+//  GroupDTO.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 19.09.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Group: Hashable {
+public struct GroupDTO: Hashable {
     var academicProgram: AcademicProgram?
     var fullNumber: Int
     var shortName: String

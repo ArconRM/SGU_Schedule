@@ -22,7 +22,7 @@ final class DateHTMLParserSGU: DateHTMLParser {
             return date
         }
         catch {
-            throw NetworkError.HTMLParserError
+            throw NetworkError.htmlParserError
         }
     }
 }

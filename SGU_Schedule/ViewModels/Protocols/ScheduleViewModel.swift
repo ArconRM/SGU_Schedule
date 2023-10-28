@@ -8,9 +8,12 @@
 import Foundation
 
 public protocol ScheduleViewModel: ObservableObject {
-    var lessonsByDays: [[[Lesson]]] { get set }
-    var currentEvent: (any Event)? { get set }
-    var nextTwoLessons: [Lesson?] { get set }
+    var lessonsByDays: [[[LessonDTO]]] { get set }
+    var currentEvent: (any EventDTO)? { get set }
+    var nextLesson1: LessonDTO? { get set }
+    var nextLesson2: LessonDTO? { get set }
+    
+    var favoriteGroupNumber: Int? { get set }
     
     var updateDate: Date { get set }
     
@@ -19,6 +22,6 @@ public protocol ScheduleViewModel: ObservableObject {
     
     /// Fetches schedule's last update date.
     func fetchUpdateDate(groupNumber: Int)
-    /// Fetches schedule and sets currentLesson and twoNextLessons.
+    /// Fetches schedule and sets currentLesson and two next lessons.
     func fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: Int)
 }

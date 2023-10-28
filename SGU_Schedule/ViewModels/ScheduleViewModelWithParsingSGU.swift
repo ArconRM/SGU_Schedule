@@ -8,10 +8,21 @@
 import Foundation
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
-    @Published var lessonsByDays = [[[Lesson]]]()
-    @Published var currentEvent: (any Event)? = nil
-    /// Should always contain two objects
-    @Published var nextTwoLessons: [Lesson?] = [nil, nil]
+    @Published var lessonsByDays = [[[LessonDTO]]]()
+    @Published var currentEvent: (any EventDTO)? = nil
+    
+    @Published var nextLesson1: LessonDTO? = nil
+    @Published var nextLesson2: LessonDTO? = nil
+    
+    var favoriteGroupNumber: Int? {
+        get {
+            let number = UserDefaults.standard.integer(forKey: GroupsKeys.favoriteGroupNumberKey.rawValue)
+            return number != 0 ? number : nil
+        }
+        set {
+            UserDefaults.standard.setValue(newValue, forKey: GroupsKeys.favoriteGroupNumberKey.rawValue)
+        }
+    }
     
     @Published var updateDate = Date()
     
@@ -29,7 +40,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     }
     
     public func fetchUpdateDate(groupNumber: Int) {
-        dateNetworkManager.getLastUpdateDate(group: Group(fullNumber: groupNumber), resultQueue: .main) { result in
+        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
             switch result {
             case .success(let date):
                 self.updateDate = date
@@ -41,7 +52,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     }
     
     public func fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: Int) {
-        lessonsNetworkManager.getLessonsForCurrentWeek(group: Group(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
+        lessonsNetworkManager.getLessonsForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
             switch result {
             case .success(let lessons):
                 self.lessonsByDays = lessons
@@ -54,7 +65,6 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
     }
     
-    
     private func setCurrentAndTwoNextLessons() {
         let currentDayNumber = Date.currentWeekDay.number
         let currentTime = Date.currentTime
@@ -64,7 +74,8 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                                                                    dateMiddle: currentTime,
                                                                    dateEnd: todayLessons[0][0].timeEnd) {
             currentEvent = todayLessons[0][0]
-            nextTwoLessons = [nil, nil]
+            nextLesson1 = nil
+            nextLesson2 = nil
             return
             
         } else if todayLessons.count > 1 {
@@ -96,7 +107,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 } else if lessons1.count > 0 && lessons2.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons1[0].timeEnd,
                                                                                                    dateMiddle: currentTime,
                                                                                                    dateEnd: lessons2[0].timeStart) {
-                    currentEvent = TimeBreak(timeStart: lessons1[0].timeEnd, timeEnd: lessons2[0].timeStart)
+                    currentEvent = TimeBreakDTO(timeStart: lessons1[0].timeEnd, timeEnd: lessons2[0].timeStart)
                     setNextTwoLessons(lessons: todayLessons, from: i)
                     return
                 }
@@ -113,17 +124,19 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                     }
                     
                     currentEvent = newCurrentLesson
-                    nextTwoLessons = [nil, nil]
+                    nextLesson1 = nil
+                    nextLesson2 = nil
                     return
                 }
             }
         }
         
         currentEvent = nil
-        nextTwoLessons = [nil, nil]
+        nextLesson1 = nil
+        nextLesson2 = nil
     }
     
-    private func setNextTwoLessons(lessons: [[Lesson]], from index: Int) {
+    private func setNextTwoLessons(lessons: [[LessonDTO]], from index: Int) {
         let lessonsSlice = lessons[(index+1)...]
         
         if lessonsSlice.count >= 1 {
@@ -134,7 +147,8 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 if nextLessons1.count > 1 {
                     nextLesson1.cabinet = ""
                 }
-                nextTwoLessons = [nextLesson1, nil]
+                self.nextLesson1 = nextLesson1
+                self.nextLesson2 = nil
             }
             
         }
@@ -146,7 +160,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 if nextLessons2.count > 1 {
                     nextLesson2.cabinet = ""
                 }
-                nextTwoLessons[1] = nextLesson2
+                self.nextLesson2 = nextLesson2
             }
         }
     }

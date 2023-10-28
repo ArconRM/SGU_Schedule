@@ -8,6 +8,6 @@
 import Foundation
 
 enum NetworkError: Error {
-    case HTMLParserError
-    case NetworkManagerError
+    case htmlParserError
+    case networkManagerError
 }

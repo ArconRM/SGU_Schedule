@@ -8,7 +8,9 @@
 import Foundation
 
 public protocol GroupsViewModel: ObservableObject {
-    var groups: [Group] { get set }
+    var groups: [GroupDTO] { get set }
+    
+    var favoriteGroupNumber: Int? { get }
     
     var isLoadingGroups: Bool { get set }
     

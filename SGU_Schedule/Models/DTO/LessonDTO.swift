@@ -1,5 +1,5 @@
 //
-//  Class.swift
+//  LessonDTO.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 19.09.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Lesson: Event {
+public struct LessonDTO: EventDTO {
     
     public var id: UUID
     /// subject
@@ -35,5 +35,18 @@ public struct Lesson: Event {
         
         self.timeStart = dateFormatter.date(from: TimeStart)!
         self.timeEnd = dateFormatter.date(from: TimeEnd)!
+    }
+    
+    init(Subject: String, LectorFullName: String, TimeStart: Date, TimeEnd: Date, LessonType: LessonType, WeekType: WeekType, Subgroup: String? = nil, Cabinet: String) {
+        self.id = UUID()
+        self.title = Subject
+        self.lectorFullName = LectorFullName
+        self.lessonType = LessonType
+        self.weekType = WeekType
+        self.subgroup = Subgroup
+        self.cabinet = Cabinet
+        
+        self.timeStart = TimeStart
+        self.timeEnd = TimeEnd
     }
 }

@@ -9,5 +9,5 @@ import Foundation
 
 public protocol GroupsHTMLParser {
 //    func getAllGroupsFromSource(source html: String) -> [Group]
-    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, program: AcademicProgram) throws -> [Group]
+    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, program: AcademicProgram) throws -> [GroupDTO]
 }

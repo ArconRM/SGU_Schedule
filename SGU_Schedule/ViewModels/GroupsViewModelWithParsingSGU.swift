@@ -12,8 +12,15 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
-    @Published var groups = [Group]()
+    @Published var groups = [GroupDTO]()
     @Published var isLoadingGroups: Bool = true
+    
+    var favoriteGroupNumber: Int? {
+        get {
+            let number = UserDefaults.standard.integer(forKey: GroupsKeys.favoriteGroupNumberKey.rawValue)
+            return number != 0 ? number : nil
+        }
+    }
     
     @Published var networkManager: GroupNetworkManager
     
@@ -55,7 +62,11 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
         networkManager.getGroupsByYearAndAcademicProgram(year: year, program: academicProgram, resultQueue: .main) { result in
             switch result {
             case .success(let groups):
-                self.groups = groups
+                if self.favoriteGroupNumber != nil, let favGroup = groups.first(where: { $0.fullNumber == self.favoriteGroupNumber }) {
+                    self.groups = [favGroup] + groups.filter { $0.fullNumber != self.favoriteGroupNumber }
+                } else {
+                    self.groups = groups
+                }
             case .failure(let error):
                 self.groups = []
                 print(error)

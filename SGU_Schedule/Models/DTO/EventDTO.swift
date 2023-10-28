@@ -1,5 +1,5 @@
 //
-//  Event.swift
+//  EventDTO.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 23.10.2023.
@@ -8,7 +8,7 @@
 import Foundation
 
 
-public protocol Event: Hashable, Identifiable, Decodable {
+public protocol EventDTO: Hashable, Identifiable, Decodable {
     
     var id: UUID { get set }
     var title: String { get set }

@@ -18,7 +18,7 @@ public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
         self.lessonParser = lessonParser
     }
     
-    public func getHTML(group: Group, resultQueue: DispatchQueue = .main, completionHandler: @escaping(Result<String, Error>) -> Void) { // для теста
+    public func getHTML(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping(Result<String, Error>) -> Void) { // для теста
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         
         URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
@@ -34,13 +34,13 @@ public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
                 }
             }
             catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.NetworkManagerError)) }
+                resultQueue.async { completionHandler(.failure(NetworkError.networkManagerError)) }
             }
             
         }.resume()
     }
     
-    public func getLessonsForDay(group: Group, day: Weekdays, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[[Lesson]], Error>) -> Void) {
+    public func getLessonsForDay(group: GroupDTO, day: Weekdays, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[[LessonDTO]], Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         
         URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
@@ -57,12 +57,12 @@ public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
                 }
             }
             catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.HTMLParserError)) }
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
         }.resume()
     }
     
-    public func getLessonsForCurrentWeek(group: Group, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[[[Lesson]]], Error>) -> Void) {
+    public func getLessonsForCurrentWeek(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[[[LessonDTO]]], Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         
         URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
@@ -80,7 +80,7 @@ public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
                 }
             }
             catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.HTMLParserError)) }
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
         }.resume()
     }

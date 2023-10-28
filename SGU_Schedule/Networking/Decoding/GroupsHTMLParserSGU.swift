@@ -18,8 +18,8 @@ final class GroupsHTMLParserSGU: GroupsHTMLParser {
 //        return result
 //    }
     
-    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, program: AcademicProgram) throws -> [Group] {
-        var result = [Group]()
+    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, program: AcademicProgram) throws -> [GroupDTO] {
+        var result = [GroupDTO]()
         var groupTypeRange = [Int]()
         switch program {
         case .BachelorAndSpeciality:
@@ -41,15 +41,15 @@ final class GroupsHTMLParserSGU: GroupsHTMLParser {
                 
                 for i in 0...xpathResult.count-1 where i % 2 == 0 {
                     guard Int(xpathResult[i]) != nil else {
-                        throw NetworkError.HTMLParserError
+                        throw NetworkError.htmlParserError
                     }
-                    result.append(Group(fullNumber: Int(xpathResult[i])!))
+                    result.append(GroupDTO(fullNumber: Int(xpathResult[i])!))
                 }
                 
             }
         }
         catch {
-            throw NetworkError.HTMLParserError
+            throw NetworkError.htmlParserError
         }
         return result
     }

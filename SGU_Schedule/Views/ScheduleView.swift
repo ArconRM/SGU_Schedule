@@ -9,27 +9,42 @@ import SwiftUI
 import UIKit
 
 struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
-    
-    @State var selectedGroup: Group
+    @EnvironmentObject var networkMonitor: NetworkMonitor
     
     @ObservedObject var viewModel: ViewModel
+    
+    @State var selectedGroup: GroupDTO
+    @Binding var favoriteGroupNumber: Int?
     
     var body : some View {
         ZStack(alignment: .bottom) {
             ScheduleBackView(selectedGroup: selectedGroup, viewModel: viewModel)
             ScheduleModuleView(viewModel: viewModel, selectedGroup: selectedGroup)
+                .environmentObject(networkMonitor)
+        }
+        .toolbar {
+            ToolbarItem {
+                Button(action: {
+                    viewModel.favoriteGroupNumber = selectedGroup.fullNumber
+                    favoriteGroupNumber = viewModel.favoriteGroupNumber
+                }) {
+                    Label("Добавить в избранное", systemImage: favoriteGroupNumber == selectedGroup.fullNumber ? "star.fill" : "star")
+                }
+            }
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
-            viewModel.fetchUpdateDate(groupNumber: selectedGroup.fullNumber)
-            viewModel.fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: selectedGroup.fullNumber)
+            if networkMonitor.isConnected {
+                viewModel.fetchUpdateDate(groupNumber: selectedGroup.fullNumber)
+                viewModel.fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: selectedGroup.fullNumber)
+            }
         }
     }
 }
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     
-    @State var selectedGroup: Group
+    @State var selectedGroup: GroupDTO
     
     @ObservedObject var viewModel: ViewModel
     
@@ -44,7 +59,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 .font(.system(size: 20, weight: .bold))
                 .padding()
             
-            if let lesson = viewModel.currentEvent as? Lesson {
+            if let lesson = viewModel.currentEvent as? LessonDTO {
                 Text(lesson.timeStart.getHoursAndMinutesString() + " - " +
                      lesson.timeEnd.getHoursAndMinutesString() + " " +
                      lesson.title)
@@ -59,7 +74,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
                     .bold()
-            } else if let timeBreak = viewModel.currentEvent as? TimeBreak {
+            } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
                      timeBreak.timeEnd.getHoursAndMinutesString())
                     .font(.system(size: 20, weight: .bold))
@@ -80,40 +95,38 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 .padding()
             
             HStack {
-                if viewModel.nextTwoLessons.count >= 2 {
-                    VStack {
-                        if let nextLesson1 = viewModel.nextTwoLessons[0] {
-                            Text(nextLesson1.timeStart.getHoursAndMinutesString() + "-" +
-                                 nextLesson1.timeEnd.getHoursAndMinutesString() + " " +
-                                 nextLesson1.title)
-                            .font(.system(size: 17, weight: .semibold))
+                VStack {
+                    if let nextLesson1 = viewModel.nextLesson1 {
+                        Text(nextLesson1.timeStart.getHoursAndMinutesString() + "-" +
+                             nextLesson1.timeEnd.getHoursAndMinutesString() + " " +
+                             nextLesson1.title)
+                        .font(.system(size: 17, weight: .semibold))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        
+                        Text(nextLesson1.cabinet)
+                            .padding()
+                            .font(.system(size: 15, weight: .semibold))
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                            
-                            Text(nextLesson1.cabinet)
-                                .padding()
-                                .font(.system(size: 15, weight: .semibold))
-                                .multilineTextAlignment(.center)
-                        } else {
-                            Text("-")
-                                .font(.system(size: 20, weight: .bold))
-                        }
+                    } else {
+                        Text("-")
+                            .font(.system(size: 20, weight: .bold))
                     }
-                    
-                    VStack {
-                        if let nextLesson2 = viewModel.nextTwoLessons[1] {
-                            Text(nextLesson2.timeStart.getHoursAndMinutesString() + "-" +
-                                 nextLesson2.timeEnd.getHoursAndMinutesString() + " " +
-                                 nextLesson2.title)
-                            .font(.system(size: 17, weight: .semibold))
+                }
+                
+                VStack {
+                    if let nextLesson2 = viewModel.nextLesson2 {
+                        Text(nextLesson2.timeStart.getHoursAndMinutesString() + "-" +
+                             nextLesson2.timeEnd.getHoursAndMinutesString() + " " +
+                             nextLesson2.title)
+                        .font(.system(size: 17, weight: .semibold))
+                        .multilineTextAlignment(.center)
+                        .padding(.horizontal)
+                        
+                        Text(nextLesson2.cabinet)
+                            .padding()
+                            .font(.system(size: 15, weight: .semibold))
                             .multilineTextAlignment(.center)
-                            .padding(.horizontal)
-                            
-                            Text(nextLesson2.cabinet)
-                                .padding()
-                                .font(.system(size: 15, weight: .semibold))
-                                .multilineTextAlignment(.center)
-                        }
                     }
                 }
             }
@@ -124,6 +137,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 
 struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var networkMonitor: NetworkMonitor
     
     @ObservedObject var viewModel: ViewModel
     
@@ -132,11 +146,11 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     let maxHeight: CGFloat = UIScreen.screenHeight - 115
 //    let maxHeightWithoutCurrentLessonText: CGFloat = 530
     
-    @State var selectedGroup: Group
+    @State var selectedGroup: GroupDTO
     
     @State var showsAlert = false
     @State var selectedDay: Weekdays = Date.currentWeekDay
-    @State var lessonsBySelectedDay = [[Lesson]]()
+    @State var lessonsBySelectedDay = [[LessonDTO]]()
     
     var body: some View {
         ZStack {
@@ -151,15 +165,22 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .background (Color.white.opacity (0.00001))
                 .gesture(dragGesture)
                 
-                if (viewModel.isLoadingUpdateDate) {
-                    Text("Загрузка...")
-                        .padding(.top, -10)
-                        .font(.custom("arial", size: 19))
-                        .bold()
+                if networkMonitor.isConnected {
+                    if viewModel.isLoadingUpdateDate {
+                        Text("Загрузка...")
+                            .padding(.top, -10)
+                            .font(.system(size: 19, design: .rounded))
+                            .bold()
+                    } else {
+                        Text("Обновлено: " + viewModel.updateDate.getDayAndMonthString())
+                            .padding(.top, -10)
+                            .font(.system(size: 19, design: .rounded))
+                            .bold()
+                    }
                 } else {
-                    Text("Обновлено: " + viewModel.updateDate.getDayAndMonthString())
+                    Text("Нет соединения с интернетом")
                         .padding(.top, -10)
-                        .font(.custom("arial", size: 19))
+                        .font(.system(size: 19, design: .rounded))
                         .bold()
                 }
                 
@@ -178,21 +199,28 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 
                 Spacer()
                 
-                if viewModel.isLoadingLessons {
-                    Text("Загрузка...")
-                        .font(.custom("arial", size: 19))
-                        .bold()
-                } else {
-                    ScrollView {
-                        ForEach(lessonsBySelectedDay, id:\.self) { lessons in
-                            ScheduleSubview(lessons: lessons)
-                                .padding(.bottom, 5)
+                if networkMonitor.isConnected {
+                    if viewModel.isLoadingLessons {
+                        Text("Загрузка...")
+                            .font(.system(size: 19, design: .rounded))
+                            .bold()
+                    } else {
+                        ScrollView {
+                            ForEach(lessonsBySelectedDay, id:\.self) { lessons in
+                                ScheduleSubview(lessons: lessons)
+                                    .padding(.bottom, 5)
+                            }
+                            .padding(.bottom, 20)
                         }
-                        .padding(.bottom, 20)
+                        .onAppear {
+                            lessonsBySelectedDay = viewModel.lessonsByDays[selectedDay.number - 1]
+                        }
                     }
-                    .onAppear {
-                        lessonsBySelectedDay = viewModel.lessonsByDays[selectedDay.number - 1]
-                    }
+                } else {
+                    Text("Нет соединения с интернетом")
+                        .padding(.top, -10)
+                        .font(.system(size: 19, design: .rounded))
+                        .bold()
                 }
                 
                 Spacer()
@@ -245,27 +273,17 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else {
                     if dragAmount > 0 { //вниз
                         if curHeight == maxHeight {
-                            withAnimation(.easeInOut(duration: 1)) {
+                            withAnimation(.easeInOut(duration: 0.5)) {
                                 curHeight = minHeight
                             }
-                        } 
-//                        else if curHeight == maxHeightWithoutCurrentLessonText {
-//                            withAnimation(.easeInOut(duration: 1.5)) {
-//                                curHeight = minHeight
-//                            }
-//                        }
+                        }
                         
                     } else { //вверх
                         if curHeight == minHeight {
-                            withAnimation(.easeInOut(duration: 1)) {
+                            withAnimation(.easeInOut(duration: 0.5)) {
                                 curHeight = maxHeight
                             }
-                        } 
-//                        else if curHeight == maxHeightWithoutCurrentLessonText {
-//                            withAnimation(.easeInOut(duration: 1.5)) {
-//                                curHeight = maxHeight
-//                            }
-//                        }
+                        }
                     }
                 }
                 prevDragTrans = value.translation
@@ -278,7 +296,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(selectedGroup: Group(fullNumber: 141), viewModel: ScheduleViewModelWithParsingSGU())
+        ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: 141), favoriteGroupNumber: .constant(141))
 //            .colorScheme(.dark)
     }
 }

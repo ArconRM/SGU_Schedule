@@ -10,7 +10,7 @@ import SwiftUI
 struct ScheduleSubview: View {
     @Environment(\.colorScheme) var colorScheme
     
-    let lessons: [Lesson]
+    let lessons: [LessonDTO]
     
     var body: some View {
         LazyVStack {
@@ -90,9 +90,9 @@ struct ScheduleSubview_Previews: PreviewProvider {
                 .foregroundColor(.blue.opacity(0.07))
                 .ignoresSafeArea()
             VStack {
-                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Cabinet: "12 корпус ауд.303"), Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Practice, WeekType: .All, Subgroup: "под. 3", Cabinet: "12 корпус ауд.303")])
-                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Denumerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
-                ScheduleSubview(lessons: [Lesson(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Cabinet: "12 корпус ауд.303"), LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Practice, WeekType: .All, Subgroup: "под. 3", Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Denumerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
             }
         }
     }

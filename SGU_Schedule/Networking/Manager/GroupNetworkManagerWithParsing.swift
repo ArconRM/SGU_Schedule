@@ -42,7 +42,7 @@ public class GroupNetworkManagerWithParsing: GroupNetworkManager {
 //    }
     
 
-    public func getGroupsByYearAndAcademicProgram(year: Int, program: AcademicProgram, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[Group], Error>) -> Void) {
+    public func getGroupsByYearAndAcademicProgram(year: Int, program: AcademicProgram, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void) {
         let url = urlSource.baseURL
         
         URLSession.shared.dataTask(with: url as URL) { data, _, error in
@@ -60,7 +60,7 @@ public class GroupNetworkManagerWithParsing: GroupNetworkManager {
                 }
             }
             catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.HTMLParserError)) }
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
         }.resume()
     }

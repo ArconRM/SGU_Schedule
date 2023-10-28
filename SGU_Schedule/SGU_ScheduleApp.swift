@@ -12,6 +12,7 @@ struct SGU_ScheduleApp: App {
     var body: some Scene {
         WindowGroup {
             GroupsView(viewModel: GroupsViewModelWithParsingSGU())
+                .environmentObject(NetworkMonitor())
         }
     }
 }

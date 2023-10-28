@@ -55,15 +55,19 @@ enum GroupsSource: Int { // костыль
     }
     
     init?(rawValue: Int) {
-        switch Array(String(rawValue))[1] {
-        case "1": self = .FIIT
-        case "2": self = .IVT
-        case "3": self = .CS
-        case "4": self = .MOAIS
-        case "5": self = .PI
-        case "6": self = .PO
-        case "8": self = .SAU
-        default:
+        if String(rawValue).count > 1 {
+            switch Array(String(rawValue))[1] {
+            case "1": self = .FIIT
+            case "2": self = .IVT
+            case "3": self = .CS
+            case "4": self = .MOAIS
+            case "5": self = .PI
+            case "6": self = .PO
+            case "8": self = .SAU
+            default:
+                return nil
+            }
+        } else {
             return nil
         }
     }

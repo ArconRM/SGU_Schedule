@@ -14,5 +14,5 @@ public protocol GroupNetworkManager: NetworkManager {
     func getGroupsByYearAndAcademicProgram(year: Int,
                                            program: AcademicProgram,
                                            resultQueue: DispatchQueue,
-                                           completionHandler: @escaping (Result<[Group], Error>) -> Void)
+                                           completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void)
 }

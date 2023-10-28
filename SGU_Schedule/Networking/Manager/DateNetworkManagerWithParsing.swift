@@ -17,7 +17,7 @@ public class DateNetworkManagerWithParsing: DateNetworkManager {
         self.dateParser = dateParser
     }
     
-    public func getLastUpdateDate(group: Group, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<Date, Error>) -> Void) {
+    public func getLastUpdateDate(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<Date, Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         
         URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
@@ -35,7 +35,7 @@ public class DateNetworkManagerWithParsing: DateNetworkManager {
                 }
             }
             catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.HTMLParserError)) }
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
         }.resume()
     }

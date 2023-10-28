@@ -10,7 +10,8 @@ import SwiftUI
 struct GroupSubview: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var group: Group
+    var group: GroupDTO
+    var isFavorite: Bool
     
     var body: some View {
         VStack {
@@ -18,7 +19,7 @@ struct GroupSubview: View {
                 ZStack {
                     Rectangle()
                         .cornerRadius(10)
-                        .foregroundColor(.cyan.opacity(0.3))
+                        .foregroundColor(isFavorite ? .cyan.opacity(0.7) : .cyan.opacity(0.3))
                         .shadow(color: .cyan.opacity(0.7), radius: 7, x: 2, y: 2)
                         .blur(radius: 1)
                     
@@ -56,10 +57,12 @@ struct GroupSubview_Previews: PreviewProvider {
     static var previews: some View {
         ZStack {
             Rectangle()
-                .foregroundColor(.blue.opacity(0.2))
+                .foregroundColor(.blue.opacity(0.1))
                 .ignoresSafeArea()
-            
-            GroupSubview(group: Group(fullNumber: 141))
+            VStack {
+                GroupSubview(group: GroupDTO(fullNumber: 141), isFavorite: true)
+                GroupSubview(group: GroupDTO(fullNumber: 131), isFavorite: false)
+            }
         }
     }
 }

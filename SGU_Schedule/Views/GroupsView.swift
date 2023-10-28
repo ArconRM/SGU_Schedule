@@ -9,11 +9,14 @@ import SwiftUI
 
 struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var networkMonitor: NetworkMonitor
     
     @ObservedObject var viewModel: ViewModel
     
-    @State var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
-    @State var selectedYear = 1
+    @State private var favoriteGroupNumber: Int? = nil //0, потому что UD возвращает ноль если объекта нет
+    
+    @State private var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
+    @State private var selectedYear = 1
     
     var body: some View {
         NavigationView {
@@ -53,6 +56,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 .padding(.vertical, 5)
                         }
                     }
+                    .disabled(!networkMonitor.isConnected)
                     .onChange(of: selectedAcademicProgram) { newValue in
                         viewModel.setSelectedAcademicProgramAndFetchGroups(newValue: newValue)
                     }
@@ -71,24 +75,54 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 .foregroundColor(colorScheme == .light ? .black : .white)
                         }
                     }
+                    .disabled(!networkMonitor.isConnected)
                     .onChange(of: selectedYear) { newValue in
                         viewModel.setSelectedYearAndFetchGroups(newValue: newValue)
                     }
                     
                     if viewModel.isLoadingGroups {
+                        Spacer()
+                        
                         Text("Загрузка...")
                             .padding(.top)
                             .font(.custom("arial", size: 19))
                             .bold()
-                    } else {
+                        
+                        Spacer()
+                    } else if networkMonitor.isConnected {
                         ScrollView {
                             ForEach(viewModel.groups, id:\.self) { group in
-                                NavigationLink(destination: ScheduleView(selectedGroup: group, viewModel: ScheduleViewModelWithParsingSGU())) {
-                                    GroupSubview(group: group)
+                                NavigationLink(
+                                    destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: group, favoriteGroupNumber: $favoriteGroupNumber)
+                                        .environmentObject(networkMonitor)
+                                ) {
+                                    GroupSubview(group: group,
+                                                 isFavorite: favoriteGroupNumber == group.fullNumber)
                                 }
                             }
                         }
                         .background(.clear)
+                    } else if favoriteGroupNumber != nil {
+                        Spacer()
+                        
+                        NavigationLink(
+                            destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: favoriteGroupNumber!), favoriteGroupNumber: $favoriteGroupNumber)
+                                .environmentObject(networkMonitor)
+                        ) {
+                            GroupSubview(group: GroupDTO(fullNumber: favoriteGroupNumber!),
+                                         isFavorite: true)
+                        }
+                        
+                        Spacer()
+                    } else {
+                        Spacer()
+                        
+                        Text("Нет соединения с интернетом")
+                            .padding(.top)
+                            .font(.system(size: 19, design: .rounded))
+                            .bold()
+                        
+                        Spacer()
                     }
                 }
             }
@@ -98,6 +132,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             selectedYear = viewModel.getSelectedYear()
             selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
             viewModel.fetchGroupsWithFavoritesBeingFirst(year: selectedYear, academicProgram: selectedAcademicProgram)
+            favoriteGroupNumber = viewModel.favoriteGroupNumber
         }
     }
 }

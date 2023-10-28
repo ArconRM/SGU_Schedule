@@ -8,12 +8,12 @@
 import Foundation
 
 public protocol LessonsNetworkManager : NetworkManager {
-    func getLessonsForDay(group: Group,
+    func getLessonsForDay(group: GroupDTO,
                            day: Weekdays,
                            resultQueue: DispatchQueue,
-                           completionHandler: @escaping(Result<[[Lesson]], Error>) -> Void)
+                           completionHandler: @escaping(Result<[[LessonDTO]], Error>) -> Void)
     
-    func getLessonsForCurrentWeek(group: Group,
+    func getLessonsForCurrentWeek(group: GroupDTO,
                                    resultQueue: DispatchQueue,
-                                   completionHandler: @escaping(Result<[[[Lesson]]], Error>) -> Void)
+                                   completionHandler: @escaping(Result<[[[LessonDTO]]], Error>) -> Void)
 }
