@@ -36,7 +36,7 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .onAppear {
             if networkMonitor.isConnected {
                 viewModel.fetchUpdateDate(groupNumber: selectedGroup.fullNumber)
-                viewModel.fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: selectedGroup.fullNumber)
+                viewModel.fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: selectedGroup.fullNumber, isOffline: !networkMonitor.isConnected)
             }
         }
     }
@@ -149,7 +149,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @State var selectedGroup: GroupDTO
     
     @State var showsAlert = false
-    @State var selectedDay: Weekdays = Date.currentWeekDay
+    @State var selectedDay: Weekdays = Date.currentWeekDayWithoutSunday
     @State var lessonsBySelectedDay = [[LessonDTO]]()
     
     var body: some View {

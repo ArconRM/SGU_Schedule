@@ -8,7 +8,7 @@
 import Foundation
 import CoreData
 
-protocol PersistenceManager {
+public protocol PersistenceManager {
     associatedtype ManagedModel: NSManagedObject
     associatedtype DTOModel
     

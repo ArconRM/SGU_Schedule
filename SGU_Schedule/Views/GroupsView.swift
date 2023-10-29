@@ -40,47 +40,48 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 }
                 
                 VStack {
-                    Menu {
-                        Picker(selection: $selectedAcademicProgram) {
-                            ForEach(AcademicProgram.allCases, id:\.self) { program in
-                                Text(program.rawValue)
-                                    .tag(program)
+                    if networkMonitor.isConnected {
+                        Menu {
+                            Picker(selection: $selectedAcademicProgram) {
+                                ForEach(AcademicProgram.allCases, id:\.self) { program in
+                                    Text(program.rawValue)
+                                        .tag(program)
+                                        .bold()
+                                }
+                            } label: {}
+                        } label: {
+                            HStack{
+                                Text(selectedAcademicProgram.rawValue)
                                     .bold()
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .padding(.vertical, 5)
                             }
-                        } label: {}
-                    } label: {
-                        HStack{
-                            Text(selectedAcademicProgram.rawValue)
-                                .bold()
-                                .foregroundColor(colorScheme == .light ? .black : .white)
-                                .padding(.vertical, 5)
+                        }
+                        .disabled(!networkMonitor.isConnected)
+                        .onChange(of: selectedAcademicProgram) { newValue in
+                            viewModel.setSelectedAcademicProgramAndFetchGroups(newValue: newValue)
+                        }
+                        
+                        Menu {
+                            Picker(selection: $selectedYear) {
+                                ForEach(1..<7) {
+                                    Text("\($0) курс")
+                                        .tag($0)
+                                }
+                            } label: {}
+                        } label: {
+                            HStack{
+                                Text(String(selectedYear) + " курс")
+                                    .bold()
+                                    .foregroundColor(colorScheme == .light ? .black : .white)
+                            }
+                        }
+                        .onChange(of: selectedYear) { newValue in
+                            viewModel.setSelectedYearAndFetchGroups(newValue: newValue)
                         }
                     }
-                    .disabled(!networkMonitor.isConnected)
-                    .onChange(of: selectedAcademicProgram) { newValue in
-                        viewModel.setSelectedAcademicProgramAndFetchGroups(newValue: newValue)
-                    }
                     
-                    Menu {
-                        Picker(selection: $selectedYear) {
-                            ForEach(1..<7) {
-                                Text("\($0) курс")
-                                    .tag($0)
-                            }
-                        } label: {}
-                    } label: {
-                        HStack{
-                            Text(String(selectedYear) + " курс")
-                                .bold()
-                                .foregroundColor(colorScheme == .light ? .black : .white)
-                        }
-                    }
-                    .disabled(!networkMonitor.isConnected)
-                    .onChange(of: selectedYear) { newValue in
-                        viewModel.setSelectedYearAndFetchGroups(newValue: newValue)
-                    }
-                    
-                    if viewModel.isLoadingGroups {
+                    if networkMonitor.isConnected && viewModel.isLoadingGroups {
                         Spacer()
                         
                         Text("Загрузка...")

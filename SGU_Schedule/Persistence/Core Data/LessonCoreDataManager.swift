@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct LessonCoreDataManager: PersistenceManager {
+struct LessonsCoreDataManager: PersistenceManager {
     typealias DTOModel = LessonDTO
     typealias ManagedModel = Lesson
     

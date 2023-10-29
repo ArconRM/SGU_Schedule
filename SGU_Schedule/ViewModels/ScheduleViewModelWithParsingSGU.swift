@@ -31,12 +31,14 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     private var lessonsNetworkManager: LessonsNetworkManager
     private var dateNetworkManager: DateNetworkManager
+    private var persistenceManager: any PersistenceManager
     
     init() {
         self.lessonsNetworkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                                       lessonParser: LessonHTMLParserSGU())
         self.dateNetworkManager = DateNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                                 dateParser: DateHTMLParserSGU())
+        self.persistenceManager = LessonsCoreDataManager()
     }
     
     public func fetchUpdateDate(groupNumber: Int) {
@@ -51,13 +53,17 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
     }
     
-    public func fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: Int) {
+    public func fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: Int, isOffline: Bool) {
         lessonsNetworkManager.getLessonsForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
             switch result {
             case .success(let lessons):
-                self.lessonsByDays = lessons
-                
-                self.setCurrentAndTwoNextLessons()
+                if !isOffline {
+//                    if self.updateDate != nil {
+//                        print(self.updateDate)
+//                    }
+                    self.lessonsByDays = lessons
+                    self.setCurrentAndTwoNextLessons()
+                }
             case .failure(let error):
                 print(error.localizedDescription)
             }
@@ -67,6 +73,10 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     private func setCurrentAndTwoNextLessons() {
         let currentDayNumber = Date.currentWeekDay.number
+        if currentDayNumber == 7 {
+            return
+        }
+        
         let currentTime = Date.currentTime
         let todayLessons = lessonsByDays[currentDayNumber - 1]
         

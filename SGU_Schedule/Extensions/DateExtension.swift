@@ -27,6 +27,17 @@ extension Date {
         }
     }
     
+    static var currentWeekDayWithoutSunday: Weekdays {
+        get {
+            let date = Date()
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            let day = dateFormatter.string(from: date)
+            
+            return( Weekdays(rawValue: day) == .Sunday) ? .Monday : (Weekdays(rawValue: day) ?? .Monday)
+        }
+    }
+    
     static var currentTime: Date {
         get {
             let date = Date()

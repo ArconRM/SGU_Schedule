@@ -54,7 +54,7 @@
 		BAFA58092AEC5D8D0060BD81 /* CoreData_LessonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58082AEC5D8D0060BD81 /* CoreData_LessonExtension.swift */; };
 		BAFA580C2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAFA580A2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld */; };
 		BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA580D2AEC621D0060BD81 /* LessonCoreDataManager.swift */; };
-		BAFA58112AECFD0B0060BD81 /* LessonsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58102AECFD0B0060BD81 /* LessonsPersistenceManager.swift */; };
+		BAFA58112AECFD0B0060BD81 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58102AECFD0B0060BD81 /* PersistenceManager.swift */; };
 		BAFA58132AED0EE10060BD81 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58122AED0EE10060BD81 /* CoreDataError.swift */; };
 		BAFA58152AED25DD0060BD81 /* GroupsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58142AED25DD0060BD81 /* GroupsKeys.swift */; };
 		BAFA58172AED3A840060BD81 /* NetworkMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58162AED3A840060BD81 /* NetworkMonitor.swift */; };
@@ -120,7 +120,7 @@
 		BAFA58082AEC5D8D0060BD81 /* CoreData_LessonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_LessonExtension.swift; sourceTree = "<group>"; };
 		BAFA580B2AEC60C30060BD81 /* CoreDataModel.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CoreDataModel.xcdatamodel; sourceTree = "<group>"; };
 		BAFA580D2AEC621D0060BD81 /* LessonCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCoreDataManager.swift; sourceTree = "<group>"; };
-		BAFA58102AECFD0B0060BD81 /* LessonsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonsPersistenceManager.swift; sourceTree = "<group>"; };
+		BAFA58102AECFD0B0060BD81 /* PersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersistenceManager.swift; sourceTree = "<group>"; };
 		BAFA58122AED0EE10060BD81 /* CoreDataError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataError.swift; sourceTree = "<group>"; };
 		BAFA58142AED25DD0060BD81 /* GroupsKeys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsKeys.swift; sourceTree = "<group>"; };
 		BAFA58162AED3A840060BD81 /* NetworkMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkMonitor.swift; sourceTree = "<group>"; };
@@ -377,7 +377,7 @@
 		BAFA580F2AECFCD30060BD81 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				BAFA58102AECFD0B0060BD81 /* LessonsPersistenceManager.swift */,
+				BAFA58102AECFD0B0060BD81 /* PersistenceManager.swift */,
 				BAFA57DF2AEC510E0060BD81 /* Core Data */,
 			);
 			path = Persistence;
@@ -574,7 +574,7 @@
 				BAAEB3122AD9A4BE00E90223 /* GroupNetworkManager.swift in Sources */,
 				BA9D791C2ABE2E4700C36932 /* GroupsSource.swift in Sources */,
 				BAFA580C2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld in Sources */,
-				BAFA58112AECFD0B0060BD81 /* LessonsPersistenceManager.swift in Sources */,
+				BAFA58112AECFD0B0060BD81 /* PersistenceManager.swift in Sources */,
 				BAFA58132AED0EE10060BD81 /* CoreDataError.swift in Sources */,
 				BAFA58072AEC5AFD0060BD81 /* PersistenceController.swift in Sources */,
 				BAFB8C2C2AC766850080834C /* LessonsNetworkManager.swift in Sources */,
