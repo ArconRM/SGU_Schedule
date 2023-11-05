@@ -16,10 +16,8 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
     @Published var isLoadingGroups: Bool = true
     
     var favoriteGroupNumber: Int? {
-        get {
-            let number = UserDefaults.standard.integer(forKey: GroupsKeys.favoriteGroupNumberKey.rawValue)
-            return number != 0 ? number : nil
-        }
+        let number = UserDefaults.standard.integer(forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
+        return number != 0 ? number : nil
     }
     
     @Published var networkManager: GroupNetworkManager
@@ -58,6 +56,7 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
     
     
     public func fetchGroupsWithFavoritesBeingFirst(year: Int, academicProgram: AcademicProgram) {
+        self.isLoadingGroups = true
         
         networkManager.getGroupsByYearAndAcademicProgram(year: year, program: academicProgram, resultQueue: .main) { result in
             switch result {

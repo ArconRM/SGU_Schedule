@@ -8,7 +8,7 @@
 import Foundation
 
 
-public protocol EventDTO: Hashable, Identifiable, Decodable {
+public protocol EventDTO: Hashable, Identifiable {
     
     var id: UUID { get set }
     var title: String { get set }

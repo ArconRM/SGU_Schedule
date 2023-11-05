@@ -12,9 +12,9 @@ enum LessonType: String, Decodable {
     case Practice = "Практика"
     
     init?(rawValue: String) {
-        if rawValue == "лек." {
+        if rawValue == "лек." || rawValue == "Лекция" {
             self = .Lecture
-        } else if rawValue == "пр." {
+        } else if rawValue == "пр." || rawValue == "Практика" {
             self = .Practice
         } else {
             return nil

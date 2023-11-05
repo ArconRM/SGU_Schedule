@@ -13,7 +13,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var favoriteGroupNumber: Int? = nil //0, потому что UD возвращает ноль если объекта нет
+    @State private var favoriteGroupNumber: Int? = nil
     
     @State private var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
     @State private var selectedYear = 1
@@ -57,7 +57,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                     .padding(.vertical, 5)
                             }
                         }
-                        .disabled(!networkMonitor.isConnected)
                         .onChange(of: selectedAcademicProgram) { newValue in
                             viewModel.setSelectedAcademicProgramAndFetchGroups(newValue: newValue)
                         }
@@ -81,33 +80,41 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         }
                     }
                     
-                    if networkMonitor.isConnected && viewModel.isLoadingGroups {
-                        Spacer()
-                        
-                        Text("Загрузка...")
-                            .padding(.top)
-                            .font(.custom("arial", size: 19))
-                            .bold()
-                        
-                        Spacer()
-                    } else if networkMonitor.isConnected {
-                        ScrollView {
-                            ForEach(viewModel.groups, id:\.self) { group in
-                                NavigationLink(
-                                    destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: group, favoriteGroupNumber: $favoriteGroupNumber)
-                                        .environmentObject(networkMonitor)
-                                ) {
-                                    GroupSubview(group: group,
-                                                 isFavorite: favoriteGroupNumber == group.fullNumber)
+                    if networkMonitor.isConnected {
+                        if viewModel.isLoadingGroups {
+                            Spacer()
+                            
+                            Text("Загрузка...")
+                                .padding(.top)
+                                .font(.custom("arial", size: 19))
+                                .bold()
+                            
+                            Spacer()
+                        } else {
+                            ScrollView {
+                                ForEach(viewModel.groups, id:\.self) { group in
+                                    NavigationLink(
+                                        destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
+                                                                  selectedGroup: group,
+                                                                  favoriteGroupNumber: $favoriteGroupNumber)
+                                            .environmentObject(networkMonitor)
+                                    ) {
+                                        GroupSubview(group: group, isFavorite: favoriteGroupNumber == group.fullNumber)
+                                    }
                                 }
                             }
+                            .background(.clear)
+                            .onChange(of: favoriteGroupNumber) { _ in
+                                viewModel.fetchGroupsWithFavoritesBeingFirst(year: selectedYear, academicProgram: selectedAcademicProgram)
+                            }
                         }
-                        .background(.clear)
                     } else if favoriteGroupNumber != nil {
                         Spacer()
                         
                         NavigationLink(
-                            destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: favoriteGroupNumber!), favoriteGroupNumber: $favoriteGroupNumber)
+                            destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
+                                                      selectedGroup: GroupDTO(fullNumber: favoriteGroupNumber!),
+                                                      favoriteGroupNumber: $favoriteGroupNumber)
                                 .environmentObject(networkMonitor)
                         ) {
                             GroupSubview(group: GroupDTO(fullNumber: favoriteGroupNumber!),

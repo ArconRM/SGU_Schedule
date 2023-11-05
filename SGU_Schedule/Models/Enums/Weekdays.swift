@@ -41,4 +41,18 @@ public enum Weekdays: String, CaseIterable {
             return nil
         }
     }
+    
+    public init?(dayNumber: Int) {
+        switch dayNumber {
+        case 1: self = .Monday
+        case 2: self = .Tuesday
+        case 3: self = .Wednesday
+        case 4: self = .Thursday
+        case 5: self = .Friday
+        case 6: self = .Saturday
+        case 7: self = .Sunday
+        default:
+            return nil
+        }
+    }
 }

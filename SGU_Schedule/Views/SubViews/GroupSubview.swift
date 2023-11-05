@@ -19,7 +19,7 @@ struct GroupSubview: View {
                 ZStack {
                     Rectangle()
                         .cornerRadius(10)
-                        .foregroundColor(isFavorite ? .cyan.opacity(0.7) : .cyan.opacity(0.3))
+                        .foregroundColor(isFavorite ? .cyan.opacity(0.6) : .cyan.opacity(0.3))
                         .shadow(color: .cyan.opacity(0.7), radius: 7, x: 2, y: 2)
                         .blur(radius: 1)
                     

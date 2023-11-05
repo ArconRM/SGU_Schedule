@@ -9,6 +9,7 @@ import SwiftUI
 import UIKit
 
 struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
+    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var networkMonitor: NetworkMonitor
     
     @ObservedObject var viewModel: ViewModel
@@ -25,8 +26,11 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .toolbar {
             ToolbarItem {
                 Button(action: {
-                    viewModel.favoriteGroupNumber = selectedGroup.fullNumber
-                    favoriteGroupNumber = viewModel.favoriteGroupNumber
+                    if viewModel.favoriteGroupNumber != selectedGroup.fullNumber {
+                        viewModel.favoriteGroupNumber = selectedGroup.fullNumber
+                        favoriteGroupNumber = viewModel.favoriteGroupNumber
+                        presentationMode.wrappedValue.dismiss()
+                    }
                 }) {
                     Label("Добавить в избранное", systemImage: favoriteGroupNumber == selectedGroup.fullNumber ? "star.fill" : "star")
                 }
@@ -34,10 +38,7 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
         }
         .edgesIgnoringSafeArea(.bottom)
         .onAppear {
-            if networkMonitor.isConnected {
-                viewModel.fetchUpdateDate(groupNumber: selectedGroup.fullNumber)
-                viewModel.fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: selectedGroup.fullNumber, isOffline: !networkMonitor.isConnected)
-            }
+            viewModel.fetchUpdateDateAndLessons(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
         }
     }
 }
@@ -65,23 +66,29 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                      lesson.title)
                     .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
+                    .padding(.horizontal, 5)
                 
                 Text(lesson.lessonType.rawValue)
                     .padding(.top, 2)
                     .padding(.bottom, 10)
                     .font(.system(size: 17, weight: .bold))
+                    .padding(.horizontal, 5)
 
                 Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
                     .bold()
+                    .padding(.horizontal, 5)
+                
             } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
                      timeBreak.timeEnd.getHoursAndMinutesString())
                     .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
+                    .padding(.horizontal, 5)
                 
                 Text(timeBreak.title)
                     .font(.system(size: 20, weight: .bold))
+                    .padding(.horizontal, 5)
                 
             } else {
                 Text("-")
@@ -102,7 +109,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                              nextLesson1.title)
                         .font(.system(size: 17, weight: .semibold))
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 5)
                         
                         Text(nextLesson1.cabinet)
                             .padding()
@@ -121,7 +128,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                              nextLesson2.title)
                         .font(.system(size: 17, weight: .semibold))
                         .multilineTextAlignment(.center)
-                        .padding(.horizontal)
+                        .padding(.horizontal, 5)
                         
                         Text(nextLesson2.cabinet)
                             .padding()
@@ -144,13 +151,12 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @State private var curHeight: CGFloat = UIScreen.screenHeight - 115
     let minHeight: CGFloat = 250
     let maxHeight: CGFloat = UIScreen.screenHeight - 115
-//    let maxHeightWithoutCurrentLessonText: CGFloat = 530
     
     @State var selectedGroup: GroupDTO
     
     @State var showsAlert = false
     @State var selectedDay: Weekdays = Date.currentWeekDayWithoutSunday
-    @State var lessonsBySelectedDay = [[LessonDTO]]()
+    @State var lessonsBySelectedDay = [LessonDTO]()
     
     var body: some View {
         ZStack {
@@ -193,30 +199,27 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .padding(.horizontal)
                 .padding(.bottom)
                 .onChange(of: selectedDay) { newDay in
-                    lessonsBySelectedDay = viewModel.lessonsByDays[newDay.number - 1]
+                    lessonsBySelectedDay = viewModel.lessons.filter { $0.weekDay == selectedDay }
                 }
                 .disabled(viewModel.isLoadingLessons)
                 
                 Spacer()
                 
-                if networkMonitor.isConnected {
-                    if viewModel.isLoadingLessons {
-                        Text("Загрузка...")
-                            .font(.system(size: 19, design: .rounded))
-                            .bold()
-                    } else {
-                        ScrollView {
-                            ForEach(lessonsBySelectedDay, id:\.self) { lessons in
-                                ScheduleSubview(lessons: lessons)
-                                    .padding(.bottom, 5)
-                            }
-                            .padding(.bottom, 20)
+                if viewModel.isLoadingLessons && networkMonitor.isConnected {
+                    Text("Загрузка...")
+                        .font(.system(size: 19, design: .rounded))
+                        .bold()
+                } else if !viewModel.lessons.isEmpty {
+                    ScrollView {
+                        ForEach(1...8, id:\.self) { lessonNumber in
+                            ScheduleSubview(lessons: lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber })
                         }
-                        .onAppear {
-                            lessonsBySelectedDay = viewModel.lessonsByDays[selectedDay.number - 1]
-                        }
+                        .padding(.bottom, 20)
                     }
-                } else {
+                    .onAppear {
+                        lessonsBySelectedDay = viewModel.lessons.filter { $0.weekDay == selectedDay }
+                    }
+                } else if !networkMonitor.isConnected {
                     Text("Нет соединения с интернетом")
                         .padding(.top, -10)
                         .font(.system(size: 19, design: .rounded))

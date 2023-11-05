@@ -8,7 +8,7 @@
 import Foundation
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
-    @Published var lessonsByDays = [[[LessonDTO]]]()
+    @Published var lessons = [LessonDTO]()
     @Published var currentEvent: (any EventDTO)? = nil
     
     @Published var nextLesson1: LessonDTO? = nil
@@ -16,32 +16,124 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     var favoriteGroupNumber: Int? {
         get {
-            let number = UserDefaults.standard.integer(forKey: GroupsKeys.favoriteGroupNumberKey.rawValue)
+            let number = UserDefaults.standard.integer(forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
             return number != 0 ? number : nil
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: GroupsKeys.favoriteGroupNumberKey.rawValue)
+            UserDefaults.standard.setValue(newValue, forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
+            do {
+                try self.schedulePersistenceManager.clearAllItems()
+            }
+            catch(let error) {
+                print(error.localizedDescription)
+            }
         }
     }
     
-    @Published var updateDate = Date()
+    @Published var updateDate = Date.distantFuture
     
     @Published var isLoadingLessons = true
     @Published var isLoadingUpdateDate = true
     
     private var lessonsNetworkManager: LessonsNetworkManager
     private var dateNetworkManager: DateNetworkManager
-    private var persistenceManager: any PersistenceManager
+    private var schedulePersistenceManager: GroupScheduleCoreDataManager
     
     init() {
         self.lessonsNetworkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                                       lessonParser: LessonHTMLParserSGU())
         self.dateNetworkManager = DateNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                                 dateParser: DateHTMLParserSGU())
-        self.persistenceManager = LessonsCoreDataManager()
+        self.schedulePersistenceManager = GroupScheduleCoreDataManager()
     }
     
-    public func fetchUpdateDate(groupNumber: Int) {
+    /// If groupNumber isn't favorite and isOnline true - fetches lessons throught network manager and caches it
+    /// If groupNumber is favorite and todays date equals updateDate (or nothing was previously saved) - fetches lessons throught network manager and saves it to CoreData
+    /// If groupNumber is favorite and schedule was previously saved - fetches lessons from CoreData
+    /// In over cases it does nothing
+    public func fetchUpdateDateAndLessons(groupNumber: Int, isOnline: Bool) {
+        let dispatchGroup = DispatchGroup()
+        
+        if isOnline {
+            dispatchGroup.enter()
+            dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
+                switch result {
+                case .success(let date):
+                    self.updateDate = date
+                case .failure(let error):
+                    print(error.localizedDescription)
+                }
+                dispatchGroup.leave()
+                self.isLoadingUpdateDate = false
+            }
+        }
+        dispatchGroup.notify(queue: .main) {
+            do {
+                let schedule = try self.schedulePersistenceManager.fetchAllItemsDTO().first
+                
+                if self.favoriteGroupNumber == groupNumber {
+                    if isOnline {
+                        if self.updateDate.getDayAndMonthString() == Date().getDayAndMonthString() || schedule == nil {
+                            
+                            self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
+                                switch result {
+                                case .success(let schedule):
+                                    do {
+                                        self.lessons = schedule.lessons
+                                        try self.schedulePersistenceManager.clearAllItems()
+                                        try self.schedulePersistenceManager.saveItem(item: schedule)
+                                        
+                                        self.setCurrentAndTwoNextLessons()
+                                    }
+                                    catch(let error) {
+                                        print(error.localizedDescription)
+                                    }
+                                    
+                                case .failure(let error):
+                                    print(error.localizedDescription)
+                                }
+                                
+                                self.isLoadingLessons = false
+                            }
+                        } else {
+                            DispatchQueue.main.async {
+                                self.lessons = schedule!.lessons
+                                
+                                self.isLoadingLessons = false
+                                self.setCurrentAndTwoNextLessons()
+                            }
+                        }
+                    } else {
+                        DispatchQueue.main.async {
+                            if schedule != nil {
+                                self.lessons = schedule!.lessons
+                                self.setCurrentAndTwoNextLessons()
+                            }
+                            self.isLoadingLessons = false
+                        }
+                    }
+                } else {
+                    self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
+                        switch result {
+                        case .success(let schedule):
+                            self.lessons = schedule.lessons
+                            
+                            self.setCurrentAndTwoNextLessons()
+                        case .failure(let error):
+                            print(error.localizedDescription)
+                        }
+                        
+                        self.isLoadingLessons = false
+                    }
+                }
+            }
+            catch(let error) {
+                print(error.localizedDescription)
+            }
+        }
+    }
+    
+    private func fetchUpdateDate(groupNumber: Int) {
         dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
             switch result {
             case .success(let date):
@@ -53,124 +145,79 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
     }
     
-    public func fetchLessonsAndSetCurrentAndTwoNextLessons(groupNumber: Int, isOffline: Bool) {
-        lessonsNetworkManager.getLessonsForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
-            switch result {
-            case .success(let lessons):
-                if !isOffline {
-//                    if self.updateDate != nil {
-//                        print(self.updateDate)
-//                    }
-                    self.lessonsByDays = lessons
-                    self.setCurrentAndTwoNextLessons()
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
-            self.isLoadingLessons = false
-        }
-    }
-    
     private func setCurrentAndTwoNextLessons() {
+        currentEvent = nil
+        nextLesson1 = nil
+        nextLesson2 = nil
+        
         let currentDayNumber = Date.currentWeekDay.number
         if currentDayNumber == 7 {
             return
         }
         
         let currentTime = Date.currentTime
-        let todayLessons = lessonsByDays[currentDayNumber - 1]
-        
-        if todayLessons.count == 1 && checkIfTimeIsBetweenTwoTimes(dateStart: todayLessons[0][0].timeStart,
-                                                                   dateMiddle: currentTime,
-                                                                   dateEnd: todayLessons[0][0].timeEnd) {
-            currentEvent = todayLessons[0][0]
-            nextLesson1 = nil
-            nextLesson2 = nil
+        let todayLessons = lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
+        if todayLessons.isEmpty {
             return
+        }
+        
+        for lessonNumber in 1...8 {
+            let todayLessonsByNumber = todayLessons.filter { $0.lessonNumber == lessonNumber }
+            if todayLessonsByNumber.isEmpty {
+                continue
+            }
             
-        } else if todayLessons.count > 1 {
-            for i in 0...todayLessons.count-2 {
-                let lessons1 = todayLessons[i].filter { Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) } //следующая пара (возможно пустая)
-                let lessons2 = todayLessons.suffix(from: i+1) //позаследующая, если пустая - значит дальше ничего с текущим типом недели нет
-                    .filter({ lessons in
-                        for lesson in lessons {
-                            if Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) {
-                                return true
-                            }
-                        }
-                        return false
-                    })
-                    .first { $0.count > 0 } ?? []
-                
-                if lessons1.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons1[0].timeStart,
-                                                                      dateMiddle: currentTime,
-                                                                      dateEnd: lessons1[0].timeEnd) {
-                    var newCurrentLesson = lessons1[0]
-                    if lessons1.count > 1 { //значит есть подгруппы и общего кабинета нет
-                        newCurrentLesson.cabinet = ""
-                    }
-                    
-                    currentEvent = newCurrentLesson
-                    setNextTwoLessons(lessons: todayLessons, from: i)
-                    return
-                    
-                } else if lessons1.count > 0 && lessons2.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons1[0].timeEnd,
-                                                                                                   dateMiddle: currentTime,
-                                                                                                   dateEnd: lessons2[0].timeStart) {
-                    currentEvent = TimeBreakDTO(timeStart: lessons1[0].timeEnd, timeEnd: lessons2[0].timeStart)
-                    setNextTwoLessons(lessons: todayLessons, from: i)
-                    return
+            if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeStart,
+                                            dateMiddle: currentTime,
+                                            dateEnd: todayLessonsByNumber[0].timeEnd) {
+                var newCurrentLesson = todayLessonsByNumber[0]
+                if todayLessonsByNumber.count > 1 { //значит есть подгруппы и общего кабинета нет
+                    newCurrentLesson.cabinet = "По подгруппам"
                 }
+                currentEvent = newCurrentLesson
+                setNextTwoLessons(lessons: todayLessons, from: lessonNumber)
+                return
                 
-                // проверка последнего
-                let lessons = todayLessons.last!.filter { Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
-                
-                if lessons.count > 0 && checkIfTimeIsBetweenTwoTimes(dateStart: lessons[0].timeStart,
-                                                                     dateMiddle: currentTime,
-                                                                     dateEnd: lessons[0].timeEnd) {
-                    var newCurrentLesson = lessons[0]
-                    if lessons.count > 1 { //значит есть подгруппы и общего кабинета нет
-                        newCurrentLesson.cabinet = ""
+            } else if lessonNumber != 8 { // смотрим следующую пару, когда находим - выходим
+                for nextLessonNumber in (lessonNumber + 1)...8 {
+                    let todayLessonsByNumberNext = todayLessons.filter { $0.lessonNumber == nextLessonNumber }
+                    if todayLessonsByNumberNext.isEmpty {
+                        continue
                     }
                     
-                    currentEvent = newCurrentLesson
-                    nextLesson1 = nil
-                    nextLesson2 = nil
-                    return
+                    if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeEnd,
+                                                    dateMiddle: currentTime,
+                                                    dateEnd: todayLessonsByNumberNext[0].timeStart) {
+                        currentEvent = TimeBreakDTO(timeStart: todayLessonsByNumber[0].timeEnd, timeEnd: todayLessonsByNumberNext[0].timeStart)
+                        setNextTwoLessons(lessons: todayLessons, from: lessonNumber)
+                    }
+                    
+                    if !todayLessonsByNumberNext.isEmpty {
+                        break
+                    }
                 }
             }
         }
-        
-        currentEvent = nil
-        nextLesson1 = nil
-        nextLesson2 = nil
     }
     
-    private func setNextTwoLessons(lessons: [[LessonDTO]], from index: Int) {
-        let lessonsSlice = lessons[(index+1)...]
-        
-        if lessonsSlice.count >= 1 {
-            let nextLessons1 = lessonsSlice.first!.filter{ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
-            
-            if nextLessons1.count > 0 {
-                var nextLesson1 = nextLessons1[0]
-                if nextLessons1.count > 1 {
-                    nextLesson1.cabinet = ""
+    /// If possible, sets twoNextLessons to two nearest lessons from given array, which have greater lessonNumber than given one
+    private func setNextTwoLessons(lessons: [LessonDTO], from number: Int) {
+        for nextLessonNumber in (number + 1)...8 {
+            let lessonsByNumber = lessons.filter { $0.lessonNumber == nextLessonNumber }
+            if !lessonsByNumber.isEmpty {
+                if nextLesson1 == nil {
+                    var newNextLesson = lessonsByNumber[0]
+                    if lessonsByNumber.count > 1 {
+                        newNextLesson.cabinet = "По подгруппам"
+                    }
+                    nextLesson1 = newNextLesson
+                } else if nextLesson2 == nil {
+                    var newNextLesson = lessonsByNumber[0]
+                    if lessonsByNumber.count > 1 {
+                        newNextLesson.cabinet = "По подгруппам"
+                    }
+                    nextLesson2 = newNextLesson
                 }
-                self.nextLesson1 = nextLesson1
-                self.nextLesson2 = nil
-            }
-            
-        }
-        if lessonsSlice.count > 1 {
-            let nextLessons2 = lessonsSlice.dropFirst().first!.filter{ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
-            
-            if nextLessons2.count > 0 {
-                var nextLesson2 = nextLessons2[0]
-                if nextLessons2.count > 1 {
-                    nextLesson2.cabinet = ""
-                }
-                self.nextLesson2 = nextLesson2
             }
         }
     }
@@ -188,7 +235,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         
         let date1Components = calendar.dateComponents([.hour, .minute], from: date1)
         let date2Components = calendar.dateComponents([.hour, .minute], from: date2)
-
+        
         dateToCompare1 = calendar.date(byAdding: date1Components, to: dateToCompare1) ?? Date.now
         dateToCompare2 = calendar.date(byAdding: date2Components, to: dateToCompare2) ?? Date.now
         

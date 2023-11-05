@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol LessonHTMLParser {
-    func getLessonsByDayNumberFromSource(source html: String, dayNumber: Int) throws -> [[LessonDTO]]
-    func getLessonsOnCurrentWeekFromSource(source html: String) throws -> [[[LessonDTO]]]
+//    func getLessonsByDayNumberFromSource(source html: String, dayNumber: Int) throws -> [[LessonDTO]]
+    func getGroupScheduleFromSource(source html: String, groupNumber: Int) throws -> GroupScheduleDTO
 }

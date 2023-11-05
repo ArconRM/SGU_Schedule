@@ -14,39 +14,46 @@ public struct LessonDTO: EventDTO {
     public var title: String
     var lectorFullName: String
     var lessonType: LessonType
+    var weekDay: Weekdays
     var weekType: WeekType
     var cabinet: String
     var subgroup: String?
+    var lessonNumber: Int
     public var timeStart: Date
     public var timeEnd: Date
     
-    init(Subject: String, LectorFullName: String, TimeStart: String, TimeEnd: String, LessonType: LessonType, WeekType: WeekType, Subgroup: String? = nil, Cabinet: String) {
+    
+    /// TimeStart and TimeEnd must be in "HH:mm" format
+    init(subject: String, lectorFullName: String, lessonType: LessonType, weekDay: Weekdays, weekType: WeekType, cabinet: String, subgroup: String? = nil, lessonNumber: Int, timeStart: String, timeEnd: String ) {
         self.id = UUID()
-        self.title = Subject
-        self.lectorFullName = LectorFullName
-        self.lessonType = LessonType
-        self.weekType = WeekType
-        self.subgroup = Subgroup
-        self.cabinet = Cabinet
+        self.title = subject
+        self.lectorFullName = lectorFullName
+        self.lessonType = lessonType
+        self.weekDay = weekDay
+        self.weekType = weekType
+        self.cabinet = cabinet
+        self.subgroup = subgroup
+        self.lessonNumber = lessonNumber
         
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "HH:mm"
         
-        self.timeStart = dateFormatter.date(from: TimeStart)!
-        self.timeEnd = dateFormatter.date(from: TimeEnd)!
+        self.timeStart = dateFormatter.date(from: timeStart) ?? dateFormatter.date(from: "00:00")!
+        self.timeEnd = dateFormatter.date(from: timeEnd) ?? dateFormatter.date(from: "00:00")!
     }
     
-    init(Subject: String, LectorFullName: String, TimeStart: Date, TimeEnd: Date, LessonType: LessonType, WeekType: WeekType, Subgroup: String? = nil, Cabinet: String) {
+    init(subject: String, lectorFullName: String, lessonType: LessonType, weekDay: Weekdays, weekType: WeekType, cabinet: String, subgroup: String? = nil, lessonNumber: Int, timeStart: Date, timeEnd: Date) {
         self.id = UUID()
-        self.title = Subject
-        self.lectorFullName = LectorFullName
-        self.lessonType = LessonType
-        self.weekType = WeekType
-        self.subgroup = Subgroup
-        self.cabinet = Cabinet
-        
-        self.timeStart = TimeStart
-        self.timeEnd = TimeEnd
+        self.title = subject
+        self.lectorFullName = lectorFullName
+        self.lessonType = lessonType
+        self.weekDay = weekDay
+        self.weekType = weekType
+        self.cabinet = cabinet
+        self.subgroup = subgroup
+        self.lessonNumber = lessonNumber
+        self.timeStart = timeStart
+        self.timeEnd = timeEnd
     }
 }

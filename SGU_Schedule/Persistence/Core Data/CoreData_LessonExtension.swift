@@ -10,7 +10,7 @@ import Foundation
 
 extension Lesson {
     
-    /// Sets Lecture if value is null or incorrect
+    /// Note: sets Lecture if value is null or incorrect
     var lessonType: LessonType {
             get {
                 return LessonType(rawValue: self.lessonTypeRawValue ?? "") ?? .Lecture
@@ -26,6 +26,15 @@ extension Lesson {
         }
         set {
             self.weekTypeRawValue = newValue.rawValue
+        }
+    }
+    
+    var weekDay: Weekdays {
+        get {
+            return Weekdays(dayNumber: Int(self.weekDayNumber)) ?? .Monday
+        }
+        set {
+            self.weekDayNumber = Int16(newValue.number)
         }
     }
 }

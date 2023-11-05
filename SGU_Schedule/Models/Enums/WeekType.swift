@@ -13,9 +13,9 @@ enum WeekType: String, Decodable {
     case Denumerator = "Знам."
     
     init?(rawValue: String) {
-        if rawValue == "чис." {
+        if rawValue == "чис." || rawValue == "Числ." {
             self = .Numerator
-        } else if rawValue == "знам." {
+        } else if rawValue == "знам." || rawValue == "Знам." {
             self = .Denumerator
         } else {
             self = .All

@@ -90,9 +90,45 @@ struct ScheduleSubview_Previews: PreviewProvider {
                 .foregroundColor(.blue.opacity(0.07))
                 .ignoresSafeArea()
             VStack {
-                ScheduleSubview(lessons: [LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Cabinet: "12 корпус ауд.303"), LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Practice, WeekType: .All, Subgroup: "под. 3", Cabinet: "12 корпус ауд.303")])
-                ScheduleSubview(lessons: [LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Denumerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
-                ScheduleSubview(lessons: [LessonDTO(Subject: "Основы Российской государственности", LectorFullName: "Бредихин Д. А.", TimeStart: "08:20", TimeEnd: "09:50", LessonType: LessonType.Lecture, WeekType: .Numerator, Subgroup: "test group", Cabinet: "12 корпус ауд.303")])
+                ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
+                                                    lectorFullName: "Бредихин Д. А.",
+                                                    lessonType: .Lecture,
+                                                    weekDay: .Monday,
+                                                    weekType: .Numerator,
+                                                    cabinet: "12 корпус ауд.303",
+                                                    lessonNumber: 1,
+                                                    timeStart: "08:20",
+                                                    timeEnd: "09:50"),
+                                          
+                                          LessonDTO(subject: "Основы Российской государственности",
+                                                    lectorFullName: "Бредихин Д. А.",
+                                                    lessonType: .Practice,
+                                                    weekDay: .Monday,
+                                                    weekType: .Denumerator,
+                                                    cabinet: "12 корпус ауд.303",
+                                                    lessonNumber: 1,
+                                                    timeStart: "08:20",
+                                                    timeEnd: "09:50")])
+                
+                ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
+                                                    lectorFullName: "Бредихин Д. А.",
+                                                    lessonType: .Lecture,
+                                                    weekDay: .Monday,
+                                                    weekType: .All,
+                                                    cabinet: "12 корпус ауд.303",
+                                                    lessonNumber: 1,
+                                                    timeStart: "08:20",
+                                                    timeEnd: "09:50")])
+                
+                ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
+                                                    lectorFullName: "Бредихин Д. А.",
+                                                    lessonType: .Practice,
+                                                    weekDay: .Monday,
+                                                    weekType: .All,
+                                                    cabinet: "12 корпус ауд.303",
+                                                    lessonNumber: 1,
+                                                    timeStart: "08:20",
+                                                    timeEnd: "09:50")])
             }
         }
     }
