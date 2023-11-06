@@ -17,6 +17,7 @@ public class DateNetworkManagerWithParsing: DateNetworkManager {
         self.dateParser = dateParser
     }
     
+    /// May return htmlParserError or any other
     public func getLastUpdateDate(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<Date, Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         

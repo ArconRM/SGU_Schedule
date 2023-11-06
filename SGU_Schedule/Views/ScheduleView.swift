@@ -40,6 +40,10 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .onAppear {
             viewModel.fetchUpdateDateAndLessons(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
         }
+        .alert(isPresented: $viewModel.isShowingError) {
+            Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
+                  message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
+        }
     }
 }
 
@@ -199,7 +203,9 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .padding(.horizontal)
                 .padding(.bottom)
                 .onChange(of: selectedDay) { newDay in
-                    lessonsBySelectedDay = viewModel.lessons.filter { $0.weekDay == selectedDay }
+                    if viewModel.schedule != nil {
+                        lessonsBySelectedDay = viewModel.schedule!.lessons.filter { $0.weekDay == selectedDay }
+                    }
                 }
                 .disabled(viewModel.isLoadingLessons)
                 
@@ -209,7 +215,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     Text("Загрузка...")
                         .font(.system(size: 19, design: .rounded))
                         .bold()
-                } else if !viewModel.lessons.isEmpty {
+                } else if viewModel.schedule != nil && !viewModel.schedule!.lessons.isEmpty {
                     ScrollView {
                         ForEach(1...8, id:\.self) { lessonNumber in
                             ScheduleSubview(lessons: lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber })
@@ -217,7 +223,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .padding(.bottom, 20)
                     }
                     .onAppear {
-                        lessonsBySelectedDay = viewModel.lessons.filter { $0.weekDay == selectedDay }
+                        lessonsBySelectedDay = viewModel.schedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 } else if !networkMonitor.isConnected {
                     Text("Нет соединения с интернетом")
@@ -257,9 +263,6 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 6, x: 0, y: -5))
         )
-        .alert(isPresented: $showsAlert) {
-            Alert(title: Text("Fuck"))
-        }
     }
     
     

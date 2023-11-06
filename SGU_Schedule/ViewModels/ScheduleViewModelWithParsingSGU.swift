@@ -8,11 +8,24 @@
 import Foundation
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
-    @Published var lessons = [LessonDTO]()
+    
+    private var lessonsNetworkManager: LessonsNetworkManager
+    private var dateNetworkManager: DateNetworkManager
+    private var schedulePersistenceManager: GroupScheduleCoreDataManager
+    
+    @Published var schedule: GroupScheduleDTO?
     @Published var currentEvent: (any EventDTO)? = nil
     
     @Published var nextLesson1: LessonDTO? = nil
     @Published var nextLesson2: LessonDTO? = nil
+    
+    @Published var updateDate = Date.distantFuture
+    
+    @Published var isLoadingLessons = true
+    @Published var isLoadingUpdateDate = true
+    
+    @Published var isShowingError = false
+    @Published var activeError: LocalizedError?
     
     var favoriteGroupNumber: Int? {
         get {
@@ -22,22 +35,21 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         set {
             UserDefaults.standard.setValue(newValue, forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
             do {
-                try self.schedulePersistenceManager.clearAllItems()
+                if schedule != nil {
+                    try saveNewScheduleWithClearingPreviousVersion(schedule: schedule!)
+                }
             }
             catch(let error) {
-                print(error.localizedDescription)
+                self.isShowingError = true
+                
+                if let coreDataError = error as? CoreDataError {
+                    self.activeError = coreDataError
+                } else {
+                    self.activeError = CoreDataError.unexpectedError
+                }
             }
         }
     }
-    
-    @Published var updateDate = Date.distantFuture
-    
-    @Published var isLoadingLessons = true
-    @Published var isLoadingUpdateDate = true
-    
-    private var lessonsNetworkManager: LessonsNetworkManager
-    private var dateNetworkManager: DateNetworkManager
-    private var schedulePersistenceManager: GroupScheduleCoreDataManager
     
     init() {
         self.lessonsNetworkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
@@ -61,7 +73,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 case .success(let date):
                     self.updateDate = date
                 case .failure(let error):
-                    print(error.localizedDescription)
+                    self.showNetworkError(error: error)
                 }
                 dispatchGroup.leave()
                 self.isLoadingUpdateDate = false
@@ -79,57 +91,75 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                                 switch result {
                                 case .success(let schedule):
                                     do {
-                                        self.lessons = schedule.lessons
-                                        try self.schedulePersistenceManager.clearAllItems()
-                                        try self.schedulePersistenceManager.saveItem(item: schedule)
-                                        
+                                        self.schedule = schedule
+                                        try self.saveNewScheduleWithClearingPreviousVersion(schedule: schedule)
                                         self.setCurrentAndTwoNextLessons()
                                     }
-                                    catch(let error) {
-                                        print(error.localizedDescription)
+                                    catch (let error) {
+                                        self.showCoreDataError(error: error)
                                     }
                                     
                                 case .failure(let error):
-                                    print(error.localizedDescription)
+                                    self.showNetworkError(error: error)
                                 }
                                 
                                 self.isLoadingLessons = false
                             }
                         } else {
-                            DispatchQueue.main.async {
-                                self.lessons = schedule!.lessons
+//                            DispatchQueue.main.async {
+                                self.schedule = schedule
+                                self.setCurrentAndTwoNextLessons()
                                 
                                 self.isLoadingLessons = false
-                                self.setCurrentAndTwoNextLessons()
-                            }
+//                            }
                         }
                     } else {
-                        DispatchQueue.main.async {
+//                        DispatchQueue.main.async {
                             if schedule != nil {
-                                self.lessons = schedule!.lessons
+                                self.schedule = schedule
                                 self.setCurrentAndTwoNextLessons()
                             }
                             self.isLoadingLessons = false
-                        }
+//                        }
                     }
                 } else {
                     self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
                         switch result {
                         case .success(let schedule):
-                            self.lessons = schedule.lessons
-                            
+                            self.schedule = schedule
                             self.setCurrentAndTwoNextLessons()
+                            
                         case .failure(let error):
-                            print(error.localizedDescription)
+                            self.showNetworkError(error: error)
                         }
                         
                         self.isLoadingLessons = false
                     }
                 }
             }
-            catch(let error) {
-                print(error.localizedDescription)
+            catch (let error) {
+                self.showCoreDataError(error: error)
             }
+        }
+    }
+    
+    private func showNetworkError(error: Error) {
+        self.isShowingError = true
+        
+        if let networkError = error as? NetworkError {
+            self.activeError = networkError
+        } else {
+            self.activeError = NetworkError.unexpectedError
+        }
+    }
+    
+    private func showCoreDataError(error: Error) {
+        self.isShowingError = true
+        
+        if let coreDataError = error as? CoreDataError {
+            self.activeError = coreDataError
+        } else {
+            self.activeError = CoreDataError.unexpectedError
         }
     }
     
@@ -139,10 +169,16 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             case .success(let date):
                 self.updateDate = date
             case .failure(let error):
-                print(error.localizedDescription)
+                self.showNetworkError(error: error)
             }
             self.isLoadingUpdateDate = false
         }
+    }
+    
+    /// May throw failedToClear or failedToSave errors
+    private func saveNewScheduleWithClearingPreviousVersion(schedule: GroupScheduleDTO) throws {
+        try self.schedulePersistenceManager.clearAllItems()
+        try self.schedulePersistenceManager.saveItem(item: schedule)
     }
     
     private func setCurrentAndTwoNextLessons() {
@@ -150,13 +186,17 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         nextLesson1 = nil
         nextLesson2 = nil
         
+        if schedule == nil {
+            return
+        }
+        
         let currentDayNumber = Date.currentWeekDay.number
         if currentDayNumber == 7 {
             return
         }
         
         let currentTime = Date.currentTime
-        let todayLessons = lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
+        let todayLessons = schedule!.lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
         if todayLessons.isEmpty {
             return
         }
