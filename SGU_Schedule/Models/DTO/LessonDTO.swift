@@ -9,7 +9,7 @@ import Foundation
 
 public struct LessonDTO: EventDTO {
     
-    public var id: UUID
+//    public var id: UUID
     /// subject
     public var title: String
     var lectorFullName: String
@@ -25,7 +25,7 @@ public struct LessonDTO: EventDTO {
     
     /// TimeStart and TimeEnd must be in "HH:mm" format
     init(subject: String, lectorFullName: String, lessonType: LessonType, weekDay: Weekdays, weekType: WeekType, cabinet: String, subgroup: String? = nil, lessonNumber: Int, timeStart: String, timeEnd: String ) {
-        self.id = UUID()
+//        self.id = UUID()
         self.title = subject
         self.lectorFullName = lectorFullName
         self.lessonType = lessonType
@@ -44,7 +44,7 @@ public struct LessonDTO: EventDTO {
     }
     
     init(subject: String, lectorFullName: String, lessonType: LessonType, weekDay: Weekdays, weekType: WeekType, cabinet: String, subgroup: String? = nil, lessonNumber: Int, timeStart: Date, timeEnd: Date) {
-        self.id = UUID()
+//        self.id = UUID()
         self.title = subject
         self.lectorFullName = lectorFullName
         self.lessonType = lessonType

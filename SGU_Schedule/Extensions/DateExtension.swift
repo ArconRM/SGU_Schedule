@@ -27,6 +27,27 @@ extension Date {
         }
     }
     
+    /// If current hour is more than or equals 22, returns next day
+    static var currentWeekDayWithEveningBeingNextDay: Weekdays {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            
+            var currentDate = Date()
+            let currentTime = Date.currentTime
+            var dateComponent = DateComponents()
+            dateComponent.day = 1
+            
+            if currentTime.getHours() >= 22 {
+                currentDate = Calendar.current.date(byAdding: dateComponent, to: currentDate) ?? Date()
+            }
+            
+            let day = dateFormatter.string(from: currentDate)
+            
+            return Weekdays(rawValue: day) ?? .Monday
+        }
+    }
+    
     static var currentWeekDayWithoutSunday: Weekdays {
         get {
             let date = Date()
@@ -34,7 +55,25 @@ extension Date {
             dateFormatter.dateFormat = "EEEE"
             let day = dateFormatter.string(from: date)
             
-            return( Weekdays(rawValue: day) == .Sunday) ? .Monday : (Weekdays(rawValue: day) ?? .Monday)
+            return(Weekdays(rawValue: day) == .Sunday) ? .Monday : (Weekdays(rawValue: day) ?? .Monday)
+        }
+    }
+    
+    /// If current hour is more than or equals 22, returns next day
+    static var currentWeekDayWithoutSundayAndWithEveningBeingNextDay: Weekdays {
+        get {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "EEEE"
+            let currentTime = Date.currentTime
+            
+            var date = Date()
+            if currentTime.getHours() >= 22 {
+                date.addTimeInterval(10800)
+            }
+            
+            let day = dateFormatter.string(from: date)
+            
+            return (Weekdays(rawValue: day) == .Sunday) ? .Monday : (Weekdays(rawValue: day) ?? .Monday)
         }
     }
     
@@ -67,6 +106,13 @@ extension Date {
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "dd.MM"
         return dateFormatter.string(from: self)
+    }
+    
+    func getHours() -> Int {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "HH"
+        return Int(dateFormatter.string(from: self)) ?? 0
     }
     
 //    static func getCurrentWeekType() -> WeekType {

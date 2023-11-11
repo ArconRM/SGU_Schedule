@@ -14,7 +14,7 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
     func saveItem(item: LessonDTO) throws -> Lesson {
         do {
             let newLesson = Lesson(context: viewContext)
-            newLesson.id = UUID()
+//            newLesson.id = UUID()
             newLesson.title = item.title
             newLesson.lectorFullName = item.lectorFullName
             newLesson.timeStart = item.timeStart

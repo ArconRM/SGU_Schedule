@@ -47,6 +47,8 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     }
 }
 
+
+
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     
     @State var selectedGroup: GroupDTO
@@ -56,7 +58,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     var body : some View {
         VStack {
             Text(selectedGroup.shortName)
-                .font(.custom("arial", size: 33))
+                .font(.custom("arial", size: 30))
                 .bold()
                 .padding(.top, -20)
             
@@ -146,21 +148,21 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     }
 }
 
+
+
 struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = UIScreen.screenHeight - 115
-    let minHeight: CGFloat = 250
-    let maxHeight: CGFloat = UIScreen.screenHeight - 115
+    @State private var curHeight: CGFloat = UIScreen.screenHeight - 120
+    private let minHeight: CGFloat = 250
+    private let maxHeight: CGFloat = UIScreen.screenHeight - 120
     
+    @State private var lessonsBySelectedDay = [LessonDTO]()
+    @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
     @State var selectedGroup: GroupDTO
-    
-    @State var showsAlert = false
-    @State var selectedDay: Weekdays = Date.currentWeekDayWithoutSunday
-    @State var lessonsBySelectedDay = [LessonDTO]()
     
     var body: some View {
         ZStack {
@@ -174,6 +176,18 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .frame(maxWidth: .infinity)
                 .background (Color.white.opacity (0.00001))
                 .gesture(dragGesture)
+                .onChange(of: viewModel.schedule?.lessons) { newLessons in
+                    if viewModel.currentEvent != nil {
+                        withAnimation(.easeInOut(duration: 0.5)) {
+                            curHeight = minHeight
+                        }
+                    }
+                }
+//                .onChange(of: viewModel.isLoadingLessons) { newValue in
+//                    if newValue {
+//                        viewModel.fetchUpdateDateAndLessons(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
+//                    }
+//                }
                 
                 if networkMonitor.isConnected {
                     if viewModel.isLoadingUpdateDate {
@@ -218,7 +232,10 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else if viewModel.schedule != nil && !viewModel.schedule!.lessons.isEmpty {
                     ScrollView {
                         ForEach(1...8, id:\.self) { lessonNumber in
-                            ScheduleSubview(lessons: lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber })
+                            let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
+                            if !lessonsByNumber.isEmpty {
+                                ScheduleSubview(lessons: lessonsByNumber)
+                            }
                         }
                         .padding(.bottom, 20)
                     }

@@ -75,10 +75,11 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 case .failure(let error):
                     self.showNetworkError(error: error)
                 }
-                dispatchGroup.leave()
                 self.isLoadingUpdateDate = false
+                dispatchGroup.leave()
             }
         }
+        
         dispatchGroup.notify(queue: .main) {
             do {
                 let schedule = try self.schedulePersistenceManager.fetchAllItemsDTO().first
@@ -106,21 +107,36 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                                 self.isLoadingLessons = false
                             }
                         } else {
-//                            DispatchQueue.main.async {
-                                self.schedule = schedule
-                                self.setCurrentAndTwoNextLessons()
-                                
-                                self.isLoadingLessons = false
-//                            }
+                            self.schedule = schedule
+                            self.setCurrentAndTwoNextLessons()
+                            
+                            self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
+                                switch result {
+                                case .success(let networkSchedule):
+                                    do {
+                                        if networkSchedule.lessons != schedule!.lessons { // если дату обновления не изменят
+                                            self.schedule = networkSchedule
+                                            try self.saveNewScheduleWithClearingPreviousVersion(schedule: networkSchedule)
+                                            self.setCurrentAndTwoNextLessons()
+                                        }
+                                    }
+                                    catch (let error) {
+                                        self.showCoreDataError(error: error)
+                                    }
+                                    
+                                case .failure(let error):
+                                    self.showNetworkError(error: error)
+                                }
+                            }
+                            
+                            self.isLoadingLessons = false
                         }
                     } else {
-//                        DispatchQueue.main.async {
-                            if schedule != nil {
-                                self.schedule = schedule
-                                self.setCurrentAndTwoNextLessons()
-                            }
-                            self.isLoadingLessons = false
-//                        }
+                        if schedule != nil {
+                            self.schedule = schedule
+                            self.setCurrentAndTwoNextLessons()
+                        }
+                        self.isLoadingLessons = false
                     }
                 } else {
                     self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
@@ -190,12 +206,13 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             return
         }
         
-        let currentDayNumber = Date.currentWeekDay.number
+        var currentDayNumber = Date.currentWeekDayWithEveningBeingNextDay.number
+        let currentTime = Date.currentTime
+        
         if currentDayNumber == 7 {
             return
         }
         
-        let currentTime = Date.currentTime
         let todayLessons = schedule!.lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
         if todayLessons.isEmpty {
             return

@@ -6,7 +6,6 @@
     </entity>
     <entity name="Lesson" representedClassName=".Lesson" syncable="YES" codeGenerationType="class">
         <attribute name="cabinet" optional="YES" attributeType="String"/>
-        <attribute name="id" optional="YES" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="lectorFullName" optional="YES" attributeType="String"/>
         <attribute name="lessonNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="lessonTypeRawValue" optional="YES" attributeType="String"/>
