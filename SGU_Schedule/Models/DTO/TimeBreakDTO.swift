@@ -19,4 +19,15 @@ public struct TimeBreakDTO: EventDTO {
         self.timeStart = timeStart
         self.timeEnd = timeEnd
     }
+    
+    init(timeStart: String, timeEnd: String) {
+//        self.id = UUID()
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "HH:mm"
+        
+        self.timeStart = dateFormatter.date(from: timeStart) ?? dateFormatter.date(from: "00:00")!
+        self.timeEnd = dateFormatter.date(from: timeEnd) ?? dateFormatter.date(from: "00:00")!
+    }
 }

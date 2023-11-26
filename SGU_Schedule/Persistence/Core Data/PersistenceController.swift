@@ -1,5 +1,5 @@
 //
-//  Persistence.swift
+//  PersistenceController.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 28.10.2023.

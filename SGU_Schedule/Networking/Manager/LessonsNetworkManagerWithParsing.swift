@@ -40,28 +40,6 @@ public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
         }.resume()
     }
     
-//    public func getLessonsForDay(group: GroupDTO, day: Weekdays, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[[LessonDTO]], Error>) -> Void) {
-//        let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
-//        
-//        URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
-//            guard error == nil else {
-//                resultQueue.async { completionHandler(.failure(error!)) }
-//                return
-//            }
-//            do {
-//                let html = try String(contentsOf: groupURL, encoding: .utf8)
-//                let lessons = try self.lessonParser.getLessonsByDayNumberFromSource(source: html, dayNumber: day.number)
-//                
-//                resultQueue.async {
-//                    completionHandler(.success(lessons))
-//                }
-//            }
-//            catch {
-//                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-//            }
-//        }.resume()
-//    }
-    
     public func getGroupScheduleForCurrentWeek(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         

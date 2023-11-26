@@ -25,16 +25,15 @@ struct GroupSubview: View {
                     
                     Text(String(group.fullNumber))
                         .foregroundColor(colorScheme == .light ? .black : .white)
-                        .font(.custom("arial", size: 20))
+                        .font(.system(size: 20))
                         .bold()
                 }
-                .frame(maxWidth: 90, maxHeight: 120)
+                .frame(maxWidth: 90)
                 
                 Text(group.fullName)
                     .foregroundColor(colorScheme == .light ? .black : .white)
-                    .font(.custom("arial", size: 18))
+                    .font(.system(size: 18, weight: .bold))
                     .multilineTextAlignment(.leading)
-                    .bold()
                     .padding(.vertical, 20)
                 
                 Spacer()

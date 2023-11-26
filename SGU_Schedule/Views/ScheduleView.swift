@@ -58,8 +58,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     var body : some View {
         VStack {
             Text(selectedGroup.shortName)
-                .font(.custom("arial", size: 30))
-                .bold()
+                .font(.system(size: 30, weight: .bold))
                 .padding(.top, -20)
             
             Text("Сейчас:")
@@ -82,7 +81,6 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 
                 Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
-                    .bold()
                     .padding(.horizontal, 5)
                 
             } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
@@ -162,7 +160,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     
     @State private var lessonsBySelectedDay = [LessonDTO]()
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
-    @State var selectedGroup: GroupDTO
+    @State var selectedGroup: GroupDTO  
     
     var body: some View {
         ZStack {
@@ -193,19 +191,16 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     if viewModel.isLoadingUpdateDate {
                         Text("Загрузка...")
                             .padding(.top, -10)
-                            .font(.system(size: 19, design: .rounded))
-                            .bold()
+                            .font(.system(size: 19, weight: .bold, design: .rounded))
                     } else {
                         Text("Обновлено: " + viewModel.updateDate.getDayAndMonthString())
                             .padding(.top, -10)
-                            .font(.system(size: 19, design: .rounded))
-                            .bold()
+                            .font(.system(size: 19, weight: .bold, design: .rounded))
                     }
                 } else {
                     Text("Нет соединения с интернетом")
                         .padding(.top, -10)
-                        .font(.system(size: 19, design: .rounded))
-                        .bold()
+                        .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
                 
                 Picker("", selection: $selectedDay) {
@@ -245,8 +240,7 @@ struct ScheduleModuleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else if !networkMonitor.isConnected {
                     Text("Нет соединения с интернетом")
                         .padding(.top, -10)
-                        .font(.system(size: 19, design: .rounded))
-                        .bold()
+                        .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
                 
                 Spacer()

@@ -46,7 +46,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 ForEach(AcademicProgram.allCases, id:\.self) { program in
                                     Text(program.rawValue)
                                         .tag(program)
-                                        .bold()
+                                        .font(.system(size: 15, weight: .bold))
                                 }
                             } label: {}
                         } label: {
@@ -86,8 +86,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             
                             Text("Загрузка...")
                                 .padding(.top)
-                                .font(.custom("arial", size: 19))
-                                .bold()
+                                .font(.system(size: 19, weight: .bold))
                             
                             Spacer()
                         } else {
@@ -127,8 +126,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         
                         Text("Нет соединения с интернетом")
                             .padding(.top)
-                            .font(.system(size: 19, design: .rounded))
-                            .bold()
+                            .font(.system(size: 19, weight: .bold, design: .rounded))
                         
                         Spacer()
                     }

@@ -14,9 +14,9 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "93AC747EDE1EE56F89BBF405C1D67027"
-               BuildableName = "Kanna.framework"
-               BlueprintName = "Kanna"
+               BlueprintIdentifier = "DA906CFFD7A1C358B666F54462747C4A"
+               BuildableName = "Pods_Watch_SGU_Schedule_Watch_App.framework"
+               BlueprintName = "Pods-Watch_SGU_Schedule Watch App"
                ReferencedContainer = "container:Pods.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>

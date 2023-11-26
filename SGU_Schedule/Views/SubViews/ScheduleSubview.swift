@@ -13,49 +13,48 @@ struct ScheduleSubview: View {
     let lessons: [LessonDTO]
     
     var body: some View {
-        LazyVStack {
+        VStack {
             ForEach(lessons, id:\.self) { lesson in
                 VStack {
                     HStack {
                         Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
-                            .font(.custom("arial", size: 17))
+                            .font(.system(size: 17))
                             .bold()
                         
                         if lesson.weekType != .All {
                             Text("(\(lesson.weekType.rawValue))")
-                                .font(.custom("arial", size: 17))
+                                .font(.system(size: 17))
                                 .bold()
                         }
                         
                         Spacer()
                         
                         Text(lesson.lessonType.rawValue)
-                            .font(.custom("arial", size: 17))
+                            .font(.system(size: 17))
                             .bold()
                             .opacity(0.7)
                     }
                     
                     Text(lesson.title)
                         .multilineTextAlignment(.center)
-                        .font(.custom("arial", size: 17))
-                        .bold()
+                        .font(.system(size: 17, weight: .bold))
                         .padding(.vertical, 19)
                     
                     HStack {
                         if lesson.subgroup != nil {
                             Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
-                                .font(.custom("arial", size: 17))
+                                .font(.system(size: 17))
                                 .italic()
                         } else {
                             Text(lesson.lectorFullName)
-                                .font(.custom("arial", size: 17))
+                                .font(.system(size: 17))
                                 .italic()
                         }
                         
                         Spacer()
                         
                         Text("\(lesson.cabinet)")
-                            .font(.custom("arial", size: 17))
+                            .font(.system(size: 17))
                             .bold()
                     }
                 }
@@ -66,18 +65,17 @@ struct ScheduleSubview: View {
                             (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
                             : .gray.opacity(0.1)
                 )
-//                .cornerRadius(20)
             }
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
+        .cornerRadius(10)
         .padding(.horizontal, 13)
         .shadow(color: colorScheme == .light ?
                     .gray.opacity(0.3) :
                     .white.opacity(0.2),
-                 radius: 5,
+                 radius: 3,
                  x: 0,
                  y: 0)
-        .cornerRadius(20)
     }
     
     

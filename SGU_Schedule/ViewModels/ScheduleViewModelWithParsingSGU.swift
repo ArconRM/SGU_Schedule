@@ -206,7 +206,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             return
         }
         
-        var currentDayNumber = Date.currentWeekDayWithEveningBeingNextDay.number
+        let currentDayNumber = Date.currentWeekDayWithEveningBeingNextDay.number
         let currentTime = Date.currentTime
         
         if currentDayNumber == 7 {
