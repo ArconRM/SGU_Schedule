@@ -40,6 +40,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 }
                 
                 VStack {
+                    // Пикеры с программой обучения и курсом
                     if networkMonitor.isConnected {
                         Menu {
                             Picker(selection: $selectedAcademicProgram) {
@@ -80,48 +81,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         }
                     }
                     
-                    if networkMonitor.isConnected {
-                        if viewModel.isLoadingGroups {
-                            Spacer()
-                            
-                            Text("Загрузка...")
-                                .padding(.top)
-                                .font(.system(size: 19, weight: .bold))
-                            
-                            Spacer()
-                        } else {
-                            ScrollView {
-                                ForEach(viewModel.groups, id:\.self) { group in
-                                    NavigationLink(
-                                        destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
-                                                                  selectedGroup: group,
-                                                                  favoriteGroupNumber: $favoriteGroupNumber)
-                                            .environmentObject(networkMonitor)
-                                    ) {
-                                        GroupSubview(group: group, isFavorite: favoriteGroupNumber == group.fullNumber)
-                                    }
-                                }
-                            }
-                            .background(.clear)
-                            .onChange(of: favoriteGroupNumber) { _ in
-                                viewModel.fetchGroupsWithFavoritesBeingFirst(year: selectedYear, academicProgram: selectedAcademicProgram)
-                            }
-                        }
-                    } else if favoriteGroupNumber != nil {
-                        Spacer()
-                        
-                        NavigationLink(
-                            destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
-                                                      selectedGroup: GroupDTO(fullNumber: favoriteGroupNumber!),
-                                                      favoriteGroupNumber: $favoriteGroupNumber)
-                                .environmentObject(networkMonitor)
-                        ) {
-                            GroupSubview(group: GroupDTO(fullNumber: favoriteGroupNumber!),
-                                         isFavorite: true)
-                        }
-                        
-                        Spacer()
-                    } else {
+                    // Если в оффлайне
+                    if !networkMonitor.isConnected {
                         Spacer()
                         
                         Text("Нет соединения с интернетом")
@@ -130,6 +91,49 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         
                         Spacer()
                     }
+                    
+                    ScrollView {
+                        // Сохраненная группа
+                        if favoriteGroupNumber != nil {
+                            NavigationLink(
+                                destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(),
+                                                          favoriteGroupNumber: $favoriteGroupNumber,
+                                                          selectedGroup: GroupDTO(fullNumber: favoriteGroupNumber!))
+                                .environmentObject(networkMonitor)
+                            ) {
+                                GroupSubview(group: GroupDTO(fullNumber: favoriteGroupNumber!),
+                                             isFavorite: true)
+                            }
+                        }
+                        
+                        // Список групп
+                        if networkMonitor.isConnected {
+                            if viewModel.isLoadingGroups {
+                                Spacer()
+                                
+                                Text("Загрузка...")
+                                    .padding(.top)
+                                    .font(.system(size: 19, weight: .bold))
+                                
+                                Spacer()
+                            } else {                                ForEach(viewModel.groupsWithoutFavorite, id:\.self) { group in
+                                NavigationLink(
+                                    destination: ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
+                                                              favoriteGroupNumber: $favoriteGroupNumber, 
+                                                              selectedGroup: group)
+                                    .environmentObject(networkMonitor)
+                                ) {
+                                    GroupSubview(group: group, 
+                                                 isFavorite: false)
+                                }
+                            }
+                            .background(.clear)
+                            .onChange(of: favoriteGroupNumber) { _ in
+                                viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
+                            }
+                            }
+                        }
+                    }
                 }
             }
         }
@@ -137,8 +141,12 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         .onAppear {
             selectedYear = viewModel.getSelectedYear()
             selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
-            viewModel.fetchGroupsWithFavoritesBeingFirst(year: selectedYear, academicProgram: selectedAcademicProgram)
+            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
             favoriteGroupNumber = viewModel.favoriteGroupNumber
+        }
+        .alert(isPresented: $viewModel.isShowingError) {
+            Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
+                  message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
     }
 }

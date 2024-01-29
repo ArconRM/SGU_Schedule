@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LessonsNetworkManager : NetworkManager {
+public protocol LessonsNetworkManager {
 //    func getLessonsForDay(group: GroupDTO,
 //                           day: Weekdays,
 //                           resultQueue: DispatchQueue,
@@ -15,6 +15,6 @@ public protocol LessonsNetworkManager : NetworkManager {
     
     /// May throw htmlParserError or any other
     func getGroupScheduleForCurrentWeek(group: GroupDTO,
-                                   resultQueue: DispatchQueue,
-                                   completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void)
+                                        resultQueue: DispatchQueue,
+                                        completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void)
 }

@@ -58,7 +58,7 @@ struct GroupSubview_Previews: PreviewProvider {
             Rectangle()
                 .foregroundColor(.blue.opacity(0.1))
                 .ignoresSafeArea()
-            VStack {
+            ScrollView {
                 GroupSubview(group: GroupDTO(fullNumber: 141), isFavorite: true)
                 GroupSubview(group: GroupDTO(fullNumber: 131), isFavorite: false)
             }

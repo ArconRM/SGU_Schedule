@@ -10,7 +10,7 @@ import Foundation
 
 public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
     
-    public var urlSource: URLSource
+    private var urlSource: URLSource
     private var lessonParser: LessonHTMLParser
     
     public init(urlSource: URLSource, lessonParser: LessonHTMLParser) {

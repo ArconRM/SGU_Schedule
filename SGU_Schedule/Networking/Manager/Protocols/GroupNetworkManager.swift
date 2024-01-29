@@ -7,10 +7,11 @@
 
 import Foundation
 
-public protocol GroupNetworkManager: NetworkManager {
+public protocol GroupNetworkManager {
 //    func getAllGroups(resultQueue: DispatchQueue,
 //                      completionHandler: @escaping (Result<[Group], Error>) -> Void)
     
+    ///May throw htmlParserError or any other
     func getGroupsByYearAndAcademicProgram(year: Int,
                                            program: AcademicProgram,
                                            resultQueue: DispatchQueue,

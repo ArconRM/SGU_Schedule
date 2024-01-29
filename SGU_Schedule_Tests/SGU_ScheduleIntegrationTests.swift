@@ -26,13 +26,13 @@ final class SGU_ScheduleIntegrationTests: XCTestCase {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "dd'.'MM'.'yyyy'"
-        let correctDate = dateFormatter.date(from: "22.09.2023")! //ToDo: может быть заmockать нормально
+        let correctDate = dateFormatter.date(from: "15.01.2024")! //ToDo: может быть заmockать нормально
         
         var dateToCheck = Date.distantFuture
         
         let networkManager: DateNetworkManager
         networkManager = DateNetworkManagerWithParsing(urlSource: URLSourceSGU(), dateParser: DateHTMLParserSGU())
-        networkManager.getLastUpdateDate(group: Group(fullNumber: 141), resultQueue: .main) { result in
+        networkManager.getLastUpdateDate(group: GroupDTO(fullNumber: 141), resultQueue: .main) { result in
             switch result {
             case .success(let date):
                 dateToCheck = date

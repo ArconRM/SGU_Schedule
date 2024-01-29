@@ -59,7 +59,7 @@ struct ScheduleSubview: View {
                     }
                 }
                 .foregroundColor(colorScheme == .light ? .black : .white)
-                .padding(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 15 : 10)
+                .padding(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 10 : 15)
                 .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
                 .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
                             (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))

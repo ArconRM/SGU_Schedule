@@ -8,17 +8,20 @@
 import Foundation
 
 public protocol GroupsViewModel: ObservableObject {
-    var groups: [GroupDTO] { get set }
-    
+    var groupsWithoutFavorite: [GroupDTO] { get set }
     var favoriteGroupNumber: Int? { get }
     
     var isLoadingGroups: Bool { get set }
+    var isLoadingFavoriteGroup: Bool { get set }
+    
+    var isShowingError: Bool { get set }
+    var activeError: LocalizedError? { get set }
     
     func getSelectedAcademicProgram() -> AcademicProgram
-    func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram)
-    
     func getSelectedYear() -> Int
+    
+    func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram)
     func setSelectedYearAndFetchGroups(newValue: Int)
     
-    func fetchGroupsWithFavoritesBeingFirst(year: Int, academicProgram: AcademicProgram)
+    func fetchGroupsWithoutFavorite(year: Int, academicProgram: AcademicProgram)
 }

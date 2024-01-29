@@ -8,8 +8,8 @@
 import Foundation
 
 public class GroupNetworkManagerWithParsing: GroupNetworkManager {
-    public var urlSource: URLSource
     
+    private var urlSource: URLSource
     private var groupsParser: GroupsHTMLParser
     
     init(urlSource: URLSource, groupsParser: GroupsHTMLParser) {

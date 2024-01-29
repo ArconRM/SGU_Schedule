@@ -1,24 +1,24 @@
 //
-//  DateNetworkManagerWithParsing.swift
+//  SessionEventsNetworkManagerWithParsing.swift
 //  SGU_Schedule
 //
-//  Created by Артемий on 13.10.2023.
+//  Created by Артемий on 28.01.2024.
 //
 
 import Foundation
 
-public class DateNetworkManagerWithParsing: DateNetworkManager {
+public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
     
     private var urlSource: URLSource
-    private var dateParser: DateHTMLParser
+    private var sessionEventsParser: SessionEventsParser
     
-    init(urlSource: URLSource, dateParser: DateHTMLParser) {
+    public init(urlSource: URLSource, sessionEventsParser: SessionEventsParser) {
         self.urlSource = urlSource
-        self.dateParser = dateParser
+        self.sessionEventsParser = sessionEventsParser
     }
     
-    /// May return htmlParserError or any other
-    public func getLastUpdateDate(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<Date, Error>) -> Void) {
+    
+    public func getGroupSessionEvents(group: GroupDTO, resultQueue: DispatchQueue, completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         
         URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
@@ -29,10 +29,10 @@ public class DateNetworkManagerWithParsing: DateNetworkManager {
             
             do {
                 let html = try String(contentsOf: groupURL, encoding: .utf8)
-                let updateDate = try self.dateParser.getLastUpdateDateFromSource(source: html)
+                let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(source: html, groupNumber: group.fullNumber)
                 
                 resultQueue.async {
-                    completionHandler(.success(updateDate))
+                    completionHandler(.success(lessons))
                 }
             }
             catch {
@@ -40,5 +40,4 @@ public class DateNetworkManagerWithParsing: DateNetworkManager {
             }
         }.resume()
     }
-    
 }

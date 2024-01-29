@@ -8,12 +8,16 @@
 import Foundation
 
 final class GroupsViewModelWithParsingSGU: GroupsViewModel {
-    
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
-    @Published var groups = [GroupDTO]()
+    @Published var groupsWithoutFavorite = [GroupDTO]()
+    
     @Published var isLoadingGroups: Bool = true
+    @Published var isLoadingFavoriteGroup: Bool = true
+    
+    @Published var isShowingError = false
+    @Published var activeError: LocalizedError?
     
     var favoriteGroupNumber: Int? {
         let number = UserDefaults.standard.integer(forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
@@ -35,12 +39,6 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
         return AcademicProgram(rawValue: UserDefaults.standard.string(forKey: selectedAcademicProgramKey) ?? "Error") ?? .BachelorAndSpeciality
     }
     
-    public func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram) {
-        UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
-        fetchGroupsWithFavoritesBeingFirst(year: getSelectedYear(), academicProgram: newValue)
-    }
-    
-    
     public func getSelectedYear() -> Int {
         if UserDefaults.standard.value(forKey: selectedYearKey) == nil {
             UserDefaults.standard.set(1, forKey: selectedYearKey)
@@ -49,28 +47,42 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
         return UserDefaults.standard.integer(forKey: selectedYearKey)
     }
     
-    public func setSelectedYearAndFetchGroups(newValue: Int) {
-        UserDefaults.standard.set(newValue, forKey: selectedYearKey)
-        fetchGroupsWithFavoritesBeingFirst(year: newValue, academicProgram: getSelectedAcademicProgram())
+    public func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram) {
+        UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
+        fetchGroupsWithoutFavorite(year: getSelectedYear(), academicProgram: newValue)
     }
     
+    public func setSelectedYearAndFetchGroups(newValue: Int) {
+        UserDefaults.standard.set(newValue, forKey: selectedYearKey)
+        fetchGroupsWithoutFavorite(year: newValue, academicProgram: getSelectedAcademicProgram())
+    }
     
-    public func fetchGroupsWithFavoritesBeingFirst(year: Int, academicProgram: AcademicProgram) {
+    public func fetchGroupsWithoutFavorite(year: Int, academicProgram: AcademicProgram) {
         self.isLoadingGroups = true
         
         networkManager.getGroupsByYearAndAcademicProgram(year: year, program: academicProgram, resultQueue: .main) { result in
             switch result {
             case .success(let groups):
-                if self.favoriteGroupNumber != nil, let favGroup = groups.first(where: { $0.fullNumber == self.favoriteGroupNumber }) {
-                    self.groups = [favGroup] + groups.filter { $0.fullNumber != self.favoriteGroupNumber }
+                if self.favoriteGroupNumber != nil {
+                    self.groupsWithoutFavorite = groups.filter { $0.fullNumber != self.favoriteGroupNumber! }
                 } else {
-                    self.groups = groups
+                    self.groupsWithoutFavorite = groups
                 }
             case .failure(let error):
-                self.groups = []
-                print(error)
+                self.groupsWithoutFavorite = []
+                self.showNetworkError(error: error)
             }
             self.isLoadingGroups = false
+        }
+    }
+    
+    private func showNetworkError(error: Error) {
+        self.isShowingError = true
+        
+        if let networkError = error as? NetworkError {
+            self.activeError = networkError
+        } else {
+            self.activeError = NetworkError.unexpectedError
         }
     }
 }

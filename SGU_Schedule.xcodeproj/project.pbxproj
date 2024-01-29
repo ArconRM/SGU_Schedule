@@ -16,6 +16,18 @@
 		BA10695D2B08CB93001C7A63 /* CoreData_LessonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA10695C2B08CB93001C7A63 /* CoreData_LessonExtension.swift */; };
 		BA1069612B08CBE3001C7A63 /* LessonCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1069602B08CBE3001C7A63 /* LessonCoreDataManager.swift */; };
 		BA1069632B08CC67001C7A63 /* GroupScheduleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1069622B08CC67001C7A63 /* GroupScheduleCoreDataManager.swift */; };
+		BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
+		BA2FEEDA2B667E42001F91F5 /* SessionEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED92B667E42001F91F5 /* SessionEventType.swift */; };
+		BA2FEEDC2B668956001F91F5 /* SessionEventsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */; };
+		BA2FEEDE2B668AAF001F91F5 /* GroupSessionEventsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */; };
+		BA2FEEE02B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDF2B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift */; };
+		BA2FEEE22B66952B001F91F5 /* SessionEventsParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEE12B66952B001F91F5 /* SessionEventsParser.swift */; };
+		BA2FEEE42B669582001F91F5 /* SessionEventsParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEE32B669582001F91F5 /* SessionEventsParserSGU.swift */; };
+		BA2FEEE82B66B4FF001F91F5 /* SessionEventSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEE72B66B4FF001F91F5 /* SessionEventSubview.swift */; };
+		BA2FEEEA2B6817C6001F91F5 /* SessionEventsModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEE92B6817C6001F91F5 /* SessionEventsModalView.swift */; };
+		BA2FEEEC2B681F2A001F91F5 /* CarouselView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEEB2B681F2A001F91F5 /* CarouselView.swift */; };
+		BA2FEEEE2B682511001F91F5 /* ScheduleBackView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEED2B682511001F91F5 /* ScheduleBackView.swift */; };
+		BA2FEEF02B682547001F91F5 /* ScheduleModalView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEEF2B682547001F91F5 /* ScheduleModalView.swift */; };
 		BA53835D2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA53835C2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift */; };
 		BA53835F2AF56FE40004F012 /* GroupScheduleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA53835E2AF56FE40004F012 /* GroupScheduleCoreDataManager.swift */; };
 		BA5383612AF571B90004F012 /* GroupScheduleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */; };
@@ -25,7 +37,7 @@
 		BA7D3D872B0809F600C93802 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */; };
 		BA8414742B106A3000016956 /* GroupSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8414732B106A3000016956 /* GroupSubview.swift */; };
 		BA8414762B106D1C00016956 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8414752B106D1C00016956 /* GroupsView.swift */; };
-		BA977C022AE6BE3B00F28F22 /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* EventDTO.swift */; };
+		BA977C022AE6BE3B00F28F22 /* ScheduleEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */; };
 		BA977C042AE6D65000F28F22 /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
 		BA9805B52B08A39D00B69A3B /* EventSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9805B42B08A39D00B69A3B /* EventSubview.swift */; };
 		BA996A5B2AC4A00200888BE2 /* SGU_ScheduleIntegrationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA996A5A2AC4A00200888BE2 /* SGU_ScheduleIntegrationTests.swift */; };
@@ -98,7 +110,7 @@
 		BAE9A9D22B0804EA00BBCA7D /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
 		BAE9A9D32B0804EA00BBCA7D /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58122AED0EE10060BD81 /* CoreDataError.swift */; };
 		BAE9A9D42B0804EA00BBCA7D /* GroupsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D791B2ABE2E4700C36932 /* GroupsSource.swift */; };
-		BAE9A9D52B0804EA00BBCA7D /* EventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* EventDTO.swift */; };
+		BAE9A9D52B0804EA00BBCA7D /* ScheduleEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */; };
 		BAE9A9D62B0804EA00BBCA7D /* GroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1262ABA004C0079E3D7 /* GroupDTO.swift */; };
 		BAE9A9D72B0804EA00BBCA7D /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */; };
 		BAE9A9D82B0804EA00BBCA7D /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
@@ -160,6 +172,18 @@
 		BA10695C2B08CB93001C7A63 /* CoreData_LessonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_LessonExtension.swift; sourceTree = "<group>"; };
 		BA1069602B08CBE3001C7A63 /* LessonCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCoreDataManager.swift; sourceTree = "<group>"; };
 		BA1069622B08CC67001C7A63 /* GroupScheduleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleCoreDataManager.swift; sourceTree = "<group>"; };
+		BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventDTO.swift; sourceTree = "<group>"; };
+		BA2FEED92B667E42001F91F5 /* SessionEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventType.swift; sourceTree = "<group>"; };
+		BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsNetworkManager.swift; sourceTree = "<group>"; };
+		BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSessionEventsDTO.swift; sourceTree = "<group>"; };
+		BA2FEEDF2B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsNetworkManagerWithParsing.swift; sourceTree = "<group>"; };
+		BA2FEEE12B66952B001F91F5 /* SessionEventsParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsParser.swift; sourceTree = "<group>"; };
+		BA2FEEE32B669582001F91F5 /* SessionEventsParserSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsParserSGU.swift; sourceTree = "<group>"; };
+		BA2FEEE72B66B4FF001F91F5 /* SessionEventSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventSubview.swift; sourceTree = "<group>"; };
+		BA2FEEE92B6817C6001F91F5 /* SessionEventsModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsModalView.swift; sourceTree = "<group>"; };
+		BA2FEEEB2B681F2A001F91F5 /* CarouselView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselView.swift; sourceTree = "<group>"; };
+		BA2FEEED2B682511001F91F5 /* ScheduleBackView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleBackView.swift; sourceTree = "<group>"; };
+		BA2FEEEF2B682547001F91F5 /* ScheduleModalView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleModalView.swift; sourceTree = "<group>"; };
 		BA53835C2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_GroupScheduleExtension.swift; sourceTree = "<group>"; };
 		BA53835E2AF56FE40004F012 /* GroupScheduleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleCoreDataManager.swift; sourceTree = "<group>"; };
 		BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleDTO.swift; sourceTree = "<group>"; };
@@ -168,7 +192,7 @@
 		BA584D122B09E0B9002DA4AE /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		BA8414732B106A3000016956 /* GroupSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSubview.swift; sourceTree = "<group>"; };
 		BA8414752B106D1C00016956 /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
-		BA977C012AE6BE3B00F28F22 /* EventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventDTO.swift; sourceTree = "<group>"; };
+		BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventDTO.swift; sourceTree = "<group>"; };
 		BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBreakDTO.swift; sourceTree = "<group>"; };
 		BA9805B42B08A39D00B69A3B /* EventSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventSubview.swift; sourceTree = "<group>"; };
 		BA996A582AC4A00200888BE2 /* SGU_ScheduleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SGU_ScheduleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -272,6 +296,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		BA2FEEF12B6825D5001F91F5 /* AdditionalViews */ = {
+			isa = PBXGroup;
+			children = (
+				BA2FEEEB2B681F2A001F91F5 /* CarouselView.swift */,
+			);
+			path = AdditionalViews;
+			sourceTree = "<group>";
+		};
 		BA584D112B09E091002DA4AE /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -298,6 +330,7 @@
 				BAAEB3172ADA865500E90223 /* AcademicProgram.swift */,
 				BA07C9B82AE47A5B008CDDCC /* WeekType.swift */,
 				BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */,
+				BA2FEED92B667E42001F91F5 /* SessionEventType.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -320,6 +353,7 @@
 				BA9D79242AC2173B00C36932 /* LessonHTMLParserSGU.swift */,
 				BAAEB3072AD992EF00E90223 /* DateHTMLParserSGU.swift */,
 				BAAEB30B2AD998BE00E90223 /* GroupsHTMLParserSGU.swift */,
+				BA2FEEE32B669582001F91F5 /* SessionEventsParserSGU.swift */,
 			);
 			path = Decoding;
 			sourceTree = "<group>";
@@ -331,6 +365,7 @@
 				BA9D79202ABE439F00C36932 /* LessonsNetworkManagerWithParsing.swift */,
 				BAAEB30D2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift */,
 				BAAEB3132AD9A59C00E90223 /* GroupNetworkManagerWithParsing.swift */,
+				BA2FEEDF2B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift */,
 			);
 			path = Manager;
 			sourceTree = "<group>";
@@ -388,6 +423,7 @@
 				BAAEB3022AD98EFB00E90223 /* LessonHTMLParser.swift */,
 				BAAEB3052AD992B000E90223 /* DateHTMLParser.swift */,
 				BAAEB3092AD9953900E90223 /* GroupsHTMLParser.swift */,
+				BA2FEEE12B66952B001F91F5 /* SessionEventsParser.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -461,8 +497,12 @@
 			isa = PBXGroup;
 			children = (
 				BABF260D2ABB0D92003D3385 /* Launch Screen.storyboard */,
-				BADAE12A2ABA074F0079E3D7 /* SubViews */,
+				BA2FEEF12B6825D5001F91F5 /* AdditionalViews */,
+				BADAE12A2ABA074F0079E3D7 /* Subviews */,
 				BADAE1132AB9C0D60079E3D7 /* ScheduleView.swift */,
+				BA2FEEED2B682511001F91F5 /* ScheduleBackView.swift */,
+				BA2FEEEF2B682547001F91F5 /* ScheduleModalView.swift */,
+				BA2FEEE92B6817C6001F91F5 /* SessionEventsModalView.swift */,
 				BA9D79162ABB3AD900C36932 /* GroupsView.swift */,
 			);
 			path = Views;
@@ -488,13 +528,14 @@
 			path = ViewModels;
 			sourceTree = "<group>";
 		};
-		BADAE12A2ABA074F0079E3D7 /* SubViews */ = {
+		BADAE12A2ABA074F0079E3D7 /* Subviews */ = {
 			isa = PBXGroup;
 			children = (
 				BADAE12B2ABA08650079E3D7 /* ScheduleSubview.swift */,
 				BA9D79182ABB408100C36932 /* GroupSubview.swift */,
+				BA2FEEE72B66B4FF001F91F5 /* SessionEventSubview.swift */,
 			);
-			path = SubViews;
+			path = Subviews;
 			sourceTree = "<group>";
 		};
 		BADAE12D2ABA0B040079E3D7 /* Extensions */ = {
@@ -562,11 +603,13 @@
 		BAFA57DB2AEC4DC60060BD81 /* DTO */ = {
 			isa = PBXGroup;
 			children = (
-				BA977C012AE6BE3B00F28F22 /* EventDTO.swift */,
+				BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */,
 				BADAE1282ABA011C0079E3D7 /* LessonDTO.swift */,
 				BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */,
 				BADAE1262ABA004C0079E3D7 /* GroupDTO.swift */,
 				BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */,
+				BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */,
+				BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -602,6 +645,7 @@
 				BAFB8C2B2AC766850080834C /* LessonsNetworkManager.swift */,
 				BAAEB30F2AD9A3BD00E90223 /* DateNetworkManager.swift */,
 				BAAEB3112AD9A4BE00E90223 /* GroupNetworkManager.swift */,
+				BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -855,36 +899,47 @@
 				BAAEB30A2AD9953900E90223 /* GroupsHTMLParser.swift in Sources */,
 				BAAEB30E2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift in Sources */,
 				BA53835D2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift in Sources */,
+				BA2FEEEC2B681F2A001F91F5 /* CarouselView.swift in Sources */,
 				BAFA58172AED3A840060BD81 /* NetworkMonitor.swift in Sources */,
 				BA9D79172ABB3AD900C36932 /* GroupsView.swift in Sources */,
 				BAAEB3012AD98DCF00E90223 /* ScheduleViewModel.swift in Sources */,
 				BAA53E522AE9203A0098F30E /* UIScreenExtension.swift in Sources */,
 				BADAE1142AB9C0D60079E3D7 /* ScheduleView.swift in Sources */,
+				BA2FEEF02B682547001F91F5 /* ScheduleModalView.swift in Sources */,
 				BAFA58092AEC5D8D0060BD81 /* CoreData_LessonExtension.swift in Sources */,
+				BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */,
 				BAAEB3122AD9A4BE00E90223 /* GroupNetworkManager.swift in Sources */,
+				BA2FEEDC2B668956001F91F5 /* SessionEventsNetworkManager.swift in Sources */,
 				BA9D791C2ABE2E4700C36932 /* GroupsSource.swift in Sources */,
+				BA2FEEE82B66B4FF001F91F5 /* SessionEventSubview.swift in Sources */,
 				BAFA580C2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld in Sources */,
 				BAFA58112AECFD0B0060BD81 /* PersistenceManager.swift in Sources */,
+				BA2FEEE22B66952B001F91F5 /* SessionEventsParser.swift in Sources */,
 				BAFA58132AED0EE10060BD81 /* CoreDataError.swift in Sources */,
 				BAFA58072AEC5AFD0060BD81 /* PersistenceController.swift in Sources */,
 				BAFB8C2C2AC766850080834C /* LessonsNetworkManager.swift in Sources */,
+				BA2FEEEE2B682511001F91F5 /* ScheduleBackView.swift in Sources */,
 				BA9D79192ABB408100C36932 /* GroupSubview.swift in Sources */,
 				BA9D79212ABE439F00C36932 /* LessonsNetworkManagerWithParsing.swift in Sources */,
 				BADAE12F2ABA0B240079E3D7 /* DateExtension.swift in Sources */,
 				BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
+				BA2FEEE42B669582001F91F5 /* SessionEventsParserSGU.swift in Sources */,
 				BAAEB31C2ADAA57B00E90223 /* GroupsViewModelWithParsingSGU.swift in Sources */,
+				BA2FEEDE2B668AAF001F91F5 /* GroupSessionEventsDTO.swift in Sources */,
 				BA9B4DB02AD0A63C008A6092 /* ScheduleViewModelWithParsingSGU.swift in Sources */,
 				BA07C9B92AE47A5B008CDDCC /* WeekType.swift in Sources */,
+				BA2FEEDA2B667E42001F91F5 /* SessionEventType.swift in Sources */,
 				BADAE1292ABA011C0079E3D7 /* LessonDTO.swift in Sources */,
+				BA2FEEEA2B6817C6001F91F5 /* SessionEventsModalView.swift in Sources */,
 				BA9D792C2AC21DDA00C36932 /* URLSourceSGU.swift in Sources */,
 				BADAE1272ABA004C0079E3D7 /* GroupDTO.swift in Sources */,
 				BADAE1322ABA21430079E3D7 /* Weekdays.swift in Sources */,
 				BA07C9BB2AE47A7B008CDDCC /* LessonType.swift in Sources */,
 				BA9D791F2ABE3DEB00C36932 /* NetworkManager.swift in Sources */,
 				BAAEB3182ADA865500E90223 /* AcademicProgram.swift in Sources */,
-				BA977C022AE6BE3B00F28F22 /* EventDTO.swift in Sources */,
+				BA977C022AE6BE3B00F28F22 /* ScheduleEventDTO.swift in Sources */,
 				BAAEB3082AD992EF00E90223 /* DateHTMLParserSGU.swift in Sources */,
 				BAAEB3142AD9A59C00E90223 /* GroupNetworkManagerWithParsing.swift in Sources */,
 				BA977C042AE6D65000F28F22 /* TimeBreakDTO.swift in Sources */,
@@ -892,6 +947,7 @@
 				BAAEB31A2ADAA4CA00E90223 /* GroupsViewModel.swift in Sources */,
 				BAAEB3032AD98EFB00E90223 /* LessonHTMLParser.swift in Sources */,
 				BAFA58152AED25DD0060BD81 /* ViewModelsKeys.swift in Sources */,
+				BA2FEEE02B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift in Sources */,
 				BA9D792A2AC21C3B00C36932 /* URLSource.swift in Sources */,
 				BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */,
 			);
@@ -935,7 +991,7 @@
 				BAE9A9D32B0804EA00BBCA7D /* CoreDataError.swift in Sources */,
 				BAE9A9D92B0804EA00BBCA7D /* GroupScheduleDTO.swift in Sources */,
 				BAADCB432B08BD2800EC8B73 /* ScheduleViewModel.swift in Sources */,
-				BAE9A9D52B0804EA00BBCA7D /* EventDTO.swift in Sources */,
+				BAE9A9D52B0804EA00BBCA7D /* ScheduleEventDTO.swift in Sources */,
 				BAADCB302B08BA6C00EC8B73 /* LessonHTMLParser.swift in Sources */,
 				BAADCB482B08C00B00EC8B73 /* LessonPersistenceManager.swift in Sources */,
 				BA9805B52B08A39D00B69A3B /* EventSubview.swift in Sources */,

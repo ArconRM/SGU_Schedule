@@ -9,7 +9,7 @@ import SwiftUI
 
 struct EventSubview: View {
     
-    let event: any EventDTO
+    let event: any ScheduleEventDTO
     
     var body: some View {
         VStack {

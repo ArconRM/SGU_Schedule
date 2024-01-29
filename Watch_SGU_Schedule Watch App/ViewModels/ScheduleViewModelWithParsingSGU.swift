@@ -13,7 +13,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     private var schedulePersistenceManager: GroupScheduleCoreDataManager
     
     @Published var schedule: GroupScheduleDTO?
-    @Published var currentEvent: (any EventDTO)? = nil
+    @Published var currentEvent: (any ScheduleEventDTO)? = nil
     
     @Published var nextLesson1: LessonDTO? = nil
     @Published var nextLesson2: LessonDTO? = nil
@@ -166,7 +166,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
         
         let currentDayNumber = Date.currentWeekDayWithEveningBeingNextDay.number
-        let currentTime = Date.currentTime
+        let currentTime = Date.currentHoursAndMinutes
         
         if currentDayNumber == 7 {
             return

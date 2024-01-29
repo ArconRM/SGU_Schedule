@@ -398,54 +398,6 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "BE94730B-23E2-40A6-B2CD-73599EF9198A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "110"
-            endingLineNumber = "110"
-            landmarkName = "fetchUpdateDateAndLessons(groupNumber:isOnline:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "BE94730B-23E2-40A6-B2CD-73599EF9198A - 4c642e4fb772f207"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 () -&gt; () in SGU_Schedule.ScheduleViewModelWithParsingSGU.fetchUpdateDateAndLessons(groupNumber: Swift.Int, isOnline: Swift.Bool) -&gt; ()"
-                  moduleName = "SGU_Schedule"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artemiy/Documents/Xcode/SGU_Schedule/SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "93"
-                  endingLineNumber = "93"
-                  offsetFromSymbolStart = "302">
-               </Location>
-               <Location
-                  uuid = "BE94730B-23E2-40A6-B2CD-73599EF9198A - 4c642e4fb772f3aa"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 @Swift.MainActor () -&gt; () in closure #2 () -&gt; () in SGU_Schedule.ScheduleViewModelWithParsingSGU.fetchUpdateDateAndLessons(groupNumber: Swift.Int, isOnline: Swift.Bool) -&gt; ()"
-                  moduleName = "SGU_Schedule"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artemiy/Documents/Xcode/SGU_Schedule/SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "98"
-                  endingLineNumber = "98"
-                  offsetFromSymbolStart = "105">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
             uuid = "598D2ECA-A746-41E4-A63D-CAC75DBAFE2F"
             shouldBeEnabled = "No"
             ignoreCount = "0"
@@ -485,8 +437,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "210"
+            endingLineNumber = "210"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
             <Locations>
@@ -548,8 +500,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "226"
-            endingLineNumber = "226"
+            startingLineNumber = "227"
+            endingLineNumber = "227"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -564,8 +516,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "249"
-            endingLineNumber = "249"
+            startingLineNumber = "250"
+            endingLineNumber = "250"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -580,8 +532,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "235"
-            endingLineNumber = "235"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -600,84 +552,6 @@
             endingLineNumber = "28"
             landmarkName = "weekType"
             landmarkType = "24">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "1623B250-2764-416E-B1FC-98052564C91D"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "117"
-            endingLineNumber = "117"
-            landmarkName = "fetchUpdateDateAndLessons(groupNumber:isOnline:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "1623B250-2764-416E-B1FC-98052564C91D - 808865583f391a19"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;SGU_Schedule.GroupScheduleDTO, Swift.Error&gt;) -&gt; () in closure #2 () -&gt; () in SGU_Schedule.ScheduleViewModelWithParsingSGU.fetchUpdateDateAndLessons(groupNumber: Swift.Int, isOnline: Swift.Bool) -&gt; ()"
-                  moduleName = "SGU_Schedule"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artemiy/Documents/Xcode/SGU_Schedule/SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117"
-                  offsetFromSymbolStart = "208">
-               </Location>
-               <Location
-                  uuid = "1623B250-2764-416E-B1FC-98052564C91D - 808865583f391a19"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;SGU_Schedule.GroupScheduleDTO, Swift.Error&gt;) -&gt; () in closure #2 () -&gt; () in SGU_Schedule.ScheduleViewModelWithParsingSGU.fetchUpdateDateAndLessons(groupNumber: Swift.Int, isOnline: Swift.Bool) -&gt; ()"
-                  moduleName = "SGU_Schedule"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artemiy/Documents/Xcode/SGU_Schedule/SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117"
-                  offsetFromSymbolStart = "230">
-               </Location>
-               <Location
-                  uuid = "1623B250-2764-416E-B1FC-98052564C91D - 808865583f391a19"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;SGU_Schedule.GroupScheduleDTO, Swift.Error&gt;) -&gt; () in closure #2 () -&gt; () in SGU_Schedule.ScheduleViewModelWithParsingSGU.fetchUpdateDateAndLessons(groupNumber: Swift.Int, isOnline: Swift.Bool) -&gt; ()"
-                  moduleName = "SGU_Schedule"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artemiy/Documents/Xcode/SGU_Schedule/SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117"
-                  offsetFromSymbolStart = "1850">
-               </Location>
-               <Location
-                  uuid = "1623B250-2764-416E-B1FC-98052564C91D - 808865583f391a19"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #2 (Swift.Result&lt;SGU_Schedule.GroupScheduleDTO, Swift.Error&gt;) -&gt; () in closure #2 () -&gt; () in SGU_Schedule.ScheduleViewModelWithParsingSGU.fetchUpdateDateAndLessons(groupNumber: Swift.Int, isOnline: Swift.Bool) -&gt; ()"
-                  moduleName = "SGU_Schedule"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/artemiy/Documents/Xcode/SGU_Schedule/SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "117"
-                  endingLineNumber = "117"
-                  offsetFromSymbolStart = "337">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy

@@ -14,8 +14,6 @@ public protocol PersistenceManager {
     
     func saveItem(item: DTOModel) throws -> ManagedModel
     
-//    func saveItems(items: [DTOModel]) throws
-    
     func fetchAllItemsDTO() throws -> [DTOModel]
     
     func fetchAllManagedItems() throws -> [ManagedModel]

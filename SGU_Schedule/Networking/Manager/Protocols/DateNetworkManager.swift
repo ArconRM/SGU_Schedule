@@ -6,7 +6,8 @@
 //
 
 import Foundation
-public protocol DateNetworkManager: NetworkManager {
+public protocol DateNetworkManager {
+    
     func getLastUpdateDate(group: GroupDTO,
                            resultQueue: DispatchQueue,
                            completionHandler: @escaping (Result<Date, Error>) -> Void)

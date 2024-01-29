@@ -8,6 +8,7 @@
 import Foundation
 
 public struct GroupDTO: Hashable {
+    
     var academicProgram: AcademicProgram?
     var fullNumber: Int
     var shortName: String

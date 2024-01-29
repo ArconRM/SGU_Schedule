@@ -28,7 +28,7 @@ final class SGU_ScheduleUnitTests: XCTestCase {
         let networkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                               lessonParser: LessonHTMLParserSGU())
         
-        networkManager.getHTML(group: Group(fullNumber: 141)) { result in
+        networkManager.getHTML(group: GroupDTO(fullNumber: 141)) { result in
             switch result {
             case .success(let html):
                 htmlToCheck = html
@@ -50,7 +50,7 @@ final class SGU_ScheduleUnitTests: XCTestCase {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "dd'.'MM'.'yyyy'"
-        let correctDate = dateFormatter.date(from: "22.09.2023")! //ToDo: может быть заmockать нормально
+        let correctDate = dateFormatter.date(from: "15.01.2024")! //ToDo: может быть заmockать нормально
         
         let htmlParser = DateHTMLParserSGU()
         
@@ -59,21 +59,22 @@ final class SGU_ScheduleUnitTests: XCTestCase {
         XCTAssertEqual(correctDate, dateToCheck)
     }
     
-    func testHTMLParserScrapsCorrectLessonsForDay_shouldBeTrue() throws { // по-хорошему надо mockать, но нужно тестирование не только декодера, но и согласованности с сайтом
+    func testHTMLParserScrapsCorrectLessons() throws { // по-хорошему надо mockать, но нужно тестирование не только декодера, но и согласованности с сайтом
         let sourceHtml = try String(contentsOf: URL(string: "https://sgu.ru/schedule/knt/do/141")!, encoding: .utf8) //синхронно для теста
             
         let htmlParser = LessonHTMLParserSGU()
-        let lessons = try htmlParser.getLessonsByDayNumberFromSource(source: sourceHtml, dayNumber: 1)
+        let lessons = try htmlParser.getGroupScheduleFromSource(source: sourceHtml, groupNumber: 141)
         print(lessons)
-    }
+    }    
     
-    func testHTMLParserScrapsCorrectLessonsForWeek_shouldBeTrue() throws { // по-хорошему надо mockать, но нужно тестирование не только декодера, но и согласованности с сайтом
+    func testHTMLParserScrapsCorrectSessionEvents() throws { // по-хорошему надо mockать, но нужно тестирование не только декодера, но и согласованности с сайтом
         let sourceHtml = try String(contentsOf: URL(string: "https://sgu.ru/schedule/knt/do/141")!, encoding: .utf8) //синхронно для теста
             
-        let htmlParser = LessonHTMLParserSGU()
-        let lessons = try htmlParser.getLessonsByDayNumberFromSource(source: sourceHtml, dayNumber: 1)
-        print(lessons)
+        let htmlParser = SessionEventsParserSGU()
+        let sessionEvents = try htmlParser.getGroupSessionEventsFromSource(source: sourceHtml, groupNumber: 141)
+        print(sessionEvents)
     }
+
     
 //    func testHTMLParserScrapsCorrectGroups_shouldBeTrue() throws {
 //        let urlSource = URLSourceSGU()
@@ -84,7 +85,7 @@ final class SGU_ScheduleUnitTests: XCTestCase {
 //        print(groups)
 //    }
     
-    func testHTMLParserScrapsCorrectGroupsByYearAndAcademicProgram_shouldBeTrue() throws {
+    func testHTMLParserScrapsCorrectGroupsByYearAndAcademicProgram() throws {
         let urlSource = URLSourceSGU()
         let sourceHtml = try String(contentsOf: URL(string: urlSource.baseURLAddress)!, encoding: .utf8)
         

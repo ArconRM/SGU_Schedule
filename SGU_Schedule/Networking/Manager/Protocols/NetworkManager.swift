@@ -7,6 +7,6 @@
 
 import Foundation
 
-public protocol NetworkManager {
-    var urlSource: URLSource { get set }
-}
+//public protocol NetworkManager {
+//    var urlSource: URLSource { get set }
+//}

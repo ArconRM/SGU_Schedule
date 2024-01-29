@@ -4,8 +4,6 @@
 //
 //  Created by Артемий on 25.09.2023.
 //
-
-
 import Foundation
 import Kanna
 
@@ -46,11 +44,11 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
             for lessonNumber in 1...8 {
                 for divClassId1 in 0...15 { // подбор айдишника
                     for divClassId2 in 0...15 {
-                        lesson = decodeLessonFromString(doc: doc,
-                                                        lessonNumber: lessonNumber,
-                                                        dayNumber: dayNumber,
-                                                        divClassId1: divClassId1,
-                                                        divClassId2: divClassId2)
+                        lesson = decodeLesson(doc: doc,
+                                              lessonNumber: lessonNumber,
+                                              dayNumber: dayNumber,
+                                              divClassId1: divClassId1,
+                                              divClassId2: divClassId2)
                         if lesson != nil {
                             result.append(lesson!)
                         }
@@ -64,11 +62,11 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
         return result
     }
     
-    private func decodeLessonFromString(doc: HTMLDocument,
-                                        lessonNumber: Int,
-                                        dayNumber: Int,
-                                        divClassId1: Int,
-                                        divClassId2: Int) -> LessonDTO? {
+    private func decodeLesson(doc: HTMLDocument,
+                              lessonNumber: Int,
+                              dayNumber: Int,
+                              divClassId1: Int,
+                              divClassId2: Int) -> LessonDTO? {
         
         var divClass = "l l--t-5 " + "l--r-\(divClassId1) l--g-\(divClassId2)" // проверка лекции
         var baseXpath = "//td[@id='\(lessonNumber)_\(dayNumber)']/div[@class='\(divClass)']"

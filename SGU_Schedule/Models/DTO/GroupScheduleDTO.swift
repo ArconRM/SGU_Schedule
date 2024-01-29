@@ -8,6 +8,7 @@
 import Foundation
 
 public struct GroupScheduleDTO {
+    
     var group: GroupDTO
     var lessons: [LessonDTO]
     

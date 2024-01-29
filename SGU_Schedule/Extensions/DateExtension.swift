@@ -34,7 +34,7 @@ extension Date {
             dateFormatter.dateFormat = "EEEE"
             
             var currentDate = Date()
-            let currentTime = Date.currentTime
+            let currentTime = Date.currentHoursAndMinutes
             var dateComponent = DateComponents()
             dateComponent.day = 1
             
@@ -59,12 +59,12 @@ extension Date {
         }
     }
     
-    /// If current hour is more than or equals 22, returns next day
+    /// If current hour is more than or equals 22, returns next day (ignoring Sunday)
     static var currentWeekDayWithoutSundayAndWithEveningBeingNextDay: Weekdays {
         get {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "EEEE"
-            let currentTime = Date.currentTime
+            let currentTime = Date.currentHoursAndMinutes
             
             var date = Date()
             if currentTime.getHours() >= 22 {
@@ -77,14 +77,14 @@ extension Date {
         }
     }
     
-    static var currentTime: Date {
+    static var currentHoursAndMinutes: Date {
         get {
             let date = Date()
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "HH:mm"
             
             let dateString = dateFormatter.string(from: date)
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             return dateFormatter.date(from: dateString) ?? Date.distantPast
         }
     }
@@ -94,25 +94,36 @@ extension Date {
         return [.All, self.currentWeekType].contains(weekType)
     }
     
+    func getHours() -> Int {
+        let dateFormatter = DateFormatter()
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "HH"
+        return Int(dateFormatter.string(from: self)) ?? 0
+    }
+    
+    ///Divided by colon
     func getHoursAndMinutesString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "HH:mm"
         return dateFormatter.string(from: self)
     }
     
+    ///Divided by dot
     func getDayAndMonthString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "dd.MM"
         return dateFormatter.string(from: self)
     }
     
-    func getHours() -> Int {
+    ///Divided by spaces
+    func getDayMonthAndYearString() -> String {
         let dateFormatter = DateFormatter()
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "HH"
-        return Int(dateFormatter.string(from: self)) ?? 0
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "d MMMM yyyy"
+        return dateFormatter.string(from: self)
     }
     
 //    static func getCurrentWeekType() -> WeekType {

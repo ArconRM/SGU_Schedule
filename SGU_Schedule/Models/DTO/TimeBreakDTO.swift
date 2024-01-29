@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TimeBreakDTO: EventDTO {
+public struct TimeBreakDTO: ScheduleEventDTO {
     
 //    public var id: UUID
     public var title: String = "Перемена"
