@@ -30,6 +30,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     )
                     .blur(radius: 2)
                     .ignoresSafeArea()
+                    .opacity(<#T##Double#>)
                 } else {
                     LinearGradient(
                         colors: [.blue.opacity(0.15), .black],
@@ -56,7 +57,18 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 Text(selectedAcademicProgram.rawValue)
                                     .bold()
                                     .foregroundColor(colorScheme == .light ? .black : .white)
-                                    .padding(.vertical, 5)
+                                    .padding(15)
+                                    .background (
+                                        ZStack {
+                                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                                .cornerRadius(10)
+                                                .blur(radius: 2)
+                                                .ignoresSafeArea()
+                                        }
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(colorScheme == .light ? .white : .clear)
+                                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.2), radius: 10)))
                             }
                         }
                         .onChange(of: selectedAcademicProgram) { newValue in
@@ -75,6 +87,18 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 Text(String(selectedYear) + " курс")
                                     .bold()
                                     .foregroundColor(colorScheme == .light ? .black : .white)
+                                    .padding(10)
+                                    .background (
+                                        ZStack {
+                                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                                .cornerRadius(10)
+                                                .blur(radius: 2)
+                                                .ignoresSafeArea()
+                                        }
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 10)
+                                                    .fill(colorScheme == .light ? .white : .clear)
+                                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.2), radius: 10)))
                             }
                         }
                         .onChange(of: selectedYear) { newValue in
@@ -156,6 +180,5 @@ struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         GroupsView(viewModel: GroupsViewModelWithParsingSGU())
             .environmentObject(NetworkMonitor())
-            .colorScheme(.dark)
     }
 }

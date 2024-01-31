@@ -43,10 +43,25 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                Button("← Группы") {
+                Button(action: {
                     presentationMode.wrappedValue.dismiss()
+                }) {
+                    Text("←")
+                        .font(.system(size: 23, weight: .semibold))
+                        .padding(.horizontal, 8)
+                        .padding(.vertical, 5)
+                        .background (
+                            ZStack {
+                                (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                    .cornerRadius(5)
+                                    .blur(radius: 2)
+                                    .ignoresSafeArea()
+                            }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(colorScheme == .light ? .white : .clear)
+                                        .shadow(color: colorScheme == .light ? .gray.opacity(0.6) : .white.opacity(0.2), radius: 5)))
                 }
-                .font(.system(size: 18, weight: .semibold))
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -58,7 +73,20 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     }
                 }) {
                     Image(systemName: favoriteGroupNumber == selectedGroup.fullNumber ? "star.fill" : "star")
+                        .padding(5)
+                        .background (
+                            ZStack {
+                                (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                    .cornerRadius(5)
+                                    .blur(radius: 2)
+                                    .ignoresSafeArea()
+                            }
+                                .background(
+                                    RoundedRectangle(cornerRadius: 5)
+                                        .fill(colorScheme == .light ? .white : .clear)
+                                        .shadow(color: colorScheme == .light ? .gray.opacity(0.6) : .white.opacity(0.2), radius: 5)))
                 }
+                .padding(.vertical)
             }
         }
         .edgesIgnoringSafeArea(.bottom)
