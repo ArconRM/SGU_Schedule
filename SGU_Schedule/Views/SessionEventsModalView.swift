@@ -37,9 +37,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         Text("Загрузка...")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
-                    } else if viewModel.sessionEvents != nil {
+                    } else if viewModel.groupSessionEvents != nil {
                         ScrollView {
-                            ForEach(viewModel.sessionEvents!.sessionEvents.filter ({ $0.date >= Date() }) + viewModel.sessionEvents!.sessionEvents.filter ({ $0.date < Date() }), id:\.self) { sessionEvent in
+                            ForEach(viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date >= Date() }) + viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date < Date() }), id:\.self) { sessionEvent in
                                 SessionEventSubview(sessionEvent: sessionEvent)
                             }
                             .padding(.top, 5)
@@ -77,7 +77,8 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 .background(
                     RoundedRectangle(cornerRadius: 35)
                         .fill(colorScheme == .light ? .white : .black)
-                        .shadow(color: .gray.opacity(0.15), radius: 6, x: 0, y: -5))
+                        .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5)
+                )
         )
     }
     

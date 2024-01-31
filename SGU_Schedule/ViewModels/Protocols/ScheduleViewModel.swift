@@ -10,7 +10,7 @@ import Foundation
 public protocol ScheduleViewModel: ObservableObject {
     var schedule: GroupScheduleDTO? { get set }
     var currentEvent: (any ScheduleEventDTO)? { get set }
-    var sessionEvents: GroupSessionEventsDTO? { get set }
+    var groupSessionEvents: GroupSessionEventsDTO? { get set }
     var favoriteGroupNumber: Int? { get set }
     
     var nextLesson1: LessonDTO? { get set }

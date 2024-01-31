@@ -19,7 +19,7 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @State var selectedGroup: GroupDTO
     
     var body : some View {
-        ZStack() {
+        ZStack {
             ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup)
             
             CarouselView(pageCount: 2, currentIndex: 0, content: {
@@ -30,6 +30,15 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     .environmentObject(networkMonitor)
             })
         }
+        .onAppear {
+            viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
+            viewModel.fetchSessionEvents(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
+        }
+        
+        .onChange(of: viewModel.groupSessionEvents?.sessionEvents) { newValue in
+            print(newValue)
+        }
+        
         .toolbar {
             ToolbarItem {
                 Button(action: {
@@ -44,10 +53,6 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
             }
         }
         .edgesIgnoringSafeArea(.bottom)
-        .onAppear {
-            viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
-            viewModel.fetchSessionEvents(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
-        }
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
@@ -59,7 +64,7 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
-                     favoriteGroupNumber: .constant(141),
+                     favoriteGroupNumber: .constant(0),
                      selectedGroup: GroupDTO(fullNumber: 141))
         .environmentObject(NetworkMonitor())
 //            .colorScheme(.dark)

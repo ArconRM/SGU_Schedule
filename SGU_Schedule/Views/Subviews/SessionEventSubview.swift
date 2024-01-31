@@ -18,10 +18,12 @@ struct SessionEventSubview: View {
                 Text(sessionEvent.title)
                     .font(.system(size: 20))
                     .bold()
+                    .multilineTextAlignment(.center)
                 
                 Text(sessionEvent.sessionEventType.rawValue)
                     .font(.system(size: 17))
                     .italic()
+                    .multilineTextAlignment(.center)
                 
                 HStack {
                     Text(sessionEvent.date.getDayMonthAndYearString())
@@ -47,7 +49,7 @@ struct SessionEventSubview: View {
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
             .opacity(sessionEvent.date >= Date() ? 1 : 0.5)
-            .background(sessionEvent.sessionEventType == .Consultation ? .green.opacity(0.2) : .blue.opacity(0.2))
+            .background(sessionEvent.date < Date() ? .gray.opacity(0.1) : (sessionEvent.sessionEventType == .Consultation ? .green.opacity(0.2) : .blue.opacity(0.2)))
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
         .cornerRadius(10)
@@ -65,6 +67,12 @@ struct SessionEventSubview: View {
     ScrollView {
         SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
                                                           date: "29 января 2025 21:00",
+                                                          sessionEventType: .Consultation,
+                                                          teacherFullName: "Алексеева Дина Алексеевна",
+                                                          cabinet: "12 корпус ауд.302"))
+        
+        SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
+                                                          date: "29 января 2025 21:00",
                                                           sessionEventType: .Exam,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
@@ -78,12 +86,6 @@ struct SessionEventSubview: View {
         SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
                                                           date: "29 января 2023 21:00",
                                                           sessionEventType: .TestWithMark,
-                                                          teacherFullName: "Алексеева Дина Алексеевна",
-                                                          cabinet: "12 корпус ауд.302"))
-        
-        SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
-                                                          date: "29 января 2025 21:00",
-                                                          sessionEventType: .Consultation,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
     }

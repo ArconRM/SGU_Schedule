@@ -15,7 +15,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     @Published var schedule: GroupScheduleDTO?
     @Published var currentEvent: (any ScheduleEventDTO)? = nil
-    @Published var sessionEvents: GroupSessionEventsDTO?
+    @Published var groupSessionEvents: GroupSessionEventsDTO?
     
     @Published var nextLesson1: LessonDTO? = nil
     @Published var nextLesson2: LessonDTO? = nil
@@ -104,7 +104,11 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                                         self.schedule = networkSchedule
                                         try self.saveNewScheduleWithClearingPreviousVersion(schedule: networkSchedule)
                                         self.setCurrentAndTwoNextLessons()
+                                    } else {
+                                        self.schedule = schedule
                                     }
+                                    
+                                    self.isLoadingLessons = false
                                 }
                                 catch (let error) {
                                     self.showCoreDataError(error: error)
@@ -114,8 +118,6 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                                 self.showNetworkError(error: error)
                             }
                         }
-                        
-                        self.isLoadingLessons = false
                         
                     } else {
                         if schedule != nil {
@@ -151,7 +153,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
                 switch result {
                 case .success(let date):
-                    self.sessionEvents = date
+                    self.groupSessionEvents = date
                 case .failure(let error):
                     self.showNetworkError(error: error)
                 }

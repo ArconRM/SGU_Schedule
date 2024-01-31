@@ -10,6 +10,7 @@ import SwiftUI
 struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    let isOnline = NetworkMonitor().isConnected
     
     @ObservedObject var viewModel: ViewModel
     
@@ -136,14 +137,14 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                 }
             }
+            .onAppear {
+                selectedYear = viewModel.getSelectedYear()
+                selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
+                viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
+                favoriteGroupNumber = viewModel.favoriteGroupNumber
+            }
         }
         .accentColor(colorScheme == .light ? .black : .white)
-        .onAppear {
-            selectedYear = viewModel.getSelectedYear()
-            selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
-            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
-            favoriteGroupNumber = viewModel.favoriteGroupNumber
-        }
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
@@ -154,6 +155,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         GroupsView(viewModel: GroupsViewModelWithParsingSGU())
+            .environmentObject(NetworkMonitor())
             .colorScheme(.dark)
     }
 }

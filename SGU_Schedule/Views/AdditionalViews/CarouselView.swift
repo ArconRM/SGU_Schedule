@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-// Подсмотрено (полностью скопировано) с https://onmyway133.com/posts/how-to-make-carousel-pager-view-in-swiftui/
+// Подсмотрено (полностью скопировано и чуть настроено) с https://onmyway133.com/posts/how-to-make-carousel-pager-view-in-swiftui/
 struct CarouselView<Content: View>: View {
     
     let pageCount: Int
@@ -29,7 +29,9 @@ struct CarouselView<Content: View>: View {
             .gesture(
                 DragGesture()
                     .updating(self.$translation) { value, state, _ in
-                        state = value.translation.width
+                        if currentIndex == 0 && value.translation.width < 0 || currentIndex == 1 && value.translation.width > 0 {
+                            state = value.translation.width
+                        }
                     }.onEnded { value in
                         let offset = value.translation.width / geometry.size.width
                         let newIndex = (CGFloat(self.currentIndex) - offset).rounded()

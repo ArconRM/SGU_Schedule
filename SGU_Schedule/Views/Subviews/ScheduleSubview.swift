@@ -59,7 +59,7 @@ struct ScheduleSubview: View {
                     }
                 }
                 .foregroundColor(colorScheme == .light ? .black : .white)
-                .padding(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 10 : 15)
+                .padding(15)
                 .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
                 .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
                             (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
@@ -77,8 +77,6 @@ struct ScheduleSubview: View {
                  x: 0,
                  y: 0)
     }
-    
-    
 }
 
 struct ScheduleSubview_Previews: PreviewProvider {
@@ -87,7 +85,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
             Rectangle()
                 .foregroundColor(.blue.opacity(0.07))
                 .ignoresSafeArea()
-            VStack {
+            ScrollView {
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
                                                     lectorFullName: "Бредихин Д. А.",
                                                     lessonType: .Lecture,

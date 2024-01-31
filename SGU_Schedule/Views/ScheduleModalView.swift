@@ -127,7 +127,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .background(
                     RoundedRectangle(cornerRadius: 35)
                         .fill(colorScheme == .light ? .white : .black)
-                        .shadow(color: .gray.opacity(0.15), radius: 6, x: 0, y: -5))
+                        .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
         )
     }
     
