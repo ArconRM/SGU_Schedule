@@ -33,7 +33,7 @@ struct CarouselView<Content: View>: View {
                             state = value.translation.width
                         }
                     }.onEnded { value in
-                        let offset = value.translation.width / geometry.size.width
+                        let offset = value.translation.width / geometry.size.width + (value.translation.width >= 0 ? UIScreen.screenWidth / 3 : -UIScreen.screenWidth / 3)
                         let newIndex = (CGFloat(self.currentIndex) - offset).rounded()
                         self.currentIndex = min(max(Int(newIndex), 0), 1)
                     }

@@ -13,9 +13,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = UIScreen.screenHeight - 120
+    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.15).rounded()
     private let minHeight: CGFloat = 250
-    private let maxHeight: CGFloat = UIScreen.screenHeight - 130
+    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.15).rounded()
     
     @State var selectedGroup: GroupDTO
     
