@@ -107,8 +107,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 if colorScheme == .light {
                     LinearGradient(
                         colors: [.blue.opacity(0.1), .white],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                        startPoint: .top,
+                        endPoint: .bottom
                     )
                     .cornerRadius(35)
                     .blur(radius: 2)
@@ -116,8 +116,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else {
                     LinearGradient(
                         colors: [.blue.opacity(0.15), .black],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                        startPoint: .top,
+                        endPoint: .bottom
                     )
                     .cornerRadius(35)
                     .blur(radius: 2)

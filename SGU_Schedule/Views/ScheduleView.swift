@@ -35,13 +35,21 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     .environmentObject(networkMonitor)
             })
         }
+        .navigationBarBackButtonHidden(true)
         .onAppear {
             viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
             viewModel.fetchSessionEvents(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
         }
         
         .toolbar {
-            ToolbarItem {
+            ToolbarItem(placement: .topBarLeading) {
+                Button("← Группы") {
+                    presentationMode.wrappedValue.dismiss()
+                }
+                .font(.system(size: 18, weight: .semibold))
+            }
+            
+            ToolbarItem(placement: .topBarTrailing) {
                 Button(action: {
                     if viewModel.favoriteGroupNumber != selectedGroup.fullNumber {
                         viewModel.favoriteGroupNumber = selectedGroup.fullNumber
@@ -49,7 +57,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                         presentationMode.wrappedValue.dismiss()
                     }
                 }) {
-                    Label("Добавить в избранное", systemImage: favoriteGroupNumber == selectedGroup.fullNumber ? "star.fill" : "star")
+                    Image(systemName: favoriteGroupNumber == selectedGroup.fullNumber ? "star.fill" : "star")
                 }
             }
         }

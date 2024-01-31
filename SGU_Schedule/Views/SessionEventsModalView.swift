@@ -57,8 +57,8 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 if colorScheme == .light {
                     LinearGradient(
                         colors: [.blue.opacity(0.1), .white],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                        startPoint: .top,
+                        endPoint: .bottom
                     )
                     .cornerRadius(35)
                     .blur(radius: 2)
@@ -66,8 +66,8 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 } else {
                     LinearGradient(
                         colors: [.blue.opacity(0.15), .black],
-                        startPoint: .topLeading,
-                        endPoint: .bottomTrailing
+                        startPoint: .top,
+                        endPoint: .bottom
                     )
                     .cornerRadius(35)
                     .blur(radius: 2)
