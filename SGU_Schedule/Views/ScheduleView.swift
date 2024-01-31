@@ -8,7 +8,12 @@
 import SwiftUI
 import UIKit
 
-struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
+struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
+    static func == (lhs: ScheduleView<ViewModel>, rhs: ScheduleView<ViewModel>) -> Bool {
+        return lhs.colorScheme == rhs.colorScheme
+    }
+    
+    @Environment(\.colorScheme) var colorScheme
     @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
     @EnvironmentObject var networkMonitor: NetworkMonitor
     
@@ -33,10 +38,6 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .onAppear {
             viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
             viewModel.fetchSessionEvents(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
-        }
-        
-        .onChange(of: viewModel.groupSessionEvents?.sessionEvents) { newValue in
-            print(newValue)
         }
         
         .toolbar {
