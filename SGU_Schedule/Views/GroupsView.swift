@@ -30,7 +30,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     )
                     .blur(radius: 2)
                     .ignoresSafeArea()
-                    .opacity(<#T##Double#>)
                 } else {
                     LinearGradient(
                         colors: [.blue.opacity(0.15), .black],
