@@ -74,7 +74,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             Text(String(selectedYear) + " курс")
                                 .bold()
                                 .foregroundColor(colorScheme == .light ? .black : .white)
-                                .padding(.vertical, 13)
+                                .padding(.vertical, 11)
                                 .padding(.horizontal, 25)
                                 .background (
                                     ZStack {
@@ -144,8 +144,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         .onAppear {
             selectedYear = viewModel.getSelectedYear()
             selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
-            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
             favoriteGroupNumber = viewModel.favoriteGroupNumber
+            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
         }
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),

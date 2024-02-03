@@ -104,20 +104,23 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .background (
             ZStack {
                 if colorScheme == .light {
-                    LinearGradient(
-                        colors: [.blue.opacity(0.1), .white],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
+//                    LinearGradient(
+//                        colors: [.blue.opacity(0.1), .white],
+//                        startPoint: .top,
+//                        endPoint: .bottom
+//                    )
+                    Color.blue.opacity(0.07)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
                 } else {
-                    LinearGradient(
-                        colors: [.blue.opacity(0.15), .black],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
+//                    LinearGradient(
+//                        colors: [.blue.opacity(0.15), .black],
+//                        startPoint: .top,
+//                        endPoint: .bottom
+//                    )
+                    
+                    Color.blue.opacity(0.1)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()

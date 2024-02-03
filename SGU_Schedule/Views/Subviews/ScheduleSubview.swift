@@ -12,59 +12,28 @@ struct ScheduleSubview: View {
     
     let lessons: [LessonDTO]
     
+    @State var areMultipleLessonsCollapsed: Bool = true
+    
     var body: some View {
         VStack {
-            ForEach(lessons, id:\.self) { lesson in
-                VStack {
-                    HStack {
-                        Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
-                            .font(.system(size: 17))
-                            .bold()
-                        
-                        if lesson.weekType != .All {
-                            Text("(\(lesson.weekType.rawValue))")
-                                .font(.system(size: 17))
-                                .bold()
+            if lessons.count == 1 {
+                makeSingleLessonView(lesson: lessons.first!)
+            } else if lessons.count >= 1 {
+                if areMultipleLessonsCollapsed {
+                    makeMultipleLessonsView(firstLesson: lessons.first!)
+                        .onTapGesture {
+                            withAnimation(.spring(duration: 0.5)) {
+                                areMultipleLessonsCollapsed.toggle()
+                            }
                         }
-                        
-                        Spacer()
-                        
-                        Text(lesson.lessonType.rawValue)
-                            .font(.system(size: 17))
-                            .bold()
-                            .opacity(0.7)
-                    }
-                    
-                    Text(lesson.title)
-                        .multilineTextAlignment(.center)
-                        .font(.system(size: 17, weight: .bold))
-                        .padding(.vertical, 19)
-                    
-                    HStack {
-                        if lesson.subgroup != nil {
-                            Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
-                                .font(.system(size: 17))
-                                .italic()
-                        } else {
-                            Text(lesson.lectorFullName)
-                                .font(.system(size: 17))
-                                .italic()
+                } else {
+                    makeMultipleLessonsView(lessons: lessons)
+                        .onTapGesture {
+                            withAnimation(.spring(duration: 0.5)) {
+                                areMultipleLessonsCollapsed.toggle()
+                            }
                         }
-                        
-                        Spacer()
-                        
-                        Text("\(lesson.cabinet)")
-                            .font(.system(size: 17))
-                            .bold()
-                    }
                 }
-                .foregroundColor(colorScheme == .light ? .black : .white)
-                .padding(15)
-                .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
-                .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
-                            (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
-                            : .gray.opacity(0.1)
-                )
             }
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
@@ -76,6 +45,167 @@ struct ScheduleSubview: View {
                  radius: 3,
                  x: 0,
                  y: 0)
+    }
+    
+    private func makeSingleLessonView(lesson: LessonDTO) -> some View {
+        VStack {
+            HStack {
+                Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
+                    .font(.system(size: 17))
+                    .bold()
+                
+                if lesson.weekType != .All {
+                    Text("(\(lesson.weekType.rawValue))")
+                        .font(.system(size: 17))
+                        .bold()
+                }
+                
+                Spacer()
+                
+                Text(lesson.lessonType.rawValue)
+                    .font(.system(size: 17))
+                    .bold()
+                    .opacity(0.7)
+            }
+            
+            Text(lesson.title)
+                .multilineTextAlignment(.center)
+                .font(.system(size: 17, weight: .bold))
+                .padding(.vertical, 19)
+            
+            HStack {
+                if lesson.subgroup != nil && lesson.subgroup != "" {
+                    Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
+                        .font(.system(size: 17))
+                        .italic()
+                } else {
+                    Text(lesson.lectorFullName)
+                        .font(.system(size: 17))
+                        .italic()
+                }
+                
+                Spacer()
+                
+                Text("\(lesson.cabinet)")
+                    .font(.system(size: 17))
+                    .bold()
+            }
+        }
+        .foregroundColor(colorScheme == .light ? .black : .white)
+        .padding(15)
+        .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+        .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
+                    (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
+                    : .gray.opacity(0.1)
+        )
+    }
+    
+    private func makeMultipleLessonsView(lessons: [LessonDTO]) -> some View {
+        ForEach(lessons, id:\.self) { lesson in
+            VStack {
+                HStack {
+                    Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
+                        .font(.system(size: 17))
+                        .bold()
+                    
+                    if lesson.weekType != .All {
+                        Text("(\(lesson.weekType.rawValue))")
+                            .font(.system(size: 17))
+                            .bold()
+                    }
+                    
+                    Spacer()
+                    
+                    Text(lesson.lessonType.rawValue)
+                        .font(.system(size: 17))
+                        .bold()
+                        .opacity(0.7)
+                }
+                
+                Text(lesson.title)
+                    .multilineTextAlignment(.center)
+                    .font(.system(size: 17, weight: .bold))
+                    .padding(.vertical, 19)
+                
+                HStack {
+                    if lesson.subgroup != nil && lesson.subgroup != "" {
+                        Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
+                            .font(.system(size: 17))
+                            .italic()
+                    } else {
+                        Text(lesson.lectorFullName)
+                            .font(.system(size: 17))
+                            .italic()
+                    }
+                    
+                    Spacer()
+                    
+                    Text("\(lesson.cabinet)")
+                        .font(.system(size: 17))
+                        .bold()
+                }
+            }
+            .foregroundColor(colorScheme == .light ? .black : .white)
+            .padding(15)
+            .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+            .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
+                        (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
+                        : .gray.opacity(0.1)
+            )
+        }
+    }
+    
+    private func makeMultipleLessonsView(firstLesson lesson: LessonDTO) -> some View {
+        VStack {
+            HStack {
+                Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
+                    .font(.system(size: 17))
+                    .bold()
+                
+                if lesson.weekType != .All {
+                    Text("(\(lesson.weekType.rawValue))")
+                        .font(.system(size: 17))
+                        .bold()
+                }
+                
+                Spacer()
+                
+                Text(lesson.lessonType.rawValue)
+                    .font(.system(size: 17))
+                    .bold()
+                    .opacity(0.7)
+            }
+            
+            Text(lesson.title)
+                .multilineTextAlignment(.center)
+                .font(.system(size: 17, weight: .bold))
+                .padding(.vertical, 19)
+            
+            HStack {
+                if lesson.subgroup == nil || lesson.subgroup == "" {
+                    Text(lesson.lectorFullName)
+                        .font(.system(size: 17))
+                        .italic()
+                    
+                    Spacer()
+                    
+                    Text("\(lesson.cabinet)")
+                        .font(.system(size: 17))
+                        .bold()
+                }
+            }
+            
+            Image(systemName: "chevron.down")
+                .font(.system(size: 20, weight: .bold))
+                .padding(.top, 2)
+        }
+        .foregroundColor(colorScheme == .light ? .black : .white)
+        .padding(15)
+        .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+        .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
+                    (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
+                    : .gray.opacity(0.1)
+        )
     }
 }
 
