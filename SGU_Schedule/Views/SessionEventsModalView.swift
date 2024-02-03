@@ -13,11 +13,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.15).rounded()
+    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.13).rounded()
     private let minHeight: CGFloat = 250
-    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.15).rounded()
-    
-    @State var selectedGroup: GroupDTO
+    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.13).rounded()
     
     var body: some View {
         ZStack {
@@ -31,6 +29,22 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 .frame(maxWidth: .infinity)
                 .background (Color.white.opacity (0.00001))
                 .gesture(dragGesture)
+                
+                if networkMonitor.isConnected {
+                    if viewModel.isLoadingUpdateDate {
+                        Text("Загрузка...")
+                            .padding(.top, -10)
+                            .font(.system(size: 19, weight: .bold, design: .rounded))
+                    } else {
+                        Text("Обновлено: " + viewModel.updateDate.getDayAndMonthString())
+                            .padding(.top, -10)
+                            .font(.system(size: 19, weight: .bold, design: .rounded))
+                    }
+                } else {
+                    Text("Нет соединения с интернетом")
+                        .padding(.top, -10)
+                        .font(.system(size: 19, weight: .bold, design: .rounded))
+                }
                 
                 if networkMonitor.isConnected {
                     if viewModel.isLoadingSessionEvents {
@@ -95,14 +109,14 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 } else {
                     if dragAmount > 0 { //вниз
                         if curHeight == maxHeight {
-                            withAnimation(.easeInOut(duration: 0.5)) {
+                            withAnimation(.easeInOut(duration: 0.4)) {
                                 curHeight = minHeight
                             }
                         }
                         
                     } else { //вверх
                         if curHeight == minHeight {
-                            withAnimation(.easeInOut(duration: 0.5)) {
+                            withAnimation(.easeInOut(duration: 0.4)) {
                                 curHeight = maxHeight
                             }
                         }
@@ -117,6 +131,6 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
 }
 
 #Preview {
-    SessionEventsModalView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: 141))
+    SessionEventsModalView(viewModel: ScheduleViewModelWithParsingSGU())
         .environmentObject(NetworkMonitor())
 }

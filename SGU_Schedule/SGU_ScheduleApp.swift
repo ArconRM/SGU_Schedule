@@ -11,8 +11,9 @@ import SwiftUI
 struct SGU_ScheduleApp: App {
     var body: some Scene {
         WindowGroup {
-            GroupsView(viewModel: GroupsViewModelWithParsingSGU())
+            MainView(groupsViewModel: GroupsViewModelWithParsingSGU())
                 .environmentObject(NetworkMonitor())
+                .environmentObject(ViewsManager())
         }
     }
 }

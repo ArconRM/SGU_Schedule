@@ -13,13 +13,12 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.15).rounded()
+    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.13).rounded()
     private let minHeight: CGFloat = 250
-    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.15).rounded()
+    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.13).rounded()
     
     @State private var lessonsBySelectedDay = [LessonDTO]()
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
-    @State var selectedGroup: GroupDTO
     
     var body: some View {
         ZStack {
@@ -145,14 +144,14 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else {
                     if dragAmount > 0 { //вниз
                         if curHeight == maxHeight {
-                            withAnimation(.easeInOut(duration: 0.5)) {
+                            withAnimation(.easeInOut(duration: 0.4)) {
                                 curHeight = minHeight
                             }
                         }
                         
                     } else { //вверх
                         if curHeight == minHeight {
-                            withAnimation(.easeInOut(duration: 0.5)) {
+                            withAnimation(.easeInOut(duration: 0.4)) {
                                 curHeight = maxHeight
                             }
                         }
@@ -168,6 +167,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 
 #Preview {
-    ScheduleModalView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: 141))
+    ScheduleModalView(viewModel: ScheduleViewModelWithParsingSGU())
         .environmentObject(NetworkMonitor())
 }

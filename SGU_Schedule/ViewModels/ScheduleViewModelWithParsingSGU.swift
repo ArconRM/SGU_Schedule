@@ -93,6 +93,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                         if self.updateDate.getDayAndMonthString() != Date().getDayAndMonthString() && schedule != nil {
                             self.schedule = schedule
                             self.setCurrentAndTwoNextLessons()
+                            self.isLoadingLessons = false
                         }
                         
                         // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)

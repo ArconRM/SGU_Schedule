@@ -8,91 +8,115 @@
 import SwiftUI
 import UIKit
 
+//ToDo: По башке бы понадавать за !
 struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
     static func == (lhs: ScheduleView<ViewModel>, rhs: ScheduleView<ViewModel>) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
     
     @Environment(\.colorScheme) var colorScheme
-    @Environment(\.presentationMode) private var presentationMode: Binding<PresentationMode>
+    @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var networkMonitor: NetworkMonitor
     
     @ObservedObject var viewModel: ViewModel
     
-    @Binding var favoriteGroupNumber: Int?
+    var selectedGroup: GroupDTO?
     
-    @State var selectedGroup: GroupDTO
+    @State var favoriteGroupNumber: Int? = nil
     
     var body : some View {
-        ZStack {
-            ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup)
-            
-            CarouselView(pageCount: 2, currentIndex: 0, content: {
-                ScheduleModalView(viewModel: viewModel, selectedGroup: selectedGroup)
-                    .environmentObject(networkMonitor)
+        if selectedGroup == nil {
+            Text("Ошибка при выборе группы")
+                .font(.system(size: 30, weight: .bold))
+                .padding(.top, -30)
+        } else {
+            NavigationView {
+                ZStack {
+                    ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
+                    
+                    CarouselView(pageCount: 2, currentIndex: 0, content: {
+                        ScheduleModalView(viewModel: viewModel)
+                            .environmentObject(networkMonitor)
+                        
+                        SessionEventsModalView(viewModel: viewModel)
+                            .environmentObject(networkMonitor)
+                    })
+                }
+                .onAppear {
+                    viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup!.fullNumber,
+                                                         isOnline: networkMonitor.isConnected)
+                    
+                    viewModel.fetchSessionEvents(groupNumber: selectedGroup!.fullNumber,
+                                                 isOnline: networkMonitor.isConnected)
+                    
+                    favoriteGroupNumber = viewModel.favoriteGroupNumber
+                }
                 
-                SessionEventsModalView(viewModel: viewModel, selectedGroup: selectedGroup)
-                    .environmentObject(networkMonitor)
-            })
-        }
-        .navigationBarBackButtonHidden(true)
-        .onAppear {
-            viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
-            viewModel.fetchSessionEvents(groupNumber: selectedGroup.fullNumber, isOnline: networkMonitor.isConnected)
-        }
-        
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                Button(action: {
-                    presentationMode.wrappedValue.dismiss()
-                }) {
-                    Text("←")
-                        .font(.system(size: 23, weight: .semibold))
-                        .padding(.horizontal, 8)
-                        .padding(.vertical, 5)
-                        .background (
-                            ZStack {
-                                (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                    .cornerRadius(5)
-                                    .blur(radius: 2)
-                                    .ignoresSafeArea()
+                .toolbar {
+                    ToolbarItem(placement: .topBarLeading) {
+                        Button(action: {
+                            
+                            withAnimation(.easeInOut(duration: 0.5)) {
+                                viewsManager.showGroupsView()
                             }
-                                .background(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(colorScheme == .light ? .white : .clear)
-                                        .shadow(color: colorScheme == .light ? .gray.opacity(0.6) : .white.opacity(0.2), radius: 5)))
-                }
-            }
-            
-            ToolbarItem(placement: .topBarTrailing) {
-                Button(action: {
-                    if viewModel.favoriteGroupNumber != selectedGroup.fullNumber {
-                        viewModel.favoriteGroupNumber = selectedGroup.fullNumber
-                        favoriteGroupNumber = viewModel.favoriteGroupNumber
-                        presentationMode.wrappedValue.dismiss()
+                        }) {
+                            Image(systemName: "multiply")
+                                .font(.system(size: 23, weight: .semibold))
+                                .padding(7)
+                                .foregroundColor(colorScheme == .light ? .black : .white)
+                                .background (
+                                    ZStack {
+                                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                            .cornerRadius(5)
+                                            .blur(radius: 2)
+                                            .ignoresSafeArea()
+                                    }
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .fill(colorScheme == .light ? .white : .clear)
+                                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                        }
                     }
-                }) {
-                    Image(systemName: favoriteGroupNumber == selectedGroup.fullNumber ? "star.fill" : "star")
-                        .padding(5)
-                        .background (
-                            ZStack {
-                                (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                    .cornerRadius(5)
-                                    .blur(radius: 2)
-                                    .ignoresSafeArea()
+                    
+                    ToolbarItem(placement: .topBarTrailing) {
+                        Button(action: {
+                            if viewModel.favoriteGroupNumber != selectedGroup!.fullNumber {
+                                viewModel.favoriteGroupNumber = selectedGroup!.fullNumber
+                                favoriteGroupNumber = viewModel.favoriteGroupNumber
+                                
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    viewsManager.showGroupsView()
+                                }
                             }
-                                .background(
-                                    RoundedRectangle(cornerRadius: 5)
-                                        .fill(colorScheme == .light ? .white : .clear)
-                                        .shadow(color: colorScheme == .light ? .gray.opacity(0.6) : .white.opacity(0.2), radius: 5)))
+                        }) {
+                            Image(systemName: favoriteGroupNumber == selectedGroup!.fullNumber ? "star.fill" : "star")
+                                .font(.system(size: 18, weight: .semibold))
+                                .padding(5)
+                                .foregroundColor(colorScheme == .light ? .black : .white)
+                                .background (
+                                    ZStack {
+                                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                            .cornerRadius(5)
+                                            .blur(radius: 2)
+                                            .ignoresSafeArea()
+                                    }
+                                        .background(
+                                            RoundedRectangle(cornerRadius: 5)
+                                                .fill(colorScheme == .light ? .white : .clear)
+                                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                        }
+                    }
                 }
-                .padding(.vertical)
+                .onAppear {
+                    print(favoriteGroupNumber)
+                    print(selectedGroup!.fullNumber)
+                }
+                .edgesIgnoringSafeArea(.bottom)
+                .alert(isPresented: $viewModel.isShowingError) {
+                    Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
+                          message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
+                }
             }
-        }
-        .edgesIgnoringSafeArea(.bottom)
-        .alert(isPresented: $viewModel.isShowingError) {
-            Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
-                  message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
     }
 }
@@ -100,10 +124,8 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), 
-                     favoriteGroupNumber: .constant(0),
-                     selectedGroup: GroupDTO(fullNumber: 141))
-        .environmentObject(NetworkMonitor())
-//            .colorScheme(.dark)
+        ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: 141))
+            .environmentObject(NetworkMonitor())
+            .environmentObject(ViewsManager())
     }
 }

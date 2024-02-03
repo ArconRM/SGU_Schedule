@@ -16,6 +16,8 @@
 		BA10695D2B08CB93001C7A63 /* CoreData_LessonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA10695C2B08CB93001C7A63 /* CoreData_LessonExtension.swift */; };
 		BA1069612B08CBE3001C7A63 /* LessonCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1069602B08CBE3001C7A63 /* LessonCoreDataManager.swift */; };
 		BA1069632B08CC67001C7A63 /* GroupScheduleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1069622B08CC67001C7A63 /* GroupScheduleCoreDataManager.swift */; };
+		BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FD82B6C09F10068B2A4 /* MainView.swift */; };
+		BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */; };
 		BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
 		BA2FEEDA2B667E42001F91F5 /* SessionEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED92B667E42001F91F5 /* SessionEventType.swift */; };
 		BA2FEEDC2B668956001F91F5 /* SessionEventsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */; };
@@ -172,6 +174,8 @@
 		BA10695C2B08CB93001C7A63 /* CoreData_LessonExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_LessonExtension.swift; sourceTree = "<group>"; };
 		BA1069602B08CBE3001C7A63 /* LessonCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonCoreDataManager.swift; sourceTree = "<group>"; };
 		BA1069622B08CC67001C7A63 /* GroupScheduleCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleCoreDataManager.swift; sourceTree = "<group>"; };
+		BA1A4FD82B6C09F10068B2A4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsManager.swift; sourceTree = "<group>"; };
 		BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventDTO.swift; sourceTree = "<group>"; };
 		BA2FEED92B667E42001F91F5 /* SessionEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventType.swift; sourceTree = "<group>"; };
 		BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsNetworkManager.swift; sourceTree = "<group>"; };
@@ -294,6 +298,14 @@
 				3BD74F47A47E5EAA76AB7E6E /* Pods_Watch_SGU_Schedule_Watch_App.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		BA1A4FDA2B6C1B2F0068B2A4 /* ViewManagers */ = {
+			isa = PBXGroup;
+			children = (
+				BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */,
+			);
+			path = ViewManagers;
 			sourceTree = "<group>";
 		};
 		BA2FEEF12B6825D5001F91F5 /* AdditionalViews */ = {
@@ -475,6 +487,7 @@
 				BAFA580F2AECFCD30060BD81 /* Persistence */,
 				BA9D791D2ABE3D7600C36932 /* Networking */,
 				BADAE12D2ABA0B040079E3D7 /* Extensions */,
+				BA1A4FDA2B6C1B2F0068B2A4 /* ViewManagers */,
 				BADAE1252ABA003D0079E3D7 /* ViewModels */,
 				BADAE1242ABA00380079E3D7 /* Models */,
 				BADAE1232ABA002C0079E3D7 /* Views */,
@@ -499,11 +512,12 @@
 				BABF260D2ABB0D92003D3385 /* Launch Screen.storyboard */,
 				BA2FEEF12B6825D5001F91F5 /* AdditionalViews */,
 				BADAE12A2ABA074F0079E3D7 /* Subviews */,
+				BA1A4FD82B6C09F10068B2A4 /* MainView.swift */,
+				BA9D79162ABB3AD900C36932 /* GroupsView.swift */,
 				BADAE1132AB9C0D60079E3D7 /* ScheduleView.swift */,
 				BA2FEEED2B682511001F91F5 /* ScheduleBackView.swift */,
 				BA2FEEEF2B682547001F91F5 /* ScheduleModalView.swift */,
 				BA2FEEE92B6817C6001F91F5 /* SessionEventsModalView.swift */,
-				BA9D79162ABB3AD900C36932 /* GroupsView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -894,6 +908,7 @@
 				BA5383612AF571B90004F012 /* GroupScheduleDTO.swift in Sources */,
 				BAAEB3102AD9A3BD00E90223 /* DateNetworkManager.swift in Sources */,
 				BA9D792F2AC33D2E00C36932 /* NetworkError.swift in Sources */,
+				BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */,
 				BAAEB3062AD992B000E90223 /* DateHTMLParser.swift in Sources */,
 				BA9D79252AC2173B00C36932 /* LessonHTMLParserSGU.swift in Sources */,
 				BAAEB30A2AD9953900E90223 /* GroupsHTMLParser.swift in Sources */,
@@ -948,6 +963,7 @@
 				BAAEB3032AD98EFB00E90223 /* LessonHTMLParser.swift in Sources */,
 				BAFA58152AED25DD0060BD81 /* ViewModelsKeys.swift in Sources */,
 				BA2FEEE02B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift in Sources */,
+				BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */,
 				BA9D792A2AC21C3B00C36932 /* URLSource.swift in Sources */,
 				BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */,
 			);

@@ -8,16 +8,15 @@
 import SwiftUI
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
-    
     @ObservedObject var viewModel: ViewModel
     
-    @State var selectedGroup: GroupDTO
+    var selectedGroup: GroupDTO
     
     var body : some View {
         VStack {
             Text(selectedGroup.shortName)
                 .font(.system(size: 30, weight: .bold))
-                .padding(.top, -20)
+                .padding(.top, -35)
             
             Text("Сейчас:")
                 .font(.system(size: 20, weight: .bold))
