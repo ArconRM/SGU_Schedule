@@ -47,33 +47,38 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
         return UserDefaults.standard.integer(forKey: selectedYearKey)
     }
     
-    public func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram) {
+    public func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram, isOnline: Bool) {
         UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
-        fetchGroupsWithoutFavorite(year: getSelectedYear(), academicProgram: newValue)
+        fetchGroupsWithoutFavorite(year: getSelectedYear(), academicProgram: newValue, isOnline: isOnline)
     }
     
-    public func setSelectedYearAndFetchGroups(newValue: Int) {
+    public func setSelectedYearAndFetchGroups(newValue: Int, isOnline: Bool) {
         UserDefaults.standard.set(newValue, forKey: selectedYearKey)
-        fetchGroupsWithoutFavorite(year: newValue, academicProgram: getSelectedAcademicProgram())
+        fetchGroupsWithoutFavorite(year: newValue, academicProgram: getSelectedAcademicProgram(), isOnline: isOnline)
     }
     
-    public func fetchGroupsWithoutFavorite(year: Int, academicProgram: AcademicProgram) {
+    public func fetchGroupsWithoutFavorite(year: Int, academicProgram: AcademicProgram, isOnline: Bool) {
         self.isLoadingGroups = true
         
-        networkManager.getGroupsByYearAndAcademicProgram(year: year, program: academicProgram, resultQueue: .main) { result in
-            switch result {
-            case .success(let groups):
-                if self.favoriteGroupNumber != nil {
-                    self.groupsWithoutFavorite = groups.filter { $0.fullNumber != self.favoriteGroupNumber! }
-                } else {
-                    self.groupsWithoutFavorite = groups
+        if isOnline {
+            networkManager.getGroupsByYearAndAcademicProgram(year: year, program: academicProgram, resultQueue: .main) { result in
+                switch result {
+                case .success(let groups):
+                    if self.favoriteGroupNumber != nil {
+                        self.groupsWithoutFavorite = groups.filter { $0.fullNumber != self.favoriteGroupNumber! }
+                    } else {
+                        self.groupsWithoutFavorite = groups
+                    }
+                case .failure(let error):
+                    self.groupsWithoutFavorite = []
+                    self.showNetworkError(error: error)
                 }
-            case .failure(let error):
-                self.groupsWithoutFavorite = []
-                self.showNetworkError(error: error)
+                self.isLoadingGroups = false
             }
+        } else {
             self.isLoadingGroups = false
         }
+        
     }
     
     private func showNetworkError(error: Error) {

@@ -82,7 +82,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         ForEach(1...8, id:\.self) { lessonNumber in
                             let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
                             if !lessonsByNumber.isEmpty {
-                                ScheduleSubview(lessons: lessonsByNumber)
+                                //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
+                                ScheduleSubview(lessons: lessonsByNumber).id(UUID())
                             }
                         }
                         .padding(.top, 5)
@@ -104,22 +105,11 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .background (
             ZStack {
                 if colorScheme == .light {
-//                    LinearGradient(
-//                        colors: [.blue.opacity(0.1), .white],
-//                        startPoint: .top,
-//                        endPoint: .bottom
-//                    )
                     Color.blue.opacity(0.07)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
                 } else {
-//                    LinearGradient(
-//                        colors: [.blue.opacity(0.15), .black],
-//                        startPoint: .top,
-//                        endPoint: .bottom
-//                    )
-                    
                     Color.blue.opacity(0.1)
                     .cornerRadius(35)
                     .blur(radius: 2)

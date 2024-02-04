@@ -59,7 +59,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         }
                     }
                     .onChange(of: selectedAcademicProgram) { newValue in
-                        viewModel.setSelectedAcademicProgramAndFetchGroups(newValue: newValue)
+                        viewModel.setSelectedAcademicProgramAndFetchGroups(newValue: newValue, isOnline: networkMonitor.isConnected)
                     }
                     
                     Menu {
@@ -90,7 +90,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         }
                     }
                     .onChange(of: selectedYear) { newValue in
-                        viewModel.setSelectedYearAndFetchGroups(newValue: newValue)
+                        viewModel.setSelectedYearAndFetchGroups(newValue: newValue, isOnline: networkMonitor.isConnected)
                     }
                 }
                 
@@ -145,7 +145,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             selectedYear = viewModel.getSelectedYear()
             selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
             favoriteGroupNumber = viewModel.favoriteGroupNumber
-            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram)
+            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram, isOnline: networkMonitor.isConnected)
         }
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),

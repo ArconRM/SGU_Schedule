@@ -107,10 +107,6 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                         }
                     }
                 }
-                .onAppear {
-                    print(favoriteGroupNumber)
-                    print(selectedGroup!.fullNumber)
-                }
                 .edgesIgnoringSafeArea(.bottom)
                 .alert(isPresented: $viewModel.isShowingError) {
                     Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),

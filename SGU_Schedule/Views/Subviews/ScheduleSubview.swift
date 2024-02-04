@@ -7,10 +7,14 @@
 
 import SwiftUI
 
-struct ScheduleSubview: View {
+struct ScheduleSubview: View, Equatable {
+    static func == (lhs: ScheduleSubview, rhs: ScheduleSubview) -> Bool {
+        return lhs.lessons == rhs.lessons
+    }
+    
     @Environment(\.colorScheme) var colorScheme
     
-    let lessons: [LessonDTO]
+    var lessons: [LessonDTO]
     
     @State var areMultipleLessonsCollapsed: Bool = true
     
@@ -20,14 +24,14 @@ struct ScheduleSubview: View {
                 makeSingleLessonView(lesson: lessons.first!)
             } else if lessons.count >= 1 {
                 if areMultipleLessonsCollapsed {
-                    makeMultipleLessonsView(firstLesson: lessons.first!)
+                    makeMultipleLessonsView(firstLesson: sortLessonsByWeekType(lessons).first!)
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.5)) {
                                 areMultipleLessonsCollapsed.toggle()
                             }
                         }
                 } else {
-                    makeMultipleLessonsView(lessons: lessons)
+                    makeMultipleLessonsView(lessons: sortLessonsByWeekType(lessons))
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.5)) {
                                 areMultipleLessonsCollapsed.toggle()
@@ -45,6 +49,10 @@ struct ScheduleSubview: View {
                  radius: 3,
                  x: 0,
                  y: 0)
+    }
+    
+    private func sortLessonsByWeekType(_ lessons: [LessonDTO]) -> [LessonDTO] {
+        return lessons.filter({ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }) + lessons.filter({ !Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) })
     }
     
     private func makeSingleLessonView(lesson: LessonDTO) -> some View {

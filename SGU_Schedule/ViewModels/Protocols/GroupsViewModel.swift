@@ -20,8 +20,8 @@ public protocol GroupsViewModel: ObservableObject {
     func getSelectedAcademicProgram() -> AcademicProgram
     func getSelectedYear() -> Int
     
-    func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram)
-    func setSelectedYearAndFetchGroups(newValue: Int)
+    func setSelectedAcademicProgramAndFetchGroups(newValue: AcademicProgram, isOnline: Bool)
+    func setSelectedYearAndFetchGroups(newValue: Int, isOnline: Bool)
     
-    func fetchGroupsWithoutFavorite(year: Int, academicProgram: AcademicProgram)
+    func fetchGroupsWithoutFavorite(year: Int, academicProgram: AcademicProgram, isOnline: Bool)
 }
