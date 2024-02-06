@@ -131,6 +131,6 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
 }
 
 #Preview {
-    SessionEventsModalView(viewModel: ScheduleViewModelWithParsingSGU())
+    SessionEventsModalView(viewModel: ScheduleViewModelWithParsingSGUAssembly().build())
         .environmentObject(NetworkMonitor())
 }

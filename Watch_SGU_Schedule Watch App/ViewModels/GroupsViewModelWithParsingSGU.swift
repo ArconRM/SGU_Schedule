@@ -12,10 +12,10 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
     @Published var groups = [GroupDTO]()
     @Published var isLoadingGroups: Bool = true
     
-    @Published var networkManager: GroupNetworkManager
+    @Published var networkManager: GroupsNetworkManager
     
     init() {
-        self.networkManager = GroupNetworkManagerWithParsing(urlSource: URLSourceSGU(),
+        self.networkManager = GroupsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                              groupsParser: GroupsHTMLParserSGU())
     }
     

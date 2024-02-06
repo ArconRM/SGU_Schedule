@@ -7,7 +7,12 @@
 
 import Foundation
 
-protocol GroupSchedulePersistenceManager: PersistenceManager {
-    associatedtype ManagedModel = GroupSchedule
-    associatedtype DTOModel = GroupScheduleDTO
+protocol GroupSchedulePersistenceManager {
+    func saveItem(item: GroupScheduleDTO) throws -> GroupSchedule
+    
+    func fetchAllItemsDTO() throws -> [GroupScheduleDTO]
+    
+    func fetchAllManagedItems() throws -> [GroupSchedule]
+    
+    func clearAllItems() throws
 }

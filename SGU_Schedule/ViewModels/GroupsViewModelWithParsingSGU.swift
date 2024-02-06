@@ -8,6 +8,8 @@
 import Foundation
 
 final class GroupsViewModelWithParsingSGU: GroupsViewModel {
+    private let networkManager: GroupsNetworkManager
+    
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
@@ -24,11 +26,8 @@ final class GroupsViewModelWithParsingSGU: GroupsViewModel {
         return number != 0 ? number : nil
     }
     
-    @Published var networkManager: GroupNetworkManager
-    
-    init() {
-        self.networkManager = GroupNetworkManagerWithParsing(urlSource: URLSourceSGU(),
-                                                             groupsParser: GroupsHTMLParserSGU())
+    init(networkManager: GroupsNetworkManager) {
+        self.networkManager = networkManager
     }
     
     public func getSelectedAcademicProgram() -> AcademicProgram {

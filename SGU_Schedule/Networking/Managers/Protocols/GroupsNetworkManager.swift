@@ -1,5 +1,5 @@
 //
-//  GroupNetworkManager.swift
+//  GroupsNetworkManager.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 13.10.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol GroupNetworkManager {
+public protocol GroupsNetworkManager {
 //    func getAllGroups(resultQueue: DispatchQueue,
 //                      completionHandler: @escaping (Result<[Group], Error>) -> Void)
     

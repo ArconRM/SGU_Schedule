@@ -8,8 +8,9 @@
 import SwiftUI
 import UIKit
 
-//ToDo: По башке бы понадавать за !
+//TODO: По башке бы понадавать за !
 struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
+    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: ScheduleView<ViewModel>, rhs: ScheduleView<ViewModel>) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
@@ -120,8 +121,9 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: GroupDTO(fullNumber: 141))
-            .environmentObject(NetworkMonitor())
-            .environmentObject(ViewsManager())
+        ScheduleView(viewModel: ScheduleViewModelWithParsingSGUAssembly().build(),
+                     selectedGroup: GroupDTO(fullNumber: 141))
+        .environmentObject(NetworkMonitor())
+        .environmentObject(ViewsManager())
     }
 }

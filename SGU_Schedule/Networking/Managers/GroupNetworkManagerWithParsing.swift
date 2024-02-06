@@ -1,5 +1,5 @@
 //
-//  GroupNetworkManagerWithParsing.swift
+//  GroupsNetworkManagerWithParsing.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 13.10.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class GroupNetworkManagerWithParsing: GroupNetworkManager {
+public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
     
     private var urlSource: URLSource
     private var groupsParser: GroupsHTMLParser

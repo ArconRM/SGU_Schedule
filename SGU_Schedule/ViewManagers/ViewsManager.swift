@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-// ToDo: через DI с протоколом сделать
+// TODO: через DI с протоколом сделать
 /// Manages navigation and passing data
 public final class ViewsManager: ObservableObject {
     

@@ -10,15 +10,15 @@ import Foundation
 public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
     
     private var urlSource: URLSource
-    private var sessionEventsParser: SessionEventsParser
+    private var sessionEventsParser: SessionEventsHTMLParser
     
-    public init(urlSource: URLSource, sessionEventsParser: SessionEventsParser) {
+    public init(urlSource: URLSource, sessionEventsParser: SessionEventsHTMLParser) {
         self.urlSource = urlSource
         self.sessionEventsParser = sessionEventsParser
     }
     
     
-    public func getGroupSessionEvents(group: GroupDTO, resultQueue: DispatchQueue, completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void) {
+    public func getGroupSessionEvents(group: GroupDTO, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void) {
         let groupURL = urlSource.getUrlWithGroupParameter(parameter: String(group.fullNumber))
         
         URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in

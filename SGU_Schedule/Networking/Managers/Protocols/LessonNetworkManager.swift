@@ -1,5 +1,5 @@
 //
-//  LessonsNetworkManager.swift
+//  LessonNetworkManager.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 30.09.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LessonsNetworkManager {
+public protocol LessonNetworkManager {
 //    func getLessonsForDay(group: GroupDTO,
 //                           day: Weekdays,
 //                           resultQueue: DispatchQueue,

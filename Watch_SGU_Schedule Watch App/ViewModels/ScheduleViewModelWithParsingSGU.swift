@@ -8,7 +8,7 @@
 import Foundation
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
-    private var lessonsNetworkManager: LessonsNetworkManager
+    private var lessonsNetworkManager: LessonNetworkManager
     private var dateNetworkManager: DateNetworkManager
     private var schedulePersistenceManager: GroupScheduleCoreDataManager
     
@@ -28,7 +28,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     
     init() {
-        self.lessonsNetworkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
+        self.lessonsNetworkManager = LessonNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                                       lessonParser: LessonHTMLParserSGU())
         self.dateNetworkManager = DateNetworkManagerWithParsing(urlSource: URLSourceSGU(),
                                                                 dateParser: DateHTMLParserSGU())

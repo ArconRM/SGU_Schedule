@@ -156,7 +156,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: GroupsViewModelWithParsingSGU())
+        GroupsView(viewModel: GroupsViewModelWithParsingSGUAssembly().build())
             .environmentObject(NetworkMonitor())
             .environmentObject(ViewsManager())
     }

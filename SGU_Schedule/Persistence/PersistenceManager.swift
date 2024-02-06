@@ -8,6 +8,7 @@
 import Foundation
 import CoreData
 
+//с ним нормально наследоваться не получается(
 public protocol PersistenceManager {
     associatedtype ManagedModel: NSManagedObject
     associatedtype DTOModel

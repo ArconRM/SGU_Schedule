@@ -7,7 +7,12 @@
 
 import Foundation
 
-protocol LessonPersistenceManager: PersistenceManager {
-    associatedtype ManagedModel = Lesson
-    associatedtype DTOModel = LessonDTO
+protocol LessonPersistenceManager {
+    func saveItem(item: LessonDTO) throws -> Lesson
+    
+    func fetchAllItemsDTO() throws -> [LessonDTO]
+    
+    func fetchAllManagedItems() throws -> [Lesson]
+    
+    func clearAllItems() throws
 }

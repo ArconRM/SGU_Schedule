@@ -1,5 +1,5 @@
 //
-//  SessionEventsParserSGU.swift
+//  SessionEventsHTMLParserSGU.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 28.01.2024.
@@ -9,7 +9,7 @@ import Foundation
 import Kanna
 
 
-struct SessionEventsParserSGU: SessionEventsParser {
+struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
     
     private let baseXpath = "//div[2]/table[@id='session']/"
     

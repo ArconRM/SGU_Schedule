@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-struct MainView<MainViewGroupsViewModel>: View where MainViewGroupsViewModel: GroupsViewModel {
+//TODO: мб все таки через интерфейсы как-то, пока для теста нужно создавать отдельную mainview
+struct MainView: View {
     
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    var groupsViewModel: MainViewGroupsViewModel
     
+    var groupsViewModel = GroupsViewModelWithParsingSGUAssembly().build()
+    let scheduleViewModelAssembly = ScheduleViewModelWithParsingSGUAssembly()
     
     var body: some View {
         VStack {
@@ -22,7 +24,7 @@ struct MainView<MainViewGroupsViewModel>: View where MainViewGroupsViewModel: Gr
                     .environmentObject(networkMonitor)
                     .environmentObject(viewsManager)
             case .ScheduleView:
-                ScheduleView(viewModel: ScheduleViewModelWithParsingSGU(), selectedGroup: viewsManager.selectedGroup)
+                ScheduleView(viewModel: scheduleViewModelAssembly.build(), selectedGroup: viewsManager.selectedGroup)
                     .environmentObject(networkMonitor)
                     .environmentObject(viewsManager)
             }
@@ -31,7 +33,7 @@ struct MainView<MainViewGroupsViewModel>: View where MainViewGroupsViewModel: Gr
 }
 
 #Preview {
-    MainView(groupsViewModel: GroupsViewModelWithParsingSGU())
+    MainView()
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManager())
 }

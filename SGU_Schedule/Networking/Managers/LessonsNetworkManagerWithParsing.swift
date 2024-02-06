@@ -1,5 +1,5 @@
 //
-//  LessonsNetworkManagerWithParsing.swift
+//  LessonNetworkManagerWithParsing.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 23.09.2023.
@@ -8,7 +8,7 @@
 import Foundation
 //https://developer.apple.com/forums/thread/729462
 
-public class LessonsNetworkManagerWithParsing: LessonsNetworkManager {
+public class LessonNetworkManagerWithParsing: LessonNetworkManager {
     
     private var urlSource: URLSource
     private var lessonParser: LessonHTMLParser

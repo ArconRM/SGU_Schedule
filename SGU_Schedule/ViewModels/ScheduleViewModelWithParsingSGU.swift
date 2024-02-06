@@ -8,10 +8,10 @@
 import Foundation
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
-    private var lessonsNetworkManager: LessonsNetworkManager
-    private var sessionEventsNetworkManager: SessionEventsNetworkManager
-    private var dateNetworkManager: DateNetworkManager
-    private var schedulePersistenceManager: GroupScheduleCoreDataManager
+    private let lessonsNetworkManager: LessonNetworkManager
+    private let sessionEventsNetworkManager: SessionEventsNetworkManager
+    private let dateNetworkManager: DateNetworkManager
+    private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
     @Published var schedule: GroupScheduleDTO?
     @Published var currentEvent: (any ScheduleEventDTO)? = nil
@@ -53,14 +53,15 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
     }
     
-    init() {
-        self.lessonsNetworkManager = LessonsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
-                                                                      lessonParser: LessonHTMLParserSGU())
-        self.sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: URLSourceSGU(),
-                                                                                  sessionEventsParser: SessionEventsParserSGU())
-        self.dateNetworkManager = DateNetworkManagerWithParsing(urlSource: URLSourceSGU(),
-                                                                dateParser: DateHTMLParserSGU())
-        self.schedulePersistenceManager = GroupScheduleCoreDataManager()
+    init(lessonsNetworkManager: LessonNetworkManager, 
+         sessionEventsNetworkManager: SessionEventsNetworkManager,
+         dateNetworkManager: DateNetworkManager, 
+         schedulePersistenceManager: GroupSchedulePersistenceManager) {
+        
+        self.lessonsNetworkManager = lessonsNetworkManager
+        self.sessionEventsNetworkManager = sessionEventsNetworkManager
+        self.dateNetworkManager = dateNetworkManager
+        self.schedulePersistenceManager = schedulePersistenceManager
     }
     
     /// If groupNumber isn't favorite and isOnline true - fetches lessons throught network manager

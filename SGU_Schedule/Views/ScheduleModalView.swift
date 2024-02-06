@@ -160,6 +160,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 
 #Preview {
-    ScheduleModalView(viewModel: ScheduleViewModelWithParsingSGU())
+    ScheduleModalView(viewModel:ScheduleViewModelWithParsingSGUAssembly().build())
         .environmentObject(NetworkMonitor())
 }
