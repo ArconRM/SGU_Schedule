@@ -19,6 +19,7 @@
 		BA1193FE2B7179A80087C6CE /* ViewModelsUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1193FD2B7179A80087C6CE /* ViewModelsUnitTests.swift */; };
 		BA1256CA2B72245C0019D2E6 /* ScheduleViewModelWithParsingSGUForTestAssembly.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256C92B72245C0019D2E6 /* ScheduleViewModelWithParsingSGUForTestAssembly.swift */; };
 		BA1256CD2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CC2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift */; };
+		BA1256CF2B72A6E60019D2E6 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CE2B72A6E60019D2E6 /* UIDeviceExtension.swift */; };
 		BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FD82B6C09F10068B2A4 /* MainView.swift */; };
 		BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */; };
 		BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
@@ -194,6 +195,7 @@
 		BA1193FD2B7179A80087C6CE /* ViewModelsUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsUnitTests.swift; sourceTree = "<group>"; };
 		BA1256C92B72245C0019D2E6 /* ScheduleViewModelWithParsingSGUForTestAssembly.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelWithParsingSGUForTestAssembly.swift; sourceTree = "<group>"; };
 		BA1256CC2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleCoreDataManagerForTest.swift; sourceTree = "<group>"; };
+		BA1256CE2B72A6E60019D2E6 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		BA1A4FD82B6C09F10068B2A4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsManager.swift; sourceTree = "<group>"; };
 		BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventDTO.swift; sourceTree = "<group>"; };
@@ -696,6 +698,7 @@
 			children = (
 				BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */,
 				BAA53E512AE920390098F30E /* UIScreenExtension.swift */,
+				BA1256CE2B72A6E60019D2E6 /* UIDeviceExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1088,6 +1091,7 @@
 				BADAE12F2ABA0B240079E3D7 /* DateExtension.swift in Sources */,
 				BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */,
 				BAAD1F192B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift in Sources */,
+				BA1256CF2B72A6E60019D2E6 /* UIDeviceExtension.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
 				BAAD1F1E2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
@@ -1370,7 +1374,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1406,7 +1410,7 @@
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",

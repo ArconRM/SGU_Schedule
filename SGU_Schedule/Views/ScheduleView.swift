@@ -21,7 +21,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     
     @ObservedObject var viewModel: ViewModel
     
-    var selectedGroup: GroupDTO?
+    @Binding var selectedGroup: GroupDTO?
     
     @State var favoriteGroupNumber: Int? = nil
     
@@ -30,7 +30,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             Text("Ошибка при выборе группы")
                 .font(.system(size: 30, weight: .bold))
                 .padding(.top, -30)
-        } else {
+        } else if UIDevice.isPhone {
             NavigationView {
                 ZStack {
                     ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
@@ -44,69 +44,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     })
                 }
                 .onAppear {
-                    viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup!.fullNumber,
-                                                         isOnline: networkMonitor.isConnected)
-                    
-                    viewModel.fetchSessionEvents(groupNumber: selectedGroup!.fullNumber,
-                                                 isOnline: networkMonitor.isConnected)
-                    
-                    favoriteGroupNumber = viewModel.favoriteGroupNumber
+                    fetchAllData()
                 }
-                
                 .toolbar {
-                    ToolbarItem(placement: .topBarLeading) {
-                        Button(action: {
-                            
-                            withAnimation(.easeInOut(duration: 0.5)) {
-                                viewsManager.showGroupsView()
-                            }
-                        }) {
-                            Image(systemName: "multiply")
-                                .font(.system(size: 23, weight: .semibold))
-                                .padding(7)
-                                .foregroundColor(colorScheme == .light ? .black : .white)
-                                .background (
-                                    ZStack {
-                                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                            .cornerRadius(5)
-                                            .blur(radius: 2)
-                                            .ignoresSafeArea()
-                                    }
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(colorScheme == .light ? .white : .clear)
-                                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                        }
-                    }
+                    makeCloseToolbarItem()
                     
-                    ToolbarItem(placement: .topBarTrailing) {
-                        Button(action: {
-                            if viewModel.favoriteGroupNumber != selectedGroup!.fullNumber {
-                                viewModel.favoriteGroupNumber = selectedGroup!.fullNumber
-                                favoriteGroupNumber = viewModel.favoriteGroupNumber
-                                
-                                withAnimation(.easeInOut(duration: 0.5)) {
-                                    viewsManager.showGroupsView()
-                                }
-                            }
-                        }) {
-                            Image(systemName: favoriteGroupNumber == selectedGroup!.fullNumber ? "star.fill" : "star")
-                                .font(.system(size: 18, weight: .semibold))
-                                .padding(5)
-                                .foregroundColor(colorScheme == .light ? .black : .white)
-                                .background (
-                                    ZStack {
-                                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                            .cornerRadius(5)
-                                            .blur(radius: 2)
-                                            .ignoresSafeArea()
-                                    }
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 5)
-                                                .fill(colorScheme == .light ? .white : .clear)
-                                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                        }
-                    }
+                    makeFavoriteToolbar()
                 }
                 .edgesIgnoringSafeArea(.bottom)
                 .alert(isPresented: $viewModel.isShowingError) {
@@ -114,6 +57,108 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                           message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
                 }
             }
+        } else if UIDevice.isPad {
+            ZStack {
+                ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
+                
+                CarouselView(pageCount: 2, currentIndex: 0, content: {
+                    ScheduleModalView(viewModel: viewModel)
+                        .environmentObject(networkMonitor)
+                    
+                    SessionEventsModalView(viewModel: viewModel)
+                        .environmentObject(networkMonitor)
+                })
+            }
+            .onAppear {
+                fetchAllData()
+            }
+            
+            .onChange(of: selectedGroup) { newValue in
+                fetchAllData()
+            }
+            
+            .toolbar {
+                makeCloseToolbarItem()
+                
+                makeFavoriteToolbar()
+            }
+            .edgesIgnoringSafeArea(.bottom)
+            .alert(isPresented: $viewModel.isShowingError) {
+                Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
+                      message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
+            }
+        }
+    }
+    
+    private func fetchAllData() {
+        viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup!.fullNumber,
+                                             isOnline: networkMonitor.isConnected)
+        
+        viewModel.fetchSessionEvents(groupNumber: selectedGroup!.fullNumber,
+                                     isOnline: networkMonitor.isConnected)
+        
+        favoriteGroupNumber = viewModel.favoriteGroupNumber
+    }
+    
+    private func makeCloseToolbarItem() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarLeading) {
+            Button(action: {
+                
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    viewsManager.showGroupsView(needToReload: false)
+                }
+            }) {
+                Image(systemName: "multiply")
+                    .font(.system(size: 23, weight: .semibold))
+                    .padding(7)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .background (
+                        ZStack {
+                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                .cornerRadius(5)
+                                .blur(radius: 2)
+                                .ignoresSafeArea()
+                        }
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(colorScheme == .light ? .white : .clear)
+                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                    .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+            }
+            .disabled(viewModel.isLoadingLessons)
+        }
+    }
+    
+    private func makeFavoriteToolbar() -> some ToolbarContent {
+        ToolbarItem(placement: .topBarTrailing) {
+            Button(action: {
+                if viewModel.favoriteGroupNumber != selectedGroup!.fullNumber {
+                    viewModel.favoriteGroupNumber = selectedGroup!.fullNumber
+                    favoriteGroupNumber = viewModel.favoriteGroupNumber
+                    
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        viewsManager.showGroupsView(needToReload: UIDevice.isPad)
+                    }
+                }
+            }) {
+                Image(systemName: favoriteGroupNumber == selectedGroup!.fullNumber ? "star.fill" : "star")
+                    .font(.system(size: 18, weight: .semibold))
+                    .padding(5)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .background (
+                        ZStack {
+                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                                .cornerRadius(5)
+                                .blur(radius: 2)
+                                .ignoresSafeArea()
+                        }
+                            .background(
+                                RoundedRectangle(cornerRadius: 5)
+                                    .fill(colorScheme == .light ? .white : .clear)
+                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                    .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+            }
+            .disabled(viewModel.isLoadingLessons)
         }
     }
 }
@@ -122,7 +167,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(viewModel: ScheduleViewModelWithParsingSGUAssembly().build(),
-                     selectedGroup: GroupDTO(fullNumber: 141))
+                     selectedGroup: .constant(GroupDTO(fullNumber: 141)))
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManager())
     }

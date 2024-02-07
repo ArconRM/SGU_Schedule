@@ -20,13 +20,23 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     var body: some View {
         ZStack {
-            LinearGradient(
-                colors: [.blue.opacity(0.15), (colorScheme == .light ? .white : .black)],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            )
-            .blur(radius: 2)
-            .ignoresSafeArea()
+            if UIDevice.isPhone {
+                LinearGradient(
+                    colors: [.blue.opacity(0.15), (colorScheme == .light ? .white : .black)],
+                    startPoint: .topLeading,
+                    endPoint: .bottomTrailing
+                )
+                .blur(radius: 2)
+                .ignoresSafeArea()
+            } else if UIDevice.isPad {
+                if colorScheme == .light {
+                    Color.blue.opacity(0.07)
+                        .ignoresSafeArea()
+                } else {
+                    Color.blue.opacity(0.1)
+                        .ignoresSafeArea()
+                }
+            }
             
             VStack {
                 // Пикеры с программой обучения и курсом
@@ -142,15 +152,28 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         }
         .accentColor(colorScheme == .light ? .black : .white)
         .onAppear {
-            selectedYear = viewModel.getSelectedYear()
-            selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
-            favoriteGroupNumber = viewModel.favoriteGroupNumber
-            viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram, isOnline: networkMonitor.isConnected)
+            fetchAllData()
         }
+        
+        //Для айпада
+        .onChange(of: viewsManager.needToReloadGroupView) { newValue in
+            if newValue {
+                fetchAllData()
+            }
+            viewsManager.needToReloadGroupView = false
+        }
+        
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
+    }
+    
+    private func fetchAllData() {
+        selectedYear = viewModel.getSelectedYear()
+        selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
+        favoriteGroupNumber = viewModel.favoriteGroupNumber
+        viewModel.fetchGroupsWithoutFavorite(year: selectedYear, academicProgram: selectedAcademicProgram, isOnline: networkMonitor.isConnected)
     }
 }
 

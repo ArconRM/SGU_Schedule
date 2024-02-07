@@ -13,9 +13,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.13).rounded()
+    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.13 : 0.1)).rounded()
     private let minHeight: CGFloat = 250
-    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * 0.13).rounded()
+    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.13 : 0.1)).rounded()
     
     var body: some View {
         ZStack {
@@ -69,20 +69,12 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
         .background (
             ZStack {
                 if colorScheme == .light {
-                    LinearGradient(
-                        colors: [.blue.opacity(0.1), .white],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
+                    Color.blue.opacity(0.07)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
                 } else {
-                    LinearGradient(
-                        colors: [.blue.opacity(0.15), .black],
-                        startPoint: .top,
-                        endPoint: .bottom
-                    )
+                    Color.blue.opacity(0.1)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
@@ -91,8 +83,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 .background(
                     RoundedRectangle(cornerRadius: 35)
                         .fill(colorScheme == .light ? .white : .black)
-                        .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5)
-                )
+                        .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
         )
     }
     

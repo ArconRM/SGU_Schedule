@@ -13,7 +13,11 @@ import SwiftUI
 public final class ViewsManager: ObservableObject {
     
     @Published private(set) var currentView: AppViews
-    @Published private(set) var selectedGroup: GroupDTO? = nil
+    @Published var selectedGroup: GroupDTO? = nil
+    
+    //Для айпада, ибо оно само не обновляется
+    var needToReloadGroupView: Bool = false
+    
     @Published var showError: Bool = false
     
     init() {
@@ -21,11 +25,12 @@ public final class ViewsManager: ObservableObject {
     }
     
     func showScheduleView(selectedGroup: GroupDTO) {
-        self.currentView = .ScheduleView
         self.selectedGroup = selectedGroup
+        self.currentView = .ScheduleView
     }
     
-    func showGroupsView() {
+    func showGroupsView(needToReload: Bool) {
+        self.needToReloadGroupView = needToReload
         self.currentView = .GroupsView
     }
 }

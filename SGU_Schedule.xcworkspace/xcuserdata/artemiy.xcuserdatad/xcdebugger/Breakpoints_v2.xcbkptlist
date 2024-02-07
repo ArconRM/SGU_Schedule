@@ -437,8 +437,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "214"
-            endingLineNumber = "214"
+            startingLineNumber = "239"
+            endingLineNumber = "239"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
             <Locations>
@@ -500,8 +500,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "231"
-            endingLineNumber = "231"
+            startingLineNumber = "256"
+            endingLineNumber = "256"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -516,8 +516,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "254"
-            endingLineNumber = "254"
+            startingLineNumber = "279"
+            endingLineNumber = "279"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -532,8 +532,8 @@
             filePath = "SGU_Schedule/ViewModels/ScheduleViewModelWithParsingSGU.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "240"
-            endingLineNumber = "240"
+            startingLineNumber = "265"
+            endingLineNumber = "265"
             landmarkName = "setCurrentAndTwoNextLessons()"
             landmarkType = "7">
          </BreakpointContent>
@@ -759,6 +759,22 @@
             endingLineNumber = "30"
             landmarkName = "showScheduleViewAndSetSelectedGroup(selectedGroup:)"
             landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9F214150-4FB5-4EE5-A561-DE2057013448"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "SGU_Schedule/Views/GroupsView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "142"
+            endingLineNumber = "142"
+            landmarkName = "body"
+            landmarkType = "24">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

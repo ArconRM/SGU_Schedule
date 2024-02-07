@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     private let lessonsNetworkManager: LessonNetworkManager
@@ -67,6 +68,8 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     /// If groupNumber isn't favorite and isOnline true - fetches lessons throught network manager
     /// If groupNumber is favorite and schedule from CoreData it is not same as from networkManager - rewrites it. Otherwise just fetches lessons from CoreData.
     public func fetchUpdateDateAndSchedule(groupNumber: Int, isOnline: Bool) {
+        clearData()
+        
         let dispatchGroup = DispatchGroup()
         
         if isOnline {
@@ -147,6 +150,28 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             catch (let error) {
                 self.showCoreDataError(error: error)
             }
+        }
+    }
+    
+    private func clearData() {
+        if UIDevice.isPad {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                currentEvent = nil
+                nextLesson1 = nil
+                nextLesson2 = nil
+                
+                isLoadingLessons = true
+                isLoadingUpdateDate = true
+                isLoadingSessionEvents = true
+            }
+        } else if UIDevice.isPhone {
+            currentEvent = nil
+            nextLesson1 = nil
+            nextLesson2 = nil
+            
+            isLoadingLessons = true
+            isLoadingUpdateDate = true
+            isLoadingSessionEvents = true
         }
     }
     
