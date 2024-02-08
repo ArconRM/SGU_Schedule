@@ -15,7 +15,7 @@ public final class ViewsManager: ObservableObject {
     @Published private(set) var currentView: AppViews
     @Published var selectedGroup: GroupDTO? = nil
     
-    //Для айпада, ибо оно само не обновляется
+    //Для айпада, ибо на нем вьюшка всегда на экране
     var needToReloadGroupView: Bool = false
     
     @Published var showError: Bool = false

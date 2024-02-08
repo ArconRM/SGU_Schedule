@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import SwiftUI
 
 final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     private let lessonsNetworkManager: LessonNetworkManager
@@ -68,7 +67,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     /// If groupNumber isn't favorite and isOnline true - fetches lessons throught network manager
     /// If groupNumber is favorite and schedule from CoreData it is not same as from networkManager - rewrites it. Otherwise just fetches lessons from CoreData.
     public func fetchUpdateDateAndSchedule(groupNumber: Int, isOnline: Bool) {
-        clearData()
+        resetData()
         
         let dispatchGroup = DispatchGroup()
         
@@ -153,28 +152,6 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
     }
     
-    private func clearData() {
-        if UIDevice.isPad {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                currentEvent = nil
-                nextLesson1 = nil
-                nextLesson2 = nil
-                
-                isLoadingLessons = true
-                isLoadingUpdateDate = true
-                isLoadingSessionEvents = true
-            }
-        } else if UIDevice.isPhone {
-            currentEvent = nil
-            nextLesson1 = nil
-            nextLesson2 = nil
-            
-            isLoadingLessons = true
-            isLoadingUpdateDate = true
-            isLoadingSessionEvents = true
-        }
-    }
-    
     public func fetchSessionEvents(groupNumber: Int, isOnline: Bool) {
         if isOnline {
             sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
@@ -187,6 +164,16 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 self.isLoadingSessionEvents = false
             }
         }
+    }
+    
+    public func resetData() {
+        currentEvent = nil
+        nextLesson1 = nil
+        nextLesson2 = nil
+        
+        isLoadingLessons = true
+        isLoadingUpdateDate = true
+        isLoadingSessionEvents = true
     }
     
     private func showNetworkError(error: Error) {

@@ -28,4 +28,5 @@ public protocol ScheduleViewModel: ObservableObject {
     /// Fetches schedule's last updateDate, fetches schedule by group and sets current lesson and two next lessons.
     func fetchUpdateDateAndSchedule(groupNumber: Int, isOnline: Bool)
     func fetchSessionEvents(groupNumber: Int, isOnline: Bool)
+    func resetData()
 }

@@ -40,6 +40,7 @@ struct MainView: View {
                         ScheduleView(viewModel: scheduleViewModelAssembly.build(), selectedGroup: $viewsManager.selectedGroup)
                             .environmentObject(networkMonitor)
                             .environmentObject(viewsManager)
+                            .id(UUID())
                     }
                 }
                 .accentColor(colorScheme == .light ? .black : .white)

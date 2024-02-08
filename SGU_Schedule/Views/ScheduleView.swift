@@ -46,11 +46,13 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 .onAppear {
                     fetchAllData()
                 }
+                
                 .toolbar {
                     makeCloseToolbarItem()
                     
                     makeFavoriteToolbar()
                 }
+                
                 .edgesIgnoringSafeArea(.bottom)
                 .alert(isPresented: $viewModel.isShowingError) {
                     Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
@@ -73,15 +75,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 fetchAllData()
             }
             
-            .onChange(of: selectedGroup) { newValue in
-                fetchAllData()
-            }
-            
             .toolbar {
                 makeCloseToolbarItem()
                 
                 makeFavoriteToolbar()
             }
+            
             .edgesIgnoringSafeArea(.bottom)
             .alert(isPresented: $viewModel.isShowingError) {
                 Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
