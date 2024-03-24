@@ -11,6 +11,7 @@ import Kanna
 private enum LessonPropertiesEndpoints: String {
     case Subject = "div[@class='l-dn']"
     case Lector = "div[@class='l-tn']"
+    case LectorUrl = "div[@class='l-tn']/a/@href"
     case Cabinet = "div[@class='l-p']"
     case LessonType = "div[@class='l-pr']/div[@class='l-pr-t']"
     case Subgroup = "div[@class='l-pr']/div[@class='l-pr-g']"
@@ -87,6 +88,7 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
         
         let subject = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subject)
         let lectorName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Lector)
+        let lectorUrl = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LectorUrl)
         let cabinet = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Cabinet)
         let lessonType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LessonType)
         let weekType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekType)
@@ -94,6 +96,7 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
         
         let lesson = LessonDTO(subject: subject ?? "Error",
                                lectorFullName: lectorName ?? "Error",
+                               lectorUrl: lectorUrl != nil ? URL(string: "https://www.sgu.ru\(lectorUrl!)") : nil,
                                lessonType: LessonType(rawValue: lessonType!) ?? .Lecture,
                                weekDay: Weekdays(dayNumber: dayNumber) ?? .Monday,
                                weekType: WeekType(rawValue: weekType!) ?? .All,

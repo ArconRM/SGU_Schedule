@@ -16,6 +16,8 @@ struct ScheduleSubview: View, Equatable {
     
     var lessons: [LessonDTO]
     
+    @State private var lessonToShowWebView: LessonDTO? = nil
+    
     @State var areMultipleLessonsCollapsed: Bool = true
     
     var body: some View {
@@ -24,14 +26,14 @@ struct ScheduleSubview: View, Equatable {
                 makeSingleLessonView(lesson: lessons.first!)
             } else if lessons.count >= 1 {
                 if areMultipleLessonsCollapsed {
-                    makeMultipleLessonsView(firstLesson: sortLessonsByWeekType(lessons).first!)
+                    makeCollapsedMultipleLessonsView(firstLesson: sortLessonsByWeekType(lessons).first!)
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.5)) {
                                 areMultipleLessonsCollapsed.toggle()
                             }
                         }
                 } else {
-                    makeMultipleLessonsView(lessons: sortLessonsByWeekType(lessons))
+                    makeFullMultipleLessonsView(lessons: sortLessonsByWeekType(lessons))
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.5)) {
                                 areMultipleLessonsCollapsed.toggle()
@@ -86,10 +88,22 @@ struct ScheduleSubview: View, Equatable {
                     Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
                         .font(.system(size: 17))
                         .italic()
+                        .underline(lesson.lectorUrl != nil)
+                        .onTapGesture {
+                            if lesson.lectorUrl != nil {
+                                self.lessonToShowWebView = lesson
+                            }
+                        }
                 } else {
                     Text(lesson.lectorFullName)
                         .font(.system(size: 17))
                         .italic()
+                        .underline(lesson.lectorUrl != nil)
+                        .onTapGesture {
+                            if lesson.lectorUrl != nil {
+                                self.lessonToShowWebView = lesson
+                            }
+                        }
                 }
                 
                 Spacer()
@@ -106,9 +120,17 @@ struct ScheduleSubview: View, Equatable {
                     (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
                     : .gray.opacity(0.1)
         )
+        .sheet(item: $lessonToShowWebView) { lesson in
+            NavigationView {
+                WebView(url: lesson.lectorUrl ?? URL(string: "https://www.sgu.ru")!)
+                    .ignoresSafeArea()
+                    .navigationTitle(lesson.lectorFullName)
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+        }
     }
     
-    private func makeMultipleLessonsView(lessons: [LessonDTO]) -> some View {
+    private func makeFullMultipleLessonsView(lessons: [LessonDTO]) -> some View {
         ForEach(lessons, id:\.self) { lesson in
             VStack {
                 HStack {
@@ -140,10 +162,22 @@ struct ScheduleSubview: View, Equatable {
                         Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
                             .font(.system(size: 17))
                             .italic()
+                            .underline(lesson.lectorUrl != nil)
+                            .onTapGesture {
+                                if lesson.lectorUrl != nil {
+                                    self.lessonToShowWebView = lesson
+                                }
+                            }
                     } else {
                         Text(lesson.lectorFullName)
                             .font(.system(size: 17))
                             .italic()
+                            .underline(lesson.lectorUrl != nil)
+                            .onTapGesture {
+                                if lesson.lectorUrl != nil {
+                                    self.lessonToShowWebView = lesson
+                                }
+                            }
                     }
                     
                     Spacer()
@@ -161,9 +195,17 @@ struct ScheduleSubview: View, Equatable {
                         : .gray.opacity(0.1)
             )
         }
+        .sheet(item: $lessonToShowWebView) { lesson in
+            NavigationView {
+                WebView(url: lesson.lectorUrl ?? URL(string: "https://www.sgu.ru")!)
+                    .ignoresSafeArea()
+                    .navigationTitle(lesson.lectorFullName)
+                    .navigationBarTitleDisplayMode(.inline)
+            }
+        }
     }
     
-    private func makeMultipleLessonsView(firstLesson lesson: LessonDTO) -> some View {
+    private func makeCollapsedMultipleLessonsView(firstLesson lesson: LessonDTO) -> some View {
         VStack {
             HStack {
                 Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
@@ -226,6 +268,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
             ScrollView {
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
                                                     lectorFullName: "Бредихин Д. А.",
+                                                    lectorUrl: URL(string: "https://www.sgu.ru/person/bredihin-dmitriy-aleksandrovich"),
                                                     lessonType: .Lecture,
                                                     weekDay: .Monday,
                                                     weekType: .Numerator,

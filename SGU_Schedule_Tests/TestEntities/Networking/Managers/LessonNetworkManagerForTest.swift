@@ -13,6 +13,7 @@ class LessonNetworkManagerForTest: LessonNetworkManager {
             return .success(GroupScheduleDTO(groupNumber: group.fullNumber,
                                              lessonsByDays: [LessonDTO(subject: "МАТАН",
                                                                        lectorFullName: "Легенда",
+                                                                       lectorUrl: URL(string: "https://www.sgu.ru/person/timofeev-vladimir-grigorevich"),
                                                                        lessonType: .Lecture,
                                                                        weekDay: .Monday,
                                                                        weekType: .All,

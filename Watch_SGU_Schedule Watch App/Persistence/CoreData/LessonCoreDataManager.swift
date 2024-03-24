@@ -16,6 +16,7 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
 //            newLesson.id = UUID()
             newLesson.title = item.title
             newLesson.lectorFullName = item.lectorFullName
+            newLesson.lectorUrl = item.lectorUrl
             newLesson.timeStart = item.timeStart
             newLesson.timeEnd = item.timeEnd
             newLesson.subgroup = item.subgroup
@@ -44,14 +45,15 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
             var resultLessons: [LessonDTO] = []
             for managedLesson in managedLessons {
                 let resultLesson = LessonDTO(subject: managedLesson.title ?? "Error",
-                                       lectorFullName: managedLesson.lectorFullName ?? "Error",
-                                       lessonType: managedLesson.lessonType,
-                                       weekDay: managedLesson.weekDay,
-                                       weekType: managedLesson.weekType,
-                                       cabinet: managedLesson.cabinet ?? "Error",
-                                       lessonNumber: Int(managedLesson.lessonNumber),
-                                       timeStart: managedLesson.timeStart ?? Date(),
-                                       timeEnd: managedLesson.timeEnd ?? Date())
+                                             lectorFullName: managedLesson.lectorFullName ?? "Error",
+                                             lectorUrl: managedLesson.lectorUrl,
+                                             lessonType: managedLesson.lessonType,
+                                             weekDay: managedLesson.weekDay,
+                                             weekType: managedLesson.weekType,
+                                             cabinet: managedLesson.cabinet ?? "Error",
+                                             lessonNumber: Int(managedLesson.lessonNumber),
+                                             timeStart: managedLesson.timeStart ?? Date(),
+                                             timeEnd: managedLesson.timeEnd ?? Date())
                 resultLessons.append(resultLesson)
             }
             return resultLessons

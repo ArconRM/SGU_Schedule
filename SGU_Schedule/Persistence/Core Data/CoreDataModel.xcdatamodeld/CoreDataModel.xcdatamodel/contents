@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22225" systemVersion="22G90" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22522" systemVersion="23D60" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="GroupSchedule" representedClassName=".GroupSchedule" syncable="YES" codeGenerationType="class">
         <attribute name="groupNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Lesson"/>
@@ -7,6 +7,7 @@
     <entity name="Lesson" representedClassName=".Lesson" syncable="YES" codeGenerationType="class">
         <attribute name="cabinet" optional="YES" attributeType="String"/>
         <attribute name="lectorFullName" optional="YES" attributeType="String"/>
+        <attribute name="lectorUrl" optional="YES" attributeType="URI"/>
         <attribute name="lessonNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="lessonTypeRawValue" optional="YES" attributeType="String"/>
         <attribute name="subgroup" optional="YES" attributeType="String"/>

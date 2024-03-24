@@ -12,6 +12,7 @@ class LessonParserForTest: LessonHTMLParser {
         return GroupScheduleDTO(groupNumber: groupNumber,
                                 lessonsByDays: [LessonDTO(subject: "МАТАН",
                                                           lectorFullName: "Легенда",
+                                                          lectorUrl: URL(string: "https://www.sgu.ru/person/timofeev-vladimir-grigorevich"),
                                                           lessonType: .Lecture,
                                                           weekDay: .Monday,
                                                           weekType: .All,

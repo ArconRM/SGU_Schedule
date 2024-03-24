@@ -22,6 +22,8 @@
 		BA1256CF2B72A6E60019D2E6 /* UIDeviceExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CE2B72A6E60019D2E6 /* UIDeviceExtension.swift */; };
 		BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FD82B6C09F10068B2A4 /* MainView.swift */; };
 		BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */; };
+		BA2F67812B7560C900B06667 /* DepartmentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67802B7560C900B06667 /* DepartmentDTO.swift */; };
+		BA2F67832B75611E00B06667 /* DepartmentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67822B75611E00B06667 /* DepartmentSource.swift */; };
 		BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
 		BA2FEEDA2B667E42001F91F5 /* SessionEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED92B667E42001F91F5 /* SessionEventType.swift */; };
 		BA2FEEDC2B668956001F91F5 /* SessionEventsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */; };
@@ -39,6 +41,7 @@
 		BA5383612AF571B90004F012 /* GroupScheduleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */; };
 		BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */; };
 		BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
+		BA5701C62BB03DF800347B53 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5701C52BB03DF800347B53 /* WebView.swift */; };
 		BA584D132B09E0B9002DA4AE /* UserDefaultsKey.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA584D122B09E0B9002DA4AE /* UserDefaultsKey.swift */; };
 		BA7D3D872B0809F600C93802 /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */; };
 		BA8414742B106A3000016956 /* GroupSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA8414732B106A3000016956 /* GroupSubview.swift */; };
@@ -198,6 +201,8 @@
 		BA1256CE2B72A6E60019D2E6 /* UIDeviceExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIDeviceExtension.swift; sourceTree = "<group>"; };
 		BA1A4FD82B6C09F10068B2A4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsManager.swift; sourceTree = "<group>"; };
+		BA2F67802B7560C900B06667 /* DepartmentDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentDTO.swift; sourceTree = "<group>"; };
+		BA2F67822B75611E00B06667 /* DepartmentSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentSource.swift; sourceTree = "<group>"; };
 		BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventDTO.swift; sourceTree = "<group>"; };
 		BA2FEED92B667E42001F91F5 /* SessionEventType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventType.swift; sourceTree = "<group>"; };
 		BA2FEEDB2B668956001F91F5 /* SessionEventsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsNetworkManager.swift; sourceTree = "<group>"; };
@@ -215,6 +220,7 @@
 		BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleDTO.swift; sourceTree = "<group>"; };
 		BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSchedulePersistenceManager.swift; sourceTree = "<group>"; };
 		BA5383642AF692840004F012 /* LessonPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPersistenceManager.swift; sourceTree = "<group>"; };
+		BA5701C52BB03DF800347B53 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		BA584D122B09E0B9002DA4AE /* UserDefaultsKey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsKey.swift; sourceTree = "<group>"; };
 		BA8414732B106A3000016956 /* GroupSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSubview.swift; sourceTree = "<group>"; };
 		BA8414752B106D1C00016956 /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
@@ -364,6 +370,7 @@
 			isa = PBXGroup;
 			children = (
 				BA2FEEEB2B681F2A001F91F5 /* CarouselView.swift */,
+				BA5701C52BB03DF800347B53 /* WebView.swift */,
 			);
 			path = AdditionalViews;
 			sourceTree = "<group>";
@@ -392,6 +399,7 @@
 				BAFA58142AED25DD0060BD81 /* ViewModelsKeys.swift */,
 				BADAE1312ABA21430079E3D7 /* Weekdays.swift */,
 				BA9D791B2ABE2E4700C36932 /* GroupsSource.swift */,
+				BA2F67822B75611E00B06667 /* DepartmentSource.swift */,
 				BAAEB3172ADA865500E90223 /* AcademicProgram.swift */,
 				BA07C9B82AE47A5B008CDDCC /* WeekType.swift */,
 				BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */,
@@ -623,7 +631,6 @@
 		BADAE1102AB9C0D60079E3D7 /* SGU_Schedule */ = {
 			isa = PBXGroup;
 			children = (
-				BAAD1EFC2B6FE32400B58E32 /* Assembly */,
 				BAC851202B0A2456004252FF /* SGU-Schedule-Info.plist */,
 				BAFA580F2AECFCD30060BD81 /* Persistence */,
 				BA9D791D2ABE3D7600C36932 /* Networking */,
@@ -676,6 +683,7 @@
 		BADAE1252ABA003D0079E3D7 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
+				BAAD1EFC2B6FE32400B58E32 /* Assembly */,
 				BAAEB3162AD9A7A200E90223 /* Protocols */,
 				BA9B4DAF2AD0A63C008A6092 /* ScheduleViewModelWithParsingSGU.swift */,
 				BAAEB31B2ADAA57B00E90223 /* GroupsViewModelWithParsingSGU.swift */,
@@ -766,6 +774,7 @@
 				BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */,
 				BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */,
 				BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */,
+				BA2F67802B7560C900B06667 /* DepartmentDTO.swift */,
 			);
 			path = DTO;
 			sourceTree = "<group>";
@@ -1060,6 +1069,7 @@
 				BA53835D2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift in Sources */,
 				BA2FEEEC2B681F2A001F91F5 /* CarouselView.swift in Sources */,
 				BAFA58172AED3A840060BD81 /* NetworkMonitor.swift in Sources */,
+				BA2F67812B7560C900B06667 /* DepartmentDTO.swift in Sources */,
 				BA9D79172ABB3AD900C36932 /* GroupsView.swift in Sources */,
 				BAAEB3012AD98DCF00E90223 /* ScheduleViewModel.swift in Sources */,
 				BAA53E522AE9203A0098F30E /* UIScreenExtension.swift in Sources */,
@@ -1079,6 +1089,7 @@
 				BAAD1F1C2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift in Sources */,
 				BAFA58112AECFD0B0060BD81 /* PersistenceManager.swift in Sources */,
 				BA2FEEE22B66952B001F91F5 /* SessionEventsHTMLParser.swift in Sources */,
+				BA5701C62BB03DF800347B53 /* WebView.swift in Sources */,
 				BAFA58132AED0EE10060BD81 /* CoreDataError.swift in Sources */,
 				BAFA58072AEC5AFD0060BD81 /* PersistenceController.swift in Sources */,
 				BAFB8C2C2AC766850080834C /* LessonNetworkManager.swift in Sources */,
@@ -1125,6 +1136,7 @@
 				BA2FEEE02B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift in Sources */,
 				BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */,
 				BA9D792A2AC21C3B00C36932 /* URLSource.swift in Sources */,
+				BA2F67832B75611E00B06667 /* DepartmentSource.swift in Sources */,
 				BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
