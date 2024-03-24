@@ -33,6 +33,9 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .background (Color.white.opacity (0.00001))
                 .gesture(dragGesture)
                 .onChange(of: viewModel.schedule?.lessons) { newLessons in
+                    if viewModel.schedule != nil {
+                        lessonsBySelectedDay = viewModel.schedule!.lessons.filter { $0.weekDay == selectedDay }
+                    }
                     if viewModel.currentEvent != nil {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             curHeight = minHeight
