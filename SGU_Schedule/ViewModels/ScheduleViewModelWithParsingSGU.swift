@@ -241,17 +241,20 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 continue
             }
             
+            // ищем пару
             if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeStart,
                                             dateMiddle: currentTime,
-                                            dateEnd: todayLessonsByNumber[0].timeEnd) {
+                                            dateEnd: todayLessonsByNumber[0].timeEnd) 
+            {
                 var newCurrentLesson = todayLessonsByNumber[0]
-                if todayLessonsByNumber.count > 1 { //значит есть подгруппы и общего кабинета нет
+                if todayLessonsByNumber.count > 1 { // значит есть подгруппы и общего кабинета нет
                     newCurrentLesson.cabinet = "По подгруппам"
                 }
                 currentEvent = newCurrentLesson
                 setNextTwoLessons(lessons: todayLessons, from: lessonNumber)
                 return
-                
+               
+            // ищем перемену
             } else if lessonNumber != 8 { // смотрим следующую пару, когда находим - выходим
                 for nextLessonNumber in (lessonNumber + 1)...8 {
                     let todayLessonsByNumberNext = todayLessons.filter { $0.lessonNumber == nextLessonNumber }
@@ -261,7 +264,9 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                     
                     if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeEnd,
                                                     dateMiddle: currentTime,
-                                                    dateEnd: todayLessonsByNumberNext[0].timeStart) {
+                                                    dateEnd: todayLessonsByNumberNext[0].timeStart,
+                                                    strictInequality: true)
+                    {
                         currentEvent = TimeBreakDTO(timeStart: todayLessonsByNumber[0].timeEnd, timeEnd: todayLessonsByNumberNext[0].timeStart)
                         setNextTwoLessons(lessons: todayLessons, from: lessonNumber)
                     }
@@ -297,12 +302,13 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     }
     
     /// Returns true if dateMiddle is more than dateStart or equals it and if dateMiddle is less than dateEnd or equals it
-    private func checkIfTimeIsBetweenTwoTimes(dateStart: Date, dateMiddle: Date, dateEnd: Date) -> Bool {
-        return compareDatesByTime(date1: dateMiddle, date2: dateStart) && compareDatesByTime(date1: dateEnd, date2: dateMiddle)
+    private func checkIfTimeIsBetweenTwoTimes(dateStart: Date, dateMiddle: Date, dateEnd: Date, strictInequality: Bool = false) -> Bool {
+        return compareDatesByTime(date1: dateMiddle, date2: dateStart, strictInequality: strictInequality) 
+        && compareDatesByTime(date1: dateEnd, date2: dateMiddle, strictInequality: strictInequality)
     }
     
     /// Returns true if date1 is bigger than date2 or equals it.
-    private func compareDatesByTime(date1: Date, date2: Date) -> Bool {
+    private func compareDatesByTime(date1: Date, date2: Date, strictInequality: Bool) -> Bool {
         let calendar = Calendar.current
         var dateToCompare1 = Date.init(timeIntervalSinceReferenceDate: 0)
         var dateToCompare2 = Date.init(timeIntervalSinceReferenceDate: 0)
@@ -313,6 +319,6 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         dateToCompare1 = calendar.date(byAdding: date1Components, to: dateToCompare1) ?? Date.now
         dateToCompare2 = calendar.date(byAdding: date2Components, to: dateToCompare2) ?? Date.now
         
-        return dateToCompare1 >= dateToCompare2
+        return (strictInequality ? dateToCompare1 > dateToCompare2 : dateToCompare1 >= dateToCompare2)
     }
 }
