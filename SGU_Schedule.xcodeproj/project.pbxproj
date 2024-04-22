@@ -386,7 +386,6 @@
 		BA996A592AC4A00200888BE2 /* SGU_Schedule_Tests */ = {
 			isa = PBXGroup;
 			children = (
-				BAAD1F202B6FFAB800B58E32 /* IntegrationTests */,
 				BAAD1F212B702D3900B58E32 /* UnitTests */,
 				BAAD1F062B6FF79700B58E32 /* TestEntities */,
 			);
@@ -529,13 +528,6 @@
 				BAAD1F1D2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift */,
 			);
 			path = ViewModels;
-			sourceTree = "<group>";
-		};
-		BAAD1F202B6FFAB800B58E32 /* IntegrationTests */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = IntegrationTests;
 			sourceTree = "<group>";
 		};
 		BAAD1F212B702D3900B58E32 /* UnitTests */ = {
