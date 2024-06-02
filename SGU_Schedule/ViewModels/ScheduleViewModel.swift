@@ -1,5 +1,5 @@
 //
-//  ScheduleViewModelWithParsingSGU.swift
+//  ScheduleViewModel.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 07.10.2023.
@@ -7,13 +7,13 @@
 
 import Foundation
 
-final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
+public final class ScheduleViewModel: ObservableObject {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
     private let dateNetworkManager: DateNetworkManager
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
-    @Published var schedule: GroupScheduleDTO?
+    @Published var groupSchedule: GroupScheduleDTO?
     @Published var currentEvent: (any ScheduleEventDTO)? = nil
     @Published var groupSessionEvents: GroupSessionEventsDTO?
     
@@ -37,8 +37,8 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         set {
             UserDefaults.standard.setValue(newValue, forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
             do {
-                if schedule != nil {
-                    try saveNewScheduleWithClearingPreviousVersion(schedule: schedule!)
+                if groupSchedule != nil {
+                    try saveNewScheduleWithClearingPreviousVersion(schedule: groupSchedule!)
                 }
             }
             catch(let error) {
@@ -53,9 +53,9 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         }
     }
     
-    init(lessonsNetworkManager: LessonNetworkManager, 
+    init(lessonsNetworkManager: LessonNetworkManager,
          sessionEventsNetworkManager: SessionEventsNetworkManager,
-         dateNetworkManager: DateNetworkManager, 
+         dateNetworkManager: DateNetworkManager,
          schedulePersistenceManager: GroupSchedulePersistenceManager) {
         
         self.lessonsNetworkManager = lessonsNetworkManager
@@ -94,7 +94,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                         
                         // Если есть сохраненное в память раннее, сначала ставится оно
                         if self.updateDate.getDayAndMonthString() != Date().getDayAndMonthString() && schedule != nil {
-                            self.schedule = schedule
+                            self.groupSchedule = schedule
                             self.setCurrentAndTwoNextLessons()
                             self.isLoadingLessons = false
                         }
@@ -105,11 +105,11 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                             case .success(let networkSchedule):
                                 do {
                                     if schedule == nil || networkSchedule.lessons != schedule!.lessons {
-                                        self.schedule = networkSchedule
+                                        self.groupSchedule = networkSchedule
                                         try self.saveNewScheduleWithClearingPreviousVersion(schedule: networkSchedule)
                                         self.setCurrentAndTwoNextLessons()
                                     } else {
-                                        self.schedule = schedule
+                                        self.groupSchedule = schedule
                                     }
                                     
                                     self.isLoadingLessons = false
@@ -125,7 +125,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                         
                     } else {
                         if schedule != nil {
-                            self.schedule = schedule
+                            self.groupSchedule = schedule
                             self.setCurrentAndTwoNextLessons()
                         }
                         self.isLoadingLessons = false
@@ -135,7 +135,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                     self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
                         switch result {
                         case .success(let schedule):
-                            self.schedule = schedule
+                            self.groupSchedule = schedule
                             self.setCurrentAndTwoNextLessons()
                             
                         case .failure(let error):
@@ -219,7 +219,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
         nextLesson1 = nil
         nextLesson2 = nil
         
-        if schedule == nil {
+        if groupSchedule == nil {
             return
         }
         
@@ -230,7 +230,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             return
         }
         
-        let todayLessons = schedule!.lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
+        let todayLessons = groupSchedule!.lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
         if todayLessons.isEmpty {
             return
         }
@@ -244,7 +244,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
             // ищем пару
             if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeStart,
                                             dateMiddle: currentTime,
-                                            dateEnd: todayLessonsByNumber[0].timeEnd) 
+                                            dateEnd: todayLessonsByNumber[0].timeEnd)
             {
                 var newCurrentLesson = todayLessonsByNumber[0]
                 if todayLessonsByNumber.count > 1 { // значит есть подгруппы и общего кабинета нет
@@ -253,8 +253,8 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
                 currentEvent = newCurrentLesson
                 setNextTwoLessons(lessons: todayLessons, from: lessonNumber)
                 return
-               
-            // ищем перемену
+                
+                // ищем перемену
             } else if lessonNumber != 8 { // смотрим следующую пару, когда находим - выходим
                 for nextLessonNumber in (lessonNumber + 1)...8 {
                     let todayLessonsByNumberNext = todayLessons.filter { $0.lessonNumber == nextLessonNumber }
@@ -303,7 +303,7 @@ final class ScheduleViewModelWithParsingSGU: ScheduleViewModel {
     
     /// Returns true if dateMiddle is more than dateStart or equals it and if dateMiddle is less than dateEnd or equals it
     private func checkIfTimeIsBetweenTwoTimes(dateStart: Date, dateMiddle: Date, dateEnd: Date, strictInequality: Bool = false) -> Bool {
-        return compareDatesByTime(date1: dateMiddle, date2: dateStart, strictInequality: strictInequality) 
+        return compareDatesByTime(date1: dateMiddle, date2: dateStart, strictInequality: strictInequality)
         && compareDatesByTime(date1: dateEnd, date2: dateMiddle, strictInequality: strictInequality)
     }
     

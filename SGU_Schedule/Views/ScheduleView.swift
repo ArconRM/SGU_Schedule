@@ -16,12 +16,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     }
     
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    @EnvironmentObject var viewsManager: ViewsManager
     
     @ObservedObject var viewModel: ViewModel
     
-    @Binding var selectedGroup: GroupDTO?
+    @State var selectedGroup: GroupDTO?
     
     @State var favoriteGroupNumber: Int? = nil
     
@@ -32,60 +32,40 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 .padding(.top, -30)
         } else if UIDevice.isPhone {
             NavigationView {
-                ZStack {
-                    ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
-                    
-                    CarouselView(pageCount: 2, currentIndex: 0, content: {
-                        ScheduleModalView(viewModel: viewModel)
-                            .environmentObject(networkMonitor)
-                        
-                        SessionEventsModalView(viewModel: viewModel)
-                            .environmentObject(networkMonitor)
-                    })
-                }
-                .onAppear {
-                    fetchAllData()
-                }
-                
-                .toolbar {
-                    makeCloseToolbarItem()
-                    
-                    makeFavoriteToolbar()
-                }
-                
-                .edgesIgnoringSafeArea(.bottom)
-                .alert(isPresented: $viewModel.isShowingError) {
-                    Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
-                          message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
-                }
+                buildUI()
             }
         } else if UIDevice.isPad {
-            ZStack {
-                ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
-                
-                CarouselView(pageCount: 2, currentIndex: 0, content: {
-                    ScheduleModalView(viewModel: viewModel)
-                        .environmentObject(networkMonitor)
-                    
-                    SessionEventsModalView(viewModel: viewModel)
-                        .environmentObject(networkMonitor)
-                })
-            }
-            .onAppear {
-                fetchAllData()
-            }
+            buildUI()
+        }
+    }
+    
+    private func buildUI() -> some View {
+        ZStack {
+            ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
             
-            .toolbar {
-                makeCloseToolbarItem()
+            CarouselView(pageCount: 2, currentIndex: 0, content: {
+                ScheduleModalView(viewModel: viewModel)
+                    .environmentObject(networkMonitor)
+                    .environmentObject(viewsManager)
                 
-                makeFavoriteToolbar()
-            }
+                SessionEventsModalView(viewModel: viewModel)
+                    .environmentObject(networkMonitor)
+            })
+        }
+        .onAppear {
+            fetchAllData()
+        }
+        
+        .toolbar {
+            makeCloseToolbarItem()
             
-            .edgesIgnoringSafeArea(.bottom)
-            .alert(isPresented: $viewModel.isShowingError) {
-                Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
-                      message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
-            }
+            makeFavoriteToolbar()
+        }
+        
+        .edgesIgnoringSafeArea(.bottom)
+        .alert(isPresented: $viewModel.isShowingError) {
+            Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
+                  message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
     }
     
@@ -102,7 +82,6 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     private func makeCloseToolbarItem() -> some ToolbarContent {
         ToolbarItem(placement: .topBarLeading) {
             Button(action: {
-                
                 withAnimation(.easeInOut(duration: 0.3)) {
                     viewsManager.showGroupsView(needToReload: false)
                 }
@@ -165,9 +144,9 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(viewModel: ScheduleViewModelWithParsingSGUAssembly().build(),
-                     selectedGroup: .constant(GroupDTO(fullNumber: 141)))
+        ScheduleView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
+                     selectedGroup: GroupDTO(fullNumber: 141))
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager())
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
     }
 }

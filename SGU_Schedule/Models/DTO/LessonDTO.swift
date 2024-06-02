@@ -12,8 +12,8 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
     public var id: UUID
     /// subject
     public var title: String
-    var lectorFullName: String
-    var lectorUrl: URL?
+    var teacherFullName: String
+    var teacherEndpoint: String?
     var lessonType: LessonType
     var weekDay: Weekdays
     var weekType: WeekType
@@ -25,11 +25,23 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
     
     
     /// TimeStart and TimeEnd must be in "HH:mm" format
-    init(subject: String, lectorFullName: String, lectorUrl: URL? = nil, lessonType: LessonType, weekDay: Weekdays, weekType: WeekType, cabinet: String, subgroup: String? = nil, lessonNumber: Int, timeStart: String, timeEnd: String) {
+    init(
+        subject: String,
+        teacherFullName: String,
+        teacherEndpoint: String? = nil,
+        lessonType: LessonType,
+        weekDay: Weekdays,
+        weekType: WeekType,
+        cabinet: String,
+        subgroup: String? = nil,
+        lessonNumber: Int,
+        timeStart: String,
+        timeEnd: String
+    ) {
         self.id = UUID()
         self.title = subject
-        self.lectorFullName = lectorFullName
-        self.lectorUrl = lectorUrl
+        self.teacherFullName = teacherFullName
+        self.teacherEndpoint = teacherEndpoint
         self.lessonType = lessonType
         self.weekDay = weekDay
         self.weekType = weekType
@@ -38,18 +50,30 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
         self.lessonNumber = lessonNumber
         
         let dateFormatter = DateFormatter()
-//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "HH:mm"
         
         self.timeStart = dateFormatter.date(from: timeStart) ?? dateFormatter.date(from: "00:00")!
         self.timeEnd = dateFormatter.date(from: timeEnd) ?? dateFormatter.date(from: "00:00")!
     }
     
-    init(subject: String, lectorFullName: String, lectorUrl: URL? = nil, lessonType: LessonType, weekDay: Weekdays, weekType: WeekType, cabinet: String, subgroup: String? = nil, lessonNumber: Int, timeStart: Date, timeEnd: Date) {
+    init(
+        subject: String,
+        teacherFullName: String,
+        teacherEndpoint: String? = nil,
+        lessonType: LessonType,
+        weekDay: Weekdays,
+        weekType: WeekType,
+        cabinet: String,
+        subgroup: String? = nil,
+        lessonNumber: Int,
+        timeStart: Date,
+        timeEnd: Date
+    ) {
         self.id = UUID()
         self.title = subject
-        self.lectorFullName = lectorFullName
-        self.lectorUrl = lectorUrl
+        self.teacherFullName = teacherFullName
+        self.teacherEndpoint = teacherEndpoint
         self.lessonType = lessonType
         self.weekDay = weekDay
         self.weekType = weekType
@@ -63,8 +87,8 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
     /// All but id, because it needs to compare the one gotten from site and the one which is already in store
     public static func == (lhs: LessonDTO, rhs: LessonDTO) -> Bool {
         return (lhs.title == rhs.title &&
-                lhs.lectorFullName == rhs.lectorFullName &&
-                lhs.lectorUrl == rhs.lectorUrl &&
+                lhs.teacherFullName == rhs.teacherFullName &&
+                lhs.teacherEndpoint == rhs.teacherEndpoint &&
                 lhs.lessonType == rhs.lessonType &&
                 lhs.weekDay == rhs.weekDay &&
                 lhs.weekType == rhs.weekType &&

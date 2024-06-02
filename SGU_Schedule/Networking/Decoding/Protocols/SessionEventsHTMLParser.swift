@@ -8,5 +8,6 @@
 import Foundation
 
 public protocol SessionEventsHTMLParser {
+    func getSessionEventsFromSource(source html: String) throws -> [SessionEventDTO]
     func getGroupSessionEventsFromSource(source html: String, groupNumber: Int) throws -> GroupSessionEventsDTO
 }

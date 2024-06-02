@@ -69,12 +69,12 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
         .background (
             ZStack {
                 if colorScheme == .light {
-                    Color.blue.opacity(0.07)
+                    mainColorView(isDark: false)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
                 } else {
-                    Color.blue.opacity(0.1)
+                    mainColorView(isDark: true)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
@@ -122,6 +122,6 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
 }
 
 #Preview {
-    SessionEventsModalView(viewModel: ScheduleViewModelWithParsingSGUAssembly().build())
+    SessionEventsModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())
         .environmentObject(NetworkMonitor())
 }

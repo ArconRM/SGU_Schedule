@@ -13,34 +13,41 @@ struct MainView: View {
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     
-    let groupsViewModel = GroupsViewModelWithParsingSGUAssembly().build()
-    let scheduleViewModelAssembly = ScheduleViewModelWithParsingSGUAssembly()
-    
     var body: some View {
         VStack {
             if UIDevice.isPhone {
                 switch viewsManager.currentView {
                 case .GroupsView:
-                    GroupsView(viewModel: groupsViewModel)
+                    self.viewsManager.buildGroupsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                     
                 case .ScheduleView:
-                    ScheduleView(viewModel: scheduleViewModelAssembly.build(), selectedGroup: $viewsManager.selectedGroup)
-                        .environmentObject(networkMonitor)
-                        .environmentObject(viewsManager)
-                }
-            } else if UIDevice.isPad {
-                NavigationView {
-                    GroupsView(viewModel: groupsViewModel)
+                    self.viewsManager.buildScheduleView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                     
-                    if viewsManager.currentView == .ScheduleView {
-                        ScheduleView(viewModel: scheduleViewModelAssembly.build(), selectedGroup: $viewsManager.selectedGroup)
+                case .TeacherInfoView:
+                    self.viewsManager.buildTeacherInfoView()
+                        .environmentObject(networkMonitor)
+                        .environmentObject(viewsManager)
+                    
+                }
+            } else if UIDevice.isPad {
+                NavigationView {
+                    self.viewsManager.buildGroupsView()
+                        .environmentObject(networkMonitor)
+                        .environmentObject(viewsManager)
+                    
+                    if self.viewsManager.currentView == .ScheduleView {
+                        self.viewsManager.buildScheduleView()
                             .environmentObject(networkMonitor)
                             .environmentObject(viewsManager)
                             .id(UUID())
+                    } else if self.viewsManager.currentView == .TeacherInfoView {
+                        self.viewsManager.buildTeacherInfoView()
+                            .environmentObject(networkMonitor)
+                            .environmentObject(viewsManager)
                     }
                 }
                 .accentColor(colorScheme == .light ? .black : .white)
@@ -52,5 +59,5 @@ struct MainView: View {
 #Preview {
     MainView()
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager())
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
 }

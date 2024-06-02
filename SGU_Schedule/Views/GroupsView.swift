@@ -30,10 +30,10 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 .ignoresSafeArea()
             } else if UIDevice.isPad {
                 if colorScheme == .light {
-                    Color.blue.opacity(0.07)
+                    mainColorView(isDark: false)
                         .ignoresSafeArea()
                 } else {
-                    Color.blue.opacity(0.1)
+                    mainColorView(isDark: true)
                         .ignoresSafeArea()
                 }
             }
@@ -179,8 +179,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: GroupsViewModelWithParsingSGUAssembly().build())
+        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel())
             .environmentObject(NetworkMonitor())
-            .environmentObject(ViewsManager())
+            .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
     }
 }

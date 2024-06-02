@@ -21,4 +21,17 @@ class SessionEventsParserForTest: SessionEventsHTMLParser {
                                                                      teacherFullName: "Легенда",
                                                                      cabinet: "Ад")])
     }
+    
+    func getSessionEventsFromSource(source html: String) throws -> [SessionEventDTO] {
+        let dateFormatter = DateFormatter()
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "dd.MM.yyyy"
+        let date = dateFormatter.date(from: "01.01.2069")!
+        
+        return [SessionEventDTO(title: "МАТАН",
+                                date: date,
+                                sessionEventType: .Consultation,
+                                teacherFullName: "Легенда",
+                                cabinet: "Ад")]
+    }
 }

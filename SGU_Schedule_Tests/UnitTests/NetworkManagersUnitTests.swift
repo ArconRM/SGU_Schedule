@@ -11,7 +11,7 @@ import SwiftUI
 
 final class NetworkManagersUnitTests: XCTestCase {
     
-    let urlSource = URLSourceSGU()
+    let urlSource = URLSourceSGU_old()
 
     override func setUpWithError() throws {
         super.setUp()
@@ -33,7 +33,7 @@ final class NetworkManagersUnitTests: XCTestCase {
             XCTAssertNotNil(correctSchedule)
         }
         catch {
-            XCTFail("Если упадет здесь, следующим упаду я")
+            XCTFail("Если упадет здесь, следующим упаду я из окна")
         }
         
         let lessonNetworkManager = LessonNetworkManagerWithParsing(urlSource: urlSource, lessonParser: lessonParser)
@@ -64,7 +64,7 @@ final class NetworkManagersUnitTests: XCTestCase {
             XCTAssertNotNil(correctDate)
         }
         catch {
-            XCTFail("Если тест пал здесь, значит пал и мир")
+            XCTFail("Буду падаю вчера")
         }
         
         let dateNetworkManager = DateNetworkManagerWithParsing(urlSource: urlSource, dateParser: dateParser)
@@ -127,6 +127,37 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         catch {
             XCTFail("Нет падения печальнее на свете, чем с горы в Тибете (чего блять)")
+        }
+        
+        let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser)
+        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141)) { result in
+            switch result {
+            case .success(let sessionEvents):
+                sessionEventsToCheck = sessionEvents
+            case .failure(let error):
+                XCTFail("Ошибка в менеджере: \(error.localizedDescription)")
+            }
+            didReceiveResponse.fulfill()
+        }
+        
+        wait(for: [didReceiveResponse], timeout: 5)
+        
+        XCTAssertNotNil(sessionEventsToCheck)
+        XCTAssertEqual(sessionEventsToCheck!.sessionEvents, correctSessionEvents!.sessionEvents)
+    }
+    
+    func testTeacherNetworkManagerWithParsingGetsSessionEvents() {
+        let didReceiveResponse = expectation(description: #function)
+        
+        let sessionEventsParser = SessionEventsParserForTest()
+        var sessionEventsToCheck: GroupSessionEventsDTO?
+        var correctSessionEvents: GroupSessionEventsDTO?
+        do {
+            correctSessionEvents = try sessionEventsParser.getGroupSessionEventsFromSource(source: "", groupNumber: 141)
+            XCTAssertNotNil(correctSessionEvents)
+        }
+        catch {
+            XCTFail("Упал - вставай, встал - упай")
         }
         
         let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser)

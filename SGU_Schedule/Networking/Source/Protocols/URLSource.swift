@@ -8,7 +8,8 @@
 import Foundation
 
 public protocol URLSource {
-    var baseURLAddress: String { get }
-    var baseURL: URL { get }
-    func getUrlWithGroupParameter(parameter: String) -> URL
+    var baseString: String { get }
+    var baseScheduleString: String { get }
+    var baseScheduleURL: URL { get }
+    func getScheduleUrlWithGroupParameter(parameter: String) -> URL
 }

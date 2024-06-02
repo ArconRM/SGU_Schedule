@@ -44,8 +44,8 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
                 
                 for managedLesson in managedSchedule.lessons?.array as! [Lesson] {
                     let resultLesson = LessonDTO(subject: managedLesson.title ?? "Error",
-                                                 lectorFullName: managedLesson.lectorFullName ?? "Error",
-                                                 lectorUrl: managedLesson.lectorUrl,
+                                                 teacherFullName: managedLesson.teacherFullName ?? "Error",
+                                                 teacherEndpoint: managedLesson.teacherEndpoint,
                                                  lessonType: managedLesson.lessonType,
                                                  weekDay: managedLesson.weekDay,
                                                  weekType: managedLesson.weekType,

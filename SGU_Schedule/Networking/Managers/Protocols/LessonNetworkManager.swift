@@ -13,8 +13,11 @@ public protocol LessonNetworkManager {
 //                           resultQueue: DispatchQueue,
 //                           completionHandler: @escaping(Result<[[LessonDTO]], Error>) -> Void)
     
-    /// May throw htmlParserError or any other
     func getGroupScheduleForCurrentWeek(group: GroupDTO,
                                         resultQueue: DispatchQueue,
                                         completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void)
+    
+    func getTeacherScheduleForCurrentWeek(teacher: TeacherDTO,
+                                          resultQueue: DispatchQueue,
+                                          completionHandler: @escaping(Result<[LessonDTO], Error>) -> Void)
 }

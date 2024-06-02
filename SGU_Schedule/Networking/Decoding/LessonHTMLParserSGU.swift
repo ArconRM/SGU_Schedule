@@ -8,7 +8,7 @@ import Foundation
 import Kanna
 
 
-private enum LessonPropertiesEndpoints: String {
+fileprivate enum LessonPropertiesEndpoints: String {
     case Subject = "div[@class='l-dn']"
     case Lector = "div[@class='l-tn']"
     case LectorUrl = "div[@class='l-tn']/a/@href"
@@ -21,24 +21,39 @@ private enum LessonPropertiesEndpoints: String {
 
 struct LessonHTMLParserSGU: LessonHTMLParser {
     
+    func getScheduleFromSource(source html: String) throws -> [LessonDTO] {
+        do {
+            let lessonsByDays = try getLessonsByDaysFromSource(source: html)
+            return lessonsByDays
+        }
+        catch {
+            throw NetworkError.htmlParserError
+        }
+    }
+    
     func getGroupScheduleFromSource(source html: String, groupNumber: Int) throws -> GroupScheduleDTO {
+        do {
+            let lessonsByDays = try getLessonsByDaysFromSource(source: html)
+            return GroupScheduleDTO(groupNumber: groupNumber, lessonsByDays: lessonsByDays)
+        }
+        catch {
+            throw NetworkError.htmlParserError
+        }
+    }
+    
+    private func getLessonsByDaysFromSource(source html: String) throws -> [LessonDTO] {
         var lessonsByDays = [LessonDTO]()
         
         for dayNumber in 1...6 {
-            do {
-                try lessonsByDays.append(contentsOf: getLessonsByDayNumberFromSource(source: html, dayNumber: dayNumber))
-            }
-            catch {
-                throw NetworkError.htmlParserError
-            }
+            try lessonsByDays.append(contentsOf: getLessonsByDayNumberFromSource(source: html, dayNumber: dayNumber))
         }
         
-        return GroupScheduleDTO(groupNumber: groupNumber, lessonsByDays: lessonsByDays)
+        return lessonsByDays
     }
     
     private func getLessonsByDayNumberFromSource(source html: String, dayNumber: Int) throws -> [LessonDTO] {
         var result = [LessonDTO]()
-        do {
+//        do {
             let doc = try HTML(html: html, encoding: .utf8)
             var lesson: LessonDTO?
             
@@ -56,10 +71,10 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
                     }
                 }
             }
-        }
-        catch {
-            throw NetworkError.htmlParserError
-        }
+//        }
+//        catch {
+//            throw NetworkError.htmlParserError
+//        }
         return result
     }
     
@@ -87,16 +102,16 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
         let timeEnd = String(lessonTimeXpathQueryResult[5...])
         
         let subject = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subject)
-        let lectorName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Lector)
-        let lectorUrl = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LectorUrl)
+        let teacherName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Lector)
+        let teacherEndpoint = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LectorUrl)
         let cabinet = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Cabinet)
         let lessonType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LessonType)
         let weekType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekType)
         let subgroup = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subgroup)
         
         let lesson = LessonDTO(subject: subject ?? "Error",
-                               lectorFullName: lectorName ?? "Error",
-                               lectorUrl: lectorUrl != nil ? URL(string: "https://www.sgu.ru\(lectorUrl!)") : nil,
+                               teacherFullName: teacherName ?? "Error",
+                               teacherEndpoint: teacherEndpoint,
                                lessonType: LessonType(rawValue: lessonType!) ?? .Lecture,
                                weekDay: Weekdays(dayNumber: dayNumber) ?? .Monday,
                                weekType: WeekType(rawValue: weekType!) ?? .All,

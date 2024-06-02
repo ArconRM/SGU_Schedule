@@ -10,6 +10,7 @@ import SwiftUI
 struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    @EnvironmentObject var viewsManager: ViewsManager
     
     @ObservedObject var viewModel: ViewModel
     
@@ -30,11 +31,11 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 .frame(height: 30)
                 .frame(maxWidth: .infinity)
-                .background (Color.white.opacity (0.00001))
+                .background(Color.white.opacity(0.00001))
                 .gesture(dragGesture)
-                .onChange(of: viewModel.schedule?.lessons) { newLessons in
-                    if viewModel.schedule != nil {
-                        lessonsBySelectedDay = viewModel.schedule!.lessons.filter { $0.weekDay == selectedDay }
+                .onChange(of: viewModel.groupSchedule?.lessons) { newLessons in
+                    if viewModel.groupSchedule != nil {
+                        lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                     if viewModel.currentEvent != nil {
                         withAnimation(.easeInOut(duration: 0.5)) {
@@ -68,8 +69,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .padding(.horizontal)
                 .padding(.bottom)
                 .onChange(of: selectedDay) { newDay in
-                    if viewModel.schedule != nil {
-                        lessonsBySelectedDay = viewModel.schedule!.lessons.filter { $0.weekDay == selectedDay }
+                    if viewModel.groupSchedule != nil {
+                        lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 }
                 .disabled(viewModel.isLoadingLessons)
@@ -80,20 +81,23 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     Text("Загрузка...")
                         .font(.system(size: 19, design: .rounded))
                         .bold()
-                } else if viewModel.schedule != nil && !viewModel.schedule!.lessons.isEmpty {
+                } else if viewModel.groupSchedule != nil && !viewModel.groupSchedule!.lessons.isEmpty {
                     ScrollView {
                         ForEach(1...8, id:\.self) { lessonNumber in
                             let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
                             if !lessonsByNumber.isEmpty {
                                 //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
-                                ScheduleSubview(lessons: lessonsByNumber).id(UUID())
+                                ScheduleSubview(lessons: lessonsByNumber)
+                                    .environmentObject(networkMonitor)
+                                    .environmentObject(viewsManager)
+                                    .id(UUID())
                             }
                         }
                         .padding(.top, 5)
                         .padding(.bottom, 20)
                     }
                     .onAppear {
-                        lessonsBySelectedDay = viewModel.schedule!.lessons.filter { $0.weekDay == selectedDay }
+                        lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 } else if !networkMonitor.isConnected {
                     Text("Нет соединения с интернетом")
@@ -108,12 +112,12 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .background (
             ZStack {
                 if colorScheme == .light {
-                    Color.blue.opacity(0.07)
+                    mainColorView(isDark: false)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
                 } else {
-                    Color.blue.opacity(0.1)
+                    mainColorView(isDark: true)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
@@ -163,6 +167,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 
 #Preview {
-    ScheduleModalView(viewModel:ScheduleViewModelWithParsingSGUAssembly().build())
+    ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())
         .environmentObject(NetworkMonitor())
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
 }

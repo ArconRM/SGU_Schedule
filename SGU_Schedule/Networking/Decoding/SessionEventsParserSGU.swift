@@ -10,28 +10,42 @@ import Kanna
 
 
 struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
-    
     private let baseXpath = "//div[2]/table[@id='session']/"
+    
+    func getSessionEventsFromSource(source html: String) throws -> [SessionEventDTO] {
+        do {
+            let sessionEvents = try getSessionEventsByRowsFromSource(source: html)
+            return sessionEvents
+        }
+        catch {
+            throw NetworkError.htmlParserError
+        }
+    }
     
     func getGroupSessionEventsFromSource(source html: String, groupNumber: Int) throws -> GroupSessionEventsDTO {
         do {
-            var sessionEvents = [SessionEventDTO]()
-            let doc = try HTML(html: html, encoding: .utf8)
-            
-            for rowNumber in stride(from: 1, through: 100, by: 3) {
-                let sessionEvent = decodeSessionEventByNumber(doc: doc, eventNumber: rowNumber)
-                
-                if sessionEvent != nil {
-                    sessionEvents.append(sessionEvent!)
-                } else {
-                    break
-                }
-            }
+            let sessionEvents = try getSessionEventsByRowsFromSource(source: html)
             return GroupSessionEventsDTO(groupNumber: groupNumber, sessionEvents: sessionEvents)
         }
         catch {
             throw NetworkError.htmlParserError
         }
+    }
+    
+    private func getSessionEventsByRowsFromSource(source html: String) throws -> [SessionEventDTO] {
+        var sessionEvents = [SessionEventDTO]()
+        let doc = try HTML(html: html, encoding: .utf8)
+        
+        for rowNumber in stride(from: 1, through: 100, by: 3) {
+            let sessionEvent = decodeSessionEventByNumber(doc: doc, eventNumber: rowNumber)
+            
+            if sessionEvent != nil {
+                sessionEvents.append(sessionEvent!)
+            } else {
+                break
+            }
+        }
+        return sessionEvents
     }
     
     private func decodeSessionEventByNumber(doc: HTMLDocument, eventNumber baseId: Int) -> SessionEventDTO? {

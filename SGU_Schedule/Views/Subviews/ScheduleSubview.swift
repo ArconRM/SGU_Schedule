@@ -13,10 +13,10 @@ struct ScheduleSubview: View, Equatable {
     }
     
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var networkMonitor: NetworkMonitor
+    @EnvironmentObject var viewsManager: ViewsManager
     
     var lessons: [LessonDTO]
-    
-    @State private var lessonToShowWebView: LessonDTO? = nil
     
     @State var areMultipleLessonsCollapsed: Bool = true
     
@@ -85,23 +85,28 @@ struct ScheduleSubview: View, Equatable {
             
             HStack {
                 if lesson.subgroup != nil && lesson.subgroup != "" {
-                    Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
+                    Text("\(lesson.teacherFullName) \n\(lesson.subgroup!)")
                         .font(.system(size: 17))
                         .italic()
-                        .underline(lesson.lectorUrl != nil)
+                        .underline(lesson.teacherEndpoint != nil)
                         .onTapGesture {
-                            if lesson.lectorUrl != nil {
-                                self.lessonToShowWebView = lesson
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
+                                    viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                }
                             }
                         }
+                    
                 } else {
-                    Text(lesson.lectorFullName)
+                    Text(lesson.teacherFullName)
                         .font(.system(size: 17))
                         .italic()
-                        .underline(lesson.lectorUrl != nil)
+                        .underline(lesson.teacherEndpoint != nil)
                         .onTapGesture {
-                            if lesson.lectorUrl != nil {
-                                self.lessonToShowWebView = lesson
+                            withAnimation(.easeInOut(duration: 0.3)) {
+                                if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
+                                    viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                }
                             }
                         }
                 }
@@ -120,14 +125,6 @@ struct ScheduleSubview: View, Equatable {
                     (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
                     : .gray.opacity(0.1)
         )
-        .sheet(item: $lessonToShowWebView) { lesson in
-            NavigationView {
-                WebView(url: lesson.lectorUrl ?? URL(string: "https://www.sgu.ru")!)
-                    .ignoresSafeArea()
-                    .navigationTitle(lesson.lectorFullName)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
-        }
     }
     
     private func makeFullMultipleLessonsView(lessons: [LessonDTO]) -> some View {
@@ -159,23 +156,28 @@ struct ScheduleSubview: View, Equatable {
                 
                 HStack {
                     if lesson.subgroup != nil && lesson.subgroup != "" {
-                        Text("\(lesson.lectorFullName) \n\(lesson.subgroup!)")
+                        Text("\(lesson.teacherFullName) \n\(lesson.subgroup!)")
                             .font(.system(size: 17))
                             .italic()
-                            .underline(lesson.lectorUrl != nil)
+                            .underline(lesson.teacherEndpoint != nil)
                             .onTapGesture {
-                                if lesson.lectorUrl != nil {
-                                    self.lessonToShowWebView = lesson
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
+                                        viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                    }
                                 }
                             }
+                        
                     } else {
-                        Text(lesson.lectorFullName)
+                        Text(lesson.teacherFullName)
                             .font(.system(size: 17))
                             .italic()
-                            .underline(lesson.lectorUrl != nil)
+                            .underline(lesson.teacherEndpoint != nil)
                             .onTapGesture {
-                                if lesson.lectorUrl != nil {
-                                    self.lessonToShowWebView = lesson
+                                withAnimation(.easeInOut(duration: 0.3)) {
+                                    if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
+                                        viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                    }
                                 }
                             }
                     }
@@ -194,14 +196,6 @@ struct ScheduleSubview: View, Equatable {
                         (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
                         : .gray.opacity(0.1)
             )
-        }
-        .sheet(item: $lessonToShowWebView) { lesson in
-            NavigationView {
-                WebView(url: lesson.lectorUrl ?? URL(string: "https://www.sgu.ru")!)
-                    .ignoresSafeArea()
-                    .navigationTitle(lesson.lectorFullName)
-                    .navigationBarTitleDisplayMode(.inline)
-            }
         }
     }
     
@@ -233,7 +227,7 @@ struct ScheduleSubview: View, Equatable {
             
             HStack {
                 if lesson.subgroup == nil || lesson.subgroup == "" {
-                    Text(lesson.lectorFullName)
+                    Text(lesson.teacherFullName)
                         .font(.system(size: 17))
                         .italic()
                     
@@ -267,8 +261,8 @@ struct ScheduleSubview_Previews: PreviewProvider {
                 .ignoresSafeArea()
             ScrollView {
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
-                                                    lectorFullName: "Бредихин Д. А.",
-                                                    lectorUrl: URL(string: "https://www.sgu.ru/person/bredihin-dmitriy-aleksandrovich"),
+                                                    teacherFullName: "Бредихин Д. А.",
+                                                    teacherEndpoint: "/person/bredihin-dmitriy-aleksandrovich",
                                                     lessonType: .Lecture,
                                                     weekDay: .Monday,
                                                     weekType: .Numerator,
@@ -278,7 +272,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     timeEnd: "09:50"),
                                           
                                           LessonDTO(subject: "Основы Российской государственности",
-                                                    lectorFullName: "Бредихин Д. А.",
+                                                    teacherFullName: "Бредихин Д. А.",
                                                     lessonType: .Practice,
                                                     weekDay: .Monday,
                                                     weekType: .Denumerator,
@@ -286,9 +280,11 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+                .environmentObject(NetworkMonitor())
                 
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
-                                                    lectorFullName: "Бредихин Д. А.",
+                                                    teacherFullName: "Бредихин Д. А.",
                                                     lessonType: .Lecture,
                                                     weekDay: .Monday,
                                                     weekType: .All,
@@ -296,9 +292,11 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+                .environmentObject(NetworkMonitor())
                 
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
-                                                    lectorFullName: "Бредихин Д. А.",
+                                                    teacherFullName: "Бредихин Д. А.",
                                                     lessonType: .Practice,
                                                     weekDay: .Monday,
                                                     weekType: .All,
@@ -306,6 +304,8 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
+                .environmentObject(NetworkMonitor())
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
             }
         }
     }

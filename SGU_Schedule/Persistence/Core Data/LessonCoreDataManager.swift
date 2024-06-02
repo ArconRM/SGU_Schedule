@@ -16,8 +16,8 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
             let newLesson = Lesson(context: viewContext)
 //            newLesson.id = UUID()
             newLesson.title = item.title
-            newLesson.lectorFullName = item.lectorFullName
-            newLesson.lectorUrl = item.lectorUrl
+            newLesson.teacherFullName = item.teacherFullName
+            newLesson.teacherEndpoint = item.teacherEndpoint
             newLesson.timeStart = item.timeStart
             newLesson.timeEnd = item.timeEnd
             newLesson.subgroup = item.subgroup
@@ -46,8 +46,8 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
             var resultLessons: [LessonDTO] = []
             for managedLesson in managedLessons {
                 let resultLesson = LessonDTO(subject: managedLesson.title ?? "Error",
-                                             lectorFullName: managedLesson.lectorFullName ?? "Error",
-                                             lectorUrl: managedLesson.lectorUrl,
+                                             teacherFullName: managedLesson.teacherFullName ?? "Error",
+                                             teacherEndpoint: managedLesson.teacherEndpoint,
                                              lessonType: managedLesson.lessonType,
                                              weekDay: managedLesson.weekDay,
                                              weekType: managedLesson.weekType,

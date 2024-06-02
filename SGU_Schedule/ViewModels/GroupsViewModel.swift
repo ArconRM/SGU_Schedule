@@ -1,5 +1,5 @@
 //
-//  GroupsViewModelWithParsingSGU.swift
+//  GroupsViewModel.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 14.10.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class GroupsViewModelWithParsingSGU: GroupsViewModel {
+public final class GroupsViewModel: ObservableObject {
     private let networkManager: GroupsNetworkManager
     
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
