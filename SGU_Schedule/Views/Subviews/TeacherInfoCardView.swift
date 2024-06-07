@@ -37,6 +37,8 @@ struct TeacherInfoCardView: View {
                 ProgressView()
             }
             
+            Divider()
+            
             Text(teacher.fullName)
                 .font(.system(size: 18))
                 .bold()
