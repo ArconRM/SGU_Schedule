@@ -48,8 +48,8 @@ struct SessionEventSubview: View {
             }
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
-            .opacity(sessionEvent.date >= Date() ? 1 : 0.5)
-            .background(sessionEvent.date < Date() ? .gray.opacity(0.1) : (sessionEvent.sessionEventType == .Consultation ? .green.opacity(0.2) : .blue.opacity(0.2)))
+            .opacity(sessionEvent.date.passed(delta: 2) ? 0.5 : 1)
+            .background(getBackground())
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
         .cornerRadius(10)
@@ -61,13 +61,29 @@ struct SessionEventSubview: View {
                 x: 0,
                 y: 0)
     }
+    
+    private func getBackground() -> Color {
+        if sessionEvent.date.passed(delta: 2) {
+            .gray.opacity(0.1)
+        } else {
+            if sessionEvent.sessionEventType == .Consultation {
+                .green.opacity(sessionEvent.date.isAroundNow(delta: 2) ? 0.6 : 0.2)
+            } else {
+                if sessionEvent.date.isAroundNow(delta: 2) {
+                    .yellow.opacity(0.6)
+                } else {
+                    .blue.opacity(0.2)
+                }
+            }
+        }
+    }
 }
 
 #Preview {
     ScrollView {
         SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
-                                                          date: "29 января 2025 21:00",
-                                                          sessionEventType: .Consultation,
+                                                          date: Date.now,
+                                                          sessionEventType: .Exam,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
         

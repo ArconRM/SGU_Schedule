@@ -128,6 +128,14 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func isAroundNow(delta: Int) -> Bool {
+        return self.getDayAndMonthString() == Date.now.getDayAndMonthString() && self.getHours() - Date.now.getHours() < delta
+    }
+    
+    func passed(delta: Int) -> Bool {
+        return Date.now > Calendar.current.date(byAdding: .hour, value: delta, to: self)!
+    }
+    
 //    static func getCurrentWeekType() -> WeekType {
 //        let calendar = Calendar.current
 //        let weekOfYear = calendar.component(.weekOfYear, from: Date())
