@@ -53,7 +53,11 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                             .font(.system(size: 19, weight: .bold, design: .rounded))
                     } else if viewModel.groupSessionEvents != nil {
                         ScrollView {
-                            ForEach(viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date >= Date() }) + viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date < Date() }), id:\.self) { sessionEvent in
+                            ForEach(
+                                viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date.isAroundNow() }) +
+                                viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date.inFuture() }) +
+                                viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date.passed() }), id:\.self
+                            ) { sessionEvent in
                                 SessionEventSubview(sessionEvent: sessionEvent)
                             }
                             .padding(.top, 5)

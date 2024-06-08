@@ -48,7 +48,7 @@ struct SessionEventSubview: View {
             }
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
-            .opacity(sessionEvent.date.passed(delta: 2) ? 0.5 : 1)
+            .opacity(sessionEvent.date.passed() ? 0.5 : 1)
             .background(getBackground())
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
@@ -63,13 +63,13 @@ struct SessionEventSubview: View {
     }
     
     private func getBackground() -> Color {
-        if sessionEvent.date.passed(delta: 2) {
+        if sessionEvent.date.passed() {
             .gray.opacity(0.1)
         } else {
             if sessionEvent.sessionEventType == .Consultation {
-                .green.opacity(sessionEvent.date.isAroundNow(delta: 2) ? 0.6 : 0.2)
+                .green.opacity(sessionEvent.date.isAroundNow() ? 0.6 : 0.2)
             } else {
-                if sessionEvent.date.isAroundNow(delta: 2) {
+                if sessionEvent.date.isAroundNow() {
                     .yellow.opacity(0.6)
                 } else {
                     .blue.opacity(0.2)
