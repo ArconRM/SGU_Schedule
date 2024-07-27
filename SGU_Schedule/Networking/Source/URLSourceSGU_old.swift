@@ -8,21 +8,20 @@
 import Foundation
 
 public struct URLSourceSGU_old: URLSource {
-    public var baseString: String {
-        return "https://old.sgu.ru"
+    private var baseUrl: URL {
+        return URL(string: "https://old.sgu.ru")!
     }
     
-    public var baseScheduleString: String {
-        return "https://old.sgu.ru/schedule/knt"
+    public func getBaseTeacherURL(teacherEndPoint: String) -> URL {
+        return self.baseUrl.appendingPathComponent(teacherEndPoint)
     }
     
-    public var baseScheduleURL: URL {
-        let url = URL(string: baseScheduleString)!
-        return url
+    public func getBaseScheduleURL(departmentCode: String) -> URL {
+        return self.baseUrl.appendingPathComponent("schedule").appendingPathComponent(departmentCode)
     }
     
-    public func getScheduleUrlWithGroupParameter(parameter groupNumber : String) -> URL {
-        return baseScheduleURL.appendingPathComponent("do/" + groupNumber)
+    public func getGroupScheduleURL(departmentCode: String, groupNumber: Int) -> URL {
+        return self.getBaseScheduleURL(departmentCode: departmentCode).appendingPathComponent("do").appendingPathComponent(String(groupNumber))
     }
     
     public init() { }

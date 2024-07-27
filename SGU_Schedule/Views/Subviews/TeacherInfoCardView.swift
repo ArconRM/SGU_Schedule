@@ -32,7 +32,7 @@ struct TeacherInfoCardView: View {
                     .resizable()
                     .aspectRatio(contentMode: ContentMode.fit)
                     .cornerRadius(20)
-//                    .shadow(radius: 3)
+                    .shadow(radius: 3)
             } placeholder: {
                 ProgressView()
             }
@@ -68,12 +68,12 @@ struct TeacherInfoCardView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 10)
         .foregroundColor(colorScheme == .light ? .black : .white)
-        .background (
-            ZStack {
-                Color.gray.opacity(0.2)
-                .cornerRadius(20)
-            }
-        )
+        .background(
+            RoundedRectangle(cornerRadius: 20)
+                .fill(colorScheme == .light ? .white : .white.opacity(0.2))
+                .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
+                .blur(radius: 0.5)
+            )
 //        .cornerRadius(20)
         .onTapGesture {
             withAnimation(.bouncy(duration: 0.5)) {
@@ -85,7 +85,7 @@ struct TeacherInfoCardView: View {
 
 #Preview {
     ZStack {
-        mainColorView(isDark: false)
+        AppTheme.blue.backgroundColor(colorScheme: .dark)
             .ignoresSafeArea()
             .shadow(radius: 5)
         

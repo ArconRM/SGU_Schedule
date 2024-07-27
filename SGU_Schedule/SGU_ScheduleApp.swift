@@ -10,11 +10,14 @@ import SwiftUI
 @main
 struct SGU_ScheduleApp: App {
     
+    let appSettings = AppSettings()
+    
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(NetworkMonitor())
                 .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+                .environmentObject(appSettings)
         }
     }
 }

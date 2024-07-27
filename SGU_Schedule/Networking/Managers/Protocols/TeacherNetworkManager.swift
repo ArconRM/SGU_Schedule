@@ -8,8 +8,9 @@
 import Foundation
 
 public protocol TeacherNetworkManager {
-    
-    func getTeacher(teacherEndpoint: String,
-                    resultQueue: DispatchQueue,
-                    completionHandler: @escaping (Result<TeacherDTO, Error>) -> Void)
+    func getTeacher(
+        teacherEndpoint: String,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<TeacherDTO, Error>) -> Void
+    )
 }

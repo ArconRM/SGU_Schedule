@@ -8,17 +8,17 @@
 import Foundation
 
 public protocol SessionEventsNetworkManager {
-    //    func getLessonsForDay(group: GroupDTO,
-    //                           day: Weekdays,
-    //                           resultQueue: DispatchQueue,
-    //                           completionHandler: @escaping(Result<[[LessonDTO]], Error>) -> Void)
+    func getGroupSessionEvents(
+        group: GroupDTO,
+        departmentCode: String,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping(Result<GroupSessionEventsDTO, Error>) -> Void
+    )
     
-    func getGroupSessionEvents(group: GroupDTO,
-                               resultQueue: DispatchQueue,
-                               completionHandler: @escaping(Result<GroupSessionEventsDTO, Error>) -> Void)
-    
-    func getTeacherSessionEvents(teacher: TeacherDTO,
-                                 resultQueue: DispatchQueue,
-                                 completionHandler: @escaping(Result<[SessionEventDTO], Error>) -> Void)
+    func getTeacherSessionEvents(
+        teacher: TeacherDTO,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping(Result<[SessionEventDTO], Error>) -> Void
+    )
 }
 

@@ -37,7 +37,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let lessonNetworkManager = LessonNetworkManagerWithParsing(urlSource: urlSource, lessonParser: lessonParser)
-        lessonNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: 141)) { result in
+        lessonNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
             switch result {
             case .success(let schedule):
                 scheduleToCheck = schedule
@@ -68,7 +68,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let dateNetworkManager = DateNetworkManagerWithParsing(urlSource: urlSource, dateParser: dateParser)
-        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: 141), resultQueue: .main) { result in
+        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: 141), departmentCode: "knt", resultQueue: .main) { result in
             switch result {
             case .success(let date):
                 dateToCheck = date
@@ -99,7 +99,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let groupsNetworkManager = GroupsNetworkManagerWithParsing(urlSource: urlSource, groupsParser: groupsParser)
-        groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 1, program: .BachelorAndSpeciality) { result in
+        groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 1, program: .BachelorAndSpeciality, departmentCode: "knt") { result in
             switch result {
             case .success(let groups):
                 groupsToCheck = groups
@@ -130,7 +130,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser)
-        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141)) { result in
+        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
             switch result {
             case .success(let sessionEvents):
                 sessionEventsToCheck = sessionEvents
@@ -161,7 +161,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser)
-        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141)) { result in
+        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
             switch result {
             case .success(let sessionEvents):
                 sessionEventsToCheck = sessionEvents

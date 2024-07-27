@@ -6,3 +6,13 @@
 //
 
 import Foundation
+
+public struct DepartmentDTO: Hashable {
+    var fullName: String
+    var code: String
+    
+    init(fullName: String, code: String) {
+        self.fullName = fullName
+        self.code = code
+    }
+}

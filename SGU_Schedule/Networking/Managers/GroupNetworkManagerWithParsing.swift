@@ -17,8 +17,14 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
         self.groupsParser = groupsParser
     }
 
-    public func getGroupsByYearAndAcademicProgram(year: Int, program: AcademicProgram, resultQueue: DispatchQueue = .main, completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void) {
-        let url = urlSource.baseScheduleURL
+    public func getGroupsByYearAndAcademicProgram(
+        year: Int,
+        program: AcademicProgram,
+        departmentCode: String,
+        resultQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void
+    ) {
+        let url = urlSource.getBaseScheduleURL(departmentCode: departmentCode)
         
         URLSession.shared.dataTask(with: url as URL) { data, _, error in
             guard error == nil else {

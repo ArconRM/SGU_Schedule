@@ -13,6 +13,8 @@ public final class ScheduleViewModel: ObservableObject {
     private let dateNetworkManager: DateNetworkManager
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
+    public var department: DepartmentDTO
+    
     @Published var groupSchedule: GroupScheduleDTO?
     @Published var currentEvent: (any ScheduleEventDTO)? = nil
     @Published var groupSessionEvents: GroupSessionEventsDTO?
@@ -31,11 +33,11 @@ public final class ScheduleViewModel: ObservableObject {
     
     var favoriteGroupNumber: Int? {
         get {
-            let number = UserDefaults.standard.integer(forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
+            let number = UserDefaults.standard.integer(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
             return number != 0 ? number : nil
         }
         set {
-            UserDefaults.standard.setValue(newValue, forKey: ViewModelsKeys.favoriteGroupNumberKey.rawValue)
+            UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
             do {
                 if groupSchedule != nil {
                     try saveNewScheduleWithClearingPreviousVersion(schedule: groupSchedule!)
@@ -53,11 +55,14 @@ public final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    init(lessonsNetworkManager: LessonNetworkManager,
-         sessionEventsNetworkManager: SessionEventsNetworkManager,
-         dateNetworkManager: DateNetworkManager,
-         schedulePersistenceManager: GroupSchedulePersistenceManager) {
-        
+    init(
+        department: DepartmentDTO,
+        lessonsNetworkManager: LessonNetworkManager,
+        sessionEventsNetworkManager: SessionEventsNetworkManager,
+        dateNetworkManager: DateNetworkManager,
+        schedulePersistenceManager: GroupSchedulePersistenceManager
+    ) {
+        self.department = department
         self.lessonsNetworkManager = lessonsNetworkManager
         self.sessionEventsNetworkManager = sessionEventsNetworkManager
         self.dateNetworkManager = dateNetworkManager
@@ -73,7 +78,11 @@ public final class ScheduleViewModel: ObservableObject {
         
         if isOnline {
             dispatchGroup.enter()
-            dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
+            dateNetworkManager.getLastUpdateDate(
+                group: GroupDTO(fullNumber: groupNumber),
+                departmentCode: department.code,
+                resultQueue: .main
+            ) { result in
                 switch result {
                 case .success(let date):
                     self.updateDate = date
@@ -100,7 +109,11 @@ public final class ScheduleViewModel: ObservableObject {
                         }
                         
                         // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
-                        self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
+                        self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
+                            group: GroupDTO(fullNumber: groupNumber),
+                            departmentCode: self.department.code,
+                            resultQueue: DispatchQueue.main
+                        ) { result in
                             switch result {
                             case .success(let networkSchedule):
                                 do {
@@ -132,7 +145,11 @@ public final class ScheduleViewModel: ObservableObject {
                     }
                     
                 } else {
-                    self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: groupNumber), resultQueue: DispatchQueue.main) { result in
+                    self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
+                        group: GroupDTO(fullNumber: groupNumber),
+                        departmentCode: self.department.code,
+                        resultQueue: DispatchQueue.main
+                    ) { result in
                         switch result {
                         case .success(let schedule):
                             self.groupSchedule = schedule
@@ -154,7 +171,11 @@ public final class ScheduleViewModel: ObservableObject {
     
     public func fetchSessionEvents(groupNumber: Int, isOnline: Bool) {
         if isOnline {
-            sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
+            sessionEventsNetworkManager.getGroupSessionEvents(
+                group: GroupDTO(fullNumber: groupNumber),
+                departmentCode: department.code,
+                resultQueue: .main
+            ) { result in
                 switch result {
                 case .success(let date):
                     self.groupSessionEvents = date
@@ -197,7 +218,11 @@ public final class ScheduleViewModel: ObservableObject {
     }
     
     private func fetchUpdateDate(groupNumber: Int) {
-        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: groupNumber), resultQueue: .main) { result in
+        dateNetworkManager.getLastUpdateDate(
+            group: GroupDTO(fullNumber: groupNumber),
+            departmentCode: department.code,
+            resultQueue: .main
+        ) { result in
             switch result {
             case .success(let date):
                 self.updateDate = date

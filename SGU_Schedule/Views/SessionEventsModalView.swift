@@ -10,6 +10,7 @@ import SwiftUI
 struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    @EnvironmentObject var appSettings: AppSettings
     
     @ObservedObject var viewModel: ViewModel
     
@@ -72,17 +73,10 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
         .frame(height: curHeight)
         .background (
             ZStack {
-                if colorScheme == .light {
-                    mainColorView(isDark: false)
+                AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
-                } else {
-                    mainColorView(isDark: true)
-                    .cornerRadius(35)
-                    .blur(radius: 2)
-                    .ignoresSafeArea()
-                }
             }
                 .background(
                     RoundedRectangle(cornerRadius: 35)
@@ -126,6 +120,6 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
 }
 
 #Preview {
-    SessionEventsModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())
+    SessionEventsModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt")))
         .environmentObject(NetworkMonitor())
 }

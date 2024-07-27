@@ -15,6 +15,7 @@ struct ScheduleSubview: View, Equatable {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
+    @EnvironmentObject var appSettings: AppSettings
     
     var lessons: [LessonDTO]
     
@@ -73,9 +74,9 @@ struct ScheduleSubview: View, Equatable {
                 Spacer()
                 
                 Text(lesson.lessonType.rawValue)
+                    .foregroundColor(getLessonColor(lesson: lesson))
                     .font(.system(size: 17))
                     .bold()
-                    .opacity(0.7)
             }
             
             Text(lesson.title)
@@ -121,10 +122,7 @@ struct ScheduleSubview: View, Equatable {
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
         .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
-        .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
-                    (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
-                    : .gray.opacity(0.1)
-        )
+        .background(getBackground(lesson: lesson))
     }
     
     private func makeFullMultipleLessonsView(lessons: [LessonDTO]) -> some View {
@@ -144,9 +142,9 @@ struct ScheduleSubview: View, Equatable {
                     Spacer()
                     
                     Text(lesson.lessonType.rawValue)
+                        .foregroundColor(getLessonColor(lesson: lesson))
                         .font(.system(size: 17))
                         .bold()
-                        .opacity(0.7)
                 }
                 
                 Text(lesson.title)
@@ -192,10 +190,11 @@ struct ScheduleSubview: View, Equatable {
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
             .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
-            .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
-                        (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
-                        : .gray.opacity(0.1)
-            )
+            .background {
+                if AppStyle(rawValue: appSettings.currentAppStyle)! != .bordered {
+                    getBackground(lesson: lesson)
+                }
+            }
         }
     }
     
@@ -215,9 +214,9 @@ struct ScheduleSubview: View, Equatable {
                 Spacer()
                 
                 Text(lesson.lessonType.rawValue)
+                    .foregroundColor(getLessonColor(lesson: lesson))
                     .font(.system(size: 17))
                     .bold()
-                    .opacity(0.7)
             }
             
             Text(lesson.title)
@@ -246,10 +245,27 @@ struct ScheduleSubview: View, Equatable {
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
         .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
-        .background(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
-                    (lesson.lessonType == .Lecture ? .green.opacity(0.2) : .blue.opacity(0.2))
-                    : .gray.opacity(0.1)
-        )
+        .background(getBackground(lesson: lesson))
+    }
+    
+    private func getBackground(lesson: LessonDTO) -> AnyView {
+        switch AppStyle(rawValue: appSettings.currentAppStyle)! {
+        case .fill:
+            AnyView(
+                getLessonColor(lesson: lesson).opacity(0.2)
+            )
+        case .bordered:
+            AnyView(
+                RoundedRectangle(cornerRadius: 10)
+                    .stroke(getLessonColor(lesson: lesson).opacity(0.5), lineWidth: 7)
+            )
+        }
+    }
+    
+    private func getLessonColor(lesson: LessonDTO) -> Color {
+        Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
+        (lesson.lessonType == .Lecture ? Color.green : Color.blue)
+        : Color.gray
     }
 }
 
@@ -282,6 +298,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     timeEnd: "09:50")])
                 .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
                 .environmentObject(NetworkMonitor())
+                .environmentObject(AppSettings())
                 
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
                                                     teacherFullName: "Бредихин Д. А.",
@@ -294,6 +311,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     timeEnd: "09:50")])
                 .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
                 .environmentObject(NetworkMonitor())
+                .environmentObject(AppSettings())
                 
                 ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
                                                     teacherFullName: "Бредихин Д. А.",
@@ -306,6 +324,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     timeEnd: "09:50")])
                 .environmentObject(NetworkMonitor())
                 .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+                .environmentObject(AppSettings())
             }
         }
     }

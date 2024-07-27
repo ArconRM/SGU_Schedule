@@ -17,43 +17,22 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
         self.lessonParser = lessonParser
     }
     
-    public func getHTML(group: GroupDTO, 
-                        resultQueue: DispatchQueue = .main,
-                        completionHandler: @escaping(Result<String, Error>) -> Void) { // для теста
-        let groupURL = urlSource.getScheduleUrlWithGroupParameter(parameter: String(group.fullNumber))
+    public func getGroupScheduleForCurrentWeek(
+        group: GroupDTO,
+        departmentCode: String,
+        resultQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void
+    ) {
+        let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
         
-        URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
+        URLSession.shared.dataTask(with: groupScheduleUrl as URL) { data, _, error in
             guard error == nil else {
                 resultQueue.async { completionHandler(.failure(error!)) }
                 return
             }
             
             do {
-                let html = try String(contentsOf: groupURL, encoding: .utf8)
-                resultQueue.async {
-                    completionHandler(.success(html))
-                }
-            }
-            catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.networkManagerError)) }
-            }
-            
-        }.resume()
-    }
-    
-    public func getGroupScheduleForCurrentWeek(group: GroupDTO, 
-                                               resultQueue: DispatchQueue = .main,
-                                               completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void) {
-        let groupURL = urlSource.getScheduleUrlWithGroupParameter(parameter: String(group.fullNumber))
-        
-        URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
-            guard error == nil else {
-                resultQueue.async { completionHandler(.failure(error!)) }
-                return
-            }
-            
-            do {
-                let html = try String(contentsOf: groupURL, encoding: .utf8)
+                let html = try String(contentsOf: groupScheduleUrl, encoding: .utf8)
                 let lessons = try self.lessonParser.getGroupScheduleFromSource(source: html, groupNumber: group.fullNumber)
                 
                 resultQueue.async {
@@ -66,12 +45,14 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
         }.resume()
     }
     
-    public func getTeacherScheduleForCurrentWeek(teacher: TeacherDTO, 
-                                                 resultQueue: DispatchQueue,
-                                                 completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void) {
+    public func getTeacherScheduleForCurrentWeek(
+        teacher: TeacherDTO,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void
+    ) {
         guard let _ = teacher.teacherLessonsEndpoint else { return }
-        guard let teacherLessonsUrl = URL(string: urlSource.baseString + teacher.teacherLessonsEndpoint!) else { return }
-                                  
+        let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacher.teacherLessonsEndpoint!)
+        
         URLSession.shared.dataTask(with: teacherLessonsUrl as URL) { data, _, error in
             guard error == nil else {
                 resultQueue.async { completionHandler(.failure(error!)) }

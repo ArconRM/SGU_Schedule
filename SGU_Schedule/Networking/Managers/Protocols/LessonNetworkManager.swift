@@ -8,16 +8,16 @@
 import Foundation
 
 public protocol LessonNetworkManager {
-//    func getLessonsForDay(group: GroupDTO,
-//                           day: Weekdays,
-//                           resultQueue: DispatchQueue,
-//                           completionHandler: @escaping(Result<[[LessonDTO]], Error>) -> Void)
+    func getGroupScheduleForCurrentWeek(
+        group: GroupDTO,
+        departmentCode: String,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void
+    )
     
-    func getGroupScheduleForCurrentWeek(group: GroupDTO,
-                                        resultQueue: DispatchQueue,
-                                        completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void)
-    
-    func getTeacherScheduleForCurrentWeek(teacher: TeacherDTO,
-                                          resultQueue: DispatchQueue,
-                                          completionHandler: @escaping(Result<[LessonDTO], Error>) -> Void)
+    func getTeacherScheduleForCurrentWeek(
+        teacher: TeacherDTO,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping(Result<[LessonDTO], Error>) -> Void
+    )
 }

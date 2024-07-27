@@ -9,6 +9,7 @@ import SwiftUI
 
 struct GroupSubview: View {
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSettings: AppSettings
     
     var group: GroupDTO
     var isFavorite: Bool
@@ -16,25 +17,40 @@ struct GroupSubview: View {
     var body: some View {
         VStack {
             HStack {
-                ZStack {
-                    Rectangle()
-                        .cornerRadius(10)
-                        .foregroundColor(isFavorite ? .cyan.opacity(0.6) : .cyan.opacity(0.3))
-                        .shadow(color: .cyan.opacity(0.7), radius: 7, x: 2, y: 2)
-                        .blur(radius: 1)
+                if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                    ZStack {
+                        buildFilledRectangle()
+                        
+                        Text(String(group.fullNumber))
+                            .foregroundColor(colorScheme == .light ? .black : .white)
+                            .font(.system(size: 20))
+                            .bold()
+                    }
+                    .frame(maxWidth: 90)
                     
-                    Text(String(group.fullNumber))
+                    Text(group.fullName)
                         .foregroundColor(colorScheme == .light ? .black : .white)
-                        .font(.system(size: 20))
-                        .bold()
+                        .font(.system(size: 18, weight: .bold))
+                        .multilineTextAlignment(.leading)
+                        .padding(.vertical, 20)
+                    
+                } else {
+                    ZStack {
+                        buildBorderedRectangle()
+                        
+                        Text(String(group.fullNumber))
+                            .foregroundColor(colorScheme == .light ? .black : .white)
+                            .font(.system(size: 20))
+                            .bold()
+                    }
+                    .frame(maxWidth: 90)
+                    
+                    Text(group.fullName)
+                        .foregroundColor(colorScheme == .light ? .black : .white)
+                        .font(.system(size: 18, weight: .bold))
+                        .multilineTextAlignment(.leading)
+                        .padding(.vertical, 20)
                 }
-                .frame(maxWidth: 90)
-                
-                Text(group.fullName)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
-                    .font(.system(size: 18, weight: .bold))
-                    .multilineTextAlignment(.leading)
-                    .padding(.vertical, 20)
                 
                 Spacer()
             }
@@ -50,6 +66,21 @@ struct GroupSubview: View {
         .padding(.top, 5)
         .frame(minHeight:100)
     }
+    
+    private func buildFilledRectangle() -> some View {
+        Rectangle()
+            .cornerRadius(10)
+            .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme).opacity(isFavorite ? 0.6 : 0.3))
+            .shadow(color: .cyan.opacity(0.7), radius: 7, x: 2, y: 2)
+            .blur(radius: 1)
+    }
+    
+    private func buildBorderedRectangle() -> some View {
+        RoundedRectangle(cornerRadius: 20)
+            .stroke((AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme).opacity(isFavorite ? 1 : 0.3))!, lineWidth: 4)
+            .padding(2)
+    }
+    
 }
 
 struct GroupSubview_Previews: PreviewProvider {
@@ -60,7 +91,10 @@ struct GroupSubview_Previews: PreviewProvider {
                 .ignoresSafeArea()
             ScrollView {
                 GroupSubview(group: GroupDTO(fullNumber: 141), isFavorite: true)
+                    .environmentObject(AppSettings())
+                
                 GroupSubview(group: GroupDTO(fullNumber: 131), isFavorite: false)
+                    .environmentObject(AppSettings())
             }
         }
     }

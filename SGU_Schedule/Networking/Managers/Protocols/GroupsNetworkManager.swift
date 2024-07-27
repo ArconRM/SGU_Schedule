@@ -8,12 +8,12 @@
 import Foundation
 
 public protocol GroupsNetworkManager {
-//    func getAllGroups(resultQueue: DispatchQueue,
-//                      completionHandler: @escaping (Result<[Group], Error>) -> Void)
-    
     ///May throw htmlParserError or any other
-    func getGroupsByYearAndAcademicProgram(year: Int,
-                                           program: AcademicProgram,
-                                           resultQueue: DispatchQueue,
-                                           completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void)
+    func getGroupsByYearAndAcademicProgram(
+        year: Int,
+        program: AcademicProgram,
+        departmentCode: String,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void
+    )
 }

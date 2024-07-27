@@ -15,8 +15,9 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
     }
     
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var networkMonitor: NetworkMonitor
+    @EnvironmentObject var viewsManager: ViewsManager
+    @EnvironmentObject var appSettings: AppSettings
     
     @ObservedObject var viewModel: ViewModel
     
@@ -43,15 +44,10 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
     
     private func buildUI() -> some View {
         ZStack {
-            if colorScheme == .light {
-                mainColorView(isDark: false)
-                    .ignoresSafeArea()
-                    .shadow(radius: 5)
-            } else {
-                mainColorView(isDark: true)
-                    .ignoresSafeArea()
-                    .shadow(radius: 5)
-            }
+            AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
+                .ignoresSafeArea()
+                .shadow(radius: 5)
+            
             if viewModel.isLoadingTeacherInfo {
                 ProgressView()
             } else {

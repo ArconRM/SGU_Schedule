@@ -20,10 +20,11 @@ public class DateNetworkManagerWithParsing: DateNetworkManager {
     /// May return htmlParserError or any other
     public func getLastUpdateDate(
         group: GroupDTO,
+        departmentCode: String,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<Date, Error>) -> Void
     ) {
-        let groupUrl = urlSource.getScheduleUrlWithGroupParameter(parameter: String(group.fullNumber))
+        let groupUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber: group.fullNumber)
         
         URLSession.shared.dataTask(with: groupUrl as URL) { data, _, error in
             guard error == nil else {

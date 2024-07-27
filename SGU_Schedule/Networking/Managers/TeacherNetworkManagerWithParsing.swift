@@ -22,7 +22,7 @@ public class TeacherNetworkManagerWithParsing: TeacherNetworkManager {
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<TeacherDTO, any Error>) -> Void
     ) {
-        let teacherUrl = URL(string: urlSource.baseString + teacherEndpoint)!
+        let teacherUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacherEndpoint)
         
         URLSession.shared.dataTask(with: teacherUrl as URL) { data, _, error in
             guard error == nil else {

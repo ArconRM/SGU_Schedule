@@ -8,9 +8,11 @@
 import Foundation
 
 public protocol ViewModelFactory {
-    func buildScheduleViewModel() -> ScheduleViewModel
+    func buildDepartmentsViewModel() -> DepartmentsViewModel
     
-    func buildGroupsViewModel() -> GroupsViewModel
+    func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel
+    
+    func buildScheduleViewModel(department: DepartmentDTO) -> ScheduleViewModel
     
     func buildTeacherInfoViewModel() -> TeacherInfoViewModel
 }

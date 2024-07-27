@@ -8,9 +8,12 @@
 import Foundation
 
 class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
-    func getGroupSessionEvents(group: GroupDTO, 
-                               resultQueue: DispatchQueue,
-                               completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void) {
+    func getGroupSessionEvents(
+        group: GroupDTO,
+        departmentCode: String,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void
+    ) {
         Task { () -> Result<GroupSessionEventsDTO, Error> in
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
@@ -26,9 +29,11 @@ class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
         }
     }
     
-    func getTeacherSessionEvents(teacher: TeacherDTO,
-                                 resultQueue: DispatchQueue,
-                                 completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void) {
+    func getTeacherSessionEvents(
+        teacher: TeacherDTO,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void
+    ) {
         Task { () -> Result<[SessionEventDTO], Error> in
             let dateFormatter = DateFormatter()
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")

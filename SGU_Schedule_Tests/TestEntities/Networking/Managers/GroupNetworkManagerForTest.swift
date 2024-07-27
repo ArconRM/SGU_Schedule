@@ -8,7 +8,12 @@
 import Foundation
 
 class GroupNetworkManagerForTest: GroupsNetworkManager {
-    func getGroupsByYearAndAcademicProgram(year: Int, program: AcademicProgram, resultQueue: DispatchQueue, completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void) {
+    func getGroupsByYearAndAcademicProgram(
+        year: Int,
+        program: AcademicProgram,
+        departmentCode: String,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void) {
         Task { () -> Result<[GroupDTO], Error> in
             return .success([GroupDTO(fullNumber: 141), GroupDTO(fullNumber: 121), GroupDTO(fullNumber: 181)])
         }

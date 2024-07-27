@@ -18,6 +18,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
+    @EnvironmentObject var appSettings: AppSettings
     
     @ObservedObject var viewModel: ViewModel
     
@@ -122,7 +123,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 Image(systemName: favoriteGroupNumber == selectedGroup!.fullNumber ? "star.fill" : "star")
                     .font(.system(size: 18, weight: .semibold))
                     .padding(5)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
                     .background (
                         ZStack {
                             (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
@@ -144,7 +145,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
+        ScheduleView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt")),
                      selectedGroup: GroupDTO(fullNumber: 141))
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))

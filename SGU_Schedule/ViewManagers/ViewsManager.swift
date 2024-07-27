@@ -10,64 +10,105 @@ import SwiftUI
 
 
 enum AppViews {
+    case DepartmentsView
     case GroupsView
     case ScheduleView
     case TeacherInfoView
 }
 
 // TODO: через DI с протоколом сделать
+// TODO: слишком много обязанностей
+// TODO: может как то без него кастомную навигацию
 /// Manages creating views and passing data
 public final class ViewsManager: ObservableObject {
     
     private var viewModelFactory: ViewModelFactory
-    private var groupsViewModel: GroupsViewModel
+    private var groupsViewModel: GroupsViewModel?
     
     @Published private(set) var currentView: AppViews
-    @Published private(set) var selectedGroup: GroupDTO?
-    @Published private(set) var teacherEndpoint: String?
+    var needToReloadGroupView: Bool = false // Для айпада, ибо на нем вьюшка всегда на экране
     
-    //Для айпада, ибо на нем вьюшка всегда на экране
-    var needToReloadGroupView: Bool = false
-    
+    private var selectedDepartmentCode: String? = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue)
+    private var favoriteGroupNumber: Int = UserDefaults.standard.integer(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+    private var selectedGroup: GroupDTO?
+    private var teacherEndpoint: String?
     
     init(viewModelFactory: ViewModelFactory) {
         self.viewModelFactory = viewModelFactory
-        self.groupsViewModel = self.viewModelFactory.buildGroupsViewModel() // Должен создаваться сразу и только один раз
-        self.currentView = .GroupsView
+        
+        if selectedDepartmentCode != nil {
+            groupsViewModel = self.viewModelFactory.buildGroupsViewModel(department: DepartmentSource(rawValue: selectedDepartmentCode!)!.dto) // Не должен пересоздаваться без смены факультета
+            currentView = .GroupsView
+        } else {
+            currentView = .DepartmentsView
+        }
+    }
+    
+    //Data
+    func selectDepartment(departmentCode: String) {
+        UserDefaults.standard.setValue(departmentCode, forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue)
+        selectedDepartmentCode = departmentCode
+        groupsViewModel = viewModelFactory.buildGroupsViewModel(department: DepartmentSource(rawValue: departmentCode)!.dto) // Не должен пересоздаваться без смены факультета
+    }
+    
+    func getSelectedDapertmentFullName() -> String {
+        if selectedDepartmentCode != nil {
+            return DepartmentSource(rawValue: selectedDepartmentCode!)!.fullName
+        }
+        return "Error"
+    }
+    
+    func selectGroup(group: GroupDTO) {
+        selectedGroup = group
+    }
+    
+    func resetDepartment() {
+        UserDefaults.standard.setValue(nil, forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue)
+        selectedDepartmentCode = nil
+        
+        UserDefaults.standard.setValue(0, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+        favoriteGroupNumber = 0
     }
     
     //Transitions
-    func showGroupsView(needToReload: Bool) {
-        self.needToReloadGroupView = needToReload
-        self.currentView = .GroupsView
+    func showDepartmentsView() {
+        currentView = .DepartmentsView
     }
     
-    func showScheduleView(selectedGroup: GroupDTO? = nil) {
-        if let _ = selectedGroup {
-            self.selectedGroup = selectedGroup
-        }
-        self.currentView = .ScheduleView
+    func showGroupsView(needToReload: Bool) {
+        needToReloadGroupView = needToReload
+        currentView = .GroupsView
+    }
+    
+    func showScheduleView() {
+        currentView = .ScheduleView
     }
     
     func showTeacherInfoView(teacherEndpoint: String) {
         self.teacherEndpoint = teacherEndpoint
-        self.currentView = .TeacherInfoView
+        currentView = .TeacherInfoView
     }
     
-    //Builds
+    //Factory
+    func buildDepartmentsView() -> some View {
+        let departmentsViewModel = viewModelFactory.buildDepartmentsViewModel()
+        
+        return DepartmentsView(viewModel: departmentsViewModel)
+    }
+    
     func buildGroupsView() -> some View {
-        return GroupsView(viewModel: self.groupsViewModel)
+        return GroupsView(viewModel: groupsViewModel!)
     }
     
     func buildScheduleView() -> some View {
-        let scheduleViewModel = self.viewModelFactory.buildScheduleViewModel()
+        let scheduleViewModel = viewModelFactory.buildScheduleViewModel(department: DepartmentDTO(fullName: "", code: selectedDepartmentCode!))
         
-        return ScheduleView(viewModel: scheduleViewModel, selectedGroup: self.selectedGroup)
+        return ScheduleView(viewModel: scheduleViewModel, selectedGroup: selectedGroup)
     }
     
     func buildTeacherInfoView() -> some View {
-        let teacherInfoViewModel = self.viewModelFactory.buildTeacherInfoViewModel()
+        let teacherInfoViewModel = viewModelFactory.buildTeacherInfoViewModel()
         
-        return TeacherInfoView(viewModel: teacherInfoViewModel, teacherEndpoint: self.teacherEndpoint ?? "")
+        return TeacherInfoView(viewModel: teacherInfoViewModel, teacherEndpoint: teacherEndpoint ?? "")
     }
 }

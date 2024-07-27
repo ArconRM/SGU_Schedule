@@ -18,11 +18,11 @@ public struct GroupDTO: Hashable {
         self.fullNumber = fullNumber
         
         let source = GroupsSource(rawValue: self.fullNumber) //костыль, ибо нет списка нормального
-        if source != nil {
-            self.shortName = source!.shortName
-            self.fullName = source!.fullName
-            self.academicProgram = .BachelorAndSpeciality
-        } else {
+//        if source != nil {
+//            self.shortName = source!.shortName
+//            self.fullName = source!.fullName
+//            self.academicProgram = .BachelorAndSpeciality
+//        } else {
             self.shortName = String(fullNumber)
             self.fullName = String(fullNumber) + " группа"
             
@@ -31,6 +31,6 @@ public struct GroupDTO: Hashable {
             } else if Array(String(fullNumber))[1] == "9" {
                 self.academicProgram = .Postgraduade
             }
-        }
+//        }
     }
 }

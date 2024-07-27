@@ -11,6 +11,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
+    @EnvironmentObject var appSettings: AppSettings
     
     @ObservedObject var viewModel: ViewModel
     
@@ -111,17 +112,10 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .frame(height: curHeight)
         .background (
             ZStack {
-                if colorScheme == .light {
-                    mainColorView(isDark: false)
+                AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()
-                } else {
-                    mainColorView(isDark: true)
-                    .cornerRadius(35)
-                    .blur(radius: 2)
-                    .ignoresSafeArea()
-                }
             }
                 .background(
                     RoundedRectangle(cornerRadius: 35)
@@ -167,7 +161,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 
 #Preview {
-    ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())
+    ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt")))
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
 }

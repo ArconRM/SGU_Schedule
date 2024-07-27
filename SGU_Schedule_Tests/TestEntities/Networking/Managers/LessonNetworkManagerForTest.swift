@@ -9,6 +9,7 @@ import Foundation
 
 class LessonNetworkManagerForTest: LessonNetworkManager {
     func getGroupScheduleForCurrentWeek(group: GroupDTO,
+                                        departmentCode: String,
                                         resultQueue: DispatchQueue,
                                         completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void) {
         Task { () -> Result<GroupScheduleDTO, Error> in

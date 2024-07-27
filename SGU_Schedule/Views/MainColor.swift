@@ -8,6 +8,6 @@
 import Foundation
 import SwiftUI
 
-public func mainColorView(isDark: Bool) -> Color {
-    return Color.blue.opacity(isDark ? 0.1 : 0.07)
-}
+//@State var mainColorView: Color {
+//    return Color.blue.opacity(isDark ? 0.1 : 0.07)
+//}

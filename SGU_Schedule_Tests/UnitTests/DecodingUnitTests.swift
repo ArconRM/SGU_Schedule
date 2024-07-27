@@ -8,11 +8,14 @@
 import XCTest
 import SwiftUI
 @testable import SGU_Schedule
+import Kanna
+
 
 final class DecodingUnitTests: XCTestCase {
     
     let testGroupNumbers = [141, 241, 341, 441, 173, 273, 192, 193]
-    let urlSource = URLSourceSGU_old()
+    //    let urlSource = URLSourceSGU_old()
+    let urlSource = URLSourceSGU()
     
     override func setUpWithError() throws {
         super.setUp()
@@ -25,13 +28,13 @@ final class DecodingUnitTests: XCTestCase {
     
     func testLessonParserGetsSchedule() {
         for testGroupNumber in testGroupNumbers {
-            let lessonParser = LessonHTMLParserSGU()
+            let lessonParser = LessonHTMLParserSGU_old()
             var html: String?
             var result: GroupScheduleDTO?
             
             do {
-                html = try String(contentsOf: urlSource.getScheduleUrlWithGroupParameter(parameter: String(testGroupNumber)), encoding: .utf8) //синхронно потому что щас похуй
-                html = try String(contentsOf: URL(string:"https://old.sgu.ru/schedule/teacher/475")!, encoding: .utf8) //синхронно потому что щас похуй
+                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8) //синхронно потому что щас похуй
+                //                html = try String(contentsOf: URL(string:"https://sgu.ru/schedule/teacher/475")!, encoding: .utf8) //синхронно потому что щас похуй
             }
             catch {
                 XCTFail("Не смог соскрябать html")
@@ -53,12 +56,12 @@ final class DecodingUnitTests: XCTestCase {
     
     func testDateParserGetsUpdateDate() {
         for testGroupNumber in testGroupNumbers {
-            let dateParser = DateHTMLParserSGU()
+            let dateParser = DateHTMLParserSGU_old()
             var html: String?
             var result: Date?
             
             do {
-                html = try String(contentsOf: urlSource.getScheduleUrlWithGroupParameter(parameter: String(testGroupNumber)), encoding: .utf8)
+                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8)
             }
             catch {
                 XCTFail("Не смог соскрябать html")
@@ -79,15 +82,15 @@ final class DecodingUnitTests: XCTestCase {
     }
     
     func testGroupParserGetsGroups() {
-        let groupsParser = GroupsHTMLParserSGU()
+        let groupsParser = GroupsHTMLParserSGU_old()
         var html: String?
         var result: [GroupDTO]?
         
         do {
-            html = try String(contentsOf: URL(string: urlSource.baseScheduleString)!, encoding: .utf8)
+            html = try String(contentsOf: urlSource.getBaseScheduleURL(departmentCode: "knt"), encoding: .utf8)
         }
         catch {
-            XCTFail("Что-то не так с ссылкой")
+            XCTFail("Не смог соскрябать html")
         }
         
         XCTAssertNotNil(html)
@@ -109,12 +112,12 @@ final class DecodingUnitTests: XCTestCase {
     
     func testSessionEventsParserGetsSessionEvents() {
         for testGroupNumber in testGroupNumbers {
-            let sessionEventsParser = SessionEventsHTMLParserSGU()
+            let sessionEventsParser = SessionEventsHTMLParserSGU_old()
             var html: String?
             var result: GroupSessionEventsDTO?
             
             do {
-                html = try String(contentsOf: urlSource.getScheduleUrlWithGroupParameter(parameter: String(testGroupNumber)), encoding: .utf8)
+                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8)
             }
             catch {
                 XCTFail("Не смог соскрябать html")
@@ -135,7 +138,7 @@ final class DecodingUnitTests: XCTestCase {
     }
     
     func testTeacherParserGetsTeacher() {
-        let teacherParser = TeacherHTMLParserSGU()
+        let teacherParser = TeacherHTMLParserSGU_old()
         var html: String?
         var result: TeacherDTO?
         
@@ -157,6 +160,24 @@ final class DecodingUnitTests: XCTestCase {
         
         XCTAssertNotNil(result)
         print(result!)
+    }
+    
+    
+    func testHehehe() {
+        do {
+            let html = try String(contentsOf: URL(string:"https://www.old.sgu.ru/schedule")!, encoding: .utf8)
+            let doc = try HTML(html: html, encoding: .utf8)
+            for i in 1...25 {
+//                print("case ." + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a/@href").first!.text!.split(separator: "/")[1] + ":")
+//                print("return \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a").first!.text! + "\"")
+                
+                print("case ." + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a/@href").first!.text!.split(separator: "/")[1] + ":")
+                print("return DepartmentDTO(fullName: \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a").first!.text! + "\", code: \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a/@href").first!.text!.split(separator: "/")[1] + "\")")
+            }
+        }
+        catch {
+            
+        }
     }
     
 }

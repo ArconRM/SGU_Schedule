@@ -8,39 +8,60 @@
 import Foundation
 
 public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
+    public func buildDepartmentsViewModel() -> DepartmentsViewModel {
+        return DepartmentsViewModel()
+    }
     
-    public func buildScheduleViewModel() -> ScheduleViewModel {
+    public func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
+        return GroupsViewModel (
+            department: department,
+            
+            networkManager: GroupsNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                groupsParser: GroupsHTMLParserSGU_old()
+            )
+        )
+    }
+    
+    public func buildScheduleViewModel(department: DepartmentDTO) -> ScheduleViewModel {
         return ScheduleViewModel (
-            lessonsNetworkManager: LessonNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                                   lessonParser: LessonHTMLParserSGU()),
+            department: department,
             
-            sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                                                sessionEventsParser: SessionEventsHTMLParserSGU()),
+            lessonsNetworkManager: LessonNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                lessonParser: LessonHTMLParserSGU_old()
+            ),
             
-            dateNetworkManager: DateNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                              dateParser: DateHTMLParserSGU()),
+            sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                sessionEventsParser: SessionEventsHTMLParserSGU_old()
+            ),
+            
+            dateNetworkManager: DateNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                dateParser: DateHTMLParserSGU_old()
+            ),
             
             schedulePersistenceManager: GroupScheduleCoreDataManager()
         )
     }
     
-    public func buildGroupsViewModel() -> GroupsViewModel {
-        return GroupsViewModel (
-            networkManager: GroupsNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                            groupsParser: GroupsHTMLParserSGU())
-        )
-    }
-    
     public func buildTeacherInfoViewModel() -> TeacherInfoViewModel {
         return TeacherInfoViewModel (
-            teacherNetworkManager: TeacherNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                                    teacherParser: TeacherHTMLParserSGU()),
+            teacherNetworkManager: TeacherNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                teacherParser: TeacherHTMLParserSGU_old()
+            ),
             
-            lessonsNetworkManager: LessonNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                                   lessonParser: LessonHTMLParserSGU()),
+            lessonsNetworkManager: LessonNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                lessonParser: LessonHTMLParserSGU_old()
+            ),
             
-            sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(urlSource: URLSourceSGU_old(),
-                                                                                sessionEventsParser: SessionEventsHTMLParserSGU())
+            sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
+                urlSource: URLSourceSGU_old(),
+                sessionEventsParser: SessionEventsHTMLParserSGU_old()
+            )
         )
     }
 }

@@ -17,19 +17,22 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
     }
     
     
-    public func getGroupSessionEvents(group: GroupDTO, 
-                                      resultQueue: DispatchQueue = .main,
-                                      completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void) {
-        let groupURL = urlSource.getScheduleUrlWithGroupParameter(parameter: String(group.fullNumber))
+    public func getGroupSessionEvents(
+        group: GroupDTO,
+        departmentCode: String,
+        resultQueue: DispatchQueue = .main,
+        completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void
+    ) {
+        let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
         
-        URLSession.shared.dataTask(with: groupURL as URL) { data, _, error in
+        URLSession.shared.dataTask(with: groupScheduleUrl as URL) { data, _, error in
             guard error == nil else {
                 resultQueue.async { completionHandler(.failure(error!)) }
                 return
             }
             
             do {
-                let html = try String(contentsOf: groupURL, encoding: .utf8)
+                let html = try String(contentsOf: groupScheduleUrl, encoding: .utf8)
                 let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(source: html, groupNumber: group.fullNumber)
                 
                 resultQueue.async {
@@ -42,20 +45,22 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
         }.resume()
     }
     
-    public func getTeacherSessionEvents(teacher: TeacherDTO, 
-                                        resultQueue: DispatchQueue,
-                                        completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void) {
-        guard let _ = teacher.teacherSessionEventsEndpoint else { return }
-        guard let teacherSessionEventsUrl = URL(string: urlSource.baseString + teacher.teacherSessionEventsEndpoint!) else { return }
+    public func getTeacherSessionEvents(
+        teacher: TeacherDTO,
+        resultQueue: DispatchQueue,
+        completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void
+    ) {
+        guard let _ = teacher.teacherLessonsEndpoint else { return }
+        let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacher.teacherLessonsEndpoint!)
         
-        URLSession.shared.dataTask(with: teacherSessionEventsUrl as URL) { data, _, error in
+        URLSession.shared.dataTask(with: teacherLessonsUrl as URL) { data, _, error in
             guard error == nil else {
                 resultQueue.async { completionHandler(.failure(error!)) }
                 return
             }
             
             do {
-                let html = try String(contentsOf: teacherSessionEventsUrl, encoding: .utf8)
+                let html = try String(contentsOf: teacherLessonsUrl, encoding: .utf8)
                 let lessons = try self.sessionEventsParser.getSessionEventsFromSource(source: html)
                 
                 resultQueue.async {
