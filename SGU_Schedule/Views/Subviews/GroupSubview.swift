@@ -76,7 +76,7 @@ struct GroupSubview: View {
     }
     
     private func buildBorderedRectangle() -> some View {
-        RoundedRectangle(cornerRadius: 20)
+        RoundedRectangle(cornerRadius: 18)
             .stroke((AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme).opacity(isFavorite ? 1 : 0.3))!, lineWidth: 4)
             .padding(2)
     }
