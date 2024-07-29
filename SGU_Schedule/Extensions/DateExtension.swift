@@ -129,15 +129,15 @@ extension Date {
     }
     
     func inFuture() -> Bool {
-        return Date.now < Calendar.current.date(byAdding: .hour, value: 2, to: self)! && !self.isAroundNow()
+        return Date() < Calendar.current.date(byAdding: .hour, value: 2, to: self)! && !self.isAroundNow()
     }
     
     func isAroundNow() -> Bool {
-        return self.getDayAndMonthString() == Date.now.getDayAndMonthString() && self.getHours() - Date.now.getHours() <= 2
+        return self.getDayAndMonthString() == Date().getDayAndMonthString() && Date().getHours() - self.getHours() < 2
     }
     
     func passed() -> Bool {
-        return Date.now > Calendar.current.date(byAdding: .hour, value: 2, to: self)!
+        return Date() > Calendar.current.date(byAdding: .hour, value: 2, to: self)!
     }
     
 //    static func getCurrentWeekType() -> WeekType {
