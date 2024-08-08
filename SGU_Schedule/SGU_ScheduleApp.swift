@@ -16,7 +16,7 @@ struct SGU_ScheduleApp: App {
         WindowGroup {
             MainView()
                 .environmentObject(NetworkMonitor())
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
                 .environmentObject(appSettings)
         }
     }

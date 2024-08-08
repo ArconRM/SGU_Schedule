@@ -96,10 +96,38 @@ extension Date {
         return [.All, self.currentWeekTypeWithSundayBeingNextWeek].contains(weekType)
     }
     
+    /// Returns true if dateMiddle is more than dateStart or equals it and if dateMiddle is less than dateEnd or equals it
+    static func checkIfTimeIsBetweenTwoTimes(dateStart: Date, dateMiddle: Date, dateEnd: Date, strictInequality: Bool = false) -> Bool {
+        return compareDatesByTime(date1: dateMiddle, date2: dateStart, strictInequality: strictInequality)
+        && compareDatesByTime(date1: dateEnd, date2: dateMiddle, strictInequality: strictInequality)
+    }
+    
+    /// Returns true if date1 is bigger than date2 or equals it.
+    static func compareDatesByTime(date1: Date, date2: Date, strictInequality: Bool) -> Bool {
+        let calendar = Calendar.current
+        var dateToCompare1 = Date.init(timeIntervalSinceReferenceDate: 0)
+        var dateToCompare2 = Date.init(timeIntervalSinceReferenceDate: 0)
+        
+        let date1Components = calendar.dateComponents([.hour, .minute], from: date1)
+        let date2Components = calendar.dateComponents([.hour, .minute], from: date2)
+        
+        dateToCompare1 = calendar.date(byAdding: date1Components, to: dateToCompare1) ?? Date.now
+        dateToCompare2 = calendar.date(byAdding: date2Components, to: dateToCompare2) ?? Date.now
+        
+        return (strictInequality ? dateToCompare1 > dateToCompare2 : dateToCompare1 >= dateToCompare2)
+    }
+    
     func getHours() -> Int {
         let dateFormatter = DateFormatter()
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "HH"
+        return Int(dateFormatter.string(from: self)) ?? 0
+    }
+    
+    func getMinutes() -> Int {
+        let dateFormatter = DateFormatter()
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "mm"
         return Int(dateFormatter.string(from: self)) ?? 0
     }
     

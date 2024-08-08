@@ -7,6 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		1602CA852C5D77E500E8F89F /* NotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA842C5D77E500E8F89F /* NotAvailableView.swift */; };
+		1602CA872C5D786000E8F89F /* CurrentScheduleEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */; };
+		1602CA882C5D79B900E8F89F /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */; };
+		1602CAB02C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CAAF2C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift */; };
 		16150C2B2C09BFB6006BA964 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */; };
 		16150C2D2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */; };
 		16150C2F2C09D23E006BA964 /* TeacherInfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2E2C09D23E006BA964 /* TeacherInfoCardView.swift */; };
@@ -18,6 +22,49 @@
 		165508322C14369F00A37900 /* DepartmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508312C14369F00A37900 /* DepartmentsViewModel.swift */; };
 		165508342C143B3000A37900 /* MainGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508332C143B3000A37900 /* MainGradient.swift */; };
 		165508362C15F1F200A37900 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508352C15F1F200A37900 /* ErrorView.swift */; };
+		166DB20B2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
+		166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
+		166DB20E2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */; };
+		167EE42A2C5F79BD00701C8A /* GroupSchedulePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */; };
+		167EE42B2C5F79C700701C8A /* CoreData_GroupScheduleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA53835C2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift */; };
+		167EE42C2C5F79E300701C8A /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAFA580A2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld */; };
+		167EE42D2C5F7CFF00701C8A /* GroupScheduleCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA53835E2AF56FE40004F012 /* GroupScheduleCoreDataManager.swift */; };
+		167EE42E2C5F7D0800701C8A /* PersistenceController.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58062AEC5AFC0060BD81 /* PersistenceController.swift */; };
+		167EE42F2C5F7D0E00701C8A /* CoreData_LessonExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58082AEC5D8D0060BD81 /* CoreData_LessonExtension.swift */; };
+		167EE4302C5F7D0E00701C8A /* LessonCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA580D2AEC621D0060BD81 /* LessonCoreDataManager.swift */; };
+		168069A32C5ADAFF002D47A6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */; };
+		168069A42C5ADAFF002D47A6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */; };
+		168069A72C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069A62C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift */; };
+		168069A92C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069A82C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift */; };
+		168069AB2C5ADAFF002D47A6 /* SGU_ScheduleWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069AA2C5ADAFF002D47A6 /* SGU_ScheduleWidget.swift */; };
+		168069AD2C5ADAFF002D47A6 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069AC2C5ADAFF002D47A6 /* AppIntent.swift */; };
+		168069AF2C5ADAFF002D47A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 168069AE2C5ADAFF002D47A6 /* Assets.xcassets */; };
+		168069B32C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		168069B82C5C2136002D47A6 /* GroupScheduleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */; };
+		168069BA2C5C2176002D47A6 /* LessonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1282ABA011C0079E3D7 /* LessonDTO.swift */; };
+		168069BB2C5C2176002D47A6 /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
+		168069BC2C5C2176002D47A6 /* TeacherDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F032C04CF9900870B21 /* TeacherDTO.swift */; };
+		168069BD2C5C2176002D47A6 /* GroupSessionEventsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */; };
+		168069BE2C5C2176002D47A6 /* GroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1262ABA004C0079E3D7 /* GroupDTO.swift */; };
+		168069BF2C5C2176002D47A6 /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
+		168069C02C5C2176002D47A6 /* DepartmentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67802B7560C900B06667 /* DepartmentDTO.swift */; };
+		168069C12C5C2176002D47A6 /* ScheduleEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */; };
+		168069C22C5C217D002D47A6 /* DepartmentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67822B75611E00B06667 /* DepartmentSource.swift */; };
+		168069C32C5C217D002D47A6 /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58142AED25DD0060BD81 /* UserDefaultsKeys.swift */; };
+		168069C42C5C217D002D47A6 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650F5172C54492600622205 /* AppStyle.swift */; };
+		168069C52C5C217D002D47A6 /* AcademicProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3172ADA865500E90223 /* AcademicProgram.swift */; };
+		168069C62C5C217D002D47A6 /* GroupsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D791B2ABE2E4700C36932 /* GroupsSource.swift */; };
+		168069C72C5C217D002D47A6 /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */; };
+		168069C82C5C217D002D47A6 /* SessionEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED92B667E42001F91F5 /* SessionEventType.swift */; };
+		168069C92C5C217D002D47A6 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9D2C52F2050057B062 /* AppTheme.swift */; };
+		168069CA2C5C217D002D47A6 /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1312ABA21430079E3D7 /* Weekdays.swift */; };
+		168069CB2C5C217D002D47A6 /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
+		16B3B0CE2C5FE4AE00043B16 /* ScheduleFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B3B0CD2C5FE4AE00043B16 /* ScheduleFetchResult.swift */; };
+		16B3B0CF2C61134900043B16 /* PersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58102AECFD0B0060BD81 /* PersistenceManager.swift */; };
+		16B3B0D02C61134900043B16 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
+		16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58122AED0EE10060BD81 /* CoreDataError.swift */; };
+		16B3B0D32C6116DA00043B16 /* ScheduleFetchResultVariants.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B3B0D22C6116DA00043B16 /* ScheduleFetchResultVariants.swift */; };
+		16B645EC2C634794000574F9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9B2C52F18D0057B062 /* AppSettings.swift */; };
 		16DB5F042C04CF9900870B21 /* TeacherDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F032C04CF9900870B21 /* TeacherDTO.swift */; };
 		16DB5F062C04D53900870B21 /* TeacherHTMLParserSGU_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */; };
 		16DB5F082C04D55600870B21 /* TeacherHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F072C04D55600870B21 /* TeacherHTMLParser.swift */; };
@@ -114,6 +161,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		168069B12C5ADAFF002D47A6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BADAE1062AB9C0D60079E3D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 168069A12C5ADAFF002D47A6;
+			remoteInfo = SGU_ScheduleWidgetExtension;
+		};
 		BA996A5C2AC4A00200888BE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BADAE1062AB9C0D60079E3D7 /* Project object */;
@@ -124,6 +178,17 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
+		1680699A2C5AD5E4002D47A6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				168069B32C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA5326522B07E87000DB0520 /* Embed Watch Content */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
@@ -137,6 +202,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		1602CA842C5D77E500E8F89F /* NotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotAvailableView.swift; sourceTree = "<group>"; };
+		1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentScheduleEventView.swift; sourceTree = "<group>"; };
+		1602CAAF2C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleWidgetViewModel.swift; sourceTree = "<group>"; };
 		16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithParsingSGUFactory.swift; sourceTree = "<group>"; };
 		16150C2E2C09D23E006BA964 /* TeacherInfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherInfoCardView.swift; sourceTree = "<group>"; };
@@ -148,6 +216,21 @@
 		165508312C14369F00A37900 /* DepartmentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsViewModel.swift; sourceTree = "<group>"; };
 		165508332C143B3000A37900 /* MainGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGradient.swift; sourceTree = "<group>"; };
 		165508352C15F1F200A37900 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		166DB2082C62AC7F001D0688 /* SGU_Schedule.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_Schedule.entitlements; sourceTree = "<group>"; };
+		166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_ScheduleWidgetExtension.entitlements; sourceTree = "<group>"; };
+		166DB20A2C62AE72001D0688 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
+		166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentAndNextScheduleEventsView.swift; sourceTree = "<group>"; };
+		1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
+		1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
+		168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SGU_ScheduleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		168069A62C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGU_ScheduleWidgetBundle.swift; sourceTree = "<group>"; };
+		168069A82C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGU_ScheduleWidgetLiveActivity.swift; sourceTree = "<group>"; };
+		168069AA2C5ADAFF002D47A6 /* SGU_ScheduleWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGU_ScheduleWidget.swift; sourceTree = "<group>"; };
+		168069AC2C5ADAFF002D47A6 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
+		168069AE2C5ADAFF002D47A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		168069B02C5ADAFF002D47A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16B3B0CD2C5FE4AE00043B16 /* ScheduleFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFetchResult.swift; sourceTree = "<group>"; };
+		16B3B0D22C6116DA00043B16 /* ScheduleFetchResultVariants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFetchResultVariants.swift; sourceTree = "<group>"; };
 		16DB5F032C04CF9900870B21 /* TeacherDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherDTO.swift; sourceTree = "<group>"; };
 		16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHTMLParserSGU_old.swift; sourceTree = "<group>"; };
 		16DB5F072C04D55600870B21 /* TeacherHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHTMLParser.swift; sourceTree = "<group>"; };
@@ -249,6 +332,15 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		1680699F2C5ADAFF002D47A6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				168069A42C5ADAFF002D47A6 /* SwiftUI.framework in Frameworks */,
+				168069A32C5ADAFF002D47A6 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA996A552AC4A00200888BE2 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -267,6 +359,24 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		1602CA832C5D77C400E8F89F /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				1602CA842C5D77E500E8F89F /* NotAvailableView.swift */,
+				1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */,
+				166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		1602CAB12C5D7CF400E8F89F /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				1602CAAF2C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		165508292C13A34400A37900 /* SGU_old */ = {
 			isa = PBXGroup;
 			children = (
@@ -284,6 +394,31 @@
 			children = (
 			);
 			path = SGU;
+			sourceTree = "<group>";
+		};
+		168069A52C5ADAFF002D47A6 /* SGU_ScheduleWidget */ = {
+			isa = PBXGroup;
+			children = (
+				16B3B0CC2C5FE49100043B16 /* Models */,
+				1602CAB12C5D7CF400E8F89F /* ViewModels */,
+				1602CA832C5D77C400E8F89F /* Views */,
+				168069A62C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift */,
+				168069A82C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift */,
+				168069AA2C5ADAFF002D47A6 /* SGU_ScheduleWidget.swift */,
+				168069AC2C5ADAFF002D47A6 /* AppIntent.swift */,
+				168069AE2C5ADAFF002D47A6 /* Assets.xcassets */,
+				168069B02C5ADAFF002D47A6 /* Info.plist */,
+			);
+			path = SGU_ScheduleWidget;
+			sourceTree = "<group>";
+		};
+		16B3B0CC2C5FE49100043B16 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				16B3B0CD2C5FE4AE00043B16 /* ScheduleFetchResult.swift */,
+				16B3B0D22C6116DA00043B16 /* ScheduleFetchResultVariants.swift */,
+			);
+			path = Models;
 			sourceTree = "<group>";
 		};
 		BA1256CB2B7225160019D2E6 /* Persistence */ = {
@@ -311,13 +446,13 @@
 			path = AdditionalViews;
 			sourceTree = "<group>";
 		};
-		BA996A592AC4A00200888BE2 /* SGU_Schedule_Tests */ = {
+		BA996A592AC4A00200888BE2 /* SGU_ScheduleTests */ = {
 			isa = PBXGroup;
 			children = (
 				BAAD1F212B702D3900B58E32 /* UnitTests */,
 				BAAD1F062B6FF79700B58E32 /* TestEntities */,
 			);
-			path = SGU_Schedule_Tests;
+			path = SGU_ScheduleTests;
 			sourceTree = "<group>";
 		};
 		BA9D791A2ABE2E2F00C36932 /* Enums */ = {
@@ -333,6 +468,7 @@
 				BA2FEED92B667E42001F91F5 /* SessionEventType.swift */,
 				16F7AD9D2C52F2050057B062 /* AppTheme.swift */,
 				1650F5172C54492600622205 /* AppStyle.swift */,
+				166DB20A2C62AE72001D0688 /* AppGroup.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -490,9 +626,11 @@
 		BADAE1052AB9C0D60079E3D7 = {
 			isa = PBXGroup;
 			children = (
+				166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */,
 				BADAE1212AB9CC250079E3D7 /* Podfile */,
 				BADAE1102AB9C0D60079E3D7 /* SGU_Schedule */,
-				BA996A592AC4A00200888BE2 /* SGU_Schedule_Tests */,
+				168069A52C5ADAFF002D47A6 /* SGU_ScheduleWidget */,
+				BA996A592AC4A00200888BE2 /* SGU_ScheduleTests */,
 				BADAE10F2AB9C0D60079E3D7 /* Products */,
 				C8419E67D9E26C9ADC2DEA46 /* Pods */,
 				E41C264ACE940ED4248A870E /* Frameworks */,
@@ -504,6 +642,7 @@
 			children = (
 				BADAE10E2AB9C0D60079E3D7 /* SGU_Schedule.app */,
 				BA996A582AC4A00200888BE2 /* SGU_ScheduleTests.xctest */,
+				168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -511,6 +650,7 @@
 		BADAE1102AB9C0D60079E3D7 /* SGU_Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				166DB2082C62AC7F001D0688 /* SGU_Schedule.entitlements */,
 				BAC851202B0A2456004252FF /* SGU-Schedule-Info.plist */,
 				BADAE1242ABA00380079E3D7 /* Models */,
 				BAFA580F2AECFCD30060BD81 /* Persistence */,
@@ -666,6 +806,8 @@
 			isa = PBXGroup;
 			children = (
 				CD18EAF10CCE65B188BB8657 /* Pods_SGU_Schedule.framework */,
+				1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */,
+				1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -673,6 +815,23 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		168069A12C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 168069B42C5ADAFF002D47A6 /* Build configuration list for PBXNativeTarget "SGU_ScheduleWidgetExtension" */;
+			buildPhases = (
+				1680699E2C5ADAFF002D47A6 /* Sources */,
+				1680699F2C5ADAFF002D47A6 /* Frameworks */,
+				168069A02C5ADAFF002D47A6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SGU_ScheduleWidgetExtension;
+			productName = SGU_ScheduleWidgetExtension;
+			productReference = 168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BA996A572AC4A00200888BE2 /* SGU_ScheduleTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA996A602AC4A00200888BE2 /* Build configuration list for PBXNativeTarget "SGU_ScheduleTests" */;
@@ -701,10 +860,12 @@
 				BADAE10C2AB9C0D60079E3D7 /* Resources */,
 				BA5326522B07E87000DB0520 /* Embed Watch Content */,
 				E9AC12929B35769132C354DC /* [CP] Embed Pods Frameworks */,
+				1680699A2C5AD5E4002D47A6 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				168069B22C5ADAFF002D47A6 /* PBXTargetDependency */,
 			);
 			name = SGU_Schedule;
 			productName = SGU_Schedule;
@@ -718,9 +879,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1500;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
+					168069A12C5ADAFF002D47A6 = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					BA996A572AC4A00200888BE2 = {
 						CreatedOnToolsVersion = 14.3.1;
 						TestTargetID = BADAE10D2AB9C0D60079E3D7;
@@ -745,11 +909,20 @@
 			targets = (
 				BADAE10D2AB9C0D60079E3D7 /* SGU_Schedule */,
 				BA996A572AC4A00200888BE2 /* SGU_ScheduleTests */,
+				168069A12C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		168069A02C5ADAFF002D47A6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				168069AF2C5ADAFF002D47A6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA996A562AC4A00200888BE2 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -813,6 +986,55 @@
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		1680699E2C5ADAFF002D47A6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				168069BA2C5C2176002D47A6 /* LessonDTO.swift in Sources */,
+				168069BB2C5C2176002D47A6 /* SessionEventDTO.swift in Sources */,
+				16B645EC2C634794000574F9 /* AppSettings.swift in Sources */,
+				168069C22C5C217D002D47A6 /* DepartmentSource.swift in Sources */,
+				168069C32C5C217D002D47A6 /* UserDefaultsKeys.swift in Sources */,
+				16B3B0CF2C61134900043B16 /* PersistenceManager.swift in Sources */,
+				16B3B0D02C61134900043B16 /* LessonPersistenceManager.swift in Sources */,
+				168069C42C5C217D002D47A6 /* AppStyle.swift in Sources */,
+				167EE42D2C5F7CFF00701C8A /* GroupScheduleCoreDataManager.swift in Sources */,
+				16B3B0CE2C5FE4AE00043B16 /* ScheduleFetchResult.swift in Sources */,
+				1602CA882C5D79B900E8F89F /* DateExtension.swift in Sources */,
+				168069C52C5C217D002D47A6 /* AcademicProgram.swift in Sources */,
+				168069C62C5C217D002D47A6 /* GroupsSource.swift in Sources */,
+				168069C72C5C217D002D47A6 /* LessonType.swift in Sources */,
+				166DB20E2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift in Sources */,
+				168069C82C5C217D002D47A6 /* SessionEventType.swift in Sources */,
+				168069C92C5C217D002D47A6 /* AppTheme.swift in Sources */,
+				166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */,
+				168069CA2C5C217D002D47A6 /* Weekdays.swift in Sources */,
+				168069CB2C5C217D002D47A6 /* WeekType.swift in Sources */,
+				168069BC2C5C2176002D47A6 /* TeacherDTO.swift in Sources */,
+				167EE42C2C5F79E300701C8A /* CoreDataModel.xcdatamodeld in Sources */,
+				1602CAB02C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift in Sources */,
+				168069BD2C5C2176002D47A6 /* GroupSessionEventsDTO.swift in Sources */,
+				168069BE2C5C2176002D47A6 /* GroupDTO.swift in Sources */,
+				168069BF2C5C2176002D47A6 /* TimeBreakDTO.swift in Sources */,
+				168069C02C5C2176002D47A6 /* DepartmentDTO.swift in Sources */,
+				168069C12C5C2176002D47A6 /* ScheduleEventDTO.swift in Sources */,
+				167EE42B2C5F79C700701C8A /* CoreData_GroupScheduleExtension.swift in Sources */,
+				168069AB2C5ADAFF002D47A6 /* SGU_ScheduleWidget.swift in Sources */,
+				168069AD2C5ADAFF002D47A6 /* AppIntent.swift in Sources */,
+				168069B82C5C2136002D47A6 /* GroupScheduleDTO.swift in Sources */,
+				168069A72C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift in Sources */,
+				16B3B0D32C6116DA00043B16 /* ScheduleFetchResultVariants.swift in Sources */,
+				167EE42F2C5F7D0E00701C8A /* CoreData_LessonExtension.swift in Sources */,
+				167EE4302C5F7D0E00701C8A /* LessonCoreDataManager.swift in Sources */,
+				1602CA852C5D77E500E8F89F /* NotAvailableView.swift in Sources */,
+				16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */,
+				168069A92C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift in Sources */,
+				167EE42A2C5F79BD00701C8A /* GroupSchedulePersistenceManager.swift in Sources */,
+				1602CA872C5D786000E8F89F /* CurrentScheduleEventView.swift in Sources */,
+				167EE42E2C5F7D0800701C8A /* PersistenceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		BA996A542AC4A00200888BE2 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -843,6 +1065,7 @@
 				BA53835D2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift in Sources */,
 				BA2FEEEC2B681F2A001F91F5 /* CarouselView.swift in Sources */,
 				16DB5F0E2C061D4300870B21 /* TeacherInfoView.swift in Sources */,
+				166DB20B2C62AE72001D0688 /* AppGroup.swift in Sources */,
 				BAFA58172AED3A840060BD81 /* NetworkMonitor.swift in Sources */,
 				BA2F67812B7560C900B06667 /* DepartmentDTO.swift in Sources */,
 				BA9D79172ABB3AD900C36932 /* GroupsView.swift in Sources */,
@@ -929,6 +1152,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		168069B22C5ADAFF002D47A6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 168069A12C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension */;
+			targetProxy = 168069B12C5ADAFF002D47A6 /* PBXContainerItemProxy */;
+		};
 		BA996A5D2AC4A00200888BE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BADAE10D2AB9C0D60079E3D7 /* SGU_Schedule */;
@@ -937,6 +1165,73 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		168069B52C5ADAFF002D47A6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SGU_ScheduleWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SGU_ScheduleWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SGU_ScheduleWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		168069B62C5ADAFF002D47A6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_ENTITLEMENTS = SGU_ScheduleWidgetExtension.entitlements;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SGU_ScheduleWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SGU_ScheduleWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		BA996A5E2AC4A00200888BE2 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1096,6 +1391,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SGU_Schedule/Preview Content\"";
@@ -1132,6 +1428,7 @@
 				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SGU_Schedule/Preview Content\"";
@@ -1164,6 +1461,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		168069B42C5ADAFF002D47A6 /* Build configuration list for PBXNativeTarget "SGU_ScheduleWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				168069B52C5ADAFF002D47A6 /* Debug */,
+				168069B62C5ADAFF002D47A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		BA996A602AC4A00200888BE2 /* Build configuration list for PBXNativeTarget "SGU_ScheduleTests" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (

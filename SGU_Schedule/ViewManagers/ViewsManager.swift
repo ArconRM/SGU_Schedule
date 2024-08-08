@@ -24,6 +24,7 @@ public final class ViewsManager: ObservableObject {
     
     private var viewModelFactory: ViewModelFactory
     private var groupsViewModel: GroupsViewModel?
+    private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
     @Published private(set) var currentView: AppViews
     var needToReloadGroupView: Bool = false // Для айпада, ибо на нем вьюшка всегда на экране
@@ -33,8 +34,9 @@ public final class ViewsManager: ObservableObject {
     private var selectedGroup: GroupDTO?
     private var teacherEndpoint: String?
     
-    init(viewModelFactory: ViewModelFactory) {
+    init(viewModelFactory: ViewModelFactory, schedulePersistenceManager: GroupSchedulePersistenceManager) {
         self.viewModelFactory = viewModelFactory
+        self.schedulePersistenceManager = schedulePersistenceManager
         
         if selectedDepartmentCode != nil {
             groupsViewModel = self.viewModelFactory.buildGroupsViewModel(department: DepartmentSource(rawValue: selectedDepartmentCode!)!.dto) // Не должен пересоздаваться без смены факультета
@@ -68,6 +70,14 @@ public final class ViewsManager: ObservableObject {
         
         UserDefaults.standard.setValue(0, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
         favoriteGroupNumber = 0
+        
+        do {
+            try schedulePersistenceManager.clearAllItems()
+        }
+        catch (let error) {
+            // TODO: нормально отловить
+            print(error.localizedDescription)
+        }
     }
     
     //Transitions

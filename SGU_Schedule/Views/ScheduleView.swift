@@ -44,7 +44,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         ZStack {
             ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
             
-            CarouselView(pageCount: 2, currentIndex: 0, content: {
+            CarouselView(pageCount: 2, pageTitles: ["Занятия", "Экзамены"], currentIndex: 0, content: {
                 ScheduleModalView(viewModel: viewModel)
                     .environmentObject(networkMonitor)
                     .environmentObject(viewsManager)
@@ -147,7 +147,8 @@ struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt")),
                      selectedGroup: GroupDTO(fullNumber: 141))
+        .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
     }
 }

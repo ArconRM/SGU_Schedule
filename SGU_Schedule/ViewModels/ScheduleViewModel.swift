@@ -248,7 +248,7 @@ public final class ScheduleViewModel: ObservableObject {
             return
         }
         
-        let currentDayNumber = Date.currentWeekDayWithEveningBeingNextDay.number
+        let currentDayNumber = Date.currentWeekDay.number
         let currentTime = Date.currentHoursAndMinutes
         
         if currentDayNumber == 7 {

@@ -92,6 +92,6 @@ struct SettingsSideMenuView: View {
 
 #Preview {
     SettingsSideMenuView(selectedTheme: .blue, selectedStyle: .fill)
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory()))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
         .environmentObject(AppSettings())
 }
