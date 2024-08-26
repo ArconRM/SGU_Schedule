@@ -126,6 +126,7 @@ struct ScheduleEventsView: View {
     
     private func getBackground(event: (any ScheduleEventDTO)?) -> some View {
         RoundedRectangle(cornerRadius: 18)
+            .fill(colorScheme == .light ? .white : .gray.opacity(0.2))
             .stroke(getBackgroundColor(event: event), lineWidth: 4)
             .padding(2)
     }

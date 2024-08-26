@@ -104,7 +104,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                             }
                         }
                         .padding(.top, 5)
-                        .padding(.bottom, 20)
+                        .padding(.bottom, 50)
                     }
                     .onAppear {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }

@@ -62,7 +62,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                                 SessionEventSubview(sessionEvent: sessionEvent)
                             }
                             .padding(.top, 5)
-                            .padding(.bottom, 20)
+                            .padding(.bottom, 50)
                         }
                     }
                 }
