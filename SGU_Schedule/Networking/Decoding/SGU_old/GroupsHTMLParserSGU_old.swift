@@ -9,16 +9,13 @@ import Foundation
 import Kanna
 
 final class GroupsHTMLParserSGU_old: GroupsHTMLParser {
-//    func getAllGroupsFromSource(source html: String) -> [Group] {
-//        var result = [Group]()
+    func getGroupsByYearAndAcademicProgramFromSource (
+        source html: String,
+        year: Int,
+        departmentCode: String,
+        program: AcademicProgram
+    ) throws -> [GroupDTO] {
         
-//        let doc = try HTML(html: html, encoding: .utf8)
-//        for year
-//
-//        return result
-//    }
-    
-    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, program: AcademicProgram) throws -> [GroupDTO] {
         var result = [GroupDTO]()
         var groupTypeRange = [Int]()
         switch program {

@@ -10,7 +10,6 @@ import Foundation
 public final class ScheduleViewModel: ObservableObject {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
-    private let dateNetworkManager: DateNetworkManager
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
     public var department: DepartmentDTO
@@ -22,10 +21,8 @@ public final class ScheduleViewModel: ObservableObject {
     @Published var nextLesson1: LessonDTO? = nil
     @Published var nextLesson2: LessonDTO? = nil
     
-    @Published var updateDate = Date.distantFuture
-    
     @Published var isLoadingLessons = true
-    @Published var isLoadingUpdateDate = true
+    @Published var loadedLessonsWithChanges = false
     @Published var isLoadingSessionEvents = true
     
     @Published var isShowingError = false
@@ -59,113 +56,94 @@ public final class ScheduleViewModel: ObservableObject {
         department: DepartmentDTO,
         lessonsNetworkManager: LessonNetworkManager,
         sessionEventsNetworkManager: SessionEventsNetworkManager,
-        dateNetworkManager: DateNetworkManager,
         schedulePersistenceManager: GroupSchedulePersistenceManager
     ) {
         self.department = department
         self.lessonsNetworkManager = lessonsNetworkManager
         self.sessionEventsNetworkManager = sessionEventsNetworkManager
-        self.dateNetworkManager = dateNetworkManager
         self.schedulePersistenceManager = schedulePersistenceManager
     }
     
-    /// If groupNumber isn't favorite and isOnline true - fetches lessons throught network manager
-    /// If groupNumber is favorite and schedule from CoreData it is not same as from networkManager - rewrites it. Otherwise just fetches lessons from CoreData.
+    /// Если номер группы не избранный и в онлайне - получает расписание с networkManager.
+    /// Если номер группы избранный и расписание с CoreData различается с оным с networkManager - перезаписывает его.
+    /// В иных случаях просто получает расписание с CoreData.
     public func fetchUpdateDateAndSchedule(groupNumber: Int, isOnline: Bool) {
         resetData()
         
-        let dispatchGroup = DispatchGroup()
-        
-        if isOnline {
-            dispatchGroup.enter()
-            dateNetworkManager.getLastUpdateDate(
-                group: GroupDTO(fullNumber: groupNumber),
-                departmentCode: department.code,
-                resultQueue: .main
-            ) { result in
-                switch result {
-                case .success(let date):
-                    self.updateDate = date
-                case .failure(let error):
-                    self.showNetworkError(error: error)
-                }
-                self.isLoadingUpdateDate = false
-                dispatchGroup.leave()
-            }
-        }
-        
-        dispatchGroup.notify(queue: .main) {
-            do {
-                let schedule = try self.schedulePersistenceManager.fetchAllItemsDTO().first
-                
-                if self.favoriteGroupNumber == groupNumber {
-                    if isOnline {
-                        
-                        // Если есть сохраненное в память раннее, сначала ставится оно
-                        if self.updateDate.getDayAndMonthString() != Date().getDayAndMonthString() && schedule != nil {
-                            self.groupSchedule = schedule
-                            self.setCurrentAndTwoNextLessons()
-                            self.isLoadingLessons = false
-                        }
-                        
-                        // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
-                        self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
-                            group: GroupDTO(fullNumber: groupNumber),
-                            departmentCode: self.department.code,
-                            resultQueue: DispatchQueue.main
-                        ) { result in
-                            switch result {
-                            case .success(let networkSchedule):
-                                do {
-                                    if schedule == nil || networkSchedule.lessons != schedule!.lessons {
-                                        self.groupSchedule = networkSchedule
-                                        try self.saveNewScheduleWithClearingPreviousVersion(schedule: networkSchedule)
-                                        self.setCurrentAndTwoNextLessons()
-                                    } else {
-                                        self.groupSchedule = schedule
-                                    }
-                                    
-                                    self.isLoadingLessons = false
-                                }
-                                catch (let error) {
-                                    self.showCoreDataError(error: error)
-                                }
-                                
-                            case .failure(let error):
-                                self.showNetworkError(error: error)
-                            }
-                        }
-                        
-                    } else {
-                        if schedule != nil {
-                            self.groupSchedule = schedule
-                            self.setCurrentAndTwoNextLessons()
-                        }
+        do {
+            let persistenceSchedule = try self.schedulePersistenceManager.fetchAllItemsDTO().first
+            
+            if self.favoriteGroupNumber == groupNumber {
+                if isOnline {
+                    
+                    // Если есть сохраненное в память раннее, сначала ставится оно
+                    if persistenceSchedule != nil {
+                        self.groupSchedule = persistenceSchedule
+                        self.setCurrentAndTwoNextLessons()
                         self.isLoadingLessons = false
                     }
                     
-                } else {
-                    self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
+                    // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
+                    self.lessonsNetworkManager.getGroupScheduleForCurrentWeek (
                         group: GroupDTO(fullNumber: groupNumber),
                         departmentCode: self.department.code,
                         resultQueue: DispatchQueue.main
                     ) { result in
                         switch result {
-                        case .success(let schedule):
-                            self.groupSchedule = schedule
-                            self.setCurrentAndTwoNextLessons()
+                        case .success(let networkSchedule):
+                            do {
+                                if persistenceSchedule == nil || networkSchedule.lessons != persistenceSchedule!.lessons {
+                                    self.groupSchedule = networkSchedule
+                                    try self.saveNewScheduleWithClearingPreviousVersion(schedule: networkSchedule)
+                                    self.setCurrentAndTwoNextLessons()
+                                    
+                                    if persistenceSchedule != nil && networkSchedule.lessons != persistenceSchedule!.lessons {
+                                        self.loadedLessonsWithChanges = true
+                                    }
+                                } else {
+                                    self.groupSchedule = persistenceSchedule
+                                }
+                                
+                                self.isLoadingLessons = false
+                            }
+                            catch (let error) {
+                                self.showCoreDataError(error: error)
+                            }
                             
                         case .failure(let error):
                             self.showNetworkError(error: error)
                         }
-                        
-                        self.isLoadingLessons = false
                     }
+                    
+                } else {
+                    if persistenceSchedule != nil {
+                        self.groupSchedule = persistenceSchedule
+                        self.setCurrentAndTwoNextLessons()
+                    }
+                    self.isLoadingLessons = false
+                }
+                
+            } else {
+                self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
+                    group: GroupDTO(fullNumber: groupNumber),
+                    departmentCode: self.department.code,
+                    resultQueue: DispatchQueue.main
+                ) { result in
+                    switch result {
+                    case .success(let schedule):
+                        self.groupSchedule = schedule
+                        self.setCurrentAndTwoNextLessons()
+                        
+                    case .failure(let error):
+                        self.showNetworkError(error: error)
+                    }
+                    
+                    self.isLoadingLessons = false
                 }
             }
-            catch (let error) {
-                self.showCoreDataError(error: error)
-            }
+        }
+        catch (let error) {
+            self.showCoreDataError(error: error)
         }
     }
     
@@ -193,7 +171,6 @@ public final class ScheduleViewModel: ObservableObject {
         nextLesson2 = nil
         
         isLoadingLessons = true
-        isLoadingUpdateDate = true
         isLoadingSessionEvents = true
     }
     
@@ -214,22 +191,6 @@ public final class ScheduleViewModel: ObservableObject {
             self.activeError = coreDataError
         } else {
             self.activeError = CoreDataError.unexpectedError
-        }
-    }
-    
-    private func fetchUpdateDate(groupNumber: Int) {
-        dateNetworkManager.getLastUpdateDate(
-            group: GroupDTO(fullNumber: groupNumber),
-            departmentCode: department.code,
-            resultQueue: .main
-        ) { result in
-            switch result {
-            case .success(let date):
-                self.updateDate = date
-            case .failure(let error):
-                self.showNetworkError(error: error)
-            }
-            self.isLoadingUpdateDate = false
         }
     }
     

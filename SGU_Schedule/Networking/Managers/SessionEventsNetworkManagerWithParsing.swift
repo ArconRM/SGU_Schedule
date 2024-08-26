@@ -10,14 +10,16 @@ import Foundation
 public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
     private var urlSource: URLSource
     private var sessionEventsParser: SessionEventsHTMLParser
+    private let scraper: Scraper
     
     public init(urlSource: URLSource, sessionEventsParser: SessionEventsHTMLParser) {
         self.urlSource = urlSource
         self.sessionEventsParser = sessionEventsParser
+        self.scraper = DynamicScraper()
     }
     
     
-    public func getGroupSessionEvents(
+    public func getGroupSessionEvents (
         group: GroupDTO,
         departmentCode: String,
         resultQueue: DispatchQueue = .main,
@@ -25,27 +27,26 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
     ) {
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
         
-        URLSession.shared.dataTask(with: groupScheduleUrl as URL) { data, _, error in
-            guard error == nil else {
-                resultQueue.async { completionHandler(.failure(error!)) }
-                return
-            }
-            
-            do {
-                let html = try String(contentsOf: groupScheduleUrl, encoding: .utf8)
-                let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(source: html, groupNumber: group.fullNumber)
-                
-                resultQueue.async {
-                    completionHandler(.success(lessons))
+        do {
+            try self.scraper.scrapeUrl(groupScheduleUrl) { html in
+                do {
+                    let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(source: html ?? "", groupNumber: group.fullNumber)
+                    
+                    resultQueue.async {
+                        completionHandler(.success(lessons))
+                    }
+                }
+                catch {
+                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
                 }
             }
-            catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-            }
-        }.resume()
+        }
+        catch {
+            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
+        }
     }
     
-    public func getTeacherSessionEvents(
+    public func getTeacherSessionEvents (
         teacher: TeacherDTO,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void
@@ -53,23 +54,23 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
         guard let _ = teacher.teacherLessonsEndpoint else { return }
         let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacher.teacherLessonsEndpoint!)
         
-        URLSession.shared.dataTask(with: teacherLessonsUrl as URL) { data, _, error in
-            guard error == nil else {
-                resultQueue.async { completionHandler(.failure(error!)) }
-                return
-            }
-            
-            do {
-                let html = try String(contentsOf: teacherLessonsUrl, encoding: .utf8)
-                let lessons = try self.sessionEventsParser.getSessionEventsFromSource(source: html)
-                
-                resultQueue.async {
-                    completionHandler(.success(lessons))
+        do {
+            try self.scraper.scrapeUrl(teacherLessonsUrl) { html in
+                do {
+                    let html = try String(contentsOf: teacherLessonsUrl, encoding: .utf8)
+                    let lessons = try self.sessionEventsParser.getSessionEventsFromSource(source: html)
+                    
+                    resultQueue.async {
+                        completionHandler(.success(lessons))
+                    }
+                }
+                catch {
+                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
                 }
             }
-            catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-            }
-        }.resume()
+        }
+        catch {
+            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
+        }
     }
 }

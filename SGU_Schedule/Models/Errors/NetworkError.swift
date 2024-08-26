@@ -8,16 +8,19 @@
 import Foundation
 
 enum NetworkError: Error, LocalizedError {
+    case scraperError
     case htmlParserError
     case networkManagerError
     case unexpectedError
     
     var errorDescription: String? {
         switch self {
-        case .networkManagerError:
-            return "Ошибка получения данных"
+        case .scraperError:
+            return "Ошибка при получении html"
         case .htmlParserError:
             return "Ошибка парсера"
+        case .networkManagerError:
+            return "Ошибка получения данных"
         case .unexpectedError:
             return "Неожиданная ошибка"
         }
@@ -25,10 +28,12 @@ enum NetworkError: Error, LocalizedError {
     
     var failureReason: String? {
         switch self {
-        case .networkManagerError:
-            return "Не удалось получить данные с сайта"
+        case .scraperError:
+            return "Не получилось получить html сайта"
         case .htmlParserError:
             return "Не удалось распарсить данные с сайта"
+        case .networkManagerError:
+            return "Не удалось получить данные с сайта"
         case .unexpectedError:
             return "Неожиданная ошибка при получении данных с сайта"
         }

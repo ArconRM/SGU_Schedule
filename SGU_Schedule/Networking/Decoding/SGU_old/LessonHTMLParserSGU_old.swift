@@ -53,7 +53,7 @@ struct LessonHTMLParserSGU_old: LessonHTMLParser {
     
     private func getLessonsByDayNumberFromSource(source html: String, dayNumber: Int) throws -> [LessonDTO] {
         var result = [LessonDTO]()
-//        do {
+        do {
             let doc = try HTML(html: html, encoding: .utf8)
             var lesson: LessonDTO?
             
@@ -71,10 +71,10 @@ struct LessonHTMLParserSGU_old: LessonHTMLParser {
                     }
                 }
             }
-//        }
-//        catch {
-//            throw NetworkError.htmlParserError
-//        }
+        }
+        catch {
+            throw NetworkError.htmlParserError
+        }
         return result
     }
     

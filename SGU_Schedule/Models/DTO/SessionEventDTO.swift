@@ -33,8 +33,9 @@ public struct SessionEventDTO: Hashable {
         let dateFormatter = DateFormatter()
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.locale = Locale(identifier: "ru_RU")
-        dateFormatter.dateFormat = "d MMMM yyyy HH:mm"
+//        dateFormatter.dateFormat = "d MMMM yyyy HH:mm"
+        dateFormatter.dateFormat = "d MMMM yyyy"
         
-        self.date = dateFormatter.date(from: date) ?? dateFormatter.date(from: "01 января 2000 00:00")!
+        self.date = dateFormatter.date(from: date) ?? dateFormatter.date(from: "01 января 2000")!
     }
 }

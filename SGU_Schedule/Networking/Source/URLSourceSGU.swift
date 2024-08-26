@@ -9,7 +9,7 @@ import Foundation
 
 public struct URLSourceSGU: URLSource {
     private var baseUrl: URL {
-        return URL(string: "https://sgu.ru")!
+        return URL(string: "https://www.sgu.ru")!
     }
     
     public func getBaseTeacherURL(teacherEndPoint: String) -> URL {
@@ -17,11 +17,11 @@ public struct URLSourceSGU: URLSource {
     }
     
     public func getBaseScheduleURL(departmentCode: String) -> URL {
-        return self.baseUrl.appendingPathComponent("schedule").appendingPathComponent(departmentCode)
+        return self.baseUrl.appendingPathComponent("schedule")
     }
     
     public func getGroupScheduleURL(departmentCode: String, groupNumber: Int) -> URL {
-        return self.getBaseScheduleURL(departmentCode: departmentCode).appendingPathComponent("do").appendingPathComponent(String(groupNumber))
+        return self.getBaseScheduleURL(departmentCode: departmentCode).appendingPathComponent(departmentCode).appendingPathComponent("do").appendingPathComponent("\(groupNumber)")
     }
     
     public init() { }

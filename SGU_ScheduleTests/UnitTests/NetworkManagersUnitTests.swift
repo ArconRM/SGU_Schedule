@@ -53,37 +53,37 @@ final class NetworkManagersUnitTests: XCTestCase {
         XCTAssertEqual(scheduleToCheck!.lessons, correctSchedule!.lessons)
     }
 
-    func testDateNetworkManageWithParsingGetsUpdateDate() {
-        let didReceiveResponse = expectation(description: #function)
-        
-        let dateParser = DateParserForTest()
-        var dateToCheck: Date?
-        var correctDate: Date?
-        do {
-            correctDate = try dateParser.getLastUpdateDateFromSource(source: "")
-            XCTAssertNotNil(correctDate)
-        }
-        catch {
-            XCTFail("Буду падаю вчера")
-        }
-        
-        let dateNetworkManager = DateNetworkManagerWithParsing(urlSource: urlSource, dateParser: dateParser)
-        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: 141), departmentCode: "knt", resultQueue: .main) { result in
-            switch result {
-            case .success(let date):
-                dateToCheck = date
-            case .failure(let error):
-                XCTFail("Ошибка в менеджере: \(error.localizedDescription)")
-            }
-            didReceiveResponse.fulfill()
-        }
-        
-        wait(for: [didReceiveResponse], timeout: 5)
-        
-        XCTAssertNotNil(dateToCheck)
-        XCTAssertEqual(dateToCheck!.getDayAndMonthString(), correctDate!.getDayAndMonthString())
-    }
-    
+//    func testDateNetworkManageWithParsingGetsUpdateDate() {
+//        let didReceiveResponse = expectation(description: #function)
+//        
+//        let dateParser = DateParserForTest()
+//        var dateToCheck: Date?
+//        var correctDate: Date?
+//        do {
+//            correctDate = try dateParser.getLastUpdateDateFromSource(source: "")
+//            XCTAssertNotNil(correctDate)
+//        }
+//        catch {
+//            XCTFail("Буду падаю вчера")
+//        }
+//        
+//        let dateNetworkManager = DateNetworkManagerWithParsing(urlSource: urlSource, dateParser: dateParser)
+//        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: 141), departmentCode: "knt", resultQueue: .main) { result in
+//            switch result {
+//            case .success(let date):
+//                dateToCheck = date
+//            case .failure(let error):
+//                XCTFail("Ошибка в менеджере: \(error.localizedDescription)")
+//            }
+//            didReceiveResponse.fulfill()
+//        }
+//        
+//        wait(for: [didReceiveResponse], timeout: 5)
+//        
+//        XCTAssertNotNil(dateToCheck)
+//        XCTAssertEqual(dateToCheck!.getDayAndMonthString(), correctDate!.getDayAndMonthString())
+//    }
+//    
     func testGroupsNetworkManagerWithParsingGetsUpdateDate() {
         let didReceiveResponse = expectation(description: #function)
         
@@ -91,7 +91,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         var groupsToCheck: [GroupDTO]?
         var correctGroups: [GroupDTO]?
         do {
-            correctGroups = try groupsParser.getGroupsByYearAndAcademicProgramFromSource(source: "", year: 1, program: .BachelorAndSpeciality)
+            correctGroups = try groupsParser.getGroupsByYearAndAcademicProgramFromSource(source: "", year: 1, departmentCode: "knt", program: .BachelorAndSpeciality)
             XCTAssertNotNil(correctGroups)
         }
         catch {

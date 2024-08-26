@@ -46,12 +46,21 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 
                 if networkMonitor.isConnected {
-                    if viewModel.isLoadingUpdateDate {
-                        Text("Загрузка...")
+                    if viewModel.isLoadingLessons {
+                        Text("Не обновлено")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
+                    } else if viewModel.loadedLessonsWithChanges {
+                        VStack {
+                            Text("Обновлено")
+                                .padding(.top, -10)
+                                .font(.system(size: 19, weight: .bold, design: .rounded))
+                            Text("с изменениями")
+                                .font(.system(size: 13, design: .rounded))
+                        }
+                        .foregroundColor(.green)
                     } else {
-                        Text("Обновлено: " + viewModel.updateDate.getDayAndMonthString())
+                        Text("Обновлено")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
                     }

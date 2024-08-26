@@ -59,7 +59,7 @@ struct CarouselView<Content: View>: View {
             .padding(.bottom, 20)
             .background {
                 ZStack {
-                    Color.white.opacity(0.8)
+                    Color.white
                     
                     AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme).blur(radius: 2)
                 }

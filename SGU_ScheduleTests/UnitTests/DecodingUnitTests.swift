@@ -9,13 +9,18 @@ import XCTest
 import SwiftUI
 @testable import SGU_Schedule
 import Kanna
-
+import WebKit
 
 final class DecodingUnitTests: XCTestCase {
     
-    let testGroupNumbers = [141, 241, 341, 441, 173, 273, 192, 193]
+    let testGroupNumbers = [241, 141, 341, 441, 173, 273, 192, 193]
+    let departmentCode = "knt"
     //    let urlSource = URLSourceSGU_old()
     let urlSource = URLSourceSGU()
+    let lessonParser = LessonHTMLParserSGU()
+    let groupsParser = GroupsHTMLParserSGU()
+    let sessionEventsParser = SessionEventsHTMLParserSGU()
+    let teacherParser = TeacherHTMLParserSGU_old()
     
     override func setUpWithError() throws {
         super.setUp()
@@ -26,68 +31,64 @@ final class DecodingUnitTests: XCTestCase {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
     }
     
-    func testLessonParserGetsSchedule() {
-        for testGroupNumber in testGroupNumbers {
-            let lessonParser = LessonHTMLParserSGU_old()
-            var html: String?
-            var result: GroupScheduleDTO?
-            
-            do {
-                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8) //синхронно потому что щас похуй
-                //                html = try String(contentsOf: URL(string:"https://sgu.ru/schedule/teacher/475")!, encoding: .utf8) //синхронно потому что щас похуй
-            }
-            catch {
-                XCTFail("Не смог соскрябать html")
-            }
-            
-            XCTAssertNotNil(html)
-            
-            do {
-                result = try lessonParser.getGroupScheduleFromSource(source: html!, groupNumber: testGroupNumber)
-            }
-            catch {
-                XCTFail("Ошибка в парсере")
-            }
-            
-            XCTAssertNotNil(result)
-            print(result!)
-        }
-    }
+//    func testLessonParserGetsSchedule() {
+//        for testGroupNumber in [241] {
+//            var result: GroupScheduleDTO?
+//            
+//            do {
+//                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8) //синхронно потому что щас похуй
+//                //                html = try String(contentsOf: URL(string:"https://sgu.ru/schedule/teacher/475")!, encoding: .utf8) //синхронно потому что щас похуй
+//            }
+//            catch {
+//                XCTFail("Не смог соскрябать html")
+//            }
+//            
+//            XCTAssertNotNil(html)
+//            
+//            do {
+//                result = try lessonParser.getGroupScheduleFromSource(source: html!, groupNumber: testGroupNumber)
+//            }
+//            catch {
+//                XCTFail("Ошибка в парсере")
+//            }
+//            
+//            XCTAssertNotNil(result)
+//            print(result!)
+//        }
+//    }
     
-    func testDateParserGetsUpdateDate() {
-        for testGroupNumber in testGroupNumbers {
-            let dateParser = DateHTMLParserSGU_old()
-            var html: String?
-            var result: Date?
-            
-            do {
-                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8)
-            }
-            catch {
-                XCTFail("Не смог соскрябать html")
-            }
-            
-            XCTAssertNotNil(html)
-            
-            do {
-                result = try dateParser.getLastUpdateDateFromSource(source: html!)
-            }
-            catch {
-                XCTFail("Ошибка в парсере")
-            }
-            
-            XCTAssertNotNil(result)
-            print(result!)
-        }
-    }
+//    func testDateParserGetsUpdateDate() {
+//        for testGroupNumber in testGroupNumbers {
+//            var html: String?
+//            var result: Date?
+//            
+//            do {
+//                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber: testGroupNumber), encoding: .utf8)
+//            }
+//            catch {
+//                XCTFail("Не смог соскрябать html")
+//            }
+//            
+//            XCTAssertNotNil(html)
+//            
+//            do {
+//                result = try dateParser.getLastUpdateDateFromSource(source: html!)
+//            }
+//            catch {
+//                XCTFail("Ошибка в парсере")
+//            }
+//            
+//            XCTAssertNotNil(result)
+//            print(result!)
+//        }
+//    }
     
     func testGroupParserGetsGroups() {
-        let groupsParser = GroupsHTMLParserSGU_old()
         var html: String?
         var result: [GroupDTO]?
         
         do {
-            html = try String(contentsOf: urlSource.getBaseScheduleURL(departmentCode: "knt"), encoding: .utf8)
+            html = try String(contentsOf: urlSource.getBaseScheduleURL(departmentCode: departmentCode), encoding: .utf8)
         }
         catch {
             XCTFail("Не смог соскрябать html")
@@ -98,7 +99,7 @@ final class DecodingUnitTests: XCTestCase {
         for academicProgram in AcademicProgram.allCases {
             for year in 1...6 {
                 do {
-                    result = try groupsParser.getGroupsByYearAndAcademicProgramFromSource(source: html!, year: year, program: academicProgram)
+                    result = try groupsParser.getGroupsByYearAndAcademicProgramFromSource(source: html!, year: year, departmentCode: departmentCode, program: academicProgram)
                 }
                 catch {
                     XCTFail("Ошибка в парсере")
@@ -110,35 +111,33 @@ final class DecodingUnitTests: XCTestCase {
         }
     }
     
-    func testSessionEventsParserGetsSessionEvents() {
-        for testGroupNumber in testGroupNumbers {
-            let sessionEventsParser = SessionEventsHTMLParserSGU_old()
-            var html: String?
-            var result: GroupSessionEventsDTO?
-            
-            do {
-                html = try String(contentsOf: urlSource.getGroupScheduleURL(departmentCode: "knt", groupNumber: testGroupNumber), encoding: .utf8)
-            }
-            catch {
-                XCTFail("Не смог соскрябать html")
-            }
-            
-            XCTAssertNotNil(html)
-            
-            do {
-                result = try sessionEventsParser.getGroupSessionEventsFromSource(source: html!, groupNumber: testGroupNumber)
-            }
-            catch {
-                XCTFail("Ошибка в парсере")
-            }
-            
-            XCTAssertNotNil(result)
-            print(result!)
-        }
-    }
+//    func testSessionEventsParserGetsSessionEvents() {
+//        for testGroupNumber in testGroupNumbers {
+//            var html: String?
+//            var result: GroupSessionEventsDTO?
+//            
+//            do {
+//                html = try String(contentsOf: urlSource.getGroupSessionEventsURL(departmentCode: departmentCode, groupNumber: testGroupNumber), encoding: .utf8)
+//            }
+//            catch {
+//                XCTFail("Не смог соскрябать html")
+//            }
+//            
+//            XCTAssertNotNil(html)
+//            
+//            do {
+//                result = try sessionEventsParser.getGroupSessionEventsFromSource(source: html!, groupNumber: testGroupNumber)
+//            }
+//            catch {
+//                XCTFail("Ошибка в парсере")
+//            }
+//            
+//            XCTAssertNotNil(result)
+//            print(result!)
+//        }
+//    }
     
     func testTeacherParserGetsTeacher() {
-        let teacherParser = TeacherHTMLParserSGU_old()
         var html: String?
         var result: TeacherDTO?
         

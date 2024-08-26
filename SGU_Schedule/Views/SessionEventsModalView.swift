@@ -32,12 +32,12 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 .gesture(dragGesture)
                 
                 if networkMonitor.isConnected {
-                    if viewModel.isLoadingUpdateDate {
-                        Text("Загрузка...")
+                    if viewModel.isLoadingSessionEvents {
+                        Text("Не обновлено")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
                     } else {
-                        Text("Обновлено: " + viewModel.updateDate.getDayAndMonthString())
+                        Text("Обновлено")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
                     }

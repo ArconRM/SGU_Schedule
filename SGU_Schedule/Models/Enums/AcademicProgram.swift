@@ -12,4 +12,16 @@ public enum AcademicProgram: String, CaseIterable {
     case Masters = "Магистратура"
     case Postgraduade = "Аспирантура"
     
+    public init?(rawValue: String) {
+        switch rawValue {
+        case "Бакалавриат", "Специалитет":
+            self = .BachelorAndSpeciality
+        case "Магистратура":
+            self = .Masters
+        case "Аспирантура":
+            self = .Postgraduade
+        default:
+            return nil
+        }
+    }
 }

@@ -8,7 +8,7 @@
 import Foundation
 
 class GroupsParserForTest: GroupsHTMLParser {
-    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, program: AcademicProgram) throws -> [GroupDTO] {
+    func getGroupsByYearAndAcademicProgramFromSource(source html: String, year: Int, departmentCode: String, program: AcademicProgram) throws -> [GroupDTO] {
         return [GroupDTO(fullNumber: 141), GroupDTO(fullNumber: 121), GroupDTO(fullNumber: 181)]
     }
 }

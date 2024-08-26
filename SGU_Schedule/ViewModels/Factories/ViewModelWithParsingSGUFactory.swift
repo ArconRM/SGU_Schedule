@@ -8,6 +8,8 @@
 import Foundation
 
 public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
+    private var urlSource = URLSourceSGU()
+    
     public func buildDepartmentsViewModel() -> DepartmentsViewModel {
         return DepartmentsViewModel()
     }
@@ -17,8 +19,8 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             department: department,
             
             networkManager: GroupsNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
-                groupsParser: GroupsHTMLParserSGU_old()
+                urlSource: urlSource,
+                groupsParser: GroupsHTMLParserSGU()
             )
         )
     }
@@ -28,18 +30,13 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             department: department,
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
-                lessonParser: LessonHTMLParserSGU_old()
+                urlSource: urlSource,
+                lessonParser: LessonHTMLParserSGU()
             ),
             
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
-                sessionEventsParser: SessionEventsHTMLParserSGU_old()
-            ),
-            
-            dateNetworkManager: DateNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
-                dateParser: DateHTMLParserSGU_old()
+                urlSource: urlSource,
+                sessionEventsParser: SessionEventsHTMLParserSGU()
             ),
             
             schedulePersistenceManager: GroupScheduleCoreDataManager()
@@ -54,13 +51,13 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             ),
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
-                lessonParser: LessonHTMLParserSGU_old()
+                urlSource: urlSource,
+                lessonParser: LessonHTMLParserSGU()
             ),
             
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
-                sessionEventsParser: SessionEventsHTMLParserSGU_old()
+                urlSource: urlSource,
+                sessionEventsParser: SessionEventsHTMLParserSGU()
             )
         )
     }
