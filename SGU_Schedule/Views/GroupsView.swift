@@ -196,8 +196,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             }
                         }
                     }
+                    Spacer(minLength: 40)
                 }
-                .ignoresSafeArea()
             }
             .cornerRadius(showSettingsSideMenuView ? 20 : 0)
             .offset(x: showSettingsSideMenuView ? 235 : 0, y: showSettingsSideMenuView ? 100 : 0)

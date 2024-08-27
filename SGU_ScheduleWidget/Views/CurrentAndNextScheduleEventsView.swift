@@ -64,8 +64,8 @@ struct CurrentAndNextScheduleEventsView: View {
                                 .padding(.vertical, 2)
                                 .multilineTextAlignment(.center)
                             
-                            if let currentLesson = currentEvent as? LessonDTO {
-                                Text(currentLesson.cabinet)
+                            if let nextEvent = nextEvent as? LessonDTO {
+                                Text(nextEvent.cabinet)
                                     .font(.system(size: 13))
                                     .italic()
                             }
