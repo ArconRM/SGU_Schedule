@@ -14,9 +14,11 @@ fileprivate enum LessonPropertiesEndpoints: String {
     case Teacher = "div[@class='schedule-table__lesson-teacher']"
     case TeacherUrl = "div[@class='l-tn']/a/@href"
     case Cabinet = "div[@class='schedule-table__lesson-room']/span"
-    case LessonType = "div[@class='schedule-table__lesson-props']"
+    case LectureType = "div[@class='schedule-table__lesson-props']/div[@class='lesson-prop__lecture']"
+    case PracticeType = "div[@class='schedule-table__lesson-props']/div[@class='lesson-prop__practice']"
     case Subgroup = "div[@class='schedule-table__lesson-uncertain']"
-    case WeekType = "div[@class='lesson-prop__num']"
+    case WeekTypeNum = "div[@class='schedule-table__lesson-props']/div[@class='lesson-prop__num']"
+    case WeekTypeDenum = "div[@class='schedule-table__lesson-props']/div[@class='lesson-prop__denom']"
 }
 
 
@@ -96,16 +98,31 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
             let teacherName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Teacher)?.trimmingCharacters(in: .whitespacesAndNewlines)
             let teacherEndpoint = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .TeacherUrl)?.trimmingCharacters(in: .whitespacesAndNewlines)
             let cabinet = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Cabinet)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let lessonType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LessonType)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let weekType = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekType)?.trimmingCharacters(in: .whitespacesAndNewlines)
             let subgroup = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subgroup)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            
+            let lessonType = {
+                if let lecture = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LectureType)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    return lecture
+                } else if let practice = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .PracticeType)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    return practice
+                }
+                return "Error"
+            }
+            let weekType = {
+                if let num = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekTypeNum)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    return num
+                } else if let denum = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekTypeDenum)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                    return denum
+                }
+                return ""
+            }
             
             let lesson = LessonDTO(subject: subject ?? "Error",
                                    teacherFullName: teacherName ?? "Error",
                                    teacherEndpoint: teacherEndpoint,
-                                   lessonType: LessonType(rawValue: lessonType ?? "") ?? .Lecture,
+                                   lessonType: LessonType(rawValue: lessonType()) ?? .Lecture,
                                    weekDay: Weekdays(dayNumber: dayNumber) ?? .Monday,
-                                   weekType: WeekType(rawValue: weekType ?? "") ?? .All,
+                                   weekType: WeekType(rawValue: weekType()) ?? .All,
                                    cabinet: cabinet ?? "Error",
                                    subgroup: subgroup,
                                    lessonNumber: lessonNumber,

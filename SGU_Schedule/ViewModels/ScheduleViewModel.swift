@@ -67,7 +67,7 @@ public final class ScheduleViewModel: ObservableObject {
     /// Если номер группы не избранный и в онлайне - получает расписание с networkManager.
     /// Если номер группы избранный и расписание с CoreData различается с оным с networkManager - перезаписывает его.
     /// В иных случаях просто получает расписание с CoreData.
-    public func fetchUpdateDateAndSchedule(groupNumber: Int, isOnline: Bool) {
+    public func fetchSchedule(groupNumber: Int, isOnline: Bool) {
         resetData()
         
         do {

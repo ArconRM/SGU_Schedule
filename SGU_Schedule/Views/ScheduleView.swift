@@ -71,7 +71,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     }
     
     private func fetchAllData() {
-        viewModel.fetchUpdateDateAndSchedule(groupNumber: selectedGroup!.fullNumber,
+        viewModel.fetchSchedule(groupNumber: selectedGroup!.fullNumber,
                                              isOnline: networkMonitor.isConnected)
         
         viewModel.fetchSessionEvents(groupNumber: selectedGroup!.fullNumber,
