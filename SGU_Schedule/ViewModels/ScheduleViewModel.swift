@@ -81,7 +81,6 @@ public final class ScheduleViewModel: ObservableObject {
                     if persistenceSchedule != nil {
                         self.groupSchedule = persistenceSchedule
                         self.setCurrentAndTwoNextLessons()
-                        self.isLoadingLessons = false
                     }
                     
                     // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
