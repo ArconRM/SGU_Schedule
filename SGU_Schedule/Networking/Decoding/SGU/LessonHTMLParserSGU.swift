@@ -94,24 +94,24 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
                 continue
             }
             
-            let subject = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subject)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let teacherName = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Teacher)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let teacherEndpoint = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .TeacherUrl)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let cabinet = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Cabinet)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let subgroup = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .Subgroup)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let subject = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Subject)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let teacherName = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Teacher)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let teacherEndpoint = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .TeacherUrl)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let cabinet = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Cabinet)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let subgroup = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Subgroup)?.trimmingCharacters(in: .whitespacesAndNewlines)
             
             let lessonType = {
-                if let lecture = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .LectureType)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if let lecture = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .LectureType)?.trimmingCharacters(in: .whitespacesAndNewlines) {
                     return lecture
-                } else if let practice = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .PracticeType)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                } else if let practice = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .PracticeType)?.trimmingCharacters(in: .whitespacesAndNewlines) {
                     return practice
                 }
                 return "Error"
             }
             let weekType = {
-                if let num = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekTypeNum)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                if let num = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .WeekTypeNum)?.trimmingCharacters(in: .whitespacesAndNewlines) {
                     return num
-                } else if let denum = getValueByXpathQuery(doc: doc, baseXpath: baseXpath, propertyEndpoint: .WeekTypeDenum)?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                } else if let denum = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .WeekTypeDenum)?.trimmingCharacters(in: .whitespacesAndNewlines) {
                     return denum
                 }
                 return ""

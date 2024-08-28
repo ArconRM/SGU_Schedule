@@ -16,11 +16,14 @@ struct CurrentAndNextScheduleEventsView: View {
         switch fetchResultVariant {
         case .UnknownErrorWhileFetching:
             Text("Произошла ошибка")
+                .bold()
         case .NoFavoriteGroup:
             Text("Не выбрана сохраненная группа")
+                .bold()
         case .Success:
             if currentEvent == nil {
                 Text("Сейчас нет пар")
+                    .bold()
             } else {
                 HStack {
                     VStack {

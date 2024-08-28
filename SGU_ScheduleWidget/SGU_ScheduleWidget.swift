@@ -18,10 +18,6 @@ struct ScheduleEventsEntry: TimelineEntry {
 struct ScheduleEventsProvider: TimelineProvider {
     @ObservedObject var viewModel = ScheduleWidgetViewModel(schedulePersistenceManager: GroupScheduleCoreDataManager())
     
-//    init() {
-//        viewModel.fetchSavedSchedule()
-//    }
-    
     func getTimeline(in context: Context, completion: @escaping (Timeline<ScheduleEventsEntry>) -> Void) {
         let date = Date()
         viewModel.fetchSavedSchedule()
@@ -94,6 +90,7 @@ struct ScheduleEventsProvider: TimelineProvider {
 struct ScheduleEventsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.widgetFamily) var family: WidgetFamily
+    @EnvironmentObject var appSettings: AppSettings
     
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
@@ -108,7 +105,11 @@ struct ScheduleEventsView: View {
                 currentEvent: currentEvent
             )
             .containerBackground(for: .widget) {
-                getBackground(event: currentEvent)
+                if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                    buildFilledRectangle(event: currentEvent)
+                } else {
+                    buildBorderedRectangle(event: currentEvent)
+                }
             }
         case .systemMedium:
             CurrentAndNextScheduleEventsView(
@@ -117,16 +118,28 @@ struct ScheduleEventsView: View {
                 nextEvent: nextEvent
             )
             .containerBackground(for: .widget) {
-                getBackground(event: currentEvent)
+                if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                    buildFilledRectangle(event: currentEvent)
+                } else {
+                    buildBorderedRectangle(event: currentEvent)
+                }
             }
         default:
             NotAvailableView()
         }
     }
     
-    private func getBackground(event: (any ScheduleEventDTO)?) -> some View {
+    private func buildFilledRectangle(event: (any ScheduleEventDTO)?) -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .fill(colorScheme == .light ? .white : .gray.opacity(0.2))
+            .fill(LinearGradient (
+                colors: [getBackgroundColor(event: event).opacity(0.8), (colorScheme == .light ? .gray.opacity(0.2) : .gray.opacity(0.5))],
+                startPoint: .topLeading,
+                endPoint: .bottomTrailing
+            ))
+    }
+    
+    private func buildBorderedRectangle(event: (any ScheduleEventDTO)?) -> some View {
+        RoundedRectangle(cornerRadius: 18)
             .stroke(getBackgroundColor(event: event), lineWidth: 4)
             .padding(2)
     }
@@ -153,7 +166,9 @@ struct SGU_ScheduleWidget: Widget {
             ScheduleEventsView(
                 fetchResultVariant: entry.fetchResultVariant,
                 currentEvent: entry.currentEvent,
-                nextEvent: entry.nextEvent)
+                nextEvent: entry.nextEvent
+            )
+            .environmentObject(AppSettings())
         }
         .configurationDisplayName("Расписание")
         .description("Показывает текущую и следующие пары")
@@ -176,22 +191,23 @@ struct Widget_Previews: PreviewProvider {
                                      timeStart: "08:20",
                                      timeEnd: "09:50")
         
-        let nextEvent = LessonDTO(subject: "Хуйня на постном масле",
-                                  teacherFullName: "Бредихин Д. А.",
-                                  lessonType: .Practice,
-                                  weekDay: .Monday,
-                                  weekType: .Denumerator,
-                                  cabinet: "12 корпус ауд.304",
-                                  lessonNumber: 1,
-                                  timeStart: "10:00",
-                                  timeEnd: "11:30")
+//        let nextEvent = LessonDTO(subject: "Дифференциальные уравнения и еще что-нибудь для длины",
+//                                  teacherFullName: "Бредихин Д. А.",
+//                                  lessonType: .Practice,
+//                                  weekDay: .Monday,
+//                                  weekType: .Denumerator,
+//                                  cabinet: "12 корпус ауд.304",
+//                                  lessonNumber: 1,
+//                                  timeStart: "10:00",
+//                                  timeEnd: "11:30")
         Group {
             ScheduleEventsView(
                 fetchResultVariant: .Success,
                 currentEvent: currentEvent,
-                nextEvent: nextEvent
+                nextEvent: nil
             )
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
+                .environmentObject(AppSettings())
         }
     }
 }

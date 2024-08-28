@@ -70,17 +70,20 @@ struct GroupSubview: View {
     private func buildFilledRectangle() -> some View {
         Rectangle()
             .cornerRadius(10)
-            .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme).opacity(isFavorite ? 0.6 : 0.3))
+            .foregroundColor(getBackgroundColor().opacity(isFavorite ? 0.6 : 0.3))
             .shadow(color: .cyan.opacity(0.7), radius: 7, x: 2, y: 2)
             .blur(radius: 1)
     }
     
     private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .stroke((AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme).opacity(isFavorite ? 1 : 0.3))!, lineWidth: 4)
+            .stroke(getBackgroundColor().opacity(isFavorite ? 1 : 0.3), lineWidth: 4)
             .padding(2)
     }
     
+    private func getBackgroundColor() -> Color {
+        AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme) ?? .red
+    }
 }
 
 struct GroupSubview_Previews: PreviewProvider {

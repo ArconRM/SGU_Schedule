@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import WidgetKit
 
 public final class ScheduleViewModel: ObservableObject {
     private let lessonsNetworkManager: LessonNetworkManager
@@ -141,6 +142,8 @@ public final class ScheduleViewModel: ObservableObject {
                     self.isLoadingLessons = false
                 }
             }
+            
+            WidgetCenter.shared.reloadAllTimelines()
         }
         catch (let error) {
             self.showCoreDataError(error: error)

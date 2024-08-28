@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import WidgetKit
 
 struct SettingsSideMenuView: View {
     @Environment(\.colorScheme) var colorScheme
@@ -81,6 +82,7 @@ struct SettingsSideMenuView: View {
                 .onChange(of: selectedStyle) { newValue in
                     withAnimation(.bouncy(duration: 0.5)) {
                         appSettings.currentAppStyle = newValue.rawValue
+                        WidgetCenter.shared.reloadAllTimelines()
                     }
                 }
                 
