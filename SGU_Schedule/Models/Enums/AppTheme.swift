@@ -12,6 +12,7 @@ public enum AppTheme: String, CaseIterable {
     case blue = "blue"
     case green = "green"
     case pink = "pink"
+    case gray = "gray"
     
     var rusValue: String {
         switch self {
@@ -21,6 +22,8 @@ public enum AppTheme: String, CaseIterable {
             return "зел"
         case .pink:
             return "роз"
+        case .gray:
+            return "сер"
         }
     }
     
@@ -32,6 +35,8 @@ public enum AppTheme: String, CaseIterable {
             return .green.opacity(colorScheme == .dark ? 0.1 : 0.07)
         case .pink:
             return .pink.opacity(colorScheme == .dark ? 0.1 : 0.07)
+        case .gray:
+            return colorScheme == .light ? .white : .black
         }
     }
     
@@ -43,6 +48,8 @@ public enum AppTheme: String, CaseIterable {
             return .green.opacity(colorScheme == .dark ? 1 : 0.8)
         case .pink:
             return .pink.opacity(colorScheme == .dark ? 1 : 0.8)
+        case .gray:
+            return colorScheme == .light ? .black.opacity(0.3) : .black
         }
     }
 }
