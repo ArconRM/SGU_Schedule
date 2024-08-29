@@ -104,6 +104,7 @@ struct ScheduleEventsView: View {
                 fetchResultVariant: fetchResultVariant,
                 currentEvent: currentEvent
             )
+            .environmentObject(appSettings)
             .containerBackground(for: .widget) {
                 if appSettings.currentAppStyle == AppStyle.fill.rawValue {
                     buildFilledRectangle(event: currentEvent)
@@ -117,6 +118,7 @@ struct ScheduleEventsView: View {
                 currentEvent: currentEvent,
                 nextEvent: nextEvent
             )
+            .environmentObject(appSettings)
             .containerBackground(for: .widget) {
                 if appSettings.currentAppStyle == AppStyle.fill.rawValue {
                     buildFilledRectangle(event: currentEvent)
@@ -130,12 +132,16 @@ struct ScheduleEventsView: View {
     }
     
     private func buildFilledRectangle(event: (any ScheduleEventDTO)?) -> some View {
-        RoundedRectangle(cornerRadius: 18)
-            .fill(LinearGradient (
-                colors: [getBackgroundColor(event: event).opacity(0.8), (colorScheme == .light ? .gray.opacity(0.2) : .gray.opacity(0.5))],
-                startPoint: .topLeading,
-                endPoint: .bottomTrailing
-            ))
+        
+        ZStack {
+            Color.black.opacity(colorScheme == .light ? 0.8 : 1)
+            getBackgroundColor(event: event).opacity(0.3)
+                .cornerRadius(18)
+                .padding(4)
+                .blur(radius: 20)
+            RoundedRectangle(cornerRadius: 18)
+                .fill(getBackgroundColor(event: event).opacity(0.5))
+        }
     }
     
     private func buildBorderedRectangle(event: (any ScheduleEventDTO)?) -> some View {
@@ -171,7 +177,7 @@ struct SGU_ScheduleWidget: Widget {
             .environmentObject(AppSettings())
         }
         .configurationDisplayName("Расписание")
-        .description("Показывает текущую и следующие пары")
+        .description("Показывает текущие пары")
         .supportedFamilies([.systemSmall, .systemMedium])
     }
 }

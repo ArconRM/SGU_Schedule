@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import WidgetKit
 
 
 enum AppViews {
@@ -78,6 +79,8 @@ public final class ViewsManager: ObservableObject {
             // TODO: нормально отловить
             print(error.localizedDescription)
         }
+        
+        WidgetCenter.shared.reloadAllTimelines()
     }
     
     //Transitions

@@ -8,6 +8,8 @@
 import SwiftUI
 
 struct CurrentAndNextScheduleEventsView: View {
+    @EnvironmentObject var appSettings: AppSettings
+    
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
     var nextEvent: (any ScheduleEventDTO)?
@@ -17,32 +19,33 @@ struct CurrentAndNextScheduleEventsView: View {
         case .UnknownErrorWhileFetching:
             Text("Произошла ошибка")
                 .bold()
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill.rawValue ? .white : .none)
         case .NoFavoriteGroup:
             Text("Не выбрана сохраненная группа")
                 .bold()
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill.rawValue ? .white : .none)
         case .Success:
             if currentEvent == nil {
                 Text("Сейчас нет пар")
                     .bold()
+                    .foregroundColor(appSettings.currentAppStyle == AppStyle.fill.rawValue ? .white : .none)
             } else {
                 HStack {
                     VStack {
                         Text("\(currentEvent!.timeStart.getHoursAndMinutesString()) - \(currentEvent!.timeEnd.getHoursAndMinutesString())")
-                            .font(.system(size: 16))
-                            .bold()
+                            .font(.system(size: 16, weight: .bold, design: .rounded))
                             .padding(.bottom, 0.5)
                         
-                        Divider()
-                        
                         Text(currentEvent!.title)
-                            .font(.system(size: 15))
+                            .font(.system(size: 15, weight: .medium, design: .rounded))
                             .padding(.vertical, 2)
                             .multilineTextAlignment(.center)
                         
                         if let currentLesson = currentEvent as? LessonDTO {
                             Text(currentLesson.cabinet)
-                                .font(.system(size: 13))
+                                .font(.system(size: 13, weight: .light, design: .rounded))
                                 .italic()
+                                .padding(.top, 1)
                         }
                         
                         Spacer()
@@ -56,21 +59,19 @@ struct CurrentAndNextScheduleEventsView: View {
                     } else {
                         VStack {
                             Text("\(nextEvent!.timeStart.getHoursAndMinutesString()) - \(nextEvent!.timeEnd.getHoursAndMinutesString())")
-                                .font(.system(size: 16))
-                                .bold()
+                                .font(.system(size: 16, weight: .bold, design: .rounded))
                                 .padding(.bottom, 0.5)
                             
-                            Divider()
-                            
                             Text(nextEvent!.title)
-                                .font(.system(size: 15))
+                                .font(.system(size: 15, weight: .medium, design: .rounded))
                                 .padding(.vertical, 2)
                                 .multilineTextAlignment(.center)
                             
                             if let nextEvent = nextEvent as? LessonDTO {
                                 Text(nextEvent.cabinet)
-                                    .font(.system(size: 13))
+                                    .font(.system(size: 13, weight: .light, design: .rounded))
                                     .italic()
+                                    .padding(.top, 1)
                             }
                             
                             Spacer()
@@ -78,6 +79,7 @@ struct CurrentAndNextScheduleEventsView: View {
                         .padding(.leading, 10)
                     }
                 }
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill.rawValue ? .white : .none)
             }
         }
     }
