@@ -9,12 +9,14 @@ import Foundation
 //https://developer.apple.com/forums/thread/729462
 
 public class LessonNetworkManagerWithParsing: LessonNetworkManager {
-    private var urlSource: URLSource
-    private var lessonParser: LessonHTMLParser
+    private let urlSource: URLSource
+    private let lessonParser: LessonHTMLParser
+    private let scraper: Scraper
     
-    public init(urlSource: URLSource, lessonParser: LessonHTMLParser) {
+    public init(urlSource: URLSource, lessonParser: LessonHTMLParser, scraper: Scraper) {
         self.urlSource = urlSource
         self.lessonParser = lessonParser
+        self.scraper = scraper
     }
     
     public func getGroupScheduleForCurrentWeek(
@@ -25,24 +27,24 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
     ) {
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
         
-        URLSession.shared.dataTask(with: groupScheduleUrl as URL) { data, _, error in
-            guard error == nil else {
-                resultQueue.async { completionHandler(.failure(error!)) }
-                return
-            }
-            
-            do {
-                let html = try String(contentsOf: groupScheduleUrl, encoding: .utf8)
-                let lessons = try self.lessonParser.getGroupScheduleFromSource(source: html, groupNumber: group.fullNumber)
-                
-                resultQueue.async {
-                    completionHandler(.success(lessons))
+        do {
+            try self.scraper.scrapeUrl(groupScheduleUrl) { html in
+                do {
+                    let lessons = try self.lessonParser.getGroupScheduleFromSource(
+                        source: html ?? "",
+                        groupNumber: group.fullNumber
+                    )
+                    
+                    resultQueue.async { completionHandler(.success(lessons)) }
+                }
+                catch {
+                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
                 }
             }
-            catch {
-                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-            }
-        }.resume()
+        }
+        catch {
+            resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
+        }
     }
     
     public func getTeacherScheduleForCurrentWeek(

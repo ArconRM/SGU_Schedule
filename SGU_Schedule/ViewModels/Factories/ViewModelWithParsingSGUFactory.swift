@@ -20,7 +20,8 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             
             networkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
-                groupsParser: GroupsHTMLParserSGU()
+                groupsParser: GroupsHTMLParserSGU(),
+                scraper: DynamicScraper()
             )
         )
     }
@@ -31,12 +32,14 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
-                lessonParser: LessonHTMLParserSGU()
+                lessonParser: LessonHTMLParserSGU(),
+                scraper: StaticScraper()
             ),
             
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
                 urlSource: urlSource,
-                sessionEventsParser: SessionEventsHTMLParserSGU()
+                sessionEventsParser: SessionEventsHTMLParserSGU(),
+                scraper: DynamicScraper()
             ),
             
             schedulePersistenceManager: GroupScheduleCoreDataManager()
@@ -46,18 +49,20 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
     public func buildTeacherInfoViewModel() -> TeacherInfoViewModel {
         return TeacherInfoViewModel (
             teacherNetworkManager: TeacherNetworkManagerWithParsing(
-                urlSource: URLSourceSGU_old(),
+                urlSource: urlSource,
                 teacherParser: TeacherHTMLParserSGU_old()
             ),
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
-                lessonParser: LessonHTMLParserSGU()
+                lessonParser: LessonHTMLParserSGU(),
+                scraper: StaticScraper()
             ),
             
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
                 urlSource: urlSource,
-                sessionEventsParser: SessionEventsHTMLParserSGU()
+                sessionEventsParser: SessionEventsHTMLParserSGU(),
+                scraper: DynamicScraper()
             )
         )
     }

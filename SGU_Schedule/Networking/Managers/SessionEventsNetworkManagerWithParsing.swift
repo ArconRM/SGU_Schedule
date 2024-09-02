@@ -7,17 +7,17 @@
 
 import Foundation
 
+/// С новым сайтом нужен DynamicScraper
 public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
     private var urlSource: URLSource
     private var sessionEventsParser: SessionEventsHTMLParser
     private let scraper: Scraper
     
-    public init(urlSource: URLSource, sessionEventsParser: SessionEventsHTMLParser) {
+    public init(urlSource: URLSource, sessionEventsParser: SessionEventsHTMLParser, scraper: Scraper) {
         self.urlSource = urlSource
         self.sessionEventsParser = sessionEventsParser
-        self.scraper = DynamicScraper()
+        self.scraper = scraper
     }
-    
     
     public func getGroupSessionEvents (
         group: GroupDTO,
@@ -30,11 +30,12 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
         do {
             try self.scraper.scrapeUrl(groupScheduleUrl) { html in
                 do {
-                    let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(source: html ?? "", groupNumber: group.fullNumber)
+                    let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(
+                        source: html ?? "",
+                        groupNumber: group.fullNumber
+                    )
                     
-                    resultQueue.async {
-                        completionHandler(.success(lessons))
-                    }
+                    resultQueue.async { completionHandler(.success(lessons)) }
                 }
                 catch {
                     resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
