@@ -11,7 +11,7 @@ import SwiftUI
 
 final class NetworkManagersUnitTests: XCTestCase {
     
-    let urlSource = URLSourceSGU_old()
+    let urlSource = URLSourceSGU()
 
     override func setUpWithError() throws {
         super.setUp()
@@ -36,7 +36,7 @@ final class NetworkManagersUnitTests: XCTestCase {
             XCTFail("Если упадет здесь, следующим упаду я из окна")
         }
         
-        let lessonNetworkManager = LessonNetworkManagerWithParsing(urlSource: urlSource, lessonParser: lessonParser)
+        let lessonNetworkManager = LessonNetworkManagerWithParsing(urlSource: urlSource, lessonParser: lessonParser, scraper: StaticScraper())
         lessonNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
             switch result {
             case .success(let schedule):
@@ -98,7 +98,7 @@ final class NetworkManagersUnitTests: XCTestCase {
             XCTFail("Падает не тот кто падал, а тот кто вставал")
         }
         
-        let groupsNetworkManager = GroupsNetworkManagerWithParsing(urlSource: urlSource, groupsParser: groupsParser)
+        let groupsNetworkManager = GroupsNetworkManagerWithParsing(urlSource: urlSource, groupsParser: groupsParser, scraper: DynamicScraper())
         groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 1, program: .BachelorAndSpeciality, departmentCode: "knt") { result in
             switch result {
             case .success(let groups):
@@ -129,7 +129,7 @@ final class NetworkManagersUnitTests: XCTestCase {
             XCTFail("Нет падения печальнее на свете, чем с горы в Тибете (чего блять)")
         }
         
-        let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser)
+        let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser, scraper: DynamicScraper())
         sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
             switch result {
             case .success(let sessionEvents):
@@ -160,7 +160,7 @@ final class NetworkManagersUnitTests: XCTestCase {
             XCTFail("Упал - вставай, встал - упай")
         }
         
-        let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser)
+        let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser, scraper: DynamicScraper())
         sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
             switch result {
             case .success(let sessionEvents):

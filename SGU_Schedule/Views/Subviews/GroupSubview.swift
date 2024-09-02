@@ -17,9 +17,12 @@ struct GroupSubview: View {
     var body: some View {
         VStack {
             HStack {
-                if appSettings.currentAppStyle == AppStyle.fill.rawValue {
                     ZStack {
-                        buildFilledRectangle()
+                        if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                            buildFilledRectangle()
+                        } else {
+                            buildBorderedRectangle()
+                        }
                         
                         Text(String(group.fullNumber))
                             .foregroundColor(colorScheme == .light ? .black : .white)
@@ -33,24 +36,6 @@ struct GroupSubview: View {
                         .font(.system(size: 18, weight: .bold))
                         .multilineTextAlignment(.leading)
                         .padding(.vertical, 20)
-                    
-                } else {
-                    ZStack {
-                        buildBorderedRectangle()
-                        
-                        Text(String(group.fullNumber))
-                            .foregroundColor(colorScheme == .light ? .black : .white)
-                            .font(.system(size: 20))
-                            .bold()
-                    }
-                    .frame(maxWidth: 90)
-                    
-                    Text(group.fullName)
-                        .foregroundColor(colorScheme == .light ? .black : .white)
-                        .font(.system(size: 18, weight: .bold))
-                        .multilineTextAlignment(.leading)
-                        .padding(.vertical, 20)
-                }
                 
                 Spacer()
             }
@@ -69,9 +54,9 @@ struct GroupSubview: View {
     
     private func buildFilledRectangle() -> some View {
         Rectangle()
-            .cornerRadius(10)
+            .cornerRadius(20)
             .foregroundColor(getBackgroundColor().opacity(isFavorite ? 0.6 : 0.3))
-            .shadow(color: .cyan.opacity(0.7), radius: 7, x: 2, y: 2)
+            .shadow(color: getBackgroundColor().opacity(0.7), radius: 7, x: 2, y: 2)
             .blur(radius: 1)
     }
     
