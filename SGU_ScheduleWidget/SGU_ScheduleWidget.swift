@@ -126,13 +126,24 @@ struct ScheduleEventsView: View {
                     buildBorderedRectangle(event: currentEvent)
                 }
             }
+        case .accessoryRectangular:
+            AccessoryRectangularView(
+                fetchResultVariant: fetchResultVariant,
+                currentEvent: currentEvent
+            )
+            .containerBackground(.clear, for: .widget)
+        case .accessoryInline:
+            AccessoryInlineView(
+                fetchResultVariant: fetchResultVariant,
+                currentEvent: currentEvent
+            )
+            .containerBackground(.clear, for: .widget)
         default:
             NotAvailableView()
         }
     }
     
     private func buildFilledRectangle(event: (any ScheduleEventDTO)?) -> some View {
-        
         ZStack {
             Color.black.opacity(colorScheme == .light ? 0.8 : 1)
             getBackgroundColor(event: event).opacity(0.3)
@@ -178,7 +189,12 @@ struct SGU_ScheduleWidget: Widget {
         }
         .configurationDisplayName("Расписание")
         .description("Показывает текущие пары")
-        .supportedFamilies([.systemSmall, .systemMedium])
+        .supportedFamilies([
+            .systemSmall,
+            .systemMedium,
+            .accessoryRectangular,
+            .accessoryInline
+        ])
     }
 }
 
@@ -212,7 +228,7 @@ struct Widget_Previews: PreviewProvider {
                 currentEvent: currentEvent,
                 nextEvent: nil
             )
-                .previewContext(WidgetPreviewContext(family: .systemMedium))
+                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
                 .environmentObject(AppSettings())
         }
     }

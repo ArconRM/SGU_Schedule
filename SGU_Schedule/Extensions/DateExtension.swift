@@ -131,28 +131,25 @@ extension Date {
         return Int(dateFormatter.string(from: self)) ?? 0
     }
     
-    ///Divided by colon
-    func getHoursAndMinutesString() -> String {
+    func getHoursAndMinutesString(divider: String = ":") -> String {
         let dateFormatter = DateFormatter()
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "HH:mm"
+        dateFormatter.dateFormat = "HH\(divider)mm"
         return dateFormatter.string(from: self)
     }
     
-    ///Divided by dot
-    func getDayAndMonthString() -> String {
+    func getDayAndMonthString(divider: String = ".") -> String {
         let dateFormatter = DateFormatter()
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "dd.MM"
+        dateFormatter.dateFormat = "dd\(divider)MM"
         return dateFormatter.string(from: self)
     }
     
-    ///Divided by spaces
-    func getDayMonthAndYearString() -> String {
+    func getDayMonthAndYearString(divider: String = " ") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "d MMMM yyyy"
+        dateFormatter.dateFormat = "d\(divider)MMMM\(divider)yyyy"
         return dateFormatter.string(from: self)
     }
     

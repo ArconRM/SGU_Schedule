@@ -22,6 +22,7 @@
 		165508322C14369F00A37900 /* DepartmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508312C14369F00A37900 /* DepartmentsViewModel.swift */; };
 		165508342C143B3000A37900 /* MainGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508332C143B3000A37900 /* MainGradient.swift */; };
 		165508362C15F1F200A37900 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508352C15F1F200A37900 /* ErrorView.swift */; };
+		165BCF332C871EB50004C291 /* AccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165BCF322C871EB50004C291 /* AccessoryInlineView.swift */; };
 		16644B582C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */; };
 		166DB20B2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
 		166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
@@ -81,6 +82,7 @@
 		16F7AD9A2C51933B0057B062 /* SettingsSideMenuView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD992C51933B0057B062 /* SettingsSideMenuView.swift */; };
 		16F7AD9C2C52F18D0057B062 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9B2C52F18D0057B062 /* AppSettings.swift */; };
 		16F7AD9E2C52F2050057B062 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9D2C52F2050057B062 /* AppTheme.swift */; };
+		16FC5A6A2C873E6500E2563F /* AccessoryRectangularView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16FC5A692C873E6500E2563F /* AccessoryRectangularView.swift */; };
 		2A461451322DD4A81AEBD1A5 /* Pods_SGU_Schedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD18EAF10CCE65B188BB8657 /* Pods_SGU_Schedule.framework */; };
 		BA07C9B92AE47A5B008CDDCC /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
 		BA07C9BB2AE47A7B008CDDCC /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */; };
@@ -222,6 +224,7 @@
 		165508312C14369F00A37900 /* DepartmentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsViewModel.swift; sourceTree = "<group>"; };
 		165508332C143B3000A37900 /* MainGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGradient.swift; sourceTree = "<group>"; };
 		165508352C15F1F200A37900 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
+		165BCF322C871EB50004C291 /* AccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryInlineView.swift; sourceTree = "<group>"; };
 		16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsHTMLParserSGU.swift; sourceTree = "<group>"; };
 		166DB2082C62AC7F001D0688 /* SGU_Schedule.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_Schedule.entitlements; sourceTree = "<group>"; };
 		166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_ScheduleWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -253,6 +256,7 @@
 		16F7AD992C51933B0057B062 /* SettingsSideMenuView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsSideMenuView.swift; sourceTree = "<group>"; };
 		16F7AD9B2C52F18D0057B062 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		16F7AD9D2C52F2050057B062 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
+		16FC5A692C873E6500E2563F /* AccessoryRectangularView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryRectangularView.swift; sourceTree = "<group>"; };
 		504AC542FDEC94144C1005F1 /* Pods-SGU_Schedule.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGU_Schedule.release.xcconfig"; path = "Target Support Files/Pods-SGU_Schedule/Pods-SGU_Schedule.release.xcconfig"; sourceTree = "<group>"; };
 		702765E015D3321D9F649123 /* Pods-SGU_Schedule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGU_Schedule.debug.xcconfig"; path = "Target Support Files/Pods-SGU_Schedule/Pods-SGU_Schedule.debug.xcconfig"; sourceTree = "<group>"; };
 		BA07C9B82AE47A5B008CDDCC /* WeekType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekType.swift; sourceTree = "<group>"; };
@@ -377,6 +381,8 @@
 				1602CA842C5D77E500E8F89F /* NotAvailableView.swift */,
 				1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */,
 				166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */,
+				16FC5A692C873E6500E2563F /* AccessoryRectangularView.swift */,
+				165BCF322C871EB50004C291 /* AccessoryInlineView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1040,6 +1046,7 @@
 				168069C72C5C217D002D47A6 /* LessonType.swift in Sources */,
 				166DB20E2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift in Sources */,
 				168069C82C5C217D002D47A6 /* SessionEventType.swift in Sources */,
+				16FC5A6A2C873E6500E2563F /* AccessoryRectangularView.swift in Sources */,
 				168069C92C5C217D002D47A6 /* AppTheme.swift in Sources */,
 				166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */,
 				168069CA2C5C217D002D47A6 /* Weekdays.swift in Sources */,
@@ -1049,6 +1056,7 @@
 				1602CAB02C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift in Sources */,
 				168069BD2C5C2176002D47A6 /* GroupSessionEventsDTO.swift in Sources */,
 				168069BE2C5C2176002D47A6 /* GroupDTO.swift in Sources */,
+				165BCF332C871EB50004C291 /* AccessoryInlineView.swift in Sources */,
 				168069BF2C5C2176002D47A6 /* TimeBreakDTO.swift in Sources */,
 				168069C02C5C2176002D47A6 /* DepartmentDTO.swift in Sources */,
 				168069C12C5C2176002D47A6 /* ScheduleEventDTO.swift in Sources */,

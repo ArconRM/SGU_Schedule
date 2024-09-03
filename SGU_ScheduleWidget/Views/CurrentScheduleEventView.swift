@@ -44,7 +44,6 @@ struct CurrentScheduleEventView: View {
                     if let currentLesson = currentEvent as? LessonDTO {
                         Text(currentLesson.cabinet)
                             .font(.system(size: 13, weight: .light, design: .rounded))
-                            .font(.system(size: 13))
                             .italic()
                     }
                     
