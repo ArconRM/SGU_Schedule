@@ -9,10 +9,12 @@ import Foundation
 import WebKit
 
 class Delegate: NSObject, WKNavigationDelegate {
+    // Факультеты в конце не успевают прогрузиться за две секунды, xddd
+    var needToWaitLonger: Bool = false
     var onHTMLExtracted: ((String?) -> ())?
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-        DispatchQueue.main.asyncAfter(deadline: .now() + 2.0) {
+        DispatchQueue.main.asyncAfter(deadline: .now() + (needToWaitLonger ? 4.0 : 2.0)) {
             let javascriptToExtractContent = "document.documentElement.outerHTML.toString()"
 
             webView.evaluateJavaScript(javascriptToExtractContent) { (result, error) in
@@ -30,8 +32,9 @@ class DynamicScraper: Scraper {
     var delegate = Delegate()
     var webView = WKWebView(frame: CGRect.zero)
     
-    func scrapeUrl(_ url: URL, completionHandler: @escaping (String?) -> ()) throws {
+    func scrapeUrl(_ url: URL, needToWaitLonger: Bool = false, completionHandler: @escaping (String?) -> ()) throws {
         self.delegate.onHTMLExtracted = completionHandler
+        self.delegate.needToWaitLonger = needToWaitLonger
         
         self.webView.navigationDelegate = self.delegate
         self.webView.load(URLRequest(url: url))

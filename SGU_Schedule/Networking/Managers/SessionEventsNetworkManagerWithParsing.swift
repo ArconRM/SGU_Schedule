@@ -28,7 +28,7 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
         
         do {
-            try self.scraper.scrapeUrl(groupScheduleUrl) { html in
+            try self.scraper.scrapeUrl(groupScheduleUrl, needToWaitLonger: false) { html in
                 do {
                     let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(
                         source: html ?? "",
@@ -56,7 +56,7 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
         let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacher.teacherLessonsEndpoint!)
         
         do {
-            try self.scraper.scrapeUrl(teacherLessonsUrl) { html in
+            try self.scraper.scrapeUrl(teacherLessonsUrl, needToWaitLonger: false) { html in
                 do {
                     let html = try String(contentsOf: teacherLessonsUrl, encoding: .utf8)
                     let lessons = try self.sessionEventsParser.getSessionEventsFromSource(source: html)

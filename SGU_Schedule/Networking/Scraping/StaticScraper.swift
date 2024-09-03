@@ -8,7 +8,7 @@
 import Foundation
 
 class StaticScraper: Scraper {
-    func scrapeUrl(_ url: URL, completionHandler: @escaping (String?) -> ()) throws {
+    func scrapeUrl(_ url: URL, needToWaitLonger: Bool = false, completionHandler: @escaping (String?) -> ()) throws {
         URLSession.shared.dataTask(with: url) { data, _, error in
             guard error == nil else {
                 completionHandler("")

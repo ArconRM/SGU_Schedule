@@ -21,7 +21,7 @@ final class GroupsHTMLParserSGU: GroupsHTMLParser {
         program: AcademicProgram
     ) throws -> [GroupDTO] {
         let doc = try HTML(html: html, encoding: .utf8)
-        var baseXpath = "//div[@id='alias_\(departmentCode)']/div[@class='schedule__tab tab']/div[@class='tab__content tab__content_schedule']/div[@id='tab_\(departmentCode)-fulltime']/div[@class='schedule__group']/div[@class='schedule__group_wrap']"
+        let baseXpath = "//div[@id='alias_\(departmentCode)']/div[@class='schedule__tab tab']/div[@class='tab__content tab__content_schedule']/div[@id='tab_\(departmentCode)-fulltime']/div[@class='schedule__group']/div[@class='schedule__group_wrap']"
 
         var result = [GroupDTO]()
         // Подбор нужной программы обучения и добавление в список

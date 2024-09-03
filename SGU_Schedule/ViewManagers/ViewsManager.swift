@@ -19,7 +19,6 @@ enum AppViews {
 
 // TODO: через DI с протоколом сделать
 // TODO: слишком много обязанностей
-// TODO: может как то без него кастомную навигацию
 /// Manages creating views and passing data
 public final class ViewsManager: ObservableObject {
     
@@ -65,7 +64,7 @@ public final class ViewsManager: ObservableObject {
         selectedGroup = group
     }
     
-    func resetDepartment() {
+    func resetDepartment() throws {
         UserDefaults.standard.setValue(nil, forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue)
         selectedDepartmentCode = nil
         
@@ -76,8 +75,7 @@ public final class ViewsManager: ObservableObject {
             try schedulePersistenceManager.clearAllItems()
         }
         catch (let error) {
-            // TODO: нормально отловить
-            print(error.localizedDescription)
+            throw CoreDataError.failedToClear
         }
         
         WidgetCenter.shared.reloadAllTimelines()

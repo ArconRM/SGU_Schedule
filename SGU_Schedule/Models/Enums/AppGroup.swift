@@ -13,8 +13,7 @@ public enum AppGroup: String {
   public var containerURL: URL {
     switch self {
     case .schedule:
-      return FileManager.default.containerURL(
-      forSecurityApplicationGroupIdentifier: self.rawValue)!
+      return FileManager.default.containerURL(forSecurityApplicationGroupIdentifier: self.rawValue)!
     }
   }
 }

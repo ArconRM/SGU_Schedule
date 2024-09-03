@@ -22,19 +22,19 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
     public func getGroupsByYearAndAcademicProgram(
         year: Int,
         program: AcademicProgram,
-        departmentCode: String,
+        department: DepartmentDTO,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void
     ) {
-        let url = urlSource.getBaseScheduleURL(departmentCode: departmentCode)
+        let url = urlSource.getBaseScheduleURL(departmentCode: department.code)
         
         do {
-            try self.scraper.scrapeUrl(url) { html in
+            try self.scraper.scrapeUrl(url, needToWaitLonger: department.number > 15) { html in
                 do {
                     let groups = try self.groupsParser.getGroupsByYearAndAcademicProgramFromSource(
                         source: html ?? "",
                         year: year,
-                        departmentCode: departmentCode,
+                        departmentCode: department.code,
                         program: program
                     )
                     

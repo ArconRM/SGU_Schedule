@@ -10,7 +10,7 @@ import Foundation
 
 extension Lesson {
     
-    /// Note: sets Lecture if value is null or incorrect
+    /// Проставляет тип лекции если null или неправильное
     var lessonType: LessonType {
             get {
                 return LessonType(rawValue: self.lessonTypeRawValue ?? "") ?? .Lecture

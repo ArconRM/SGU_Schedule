@@ -10,7 +10,6 @@ import Foundation
 
 public protocol ScheduleEventDTO: Hashable {
     
-//    var id: UUID { get }
     var title: String { get set }
     var timeStart: Date { get set }
     var timeEnd: Date { get set }

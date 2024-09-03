@@ -87,7 +87,7 @@ public final class GroupsViewModel: ObservableObject {
             networkManager.getGroupsByYearAndAcademicProgram(
                 year: year,
                 program: academicProgram,
-                departmentCode: department.code,
+                department: department,
                 resultQueue: .main
             ) { result in
                 switch result {

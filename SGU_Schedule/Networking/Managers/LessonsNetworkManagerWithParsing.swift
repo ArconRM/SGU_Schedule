@@ -28,7 +28,7 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
         
         do {
-            try self.scraper.scrapeUrl(groupScheduleUrl) { html in
+            try self.scraper.scrapeUrl(groupScheduleUrl, needToWaitLonger: false) { html in
                 do {
                     let lessons = try self.lessonParser.getGroupScheduleFromSource(
                         source: html ?? "",

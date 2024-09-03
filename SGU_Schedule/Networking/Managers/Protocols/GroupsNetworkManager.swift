@@ -8,11 +8,10 @@
 import Foundation
 
 public protocol GroupsNetworkManager {
-    ///May throw htmlParserError or any other
     func getGroupsByYearAndAcademicProgram(
         year: Int,
         program: AcademicProgram,
-        departmentCode: String,
+        department: DepartmentDTO,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void
     )

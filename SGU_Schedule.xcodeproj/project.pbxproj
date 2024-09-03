@@ -20,7 +20,6 @@
 		1655082E2C14345A00A37900 /* DepartmentSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1655082D2C14345A00A37900 /* DepartmentSubview.swift */; };
 		165508302C14362200A37900 /* DepartmentsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1655082F2C14362200A37900 /* DepartmentsView.swift */; };
 		165508322C14369F00A37900 /* DepartmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508312C14369F00A37900 /* DepartmentsViewModel.swift */; };
-		165508342C143B3000A37900 /* MainGradient.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508332C143B3000A37900 /* MainGradient.swift */; };
 		165508362C15F1F200A37900 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508352C15F1F200A37900 /* ErrorView.swift */; };
 		165BCF332C871EB50004C291 /* AccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165BCF322C871EB50004C291 /* AccessoryInlineView.swift */; };
 		16644B582C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */; };
@@ -74,7 +73,6 @@
 		16DB5F0A2C04EFD000870B21 /* TeacherNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F092C04EFD000870B21 /* TeacherNetworkManager.swift */; };
 		16DB5F0C2C04F0C400870B21 /* TeacherNetworkManagerWithParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F0B2C04F0C400870B21 /* TeacherNetworkManagerWithParsing.swift */; };
 		16DB5F0E2C061D4300870B21 /* TeacherInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F0D2C061D4300870B21 /* TeacherInfoView.swift */; };
-		16DB5F102C06214400870B21 /* MainColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F0F2C06214400870B21 /* MainColor.swift */; };
 		16DDFFE42C7C7743004A6DA6 /* DynamicScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDFFE32C7C7743004A6DA6 /* DynamicScraper.swift */; };
 		16DDFFE62C7C7820004A6DA6 /* StaticScraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DDFFE52C7C7820004A6DA6 /* StaticScraper.swift */; };
 		16EFCD512C75075D00A617AF /* LessonHTMLParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16EFCD502C75075D00A617AF /* LessonHTMLParserSGU.swift */; };
@@ -222,7 +220,6 @@
 		1655082D2C14345A00A37900 /* DepartmentSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentSubview.swift; sourceTree = "<group>"; };
 		1655082F2C14362200A37900 /* DepartmentsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsView.swift; sourceTree = "<group>"; };
 		165508312C14369F00A37900 /* DepartmentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsViewModel.swift; sourceTree = "<group>"; };
-		165508332C143B3000A37900 /* MainGradient.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainGradient.swift; sourceTree = "<group>"; };
 		165508352C15F1F200A37900 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		165BCF322C871EB50004C291 /* AccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryInlineView.swift; sourceTree = "<group>"; };
 		16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsHTMLParserSGU.swift; sourceTree = "<group>"; };
@@ -248,7 +245,6 @@
 		16DB5F092C04EFD000870B21 /* TeacherNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherNetworkManager.swift; sourceTree = "<group>"; };
 		16DB5F0B2C04F0C400870B21 /* TeacherNetworkManagerWithParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherNetworkManagerWithParsing.swift; sourceTree = "<group>"; };
 		16DB5F0D2C061D4300870B21 /* TeacherInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherInfoView.swift; sourceTree = "<group>"; };
-		16DB5F0F2C06214400870B21 /* MainColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainColor.swift; sourceTree = "<group>"; };
 		16DDFFE32C7C7743004A6DA6 /* DynamicScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicScraper.swift; sourceTree = "<group>"; };
 		16DDFFE52C7C7820004A6DA6 /* StaticScraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StaticScraper.swift; sourceTree = "<group>"; };
 		16EFCD502C75075D00A617AF /* LessonHTMLParserSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonHTMLParserSGU.swift; sourceTree = "<group>"; };
@@ -527,9 +523,9 @@
 		BA9D79262AC2178400C36932 /* Decoding */ = {
 			isa = PBXGroup;
 			children = (
+				BAAEB3042AD9922700E90223 /* Protocols */,
 				1655082A2C13A3AB00A37900 /* SGU */,
 				165508292C13A34400A37900 /* SGU_old */,
-				BAAEB3042AD9922700E90223 /* Protocols */,
 			);
 			path = Decoding;
 			sourceTree = "<group>";
@@ -718,8 +714,6 @@
 			isa = PBXGroup;
 			children = (
 				BABF260D2ABB0D92003D3385 /* Launch Screen.storyboard */,
-				16DB5F0F2C06214400870B21 /* MainColor.swift */,
-				165508332C143B3000A37900 /* MainGradient.swift */,
 				165508352C15F1F200A37900 /* ErrorView.swift */,
 				BA1A4FD82B6C09F10068B2A4 /* MainView.swift */,
 				1655082F2C14362200A37900 /* DepartmentsView.swift */,
@@ -728,6 +722,7 @@
 				BA2FEEED2B682511001F91F5 /* ScheduleBackView.swift */,
 				BA2FEEEF2B682547001F91F5 /* ScheduleModalView.swift */,
 				BA2FEEE92B6817C6001F91F5 /* SessionEventsModalView.swift */,
+				16F7AD992C51933B0057B062 /* SettingsSideMenuView.swift */,
 				16DB5F0D2C061D4300870B21 /* TeacherInfoView.swift */,
 				BA2FEEF12B6825D5001F91F5 /* AdditionalViews */,
 				BADAE12A2ABA074F0079E3D7 /* Subviews */,
@@ -766,7 +761,6 @@
 				BA2FEEE72B66B4FF001F91F5 /* SessionEventSubview.swift */,
 				16150C2E2C09D23E006BA964 /* TeacherInfoCardView.swift */,
 				1655082D2C14345A00A37900 /* DepartmentSubview.swift */,
-				16F7AD992C51933B0057B062 /* SettingsSideMenuView.swift */,
 			);
 			path = Subviews;
 			sourceTree = "<group>";
@@ -1153,7 +1147,6 @@
 				BADAE12F2ABA0B240079E3D7 /* DateExtension.swift in Sources */,
 				BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */,
 				1650F5182C54492600622205 /* AppStyle.swift in Sources */,
-				16DB5F102C06214400870B21 /* MainColor.swift in Sources */,
 				BAAD1F192B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift in Sources */,
 				BA1256CF2B72A6E60019D2E6 /* UIDeviceExtension.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
@@ -1173,7 +1166,6 @@
 				BA9D792C2AC21DDA00C36932 /* URLSourceSGU_old.swift in Sources */,
 				16DB5F062C04D53900870B21 /* TeacherHTMLParserSGU_old.swift in Sources */,
 				BADAE1272ABA004C0079E3D7 /* GroupDTO.swift in Sources */,
-				165508342C143B3000A37900 /* MainGradient.swift in Sources */,
 				BADAE1322ABA21430079E3D7 /* Weekdays.swift in Sources */,
 				BA07C9BB2AE47A7B008CDDCC /* LessonType.swift in Sources */,
 				BAAEB3182ADA865500E90223 /* AcademicProgram.swift in Sources */,

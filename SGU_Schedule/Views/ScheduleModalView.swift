@@ -87,11 +87,11 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 
                 Spacer()
                 
-                if viewModel.isLoadingLessons && networkMonitor.isConnected {
+                if viewModel.groupSchedule == nil && networkMonitor.isConnected {
                     Text("Загрузка...")
                         .font(.system(size: 19, design: .rounded))
                         .bold()
-                } else if viewModel.groupSchedule != nil && !viewModel.groupSchedule!.lessons.isEmpty {
+                } else if viewModel.groupSchedule != nil {
                     ScrollView {
                         ForEach(1...8, id:\.self) { lessonNumber in
                             let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
@@ -109,7 +109,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     .onAppear {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
-                } else if !networkMonitor.isConnected {
+                } else {
                     Text("Нет соединения с интернетом")
                         .padding(.top, -10)
                         .font(.system(size: 19, weight: .bold, design: .rounded))

@@ -34,6 +34,11 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
     private func getSessionEventsByRowsFromSource(source html: String) throws -> [SessionEventDTO] {
         var sessionEvents = [SessionEventDTO]()
         let doc = try HTML(html: html, encoding: .utf8)
+        
+        if doc.xpath(baseXpath).count < 2 {
+            return []
+        }
+        
         let elements = doc.xpath(baseXpath)[1].text?
             .split(separator: "\n")
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }

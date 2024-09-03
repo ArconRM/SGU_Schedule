@@ -74,18 +74,6 @@ public enum DepartmentSource: String, CaseIterable {
         }
     }
     
-    var number: Int {
-        var value = 1
-        for depCase in DepartmentSource.allCases {
-            if depCase != self {
-                value += 1
-            } else {
-                break
-            }
-        }
-        return value
-    }
-    
     var dto: DepartmentDTO {
         switch self {
         case .bf:

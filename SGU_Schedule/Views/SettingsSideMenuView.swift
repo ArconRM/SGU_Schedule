@@ -15,6 +15,9 @@ struct SettingsSideMenuView: View {
     @State var selectedTheme: AppTheme
     @State var selectedStyle: AppStyle
     
+    @State var showError: Bool = false
+    var error: LocalizedError? = nil
+    
     var body: some View {
         ZStack {
             AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
@@ -28,7 +31,12 @@ struct SettingsSideMenuView: View {
                     .padding()
                 
                 Button("Сменить факультет") {
-                    viewsManager.resetDepartment()
+                    do {
+                        try viewsManager.resetDepartment()
+                    }
+                    catch {
+                        showError.toggle()
+                    }
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewsManager.showDepartmentsView()
                     }
@@ -88,6 +96,10 @@ struct SettingsSideMenuView: View {
                 
                 Spacer()
             }
+        }
+        .alert(isPresented: $showError) {
+            Alert(title: Text(error?.errorDescription ?? "Error"),
+                  message: Text(error?.failureReason ?? "Unknown"))
         }
     }
 }

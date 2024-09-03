@@ -15,4 +15,16 @@ public struct DepartmentDTO: Hashable {
         self.fullName = fullName
         self.code = code
     }
+    
+    var number: Int {
+        var value = 1
+        for depCase in DepartmentSource.allCases {
+            if depCase.dto.code != self.code {
+                value += 1
+            } else {
+                break
+            }
+        }
+        return value
+    }
 }
