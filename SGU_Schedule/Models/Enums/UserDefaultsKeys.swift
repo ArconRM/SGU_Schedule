@@ -8,6 +8,7 @@
 import Foundation
 
 public enum UserDefaultsKeys: String {
+    case wasLaunched = "wasLaunched"
     case favoriteGroupNumberKey = "favoriteGroupNumber"
     case selectedDepartmentKey = "selectedDepartment"
     case selectedAppTheme = "selectedAppTheme"

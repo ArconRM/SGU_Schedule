@@ -26,6 +26,7 @@
 		166DB20B2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
 		166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
 		166DB20E2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */; };
+		167248712C8844F4008673DE /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248702C8844F4008673DE /* TutorialView.swift */; };
 		167EE42A2C5F79BD00701C8A /* GroupSchedulePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */; };
 		167EE42B2C5F79C700701C8A /* CoreData_GroupScheduleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA53835C2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift */; };
 		167EE42C2C5F79E300701C8A /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAFA580A2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld */; };
@@ -227,6 +228,7 @@
 		166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_ScheduleWidgetExtension.entitlements; sourceTree = "<group>"; };
 		166DB20A2C62AE72001D0688 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
 		166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentAndNextScheduleEventsView.swift; sourceTree = "<group>"; };
+		167248702C8844F4008673DE /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
 		1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
 		168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SGU_ScheduleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -724,6 +726,7 @@
 				BA2FEEE92B6817C6001F91F5 /* SessionEventsModalView.swift */,
 				16F7AD992C51933B0057B062 /* SettingsSideMenuView.swift */,
 				16DB5F0D2C061D4300870B21 /* TeacherInfoView.swift */,
+				167248702C8844F4008673DE /* TutorialView.swift */,
 				BA2FEEF12B6825D5001F91F5 /* AdditionalViews */,
 				BADAE12A2ABA074F0079E3D7 /* Subviews */,
 			);
@@ -1111,6 +1114,7 @@
 				BAA53E522AE9203A0098F30E /* UIScreenExtension.swift in Sources */,
 				BADAE1142AB9C0D60079E3D7 /* ScheduleView.swift in Sources */,
 				BA2FEEF02B682547001F91F5 /* ScheduleModalView.swift in Sources */,
+				167248712C8844F4008673DE /* TutorialView.swift in Sources */,
 				BAFA58092AEC5D8D0060BD81 /* CoreData_LessonExtension.swift in Sources */,
 				BAAD1F132B6FF97A00B58E32 /* LessonNetworkManagerForTest.swift in Sources */,
 				BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */,

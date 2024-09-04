@@ -14,6 +14,7 @@ struct SettingsSideMenuView: View {
     @EnvironmentObject var appSettings: AppSettings
     @State var selectedTheme: AppTheme
     @State var selectedStyle: AppStyle
+    @Binding var showTutorial: Bool
     
     @State var showError: Bool = false
     var error: LocalizedError? = nil
@@ -94,6 +95,18 @@ struct SettingsSideMenuView: View {
                     }
                 }
                 
+                Button("Виджеты") {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        showTutorial.toggle()
+                    }
+                    
+                }
+                .buttonStyle(BorderedButtonStyle())
+                .font(.system(size: 16, weight: .bold, design: .rounded))
+                .foregroundColor(colorScheme == .light ? .black : .white)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding()
+                
                 Spacer()
             }
         }
@@ -105,7 +118,7 @@ struct SettingsSideMenuView: View {
 }
 
 #Preview {
-    SettingsSideMenuView(selectedTheme: .blue, selectedStyle: .fill)
+    SettingsSideMenuView(selectedTheme: .blue, selectedStyle: .fill, showTutorial: .constant(false))
         .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
         .environmentObject(AppSettings())
 }

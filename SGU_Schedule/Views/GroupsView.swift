@@ -20,6 +20,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @State private var favoriteGroupNumber: Int? = nil
     
     @State private var showSettingsSideMenuView: Bool = false
+    @State var showTutorialView: Bool = false
     
     var body: some View {
         ZStack {
@@ -37,7 +38,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             }
             
             if showSettingsSideMenuView {
-                SettingsSideMenuView(selectedTheme: AppTheme(rawValue: appSettings.currentAppTheme)!, selectedStyle: AppStyle(rawValue: appSettings.currentAppStyle)!)
+                SettingsSideMenuView(selectedTheme: AppTheme(rawValue: appSettings.currentAppTheme)!, selectedStyle: AppStyle(rawValue: appSettings.currentAppStyle)!, showTutorial: $showTutorialView)
                     .environmentObject(appSettings)
             }
             
@@ -203,6 +204,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             .offset(x: showSettingsSideMenuView ? 235 : 0, y: showSettingsSideMenuView ? 100 : 0)
             .scaleEffect(showSettingsSideMenuView ? 0.8 : 1)
             .disabled(showSettingsSideMenuView)
+            .blur(radius: showTutorialView ? 3 : 0)
             .onTapGesture {
                 if showSettingsSideMenuView {
                     withAnimation(.bouncy(duration: 0.5)) {
@@ -210,10 +212,15 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                 }
             }
+            
+            if showTutorialView {
+                TutorialView(isShowing: $showTutorialView)
+            }
         }
         .ignoresSafeArea(edges: [.bottom])
         .accentColor(colorScheme == .light ? .black : .white)
         .onAppear {
+            showTutorialView = !viewModel.wasLaunched
             fetchAllData()
         }
         

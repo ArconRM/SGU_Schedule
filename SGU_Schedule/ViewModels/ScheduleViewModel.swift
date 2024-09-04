@@ -196,7 +196,6 @@ public final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    /// May throw failedToClear or failedToSave errors
     private func saveNewScheduleWithClearingPreviousVersion(schedule: GroupScheduleDTO) throws {
         try self.schedulePersistenceManager.clearAllItems()
         try self.schedulePersistenceManager.saveItem(item: schedule)
@@ -230,7 +229,7 @@ public final class ScheduleViewModel: ObservableObject {
             }
             
             // ищем пару
-            if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeStart,
+            if Date.checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeStart,
                                             dateMiddle: currentTime,
                                             dateEnd: todayLessonsByNumber[0].timeEnd)
             {
@@ -250,10 +249,10 @@ public final class ScheduleViewModel: ObservableObject {
                         continue
                     }
                     
-                    if checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeEnd,
-                                                    dateMiddle: currentTime,
-                                                    dateEnd: todayLessonsByNumberNext[0].timeStart,
-                                                    strictInequality: true)
+                    if Date.checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeEnd,
+                                                         dateMiddle: currentTime,
+                                                         dateEnd: todayLessonsByNumberNext[0].timeStart,
+                                                         strictInequality: true)
                     {
                         currentEvent = TimeBreakDTO(timeStart: todayLessonsByNumber[0].timeEnd, timeEnd: todayLessonsByNumberNext[0].timeStart)
                         setNextTwoLessons(lessons: todayLessons, from: lessonNumber)
@@ -267,7 +266,7 @@ public final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    /// If possible, sets twoNextLessons to two nearest lessons from given array, which have greater lessonNumber than given one
+    /// Если есть подходящие пары, ставит twoNextLessons как две ближайшие пары с массива, у которых номер больше переданного
     private func setNextTwoLessons(lessons: [LessonDTO], from number: Int) {
         for nextLessonNumber in (number + 1)...8 {
             let lessonsByNumber = lessons.filter { $0.lessonNumber == nextLessonNumber }
@@ -287,26 +286,5 @@ public final class ScheduleViewModel: ObservableObject {
                 }
             }
         }
-    }
-    
-    /// Returns true if dateMiddle is more than dateStart or equals it and if dateMiddle is less than dateEnd or equals it
-    private func checkIfTimeIsBetweenTwoTimes(dateStart: Date, dateMiddle: Date, dateEnd: Date, strictInequality: Bool = false) -> Bool {
-        return compareDatesByTime(date1: dateMiddle, date2: dateStart, strictInequality: strictInequality)
-        && compareDatesByTime(date1: dateEnd, date2: dateMiddle, strictInequality: strictInequality)
-    }
-    
-    /// Returns true if date1 is bigger than date2 or equals it.
-    private func compareDatesByTime(date1: Date, date2: Date, strictInequality: Bool) -> Bool {
-        let calendar = Calendar.current
-        var dateToCompare1 = Date.init(timeIntervalSinceReferenceDate: 0)
-        var dateToCompare2 = Date.init(timeIntervalSinceReferenceDate: 0)
-        
-        let date1Components = calendar.dateComponents([.hour, .minute], from: date1)
-        let date2Components = calendar.dateComponents([.hour, .minute], from: date2)
-        
-        dateToCompare1 = calendar.date(byAdding: date1Components, to: dateToCompare1) ?? Date.now
-        dateToCompare2 = calendar.date(byAdding: date2Components, to: dateToCompare2) ?? Date.now
-        
-        return (strictInequality ? dateToCompare1 > dateToCompare2 : dateToCompare1 >= dateToCompare2)
     }
 }

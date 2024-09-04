@@ -28,6 +28,15 @@ public final class GroupsViewModel: ObservableObject {
         return number != 0 ? number : nil
     }
     
+    var wasLaunched: Bool {
+        let wasLaunched = UserDefaults.standard.bool(forKey: UserDefaultsKeys.wasLaunched.rawValue)
+        if !wasLaunched {
+            UserDefaults.standard.setValue(true, forKey: UserDefaultsKeys.wasLaunched.rawValue)
+        }
+        
+        return wasLaunched
+    }
+    
     init(
         department: DepartmentDTO,
         networkManager: GroupsNetworkManager
