@@ -9,8 +9,7 @@ import Foundation
 
 public protocol SessionEventsNetworkManager {
     func getGroupSessionEvents(
-        group: GroupDTO,
-        departmentCode: String,
+        group: AcademicGroupDTO,
         resultQueue: DispatchQueue,
         completionHandler: @escaping(Result<GroupSessionEventsDTO, Error>) -> Void
     )

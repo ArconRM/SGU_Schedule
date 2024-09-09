@@ -8,13 +8,14 @@
 import Foundation
 
 class SessionEventsParserForTest: SessionEventsHTMLParser {
-    func getGroupSessionEventsFromSource(source html: String, groupNumber: Int) throws -> GroupSessionEventsDTO {
+    func getGroupSessionEventsFromSource(source html: String, groupNumber: String, departmentCode: String) throws -> GroupSessionEventsDTO {
         let dateFormatter = DateFormatter()
         dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.dateFormat = "dd.MM.yyyy"
         let date = dateFormatter.date(from: "01.01.2069")!
         
-        return GroupSessionEventsDTO(groupNumber: groupNumber,
+        return GroupSessionEventsDTO(groupNumber: groupNumber, 
+                                     departmentCode: departmentCode,
                                      sessionEvents: [SessionEventDTO(title: "МАТАН",
                                                                      date: date,
                                                                      sessionEventType: .Consultation,

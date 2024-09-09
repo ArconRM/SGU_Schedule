@@ -10,7 +10,7 @@ import SwiftUI
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     @ObservedObject var viewModel: ViewModel
     
-    var selectedGroup: GroupDTO
+    var selectedGroup: AcademicGroupDTO
     
     var body : some View {
         VStack {
@@ -104,6 +104,6 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 }
 
 #Preview {
-    ScheduleBackView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt")),
-                     selectedGroup: GroupDTO(fullNumber: 141))
+    ScheduleBackView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(selectedDepartmentCode: "knt"),
+                     selectedGroup: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt"))
 }

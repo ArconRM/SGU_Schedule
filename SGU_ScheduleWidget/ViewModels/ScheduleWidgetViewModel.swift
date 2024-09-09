@@ -20,7 +20,7 @@ public final class ScheduleWidgetViewModel: ObservableObject {
     
     public func fetchSavedSchedule() {
         do {
-            let schedule = try self.schedulePersistenceManager.fetchAllItemsDTO().first
+            let schedule = try self.schedulePersistenceManager.getFavouriteGroupScheduleDTO()
             if schedule == nil {
                 fetchResult = ScheduleFetchResult(resultVariant: .NoFavoriteGroup)
             } else {

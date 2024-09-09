@@ -13,7 +13,7 @@ public final class ScheduleViewModel: ObservableObject {
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
-    public var department: DepartmentDTO
+    public var selectedDepartmentCode: String
     
     @Published var groupSchedule: GroupScheduleDTO?
     @Published var currentEvent: (any ScheduleEventDTO)? = nil
@@ -29,54 +29,29 @@ public final class ScheduleViewModel: ObservableObject {
     @Published var isShowingError = false
     @Published var activeError: LocalizedError?
     
-    var favoriteGroupNumber: Int? {
-        get {
-            let number = UserDefaults.standard.integer(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
-            return number != 0 ? number : nil
-        }
-        set {
-            UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
-            do {
-                if groupSchedule != nil {
-                    try saveNewScheduleWithClearingPreviousVersion(schedule: groupSchedule!)
-                }
-            }
-            catch(let error) {
-                self.isShowingError = true
-                
-                if let coreDataError = error as? CoreDataError {
-                    self.activeError = coreDataError
-                } else {
-                    self.activeError = CoreDataError.unexpectedError
-                }
-            }
-        }
-    }
-    
     init(
-        department: DepartmentDTO,
+        selectedDepartmentCode: String,
         lessonsNetworkManager: LessonNetworkManager,
         sessionEventsNetworkManager: SessionEventsNetworkManager,
         schedulePersistenceManager: GroupSchedulePersistenceManager
     ) {
-        self.department = department
+        self.selectedDepartmentCode = selectedDepartmentCode
         self.lessonsNetworkManager = lessonsNetworkManager
         self.sessionEventsNetworkManager = sessionEventsNetworkManager
         self.schedulePersistenceManager = schedulePersistenceManager
     }
     
-    /// Если номер группы не избранный и в онлайне - получает расписание с networkManager.
-    /// Если номер группы избранный и расписание с CoreData различается с оным с networkManager - перезаписывает его.
+    /// Если группа сохранена и в онлайне - получает расписание с networkManager.
+    /// Если группа сохранена и расписание с CoreData различается с оным с networkManager - перезаписывает его.
     /// В иных случаях просто получает расписание с CoreData.
-    public func fetchSchedule(groupNumber: Int, isOnline: Bool) {
+    public func fetchSchedule(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool) {
         resetData()
         
         do {
-            let persistenceSchedule = try self.schedulePersistenceManager.fetchAllItemsDTO().first
+            if isSaved {
+                let persistenceSchedule = try self.schedulePersistenceManager.getScheduleByGroupId(group.groupId)
             
-            if self.favoriteGroupNumber == groupNumber {
                 if isOnline {
-                    
                     // Если есть сохраненное в память раннее, сначала ставится оно
                     if persistenceSchedule != nil {
                         self.groupSchedule = persistenceSchedule
@@ -85,8 +60,7 @@ public final class ScheduleViewModel: ObservableObject {
                     
                     // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
                     self.lessonsNetworkManager.getGroupScheduleForCurrentWeek (
-                        group: GroupDTO(fullNumber: groupNumber),
-                        departmentCode: self.department.code,
+                        group: group,
                         resultQueue: DispatchQueue.main
                     ) { result in
                         switch result {
@@ -94,7 +68,7 @@ public final class ScheduleViewModel: ObservableObject {
                             do {
                                 if persistenceSchedule == nil || networkSchedule.lessons != persistenceSchedule!.lessons {
                                     self.groupSchedule = networkSchedule
-                                    try self.saveNewScheduleWithClearingPreviousVersion(schedule: networkSchedule)
+                                    try self.saveNewScheduleWithDeletingPreviousVersion(schedule: networkSchedule)
                                     self.setCurrentAndTwoNextLessons()
                                     
                                     if persistenceSchedule != nil && networkSchedule.lessons != persistenceSchedule!.lessons {
@@ -107,11 +81,11 @@ public final class ScheduleViewModel: ObservableObject {
                                 self.isLoadingLessons = false
                             }
                             catch (let error) {
-                                self.showCoreDataError(error: error)
+                                self.showCoreDataError(error)
                             }
                             
                         case .failure(let error):
-                            self.showNetworkError(error: error)
+                            self.showNetworkError(error)
                         }
                     }
                     
@@ -125,8 +99,7 @@ public final class ScheduleViewModel: ObservableObject {
                 
             } else {
                 self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
-                    group: GroupDTO(fullNumber: groupNumber),
-                    departmentCode: self.department.code,
+                    group: group,
                     resultQueue: DispatchQueue.main
                 ) { result in
                     switch result {
@@ -135,7 +108,7 @@ public final class ScheduleViewModel: ObservableObject {
                         self.setCurrentAndTwoNextLessons()
                         
                     case .failure(let error):
-                        self.showNetworkError(error: error)
+                        self.showNetworkError(error)
                     }
                     
                     self.isLoadingLessons = false
@@ -145,22 +118,21 @@ public final class ScheduleViewModel: ObservableObject {
             WidgetCenter.shared.reloadAllTimelines()
         }
         catch (let error) {
-            self.showCoreDataError(error: error)
+            self.showCoreDataError(error)
         }
     }
     
-    public func fetchSessionEvents(groupNumber: Int, isOnline: Bool) {
+    public func fetchSessionEvents(groupNumber: String, isOnline: Bool) {
         if isOnline {
             sessionEventsNetworkManager.getGroupSessionEvents(
-                group: GroupDTO(fullNumber: groupNumber),
-                departmentCode: department.code,
+                group: AcademicGroupDTO(fullNumber: groupNumber, departmentCode: selectedDepartmentCode),
                 resultQueue: .main
             ) { result in
                 switch result {
                 case .success(let date):
                     self.groupSessionEvents = date
                 case .failure(let error):
-                    self.showNetworkError(error: error)
+                    self.showNetworkError(error)
                 }
                 self.isLoadingSessionEvents = false
             }
@@ -176,7 +148,7 @@ public final class ScheduleViewModel: ObservableObject {
         isLoadingSessionEvents = true
     }
     
-    private func showNetworkError(error: Error) {
+    private func showNetworkError(_ error: Error) {
         self.isShowingError = true
         
         if let networkError = error as? NetworkError {
@@ -186,7 +158,7 @@ public final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    private func showCoreDataError(error: Error) {
+    private func showCoreDataError(_ error: Error) {
         self.isShowingError = true
         
         if let coreDataError = error as? CoreDataError {
@@ -196,9 +168,9 @@ public final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    private func saveNewScheduleWithClearingPreviousVersion(schedule: GroupScheduleDTO) throws {
-        try self.schedulePersistenceManager.clearAllItems()
-        try self.schedulePersistenceManager.saveItem(item: schedule)
+    private func saveNewScheduleWithDeletingPreviousVersion(schedule: GroupScheduleDTO) throws {
+        try self.schedulePersistenceManager.deleteScheduleByGroupId(schedule.group.groupId)
+        try self.schedulePersistenceManager.saveItem(schedule)
     }
     
     private func setCurrentAndTwoNextLessons() {

@@ -34,7 +34,7 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
                 ForEach(viewModel.departments, id: \.self) { department in
                     Button {
                         withAnimation(.easeInOut(duration: 0.5)) {
-                            viewsManager.selectDepartment(departmentCode: department.code)
+                            viewsManager.selectDepartment(department: department)
                             viewsManager.showGroupsView(needToReload: false)
                         }
                     } label: {

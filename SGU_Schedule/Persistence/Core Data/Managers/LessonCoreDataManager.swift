@@ -8,10 +8,10 @@
 import Foundation
 import SwiftUI
 
-struct LessonsCoreDataManager: LessonPersistenceManager {
+struct LessonCoreDataManager: LessonPersistenceManager {
     private let viewContext = PersistenceController.shared.container.viewContext
     
-    func saveItem(item: LessonDTO) throws -> Lesson {
+    func saveItem(_ item: LessonDTO) throws -> Lesson {
         do {
             let newLesson = Lesson(context: viewContext)
             newLesson.title = item.title
@@ -35,6 +35,19 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
         }
     }
     
+    func fetchAllItems() throws -> [Lesson] {
+        do {
+            if try viewContext.count(for: Lesson.fetchRequest()) == 0 {
+                return []
+            }
+            
+            let lessons = try viewContext.fetch(Lesson.fetchRequest())
+            return lessons
+        } catch {
+            throw CoreDataError.failedToFetch
+        }
+    }
+    
     func fetchAllItemsDTO() throws -> [LessonDTO] {
         do {
             if try viewContext.count(for: Lesson.fetchRequest()) == 0 {
@@ -51,6 +64,7 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
                                              weekDay: managedLesson.weekDay,
                                              weekType: managedLesson.weekType,
                                              cabinet: managedLesson.cabinet ?? "Error",
+                                             subgroup: managedLesson.subgroup,
                                              lessonNumber: Int(managedLesson.lessonNumber),
                                              timeStart: managedLesson.timeStart ?? Date(),
                                              timeEnd: managedLesson.timeEnd ?? Date())
@@ -63,29 +77,16 @@ struct LessonsCoreDataManager: LessonPersistenceManager {
         }
     }
     
-    func fetchAllManagedItems() throws -> [Lesson] {
-        do {
-            if try viewContext.count(for: Lesson.fetchRequest()) == 0 {
-                return []
-            }
-            
-            let lessons = try viewContext.fetch(Lesson.fetchRequest())
-            return lessons
-        } catch {
-            throw CoreDataError.failedToFetch
-        }
-    }
-    
     func clearAllItems() throws {
         do {
-            let prevLessons = try self.fetchAllManagedItems()
+            let prevLessons = try self.fetchAllItems()
             for lesson in prevLessons {
                 viewContext.delete(lesson)
             }
             try viewContext.save()
         }
         catch {
-            throw CoreDataError.failedToClear
+            throw CoreDataError.failedToDelete
         }
     }
 }

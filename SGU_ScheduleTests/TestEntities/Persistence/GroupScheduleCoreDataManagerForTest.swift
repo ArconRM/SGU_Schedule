@@ -9,19 +9,31 @@ import Foundation
 
 ///Заглушка
 final class GroupScheduleCoreDataManagerForTest: GroupSchedulePersistenceManager {
-    func saveItem(item: GroupScheduleDTO) throws -> GroupSchedule {
+    func saveItem(_ itemDto: GroupScheduleDTO) throws -> GroupSchedule {
         throw CoreDataError.failedToSave
+    }
+    
+    func fetchAllItems() throws -> [GroupSchedule] {
+        throw CoreDataError.failedToFetch
     }
     
     func fetchAllItemsDTO() throws -> [GroupScheduleDTO] {
         throw CoreDataError.failedToFetch
     }
     
-    func fetchAllManagedItems() throws -> [GroupSchedule] {
+    func getFavouriteGroupScheduleDTO() throws -> GroupScheduleDTO? {
+        throw CoreDataError.failedToFetch
+    }
+    
+    func getScheduleByGroupId(_ groupId: String) throws -> GroupScheduleDTO? {
         throw CoreDataError.failedToFetch
     }
     
     func clearAllItems() throws {
-        throw CoreDataError.failedToClear
+        throw CoreDataError.failedToDelete
+    }
+    
+    func deleteScheduleByGroupId(_ groupId: String) throws {
+        throw CoreDataError.failedToDelete
     }
 }

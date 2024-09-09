@@ -29,7 +29,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         var scheduleToCheck: GroupScheduleDTO?
         var correctSchedule: GroupScheduleDTO?
         do {
-            correctSchedule = try lessonParser.getGroupScheduleFromSource(source: "", groupNumber: 141)
+            correctSchedule = try lessonParser.getGroupScheduleFromSource(source: "", groupNumber: "141", departmentCode: "knt")
             XCTAssertNotNil(correctSchedule)
         }
         catch {
@@ -37,7 +37,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let lessonNetworkManager = LessonNetworkManagerWithParsing(urlSource: urlSource, lessonParser: lessonParser, scraper: StaticScraper())
-        lessonNetworkManager.getGroupScheduleForCurrentWeek(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
+        lessonNetworkManager.getGroupScheduleForCurrentWeek(group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt")) { result in
             switch result {
             case .success(let schedule):
                 scheduleToCheck = schedule
@@ -68,7 +68,7 @@ final class NetworkManagersUnitTests: XCTestCase {
 //        }
 //        
 //        let dateNetworkManager = DateNetworkManagerWithParsing(urlSource: urlSource, dateParser: dateParser)
-//        dateNetworkManager.getLastUpdateDate(group: GroupDTO(fullNumber: 141), departmentCode: "knt", resultQueue: .main) { result in
+//        dateNetworkManager.getLastUpdateDate(group: AcademicGroupDTO(fullNumber: 141), departmentCode: "knt", resultQueue: .main) { result in
 //            switch result {
 //            case .success(let date):
 //                dateToCheck = date
@@ -88,8 +88,8 @@ final class NetworkManagersUnitTests: XCTestCase {
         let didReceiveResponse = expectation(description: #function)
         
         let groupsParser = GroupsParserForTest()
-        var groupsToCheck: [GroupDTO]?
-        var correctGroups: [GroupDTO]?
+        var groupsToCheck: [AcademicGroupDTO]?
+        var correctGroups: [AcademicGroupDTO]?
         do {
             correctGroups = try groupsParser.getGroupsByYearAndAcademicProgramFromSource(source: "", year: 1, departmentCode: "knt", program: .BachelorAndSpeciality)
             XCTAssertNotNil(correctGroups)
@@ -122,7 +122,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         var sessionEventsToCheck: GroupSessionEventsDTO?
         var correctSessionEvents: GroupSessionEventsDTO?
         do {
-            correctSessionEvents = try sessionEventsParser.getGroupSessionEventsFromSource(source: "", groupNumber: 141)
+            correctSessionEvents = try sessionEventsParser.getGroupSessionEventsFromSource(source: "", groupNumber: "141", departmentCode: "knt")
             XCTAssertNotNil(correctSessionEvents)
         }
         catch {
@@ -130,7 +130,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser, scraper: DynamicScraper())
-        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
+        sessionEventsNetworkManager.getGroupSessionEvents(group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt")) { result in
             switch result {
             case .success(let sessionEvents):
                 sessionEventsToCheck = sessionEvents
@@ -153,7 +153,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         var sessionEventsToCheck: GroupSessionEventsDTO?
         var correctSessionEvents: GroupSessionEventsDTO?
         do {
-            correctSessionEvents = try sessionEventsParser.getGroupSessionEventsFromSource(source: "", groupNumber: 141)
+            correctSessionEvents = try sessionEventsParser.getGroupSessionEventsFromSource(source: "", groupNumber: "141", departmentCode: "knt")
             XCTAssertNotNil(correctSessionEvents)
         }
         catch {
@@ -161,7 +161,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let sessionEventsNetworkManager = SessionEventsNetworkManagerWithParsing(urlSource: urlSource, sessionEventsParser: sessionEventsParser, scraper: DynamicScraper())
-        sessionEventsNetworkManager.getGroupSessionEvents(group: GroupDTO(fullNumber: 141), departmentCode: "knt") { result in
+        sessionEventsNetworkManager.getGroupSessionEvents(group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt")) { result in
             switch result {
             case .success(let sessionEvents):
                 sessionEventsToCheck = sessionEvents

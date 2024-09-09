@@ -8,8 +8,9 @@
 import Foundation
 
 class LessonParserForTest: LessonHTMLParser {
-    func getGroupScheduleFromSource(source html: String, groupNumber: Int) throws -> GroupScheduleDTO {
+    func getGroupScheduleFromSource(source html: String, groupNumber: String, departmentCode: String) throws -> GroupScheduleDTO {
         return GroupScheduleDTO(groupNumber: groupNumber,
+                                departmentCode: departmentCode,
                                 lessonsByDays: [LessonDTO(subject: "МАТАН",
                                                           teacherFullName: "Легенда",
                                                           teacherEndpoint: "/person/timofeev-vladimir-grigorevich",

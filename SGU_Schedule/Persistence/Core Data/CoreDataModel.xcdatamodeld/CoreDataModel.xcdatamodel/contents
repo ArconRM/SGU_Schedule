@@ -1,20 +1,25 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22757" systemVersion="23D2057" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+    <entity name="AcademicGroup" representedClassName=".AcademicGroup" syncable="YES" codeGenerationType="class">
+        <attribute name="departmentCode" attributeType="String"/>
+        <attribute name="fullNumber" attributeType="String"/>
+        <attribute name="isFavourite" attributeType="Boolean" usesScalarValueType="YES"/>
+    </entity>
     <entity name="GroupSchedule" representedClassName=".GroupSchedule" syncable="YES" codeGenerationType="class">
-        <attribute name="groupNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AcademicGroup"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Lesson"/>
     </entity>
     <entity name="Lesson" representedClassName=".Lesson" syncable="YES" codeGenerationType="class">
-        <attribute name="cabinet" optional="YES" attributeType="String"/>
-        <attribute name="lessonNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="lessonTypeRawValue" optional="YES" attributeType="String"/>
+        <attribute name="cabinet" attributeType="String"/>
+        <attribute name="lessonNumber" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="lessonTypeRawValue" attributeType="String"/>
         <attribute name="subgroup" optional="YES" attributeType="String"/>
         <attribute name="teacherEndpoint" optional="YES" attributeType="String"/>
-        <attribute name="teacherFullName" optional="YES" attributeType="String"/>
-        <attribute name="timeEnd" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="timeStart" optional="YES" attributeType="Date" usesScalarValueType="NO"/>
-        <attribute name="title" optional="YES" attributeType="String"/>
-        <attribute name="weekDayNumber" optional="YES" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
-        <attribute name="weekTypeRawValue" optional="YES" attributeType="String"/>
+        <attribute name="teacherFullName" attributeType="String"/>
+        <attribute name="timeEnd" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="timeStart" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="title" attributeType="String"/>
+        <attribute name="weekDayNumber" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
+        <attribute name="weekTypeRawValue" attributeType="String"/>
     </entity>
 </model>

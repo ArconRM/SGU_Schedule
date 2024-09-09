@@ -9,8 +9,7 @@ import Foundation
 
 class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
     func getGroupSessionEvents(
-        group: GroupDTO,
-        departmentCode: String,
+        group: AcademicGroupDTO,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void
     ) {
@@ -20,7 +19,8 @@ class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
             dateFormatter.dateFormat = "dd.MM.yyyy"
             let date = dateFormatter.date(from: "01.01.2069")!
             
-            return .success(GroupSessionEventsDTO(groupNumber: group.fullNumber,
+            return .success(GroupSessionEventsDTO(groupNumber: group.fullNumber, 
+                                                  departmentCode: group.departmentCode,
                                                   sessionEvents: [SessionEventDTO(title: "МАТАН",
                                                                                   date: date,
                                                                                   sessionEventType: .Consultation,

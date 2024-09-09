@@ -1,17 +1,16 @@
 //
-//  CoreDataError.swift
+//  UserDefaultsError.swift
 //  SGU_Schedule
 //
-//  Created by Артемий on 28.10.2023.
+//  Created by Artemiy MIROTVORTSEV on 08.09.2024.
 //
 
 import Foundation
 
-enum CoreDataError: Error, LocalizedError {
+enum UserDefaultsError: Error, LocalizedError {
     case failedToSave
     case failedToFetch
-    case failedToDelete
-    case failedToUpdate
+    case failedToClear
     case unexpectedError
     
     var errorDescription: String? {
@@ -20,10 +19,8 @@ enum CoreDataError: Error, LocalizedError {
             return "Ошибка сохранения"
         case .failedToFetch:
             return "Ошибка получения"
-        case .failedToDelete:
+        case .failedToClear:
             return "Ошибка удаления"
-        case .failedToUpdate:
-            return "Ошибка изменения"
         case .unexpectedError:
             return "Неожиданная ошибка"
         }
@@ -35,10 +32,8 @@ enum CoreDataError: Error, LocalizedError {
             return "Не удалось сохранить данные на устройство"
         case .failedToFetch:
             return "Не удалось получить данные с устройства"
-        case .failedToDelete:
+        case .failedToClear:
             return "Не удалось удалить предыдущие данные с устройства"
-        case .failedToUpdate:
-            return "Не удалось изменить данные на устройстве"
         case .unexpectedError:
             return "Неожиданная ошибка при работе с данными на устройстве"
         }

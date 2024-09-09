@@ -8,12 +8,12 @@
 import Foundation
 
 class LessonNetworkManagerForTest: LessonNetworkManager {
-    func getGroupScheduleForCurrentWeek(group: GroupDTO,
-                                        departmentCode: String,
+    func getGroupScheduleForCurrentWeek(group: AcademicGroupDTO,
                                         resultQueue: DispatchQueue,
                                         completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void) {
         Task { () -> Result<GroupScheduleDTO, Error> in
-            return .success(GroupScheduleDTO(groupNumber: group.fullNumber,
+            return .success(GroupScheduleDTO(groupNumber: group.fullNumber, 
+                                             departmentCode: group.departmentCode,
                                              lessonsByDays: [LessonDTO(subject: "МАТАН",
                                                                        teacherFullName: "Легенда",
                                                                        teacherEndpoint: "/person/timofeev-vladimir-grigorevich",

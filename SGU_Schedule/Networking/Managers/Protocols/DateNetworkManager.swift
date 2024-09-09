@@ -9,7 +9,7 @@
 //
 //public protocol DateNetworkManager {
 //    func getLastUpdateDate(
-//        group: GroupDTO,
+//        group: AcademicGroupDTO,
 //        departmentCode: String,
 //        resultQueue: DispatchQueue,
 //        completionHandler: @escaping (Result<Date, Error>) -> Void

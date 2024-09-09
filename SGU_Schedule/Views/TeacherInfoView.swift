@@ -169,7 +169,7 @@ struct TeacherInfoView_Previews: PreviewProvider {
         TeacherInfoView(viewModel: ViewModelWithParsingSGUFactory().buildTeacherInfoViewModel(),
                         teacherEndpoint: "")
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
     }
 }
 

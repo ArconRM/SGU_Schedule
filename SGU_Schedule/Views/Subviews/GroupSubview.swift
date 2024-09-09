@@ -11,8 +11,9 @@ struct GroupSubview: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSettings: AppSettings
     
-    var group: GroupDTO
-    var isFavorite: Bool
+    var group: AcademicGroupDTO
+    var isFavourite: Bool
+    var isPinned: Bool
     
     var body: some View {
         VStack {
@@ -38,6 +39,13 @@ struct GroupSubview: View {
                         .padding(.vertical, 20)
                 
                 Spacer()
+                
+                if isFavourite {
+                    Image(systemName: "star.fill")
+                        .font(.system(size: 25, weight: .semibold))
+                        .padding(15)
+                        .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+                }
             }
         }
         .cornerRadius(20)
@@ -55,14 +63,14 @@ struct GroupSubview: View {
     private func buildFilledRectangle() -> some View {
         Rectangle()
             .cornerRadius(20)
-            .foregroundColor(getBackgroundColor().opacity(isFavorite ? 0.6 : 0.3))
+            .foregroundColor(getBackgroundColor().opacity(isFavourite || isPinned ? 0.6 : 0.3))
             .shadow(color: getBackgroundColor().opacity(0.7), radius: 7, x: 2, y: 2)
             .blur(radius: 1)
     }
     
     private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .stroke(getBackgroundColor().opacity(isFavorite ? 1 : 0.3), lineWidth: 4)
+            .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.3), lineWidth: 4)
             .padding(2)
     }
     
@@ -78,10 +86,10 @@ struct GroupSubview_Previews: PreviewProvider {
                 .foregroundColor(.blue.opacity(0.1))
                 .ignoresSafeArea()
             ScrollView {
-                GroupSubview(group: GroupDTO(fullNumber: 141), isFavorite: true)
+                GroupSubview(group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt"), isFavourite: true, isPinned: false)
                     .environmentObject(AppSettings())
                 
-                GroupSubview(group: GroupDTO(fullNumber: 131), isFavorite: false)
+                GroupSubview(group: AcademicGroupDTO(fullNumber: "131", departmentCode: "knt"), isFavourite: false, isPinned: false)
                     .environmentObject(AppSettings())
             }
         }

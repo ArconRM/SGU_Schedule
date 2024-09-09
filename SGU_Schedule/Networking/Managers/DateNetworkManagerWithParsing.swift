@@ -19,7 +19,7 @@
 //    
 //    /// May return htmlParserError or any other
 //    public func getLastUpdateDate(
-//        group: GroupDTO,
+//        group: AcademicGroupDTO,
 //        departmentCode: String,
 //        resultQueue: DispatchQueue = .main,
 //        completionHandler: @escaping (Result<Date, Error>) -> Void

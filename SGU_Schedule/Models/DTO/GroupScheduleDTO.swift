@@ -9,11 +9,11 @@ import Foundation
 
 public struct GroupScheduleDTO {
     
-    var group: GroupDTO
+    var group: AcademicGroupDTO
     var lessons: [LessonDTO]
     
-    init(groupNumber: Int, lessonsByDays: [LessonDTO]) {
-        self.group = GroupDTO(fullNumber: groupNumber)
+    init(groupNumber: String, departmentCode: String, lessonsByDays: [LessonDTO]) {
+        self.group = AcademicGroupDTO(fullNumber: groupNumber, departmentCode: departmentCode)
         self.lessons = lessonsByDays
     }
 }

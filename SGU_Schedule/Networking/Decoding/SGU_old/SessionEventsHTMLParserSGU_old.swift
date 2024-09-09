@@ -22,10 +22,10 @@ struct SessionEventsHTMLParserSGU_old: SessionEventsHTMLParser {
         }
     }
     
-    func getGroupSessionEventsFromSource(source html: String, groupNumber: Int) throws -> GroupSessionEventsDTO {
+    func getGroupSessionEventsFromSource(source html: String, groupNumber: String, departmentCode: String) throws -> GroupSessionEventsDTO {
         do {
             let sessionEvents = try getSessionEventsByRowsFromSource(source: html)
-            return GroupSessionEventsDTO(groupNumber: groupNumber, sessionEvents: sessionEvents)
+            return GroupSessionEventsDTO(groupNumber: groupNumber, departmentCode: departmentCode, sessionEvents: sessionEvents)
         }
         catch {
             throw NetworkError.htmlParserError

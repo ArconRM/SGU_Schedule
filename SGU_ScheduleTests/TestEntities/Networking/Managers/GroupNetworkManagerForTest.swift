@@ -13,9 +13,11 @@ class GroupNetworkManagerForTest: GroupsNetworkManager {
         program: AcademicProgram,
         department: DepartmentDTO,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void) {
-        Task { () -> Result<[GroupDTO], Error> in
-            return .success([GroupDTO(fullNumber: 141), GroupDTO(fullNumber: 121), GroupDTO(fullNumber: 181)])
+        completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void) {
+        Task { () -> Result<[AcademicGroupDTO], Error> in
+            return .success([AcademicGroupDTO(fullNumber: "141", departmentCode: department.code),
+                             AcademicGroupDTO(fullNumber: "121", departmentCode: department.code),
+                             AcademicGroupDTO(fullNumber: "181", departmentCode: department.code)])
         }
     }
 }

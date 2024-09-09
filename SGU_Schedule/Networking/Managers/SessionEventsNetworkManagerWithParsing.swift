@@ -20,19 +20,19 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
     }
     
     public func getGroupSessionEvents (
-        group: GroupDTO,
-        departmentCode: String,
+        group: AcademicGroupDTO,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void
     ) {
-        let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
+        let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: group.departmentCode, groupNumber: group.fullNumber)
         
         do {
             try self.scraper.scrapeUrl(groupScheduleUrl, needToWaitLonger: false) { html in
                 do {
                     let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(
                         source: html ?? "",
-                        groupNumber: group.fullNumber
+                        groupNumber: group.fullNumber, 
+                        departmentCode: group.departmentCode
                     )
                     
                     resultQueue.async { completionHandler(.success(lessons)) }

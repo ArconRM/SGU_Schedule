@@ -22,12 +22,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     
     @ObservedObject var viewModel: ViewModel
     
-    @State var selectedGroup: GroupDTO?
+    @State var group: AcademicGroupDTO?
+    @State var isFavourite: Bool
+    @State var isPinned: Bool
     
-    @State var favoriteGroupNumber: Int? = nil
-    
-    var body : some View {
-        if selectedGroup == nil {
+    var body: some View {
+        if group == nil {
             Text("Ошибка при выборе группы")
                 .font(.system(size: 30, weight: .bold))
                 .padding(.top, -30)
@@ -42,7 +42,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     
     private func buildUI() -> some View {
         ZStack {
-            ScheduleBackView(viewModel: viewModel, selectedGroup: selectedGroup!)
+            ScheduleBackView(viewModel: viewModel, selectedGroup: group!)
             
             CarouselView(pageCount: 2, pageTitles: ["Занятия", "Экзамены"], currentIndex: 0, content: {
                 ScheduleModalView(viewModel: viewModel)
@@ -58,9 +58,18 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         }
         
         .toolbar {
-            makeCloseToolbarItem()
+            ToolbarItem(placement: .topBarLeading) {
+                makeCloseToolbarButton()
+            }
             
-            makeFavoriteToolbar()
+            ToolbarItem(placement: .topBarTrailing) {
+                HStack {
+                    if !isFavourite {
+                        makePinToolbarButton()
+                    }
+                    makeFavoriteToolbarButton()
+                }
+            }
         }
         
         .edgesIgnoringSafeArea(.bottom)
@@ -71,84 +80,123 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     }
     
     private func fetchAllData() {
-        viewModel.fetchSchedule(groupNumber: selectedGroup!.fullNumber,
-                                             isOnline: networkMonitor.isConnected)
+        viewModel.fetchSchedule(group: group!,
+                                isOnline: networkMonitor.isConnected,
+                                isSaved: isFavourite || isPinned)
         
-        viewModel.fetchSessionEvents(groupNumber: selectedGroup!.fullNumber,
+        viewModel.fetchSessionEvents(groupNumber: group!.fullNumber,
                                      isOnline: networkMonitor.isConnected)
-        
-        favoriteGroupNumber = viewModel.favoriteGroupNumber
     }
     
-    private func makeCloseToolbarItem() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    viewsManager.showGroupsView(needToReload: false)
-                }
-            }) {
-                Image(systemName: "multiply")
-                    .font(.system(size: 23, weight: .semibold))
-                    .padding(7)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
-                    .background (
-                        ZStack {
-                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                .cornerRadius(5)
-                                .blur(radius: 2)
-                                .ignoresSafeArea()
-                        }
-                            .background(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(colorScheme == .light ? .white : .clear)
-                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                    .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+    private func makeCloseToolbarButton() -> some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                viewsManager.showGroupsView(needToReload: false)
             }
-            .disabled(viewModel.isLoadingLessons)
-        }
-    }
-    
-    private func makeFavoriteToolbar() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarTrailing) {
-            Button(action: {
-                if viewModel.favoriteGroupNumber != selectedGroup!.fullNumber {
-                    viewModel.favoriteGroupNumber = selectedGroup!.fullNumber
-                    favoriteGroupNumber = viewModel.favoriteGroupNumber
-                    
-                    withAnimation(.easeInOut(duration: 0.3)) {
-                        viewsManager.showGroupsView(needToReload: UIDevice.isPad)
+        }) {
+            Image(systemName: "multiply")
+                .font(.system(size: 23, weight: .semibold))
+                .padding(7)
+                .foregroundColor(colorScheme == .light ? .black : .white)
+                .background (
+                    ZStack {
+                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                            .cornerRadius(5)
+                            .blur(radius: 2)
+                            .ignoresSafeArea()
                     }
-                }
-            }) {
-                Image(systemName: favoriteGroupNumber == selectedGroup!.fullNumber ? "star.fill" : "star")
-                    .font(.system(size: 18, weight: .semibold))
-                    .padding(5)
-                    .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
-                    .background (
-                        ZStack {
-                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                .cornerRadius(5)
-                                .blur(radius: 2)
-                                .ignoresSafeArea()
-                        }
-                            .background(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(colorScheme == .light ? .white : .clear)
-                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                    .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
-            }
-            .disabled(viewModel.isLoadingLessons)
+                        .background(
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(colorScheme == .light ? .white : .clear)
+                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
+        //            .disabled(viewModel.isLoadingLessons)
+    }
+    
+    private func makeFavoriteToolbarButton() -> some View {
+        Button(action: {
+            if !isFavourite {
+                if !isPinned {
+                    viewsManager.saveGroup(group: group!)
+                }
+                viewsManager.setFavouriteGroup(group: group!)
+                
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    viewsManager.showGroupsView(needToReload: UIDevice.isPad)
+                }
+            }
+        }) {
+            Image(systemName: isFavourite ? "star.fill" : "star")
+                .font(.system(size: 18, weight: .semibold))
+                .padding(5)
+                .frame(minWidth: 40, minHeight: 40)
+                .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+                .background (
+                    ZStack {
+                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                            .cornerRadius(5)
+                            .blur(radius: 2)
+                            .ignoresSafeArea()
+                    }
+                        .background(
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(colorScheme == .light ? .white : .clear)
+                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+        }
+        .disabled(viewModel.isLoadingLessons)
+    }
+    
+    private func makePinToolbarButton() -> some View {
+        Button(action: {
+            if isPinned {
+                viewsManager.unpinGroup(group: group!)
+                
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    viewsManager.showGroupsView(needToReload: UIDevice.isPad)
+                }
+            } else {
+                viewsManager.saveGroup(group: group!)
+                
+                withAnimation(.easeInOut(duration: 0.3)) {
+                    viewsManager.showGroupsView(needToReload: UIDevice.isPad)
+                }
+            }
+        }) {
+            Image(systemName: isPinned ? "pin.fill" : "pin")
+                .font(.system(size: 18, weight: .semibold))
+                .padding(5)
+                .frame(minWidth: 40, minHeight: 40)
+                .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+                .background (
+                    ZStack {
+                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
+                            .cornerRadius(5)
+                            .blur(radius: 2)
+                            .ignoresSafeArea()
+                    }
+                        .background(
+                            RoundedRectangle(cornerRadius: 5)
+                                .fill(colorScheme == .light ? .white : .clear)
+                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+                .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+        }
+        .disabled(viewModel.isLoadingLessons)
     }
 }
 
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
-        ScheduleView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt")),
-                     selectedGroup: GroupDTO(fullNumber: 141))
+        ScheduleView(
+            viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(selectedDepartmentCode: "knt"),
+            group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt1"),
+            isFavourite: false,
+            isPinned: false
+        )
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
     }
 }

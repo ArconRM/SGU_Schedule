@@ -14,16 +14,16 @@ final class GroupsHTMLParserSGU_old: GroupsHTMLParser {
         year: Int,
         departmentCode: String,
         program: AcademicProgram
-    ) throws -> [GroupDTO] {
+    ) throws -> [AcademicGroupDTO] {
         
-        var result = [GroupDTO]()
+        var result = [AcademicGroupDTO]()
         var groupTypeRange = [Int]()
         switch program {
         case .BachelorAndSpeciality:
             groupTypeRange = [1, 2]
         case .Masters:
             groupTypeRange = [3]
-        case .Postgraduade:
+        case .Postgraduate:
             groupTypeRange = [4]
         }
         
@@ -38,9 +38,9 @@ final class GroupsHTMLParserSGU_old: GroupsHTMLParser {
                 
                 for i in 0...xpathResult.count-1 where i % 2 == 0 {
                     guard Int(xpathResult[i]) != nil else {
-                        throw NetworkError.htmlParserError
+                        continue
                     }
-                    result.append(GroupDTO(fullNumber: Int(xpathResult[i])!))
+                    result.append(AcademicGroupDTO(fullNumber: String(xpathResult[i]), departmentCode: departmentCode))
                 }
                 
             }

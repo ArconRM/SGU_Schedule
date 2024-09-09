@@ -1,14 +1,14 @@
 //
-//  ViewModelWithParsingSGUFactory.swift
+//  ViewModelWithParsingSGUFactory_old.swift
 //  SGU_Schedule
 //
-//  Created by Artemiy MIROTVORTSEV on 31.05.2024.
+//  Created by Artemiy MIROTVORTSEV on 06.09.2024.
 //
 
 import Foundation
 
-public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
-    private var urlSource = URLSourceSGU()
+public final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
+    private var urlSource = URLSourceSGU_old()
     
     public func buildDepartmentsViewModel() -> DepartmentsViewModel {
         return DepartmentsViewModel()
@@ -20,8 +20,8 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             
             networkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
-                groupsParser: GroupsHTMLParserSGU(),
-                scraper: DynamicScraper()
+                groupsParser: GroupsHTMLParserSGU_old(),
+                scraper: StaticScraper()
             ), 
             
             groupPersistenceManager: GroupCoreDataManager()
@@ -34,14 +34,14 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
-                lessonParser: LessonHTMLParserSGU(),
+                lessonParser: LessonHTMLParserSGU_old(),
                 scraper: StaticScraper()
             ),
             
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
                 urlSource: urlSource,
-                sessionEventsParser: SessionEventsHTMLParserSGU(),
-                scraper: DynamicScraper()
+                sessionEventsParser: SessionEventsHTMLParserSGU_old(),
+                scraper: StaticScraper()
             ),
             
             schedulePersistenceManager: GroupScheduleCoreDataManager()
@@ -57,14 +57,14 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
-                lessonParser: LessonHTMLParserSGU(),
+                lessonParser: LessonHTMLParserSGU_old(),
                 scraper: StaticScraper()
             ),
             
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
                 urlSource: urlSource,
                 sessionEventsParser: SessionEventsHTMLParserSGU(),
-                scraper: DynamicScraper()
+                scraper: StaticScraper()
             )
         )
     }

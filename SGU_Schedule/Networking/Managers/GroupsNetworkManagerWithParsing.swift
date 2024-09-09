@@ -24,7 +24,7 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
         program: AcademicProgram,
         department: DepartmentDTO,
         resultQueue: DispatchQueue = .main,
-        completionHandler: @escaping (Result<[GroupDTO], Error>) -> Void
+        completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void
     ) {
         let url = urlSource.getBaseScheduleURL(departmentCode: department.code)
         

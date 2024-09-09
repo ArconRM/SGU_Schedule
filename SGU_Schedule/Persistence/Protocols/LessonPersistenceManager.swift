@@ -8,11 +8,11 @@
 import Foundation
 
 protocol LessonPersistenceManager {
-    func saveItem(item: LessonDTO) throws -> Lesson
+    func saveItem(_ itemDto: LessonDTO) throws -> Lesson
+    
+    func fetchAllItems() throws -> [Lesson]
     
     func fetchAllItemsDTO() throws -> [LessonDTO]
-    
-    func fetchAllManagedItems() throws -> [Lesson]
     
     func clearAllItems() throws
 }

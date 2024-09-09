@@ -9,24 +9,22 @@ import Foundation
 
 public final class GroupsViewModel: ObservableObject {
     private let networkManager: GroupsNetworkManager
+    private let groupPersistenceManager: GroupPersistenceManager
     
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
     public var department: DepartmentDTO
     
-    @Published var groupsWithoutFavorite = [GroupDTO]()
+    @Published var favouriteGroup: AcademicGroupDTO? = nil
+    @Published var savedGroupsWithoutFavourite = [AcademicGroupDTO]()
+    @Published var groupsWithoutSaved = [AcademicGroupDTO]()
     
     @Published var isLoadingGroups: Bool = true
     @Published var isLoadingFavoriteGroup: Bool = true
     
     @Published var isShowingError = false
     @Published var activeError: LocalizedError?
-    
-    var favoriteGroupNumber: Int? {
-        let number = UserDefaults.standard.integer(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
-        return number != 0 ? number : nil
-    }
     
     var wasLaunched: Bool {
         let wasLaunched = UserDefaults.standard.bool(forKey: UserDefaultsKeys.wasLaunched.rawValue)
@@ -39,10 +37,12 @@ public final class GroupsViewModel: ObservableObject {
     
     init(
         department: DepartmentDTO,
-        networkManager: GroupsNetworkManager
+        networkManager: GroupsNetworkManager,
+        groupPersistenceManager: GroupPersistenceManager
     ) {
         self.department = department
         self.networkManager = networkManager
+        self.groupPersistenceManager = groupPersistenceManager
     }
     
     public func getSelectedAcademicProgram() -> AcademicProgram {
@@ -66,7 +66,7 @@ public final class GroupsViewModel: ObservableObject {
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
-        fetchGroupsWithoutFavorite(
+        fetchGroups(
             year: getSelectedYear(), 
             academicProgram: newValue,
             isOnline: isOnline
@@ -78,47 +78,56 @@ public final class GroupsViewModel: ObservableObject {
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue, forKey: selectedYearKey)
-        fetchGroupsWithoutFavorite(
+        fetchGroups(
             year: newValue,
             academicProgram: getSelectedAcademicProgram(),
             isOnline: isOnline
         )
     }
     
-    public func fetchGroupsWithoutFavorite(
-        year: Int,
-        academicProgram: AcademicProgram,
-        isOnline: Bool
-    ) {
-        self.isLoadingGroups = true
-        
-        if isOnline {
-            networkManager.getGroupsByYearAndAcademicProgram(
-                year: year,
-                program: academicProgram,
-                department: department,
-                resultQueue: .main
-            ) { result in
-                switch result {
-                case .success(let groups):
-                    if self.favoriteGroupNumber != nil {
-                        self.groupsWithoutFavorite = groups.filter { $0.fullNumber != self.favoriteGroupNumber! }
-                    } else {
-                        self.groupsWithoutFavorite = groups
+    public func fetchGroups(year: Int, academicProgram: AcademicProgram, isOnline: Bool) {
+        do {
+            self.isLoadingGroups = true
+            
+            self.favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO()
+            self.savedGroupsWithoutFavourite = try groupPersistenceManager.fetchAllItemsDTO().filter { $0.groupId != favouriteGroup?.groupId }
+            
+            if isOnline {
+                networkManager.getGroupsByYearAndAcademicProgram(
+                    year: year,
+                    program: academicProgram,
+                    department: department,
+                    resultQueue: .main
+                ) { result in
+                    switch result {
+                    case .success(let groups):
+                        self.groupsWithoutSaved = groups.filter { $0 != self.favouriteGroup && !self.savedGroupsWithoutFavourite.contains($0) }
+                    case .failure(let error):
+                        self.groupsWithoutSaved = []
+                        self.showNetworkError(error)
                     }
-                case .failure(let error):
-                    self.groupsWithoutFavorite = []
-                    self.showNetworkError(error: error)
+                    self.isLoadingGroups = false
                 }
+            } else {
                 self.isLoadingGroups = false
             }
-        } else {
-            self.isLoadingGroups = false
         }
-        
+        catch (let error) {
+            showCoreDataError(error)
+        }
     }
     
-    private func showNetworkError(error: Error) {
+    private func showCoreDataError(_ error: Error) {
+        self.isShowingError = true
+        
+        if let coreDataError = error as? CoreDataError {
+            self.activeError = coreDataError
+        } else {
+            self.activeError = CoreDataError.unexpectedError
+        }
+    }
+    
+    private func showNetworkError(_ error: Error) {
         isShowingError = true
         
         if let networkError = error as? NetworkError {

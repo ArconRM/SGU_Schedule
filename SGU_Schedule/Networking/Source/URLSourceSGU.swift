@@ -20,7 +20,7 @@ public struct URLSourceSGU: URLSource {
         return self.baseUrl.appendingPathComponent("schedule")
     }
     
-    public func getGroupScheduleURL(departmentCode: String, groupNumber: Int) -> URL {
+    public func getGroupScheduleURL(departmentCode: String, groupNumber: String) -> URL {
         return self.getBaseScheduleURL(departmentCode: departmentCode).appendingPathComponent(departmentCode).appendingPathComponent("do").appendingPathComponent("\(groupNumber)")
     }
     

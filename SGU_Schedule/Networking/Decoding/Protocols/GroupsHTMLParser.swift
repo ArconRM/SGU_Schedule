@@ -13,5 +13,5 @@ public protocol GroupsHTMLParser {
         year: Int,
         departmentCode: String,
         program: AcademicProgram
-    ) throws -> [GroupDTO]
+    ) throws -> [AcademicGroupDTO]
 }

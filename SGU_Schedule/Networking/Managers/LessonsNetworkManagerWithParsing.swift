@@ -20,19 +20,19 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
     }
     
     public func getGroupScheduleForCurrentWeek(
-        group: GroupDTO,
-        departmentCode: String,
+        group: AcademicGroupDTO,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void
     ) {
-        let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: departmentCode, groupNumber:group.fullNumber)
+        let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: group.departmentCode, groupNumber: group.fullNumber)
         
         do {
             try self.scraper.scrapeUrl(groupScheduleUrl, needToWaitLonger: false) { html in
                 do {
                     let lessons = try self.lessonParser.getGroupScheduleFromSource(
                         source: html ?? "",
-                        groupNumber: group.fullNumber
+                        groupNumber: group.fullNumber,
+                        departmentCode: group.departmentCode
                     )
                     
                     resultQueue.async { completionHandler(.success(lessons)) }

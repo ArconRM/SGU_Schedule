@@ -85,7 +85,7 @@ final class DecodingUnitTests: XCTestCase {
     
     func testGroupParserGetsGroups() {
         var html: String?
-        var result: [GroupDTO]?
+        var result: [AcademicGroupDTO]?
         
         do {
             html = try String(contentsOf: urlSource.getBaseScheduleURL(departmentCode: departmentCode), encoding: .utf8)

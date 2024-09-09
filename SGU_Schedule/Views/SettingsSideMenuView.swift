@@ -12,12 +12,13 @@ struct SettingsSideMenuView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
+    
+    public var selectedDepartment: DepartmentDTO
+    
     @State var selectedTheme: AppTheme
     @State var selectedStyle: AppStyle
+    @State var selectedParser: ParserOptions
     @Binding var showTutorial: Bool
-    
-    @State var showError: Bool = false
-    var error: LocalizedError? = nil
     
     var body: some View {
         ZStack {
@@ -26,37 +27,31 @@ struct SettingsSideMenuView: View {
                 .shadow(radius: 5)
             
             VStack {
-                Text(viewsManager.getSelectedDapertmentFullName())
+                Text(selectedDepartment.fullName)
                     .font(.system(size: 30, weight: .bold, design: .rounded))
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 
                 Button("Сменить факультет") {
-                    do {
-                        try viewsManager.resetDepartment()
-                    }
-                    catch {
-                        showError.toggle()
-                    }
+                    viewsManager.resetDepartment()
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewsManager.showDepartmentsView()
                     }
-                    
                 }
                 .buttonStyle(BorderedButtonStyle())
                 .font(.system(size: 16, weight: .bold, design: .rounded))
                 .foregroundColor(colorScheme == .light ? .black : .white)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.horizontal)
-                .padding(.bottom)
+                .padding(.bottom, 15)
                 
                 Divider()
                  
                 Text("Темы: ")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
                     .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top)
                     .padding(.horizontal)
+                    .padding(.top, 15)
                 
                 Picker("", selection: $selectedTheme) {
                     ForEach(AppTheme.allCases, id: \.self) { theme in
@@ -76,8 +71,8 @@ struct SettingsSideMenuView: View {
                Text("Стили: ")
                    .font(.system(size: 20, weight: .bold, design: .rounded))
                    .frame(maxWidth: .infinity, alignment: .leading)
-                   .padding(.top)
                    .padding(.horizontal)
+                   .padding(.top, 15)
                 
                 Picker("", selection: $selectedStyle) {
                     ForEach(AppStyle.allCases, id: \.self) { style in
@@ -95,11 +90,31 @@ struct SettingsSideMenuView: View {
                     }
                 }
                 
+                Text("Версия сайта\nдля парсинга:")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.top, 15)
+                
+                Picker("", selection: $selectedParser) {
+                    ForEach(ParserOptions.allCases, id: \.self) { parserOption in
+                        Text(parserOption.rawValue)
+                    }
+                }
+                .pickerStyle(SegmentedPickerStyle())
+                .padding(.horizontal)
+                .frame(maxWidth: 200)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .onChange(of: selectedParser) { newValue in
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        viewsManager.changeParser()
+                    }
+                }
+                
                 Button("Виджеты") {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         showTutorial.toggle()
                     }
-                    
                 }
                 .buttonStyle(BorderedButtonStyle())
                 .font(.system(size: 16, weight: .bold, design: .rounded))
@@ -110,15 +125,15 @@ struct SettingsSideMenuView: View {
                 Spacer()
             }
         }
-        .alert(isPresented: $showError) {
-            Alert(title: Text(error?.errorDescription ?? "Error"),
-                  message: Text(error?.failureReason ?? "Unknown"))
+        .alert(isPresented: $viewsManager.isShowingError) {
+            Alert(title: Text(viewsManager.activeError?.errorDescription ?? "Error"),
+                  message: Text(viewsManager.activeError?.failureReason ?? "Unknown"))
         }
     }
 }
 
 #Preview {
-    SettingsSideMenuView(selectedTheme: .blue, selectedStyle: .fill, showTutorial: .constant(false))
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+    SettingsSideMenuView(selectedDepartment: DepartmentDTO(fullName: "knt", code: "knt"), selectedTheme: .blue, selectedStyle: .fill, selectedParser: .New, showTutorial: .constant(false))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
         .environmentObject(AppSettings())
 }

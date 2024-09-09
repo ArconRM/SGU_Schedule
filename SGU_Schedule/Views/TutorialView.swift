@@ -27,7 +27,7 @@ struct TutorialView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        withAnimation(.bouncy(duration: 0.5)) {
+                        withAnimation(.bouncy(duration: 0.7)) {
                             isShowing.toggle()
                         }
                     }, label: {
@@ -49,7 +49,7 @@ struct TutorialView: View {
             }
             .background(colorScheme == .light ? .white : .black)
             .cornerRadius(30)
-            .scaleEffect(CGSize(width: 0.92, height: 0.86))
+            .scaleEffect(CGSize(width: 0.88, height: 0.86))
         }
         .ignoresSafeArea()
     }
@@ -157,7 +157,7 @@ struct TutorialView: View {
                     Spacer()
                     
                     Button("Закрыть") {
-                        withAnimation(.bouncy(duration: 0.5)) {
+                        withAnimation(.bouncy(duration: 0.7)) {
                             isShowing.toggle()
                         }
                     }

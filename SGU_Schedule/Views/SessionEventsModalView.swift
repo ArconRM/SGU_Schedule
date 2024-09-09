@@ -120,7 +120,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
 }
 
 #Preview {
-    SessionEventsModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt1")))
+    SessionEventsModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(selectedDepartmentCode: "knt1"))
         .environmentObject(NetworkMonitor())
         .environmentObject(AppSettings())
 }

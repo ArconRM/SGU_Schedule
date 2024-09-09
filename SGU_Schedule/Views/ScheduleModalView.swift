@@ -170,8 +170,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 
 #Preview {
-    ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(department: DepartmentDTO(fullName: "Test", code: "knt1")))
+    ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(selectedDepartmentCode: "knt1"))
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
 }

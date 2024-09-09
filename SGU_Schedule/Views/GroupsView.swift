@@ -17,7 +17,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     @State private var selectedAcademicProgram = AcademicProgram.Masters
     @State private var selectedYear = 1
-    @State private var favoriteGroupNumber: Int? = nil
+    
+    @State var selectedDepartment: DepartmentDTO
     
     @State private var showSettingsSideMenuView: Bool = false
     @State var showTutorialView: Bool = false
@@ -38,7 +39,13 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             }
             
             if showSettingsSideMenuView {
-                SettingsSideMenuView(selectedTheme: AppTheme(rawValue: appSettings.currentAppTheme)!, selectedStyle: AppStyle(rawValue: appSettings.currentAppStyle)!, showTutorial: $showTutorialView)
+                SettingsSideMenuView(
+                    selectedDepartment: selectedDepartment, 
+                    selectedTheme: AppTheme(rawValue: appSettings.currentAppTheme)!,
+                    selectedStyle: AppStyle(rawValue: appSettings.currentAppStyle)!,
+                    selectedParser: viewsManager.isNewParserUsed ? .New : .Old,
+                    showTutorial: $showTutorialView
+                )
                     .environmentObject(appSettings)
             }
             
@@ -162,15 +169,29 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 
                 // Список групп
                 ScrollView {
-                    if favoriteGroupNumber != nil {
+                    if viewModel.favouriteGroup != nil {
                         Button {
                             withAnimation(.easeInOut(duration: 0.5)) {
-                                viewsManager.selectGroup(group: GroupDTO(fullNumber: favoriteGroupNumber!))
+                                viewsManager.selectGroup(fullNumber: viewModel.favouriteGroup!.fullNumber, isFavourite: true, isPinned: false)
                                 viewsManager.showScheduleView()
                             }
                         } label: {
-                            GroupSubview(group: GroupDTO(fullNumber: favoriteGroupNumber!), isFavorite: true)
+                            GroupSubview(group: AcademicGroupDTO(fullNumber: viewModel.favouriteGroup!.fullNumber, departmentCode: selectedDepartment.code), isFavourite: true, isPinned: false)
                                 .environmentObject(appSettings)
+                        }
+                    }
+                    
+                    if !viewModel.savedGroupsWithoutFavourite.isEmpty {
+                        ForEach(viewModel.savedGroupsWithoutFavourite, id:\.self) { group in
+                            Button {
+                                withAnimation(.easeInOut(duration: 0.5)) {
+                                    viewsManager.selectGroup(fullNumber: group.fullNumber, isFavourite: false, isPinned: true)
+                                    viewsManager.showScheduleView()
+                                }
+                            } label: {
+                                GroupSubview(group: AcademicGroupDTO(fullNumber: group.fullNumber, departmentCode: selectedDepartment.code), isFavourite: false, isPinned: true)
+                                    .environmentObject(appSettings)
+                            }
                         }
                     }
                     
@@ -184,14 +205,14 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             
                             Spacer()
                         } else {
-                            ForEach(viewModel.groupsWithoutFavorite, id:\.self) { group in
+                            ForEach(viewModel.groupsWithoutSaved, id:\.self) { group in
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
-                                        viewsManager.selectGroup(group: group)
+                                        viewsManager.selectGroup(fullNumber: group.fullNumber, isFavourite: false, isPinned: false)
                                         viewsManager.showScheduleView()
                                     }
                                 } label: {
-                                    GroupSubview(group: group, isFavorite: false)
+                                    GroupSubview(group: group, isFavourite: false, isPinned: false)
                                         .environmentObject(appSettings)
                                 }
                             }
@@ -236,13 +257,16 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
+        .alert(isPresented: $viewsManager.isShowingError) {
+            Alert(title: Text(viewsManager.activeError?.errorDescription ?? "Error"),
+                  message: Text(viewsManager.activeError?.failureReason ?? "Unknown"))
+        }
     }
     
     private func fetchAllData() {
         selectedYear = viewModel.getSelectedYear()
         selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
-        favoriteGroupNumber = viewModel.favoriteGroupNumber
-        viewModel.fetchGroupsWithoutFavorite(
+        viewModel.fetchGroups(
             year: selectedYear,
             academicProgram: selectedAcademicProgram,
             isOnline: networkMonitor.isConnected
@@ -252,6 +276,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(fullName: "КНИИТ", code: "kn1t")))
+        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(fullName: "КНИИТ", code: "kn1t")), selectedDepartment: DepartmentDTO(fullName: "knt", code: "knt"))
     }
 }

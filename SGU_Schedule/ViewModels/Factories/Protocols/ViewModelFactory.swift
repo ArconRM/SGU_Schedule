@@ -12,7 +12,7 @@ public protocol ViewModelFactory {
     
     func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel
     
-    func buildScheduleViewModel(department: DepartmentDTO) -> ScheduleViewModel
+    func buildScheduleViewModel(selectedDepartmentCode: String) -> ScheduleViewModel
     
     func buildTeacherInfoViewModel() -> TeacherInfoViewModel
 }

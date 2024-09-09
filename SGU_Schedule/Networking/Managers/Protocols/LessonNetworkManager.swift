@@ -9,8 +9,7 @@ import Foundation
 
 public protocol LessonNetworkManager {
     func getGroupScheduleForCurrentWeek(
-        group: GroupDTO,
-        departmentCode: String,
+        group: AcademicGroupDTO,
         resultQueue: DispatchQueue,
         completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void
     )

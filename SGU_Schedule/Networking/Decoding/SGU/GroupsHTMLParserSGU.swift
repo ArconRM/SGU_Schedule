@@ -19,18 +19,18 @@ final class GroupsHTMLParserSGU: GroupsHTMLParser {
         year: Int,
         departmentCode: String,
         program: AcademicProgram
-    ) throws -> [GroupDTO] {
+    ) throws -> [AcademicGroupDTO] {
         let doc = try HTML(html: html, encoding: .utf8)
         let baseXpath = "//div[@id='alias_\(departmentCode)']/div[@class='schedule__tab tab']/div[@class='tab__content tab__content_schedule']/div[@id='tab_\(departmentCode)-fulltime']/div[@class='schedule__group']/div[@class='schedule__group_wrap']"
 
-        var result = [GroupDTO]()
+        var result = [AcademicGroupDTO]()
         // Подбор нужной программы обучения и добавление в список
         for i in 1...4 {
             if let availableProgram = AcademicProgram(rawValue: doc.xpath(baseXpath + "[\(i)]/h3").first?.text ?? "") {
                 if availableProgram == program {
                     let programXpath = baseXpath + "[\(i)]/ul[@class='schedule__group_list'][\(year)]/li[@class='schedule__group_item']"
                     result.append(contentsOf: doc.xpath(programXpath).map {
-                        GroupDTO(fullNumber: Int($0.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "404") ?? 404)
+                        AcademicGroupDTO(fullNumber: $0.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "404", departmentCode: departmentCode)
                     })
                 }
             }

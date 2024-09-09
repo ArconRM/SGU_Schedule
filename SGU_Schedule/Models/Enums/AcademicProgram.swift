@@ -10,7 +10,7 @@ import Foundation
 public enum AcademicProgram: String, CaseIterable {
     case BachelorAndSpeciality = "Бакалавриат/Специалитет"
     case Masters = "Магистратура"
-    case Postgraduade = "Аспирантура"
+    case Postgraduate = "Аспирантура"
     
     public init?(rawValue: String) {
         switch rawValue {
@@ -19,7 +19,7 @@ public enum AcademicProgram: String, CaseIterable {
         case "Магистратура":
             self = .Masters
         case "Аспирантура":
-            self = .Postgraduade
+            self = .Postgraduate
         default:
             return nil
         }

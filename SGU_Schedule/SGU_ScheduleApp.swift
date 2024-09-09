@@ -12,11 +12,19 @@ struct SGU_ScheduleApp: App {
     
     let appSettings = AppSettings()
     
+    
     var body: some Scene {
         WindowGroup {
             MainView()
+                .environmentObject(
+                    ViewsManager(
+                        viewModelFactory: ViewModelWithParsingSGUFactory(),
+                        viewModelFactory_old: ViewModelWithParsingSGUFactory_old(),
+                        schedulePersistenceManager: GroupScheduleCoreDataManager(),
+                        groupPersistenceManager: GroupCoreDataManager()
+                    )
+                )
                 .environmentObject(NetworkMonitor())
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
                 .environmentObject(appSettings)
         }
     }

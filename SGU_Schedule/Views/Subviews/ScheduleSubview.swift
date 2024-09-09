@@ -296,7 +296,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
                 .environmentObject(NetworkMonitor())
                 .environmentObject(AppSettings())
                 
@@ -309,7 +309,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
                 .environmentObject(NetworkMonitor())
                 .environmentObject(AppSettings())
                 
@@ -323,7 +323,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
                 .environmentObject(NetworkMonitor())
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), schedulePersistenceManager: GroupScheduleCoreDataManager()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
                 .environmentObject(AppSettings())
             }
         }
