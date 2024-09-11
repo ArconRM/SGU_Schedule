@@ -109,9 +109,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                             RoundedRectangle(cornerRadius: 5)
                                 .fill(colorScheme == .light ? .white : .clear)
                                 .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
-        //            .disabled(viewModel.isLoadingLessons)
     }
     
     private func makeFavoriteToolbarButton() -> some View {
@@ -197,6 +195,6 @@ struct ScheduleView_Previews: PreviewProvider {
         )
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
     }
 }

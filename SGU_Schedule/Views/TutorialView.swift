@@ -49,7 +49,8 @@ struct TutorialView: View {
             }
             .background(colorScheme == .light ? .white : .black)
             .cornerRadius(30)
-            .scaleEffect(CGSize(width: 0.88, height: 0.86))
+//            .scaleEffect(CGSize(width: 0.86, height: 0.86))
+            .frame(width: UIScreen.screenWidth - 20, height: UIScreen.screenHeight * 0.86)
         }
         .ignoresSafeArea()
     }
@@ -93,7 +94,7 @@ struct TutorialView: View {
                     }
                 }
                 .padding(30)
-                .font(.system(size: 20, weight: .bold, design: .rounded))
+                .font(.system(size: 18, weight: .bold, design: .rounded))
             }
         }
         .opacity(widgetsViewOpacity)
@@ -103,7 +104,7 @@ struct TutorialView: View {
         }
         .gesture(
             DragGesture().onEnded({ value in
-                if value.translation.width < -80 {
+                if value.translation.width < -70 {
                     withAnimation(.bouncy(duration: 0.7)) {
                         currentView = .FavoriteGroup
                     }
@@ -152,7 +153,7 @@ struct TutorialView: View {
                         }
                     }
                     .padding(30)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
                     
                     Spacer()
                     
@@ -162,13 +163,13 @@ struct TutorialView: View {
                         }
                     }
                     .padding(30)
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .font(.system(size: 18, weight: .bold, design: .rounded))
                 }
             }
         }
         .gesture(
             DragGesture().onEnded({ value in
-                if value.translation.width > 80 {
+                if value.translation.width > 70 {
                     withAnimation(.bouncy(duration: 0.7)) {
                         currentView = .Widgets
                     }

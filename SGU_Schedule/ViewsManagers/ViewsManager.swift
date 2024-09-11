@@ -29,12 +29,6 @@ public final class ViewsManager: ObservableObject {
     private let groupPersistenceManager: GroupPersistenceManager
     private var groupsViewModel: GroupsViewModel?
     
-    @Published private(set) var currentView: AppViews
-    var needToReloadGroupView: Bool = false // Для айпада, ибо на нем вьюшка всегда на экране
-    
-    @Published var isShowingError = false
-    @Published var activeError: LocalizedError?
-    
     //https://stackoverflow.com/questions/34474545/self-used-before-all-stored-properties-are-initialized
     //TODO: мб получше решение есть
     private var _selectedDepartment: DepartmentDTO?
@@ -59,6 +53,12 @@ public final class ViewsManager: ObservableObject {
         }
     }
     
+    @Published private(set) var currentView: AppViews
+    var needToReloadGroupView: Bool = false // Для айпада, ибо на нем вьюшка всегда на экране
+    
+    @Published var isShowingError = false
+    @Published var activeError: LocalizedError?
+    
     private var selectedGroup: AcademicGroupDTO?
     private var isSelectedGroupFavourite: Bool?
     private var isSelectedGroupPinned: Bool?
@@ -69,7 +69,8 @@ public final class ViewsManager: ObservableObject {
         viewModelFactory: ViewModelFactory,
         viewModelFactory_old: ViewModelFactory,
         schedulePersistenceManager: GroupSchedulePersistenceManager,
-        groupPersistenceManager: GroupPersistenceManager
+        groupPersistenceManager: GroupPersistenceManager,
+        isOpenedFromWidget: Bool
     ) {
         self.schedulePersistenceManager = schedulePersistenceManager
         self.groupPersistenceManager = groupPersistenceManager
@@ -85,6 +86,17 @@ public final class ViewsManager: ObservableObject {
             //TODO: потом поменять со старого
             groupsViewModel = self.viewModelFactory_old.buildGroupsViewModel(department: self._selectedDepartment!) // Не должен пересоздаваться без смены факультета
             currentView = .GroupsView
+            
+            // Если открыто с виджета, перебрасывает на вьюшку с избранной группой (если такова есть)
+            do {
+                if isOpenedFromWidget, let favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO() {
+                    selectGroup(fullNumber: favouriteGroup.fullNumber, isFavourite: true, isPinned: false)
+                    showScheduleView()
+                }
+            }
+            catch (let error) {
+                showCoreDataError(error: error)
+            }
         } else {
             currentView = .DepartmentsView
         }

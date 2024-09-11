@@ -65,12 +65,12 @@ struct SessionEventSubview: View {
     
     private func getBackground() -> AnyView {
         switch AppStyle(rawValue: appSettings.currentAppStyle)! {
-        case .fill:
+        case .Fill:
             AnyView(
                 getEventColor()
                     .opacity(0.6)
             )
-        case .bordered:
+        case .Bordered:
             AnyView(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(getEventColor().opacity(0.7), lineWidth: 7)

@@ -85,7 +85,7 @@ struct TeacherInfoCardView: View {
 
 #Preview {
     ZStack {
-        AppTheme.blue.backgroundColor(colorScheme: .dark)
+        AppTheme.Blue.backgroundColor(colorScheme: .dark)
             .ignoresSafeArea()
             .shadow(radius: 5)
         

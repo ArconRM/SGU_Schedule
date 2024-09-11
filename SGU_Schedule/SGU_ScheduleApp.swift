@@ -10,8 +10,8 @@ import SwiftUI
 @main
 struct SGU_ScheduleApp: App {
     
+    @State var isOpenedFromWidget: Bool = false
     let appSettings = AppSettings()
-    
     
     var body: some Scene {
         WindowGroup {
@@ -21,11 +21,17 @@ struct SGU_ScheduleApp: App {
                         viewModelFactory: ViewModelWithParsingSGUFactory(),
                         viewModelFactory_old: ViewModelWithParsingSGUFactory_old(),
                         schedulePersistenceManager: GroupScheduleCoreDataManager(),
-                        groupPersistenceManager: GroupCoreDataManager()
+                        groupPersistenceManager: GroupCoreDataManager(), 
+                        isOpenedFromWidget: isOpenedFromWidget
                     )
                 )
                 .environmentObject(NetworkMonitor())
                 .environmentObject(appSettings)
+                .onOpenURL { url in
+                    if url.absoluteString == AppUrls.OpenedFromWidget.rawValue {
+                        isOpenedFromWidget = true
+                    }
+                }
         }
     }
 }

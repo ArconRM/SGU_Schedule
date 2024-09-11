@@ -183,6 +183,7 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
         }
     }
     
+    // Если не нашел такую группу, просто ничего не делает
     func deleteScheduleByGroupId(_ groupId: String) throws {
         do {
             if try viewContext.count(for: GroupSchedule.fetchRequest()) == 0 {

@@ -19,7 +19,7 @@ struct GroupSubview: View {
         VStack {
             HStack {
                     ZStack {
-                        if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                        if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
                             buildFilledRectangle()
                         } else {
                             buildBorderedRectangle()
@@ -72,6 +72,14 @@ struct GroupSubview: View {
         RoundedRectangle(cornerRadius: 18)
             .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.3), lineWidth: 4)
             .padding(2)
+        // В сером цвете при темной теме не видно иначе
+            .background {
+                if (isFavourite || isPinned) && appSettings.currentAppTheme == AppTheme.Gray.rawValue && colorScheme == .dark {
+                    getBackgroundColor()
+                        .opacity(0.3)
+                        .cornerRadius(18)
+                }
+            }
     }
     
     private func getBackgroundColor() -> Color {
@@ -87,6 +95,9 @@ struct GroupSubview_Previews: PreviewProvider {
                 .ignoresSafeArea()
             ScrollView {
                 GroupSubview(group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt"), isFavourite: true, isPinned: false)
+                    .environmentObject(AppSettings())
+                
+                GroupSubview(group: AcademicGroupDTO(fullNumber: "121", departmentCode: "knt"), isFavourite: false, isPinned: true)
                     .environmentObject(AppSettings())
                 
                 GroupSubview(group: AcademicGroupDTO(fullNumber: "131", departmentCode: "knt"), isFavourite: false, isPinned: false)

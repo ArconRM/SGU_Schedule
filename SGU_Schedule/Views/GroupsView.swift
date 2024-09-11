@@ -47,6 +47,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     showTutorial: $showTutorialView
                 )
                     .environmentObject(appSettings)
+                    .blur(radius: showTutorialView ? 3 : 0)
             }
             
             VStack {

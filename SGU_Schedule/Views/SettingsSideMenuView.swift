@@ -112,9 +112,7 @@ struct SettingsSideMenuView: View {
                 }
                 
                 Button("Виджеты") {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        showTutorial.toggle()
-                    }
+                    showTutorial.toggle()
                 }
                 .buttonStyle(BorderedButtonStyle())
                 .font(.system(size: 16, weight: .bold, design: .rounded))
@@ -133,7 +131,7 @@ struct SettingsSideMenuView: View {
 }
 
 #Preview {
-    SettingsSideMenuView(selectedDepartment: DepartmentDTO(fullName: "knt", code: "knt"), selectedTheme: .blue, selectedStyle: .fill, selectedParser: .New, showTutorial: .constant(false))
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+    SettingsSideMenuView(selectedDepartment: DepartmentDTO(fullName: "knt", code: "knt"), selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New, showTutorial: .constant(false))
+        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
         .environmentObject(AppSettings())
 }

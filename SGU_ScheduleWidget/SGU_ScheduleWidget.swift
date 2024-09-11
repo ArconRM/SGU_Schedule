@@ -34,13 +34,13 @@ struct ScheduleEventsProvider: TimelineProvider {
         )
         
         var nextUpdateDate = date
-        // Если сейчас что-то есть, то обновляем после окончания
+        // Если сейчас что-то есть, то обновляем после окончания текущего
         if currentEvent != nil {
             nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes() + 1, second: 0, of: date)!
         } else { // Если сейчас ничего нет (значит дальше тоже ничего нет, ибо тогда была бы перемена), значит обновляем утром
             let morningUpdateDate = Calendar.current.date(bySettingHour: 8, minute: 20, second: 0, of: date)!
             // Если сейчас не позже чем 8:20
-            if morningUpdateDate <= date {
+            if date <= morningUpdateDate {
                 nextUpdateDate = morningUpdateDate
             } else { // Если позже, то обновляем уже на утро следующего дня
                 nextUpdateDate = Calendar.current.date(byAdding: .day, value: 1, to: morningUpdateDate)!
@@ -106,12 +106,13 @@ struct ScheduleEventsView: View {
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
                     buildFilledRectangle(event: currentEvent)
                 } else {
                     buildBorderedRectangle(event: currentEvent)
                 }
             }
+            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
         case .systemMedium:
             CurrentAndNextScheduleEventsView(
                 fetchResultVariant: fetchResultVariant,
@@ -120,24 +121,27 @@ struct ScheduleEventsView: View {
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.fill.rawValue {
+                if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
                     buildFilledRectangle(event: currentEvent)
                 } else {
                     buildBorderedRectangle(event: currentEvent)
                 }
             }
+            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
         case .accessoryRectangular:
             AccessoryRectangularView(
                 fetchResultVariant: fetchResultVariant,
                 currentEvent: currentEvent
             )
             .containerBackground(.clear, for: .widget)
+            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
         case .accessoryInline:
             AccessoryInlineView(
                 fetchResultVariant: fetchResultVariant,
                 currentEvent: currentEvent
             )
             .containerBackground(.clear, for: .widget)
+            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
         default:
             NotAvailableView()
         }
@@ -166,8 +170,8 @@ struct ScheduleEventsView: View {
             return .gray
         } else if let lesson = event as? LessonDTO {
             return lesson.lessonType == .Lecture ?
-            AppTheme.green.foregroundColor(colorScheme: colorScheme) :
-            AppTheme.blue.foregroundColor(colorScheme: colorScheme)
+            AppTheme.Green.foregroundColor(colorScheme: colorScheme) :
+            AppTheme.Blue.foregroundColor(colorScheme: colorScheme)
         }
         
         return .gray

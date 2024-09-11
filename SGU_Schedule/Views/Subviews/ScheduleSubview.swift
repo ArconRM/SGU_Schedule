@@ -191,7 +191,7 @@ struct ScheduleSubview: View, Equatable {
             .padding(15)
             .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
             .background {
-                if AppStyle(rawValue: appSettings.currentAppStyle)! != .bordered {
+                if AppStyle(rawValue: appSettings.currentAppStyle)! != .Bordered {
                     getBackground(lesson: lesson)
                 }
             }
@@ -250,11 +250,11 @@ struct ScheduleSubview: View, Equatable {
     
     private func getBackground(lesson: LessonDTO) -> AnyView {
         switch AppStyle(rawValue: appSettings.currentAppStyle)! {
-        case .fill:
+        case .Fill:
             AnyView(
                 getLessonColor(lesson: lesson).opacity(0.2)
             )
-        case .bordered:
+        case .Bordered:
             AnyView(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(getLessonColor(lesson: lesson).opacity(0.5), lineWidth: 7)
@@ -296,7 +296,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
                 .environmentObject(NetworkMonitor())
                 .environmentObject(AppSettings())
                 
@@ -309,7 +309,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     lessonNumber: 1,
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
                 .environmentObject(NetworkMonitor())
                 .environmentObject(AppSettings())
                 
@@ -323,7 +323,7 @@ struct ScheduleSubview_Previews: PreviewProvider {
                                                     timeStart: "08:20",
                                                     timeEnd: "09:50")])
                 .environmentObject(NetworkMonitor())
-                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+                .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
                 .environmentObject(AppSettings())
             }
         }

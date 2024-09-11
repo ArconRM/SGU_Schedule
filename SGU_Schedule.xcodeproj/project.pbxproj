@@ -16,6 +16,8 @@
 		16150C2F2C09D23E006BA964 /* TeacherInfoCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2E2C09D23E006BA964 /* TeacherInfoCardView.swift */; };
 		161EFD7C2C074C2B008E281E /* TeacherInfoViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161EFD7B2C074C2B008E281E /* TeacherInfoViewModel.swift */; };
 		163676272C8F2F4A00438B86 /* CoreData_AcademicGroupExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */; };
+		1636762B2C91EA1400438B86 /* AppUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636762A2C91EA1400438B86 /* AppUrls.swift */; };
+		1636762C2C91EA1400438B86 /* AppUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636762A2C91EA1400438B86 /* AppUrls.swift */; };
 		1650F5182C54492600622205 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650F5172C54492600622205 /* AppStyle.swift */; };
 		165508282C13826400A37900 /* URLSourceSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508272C13826400A37900 /* URLSourceSGU.swift */; };
 		1655082E2C14345A00A37900 /* DepartmentSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1655082D2C14345A00A37900 /* DepartmentSubview.swift */; };
@@ -223,6 +225,7 @@
 		16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithParsingSGUFactory.swift; sourceTree = "<group>"; };
 		16150C2E2C09D23E006BA964 /* TeacherInfoCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherInfoCardView.swift; sourceTree = "<group>"; };
 		161EFD7B2C074C2B008E281E /* TeacherInfoViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherInfoViewModel.swift; sourceTree = "<group>"; };
+		1636762A2C91EA1400438B86 /* AppUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUrls.swift; sourceTree = "<group>"; };
 		1650F5172C54492600622205 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		165508272C13826400A37900 /* URLSourceSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSourceSGU.swift; sourceTree = "<group>"; };
 		1655082D2C14345A00A37900 /* DepartmentSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentSubview.swift; sourceTree = "<group>"; };
@@ -549,6 +552,7 @@
 				1650F5172C54492600622205 /* AppStyle.swift */,
 				166DB20A2C62AE72001D0688 /* AppGroup.swift */,
 				167248762C8B5D0A008673DE /* ParserOptions.swift */,
+				1636762A2C91EA1400438B86 /* AppUrls.swift */,
 			);
 			path = Enums;
 			sourceTree = "<group>";
@@ -1089,6 +1093,7 @@
 				166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */,
 				168069CA2C5C217D002D47A6 /* Weekdays.swift in Sources */,
 				168069CB2C5C217D002D47A6 /* WeekType.swift in Sources */,
+				1636762C2C91EA1400438B86 /* AppUrls.swift in Sources */,
 				168069BC2C5C2176002D47A6 /* TeacherDTO.swift in Sources */,
 				167EE42C2C5F79E300701C8A /* CoreDataModel.xcdatamodeld in Sources */,
 				1602CAB02C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift in Sources */,
@@ -1202,6 +1207,7 @@
 				BAAD1F1E2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
 				16F7AD9A2C51933B0057B062 /* SettingsSideMenuView.swift in Sources */,
+				1636762B2C91EA1400438B86 /* AppUrls.swift in Sources */,
 				BA2FEEE42B669582001F91F5 /* SessionEventsHTMLParserSGU_old.swift in Sources */,
 				BAAEB31C2ADAA57B00E90223 /* GroupsViewModel.swift in Sources */,
 				BA2FEEDE2B668AAF001F91F5 /* GroupSessionEventsDTO.swift in Sources */,
