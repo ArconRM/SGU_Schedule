@@ -9,6 +9,6 @@ import Foundation
 
 extension AcademicGroup {
     var groupId: String {
-        return "\(self.departmentCode ?? "Error")_\(self.fullNumber ?? "Error")"
+        return AcademicGroupDTO.makeId(fullNumber: self.fullNumber ?? "Error", departmentCode: self.departmentCode ?? "Error")
     }
 }

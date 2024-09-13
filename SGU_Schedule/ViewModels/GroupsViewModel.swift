@@ -14,7 +14,7 @@ public final class GroupsViewModel: ObservableObject {
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
-    public var department: DepartmentDTO
+    public var selectedDepartment: DepartmentDTO
     
     @Published var favouriteGroup: AcademicGroupDTO? = nil
     @Published var savedGroupsWithoutFavourite = [AcademicGroupDTO]()
@@ -36,11 +36,11 @@ public final class GroupsViewModel: ObservableObject {
     }
     
     init(
-        department: DepartmentDTO,
+        selectedDepartment: DepartmentDTO,
         networkManager: GroupsNetworkManager,
         groupPersistenceManager: GroupPersistenceManager
     ) {
-        self.department = department
+        self.selectedDepartment = selectedDepartment
         self.networkManager = networkManager
         self.groupPersistenceManager = groupPersistenceManager
     }
@@ -90,18 +90,23 @@ public final class GroupsViewModel: ObservableObject {
             self.isLoadingGroups = true
             
             self.favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO()
-            self.savedGroupsWithoutFavourite = try groupPersistenceManager.fetchAllItemsDTO().filter { $0.groupId != favouriteGroup?.groupId }
+            self.savedGroupsWithoutFavourite = try groupPersistenceManager.fetchAllItemsDTO().filter {
+                $0.groupId != favouriteGroup?.groupId
+            }
             
             if isOnline {
                 networkManager.getGroupsByYearAndAcademicProgram(
                     year: year,
                     program: academicProgram,
-                    department: department,
+                    department: selectedDepartment,
                     resultQueue: .main
                 ) { result in
                     switch result {
                     case .success(let groups):
-                        self.groupsWithoutSaved = groups.filter { $0 != self.favouriteGroup && !self.savedGroupsWithoutFavourite.contains($0) }
+                        self.groupsWithoutSaved = groups.filter {
+                            $0 != self.favouriteGroup &&
+                            !self.savedGroupsWithoutFavourite.contains($0)
+                        }
                     case .failure(let error):
                         self.groupsWithoutSaved = []
                         self.showNetworkError(error)

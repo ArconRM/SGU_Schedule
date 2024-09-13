@@ -14,7 +14,7 @@ public final class DepartmentsViewModel: ObservableObject {
     @Published var isLoadingDepartments: Bool = true
     
     public func fetchDepartments() {
-        self.departments = DepartmentSource.allCases.map { DepartmentDTO(fullName: $0.fullName, code: $0.rawValue) }
+        self.departments = DepartmentSource.allCases.map { DepartmentDTO(code: $0.rawValue) }
         self.isLoadingDepartments = false
     }
 }

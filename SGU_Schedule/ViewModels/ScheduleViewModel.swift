@@ -13,8 +13,6 @@ public final class ScheduleViewModel: ObservableObject {
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
-    public var selectedDepartmentCode: String
-    
     @Published var groupSchedule: GroupScheduleDTO?
     @Published var currentEvent: (any ScheduleEventDTO)? = nil
     @Published var groupSessionEvents: GroupSessionEventsDTO?
@@ -30,12 +28,10 @@ public final class ScheduleViewModel: ObservableObject {
     @Published var activeError: LocalizedError?
     
     init(
-        selectedDepartmentCode: String,
         lessonsNetworkManager: LessonNetworkManager,
         sessionEventsNetworkManager: SessionEventsNetworkManager,
         schedulePersistenceManager: GroupSchedulePersistenceManager
     ) {
-        self.selectedDepartmentCode = selectedDepartmentCode
         self.lessonsNetworkManager = lessonsNetworkManager
         self.sessionEventsNetworkManager = sessionEventsNetworkManager
         self.schedulePersistenceManager = schedulePersistenceManager
@@ -48,16 +44,21 @@ public final class ScheduleViewModel: ObservableObject {
         resetData()
         
         do {
+            // Если сохраненная группа
             if isSaved {
                 let persistenceSchedule = try self.schedulePersistenceManager.getScheduleByGroupId(group.groupId)
-            
+                
+                if persistenceSchedule != nil {
+                    self.groupSchedule = persistenceSchedule
+                    self.setCurrentAndTwoNextLessons()
+                }
+                
                 if isOnline {
                     // Если есть сохраненное в память раннее, сначала ставится оно
                     if persistenceSchedule != nil {
                         self.groupSchedule = persistenceSchedule
                         self.setCurrentAndTwoNextLessons()
                     }
-                    
                     // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
                     self.lessonsNetworkManager.getGroupScheduleForCurrentWeek (
                         group: group,
@@ -88,15 +89,9 @@ public final class ScheduleViewModel: ObservableObject {
                             self.showNetworkError(error)
                         }
                     }
-                    
-                } else {
-                    if persistenceSchedule != nil {
-                        self.groupSchedule = persistenceSchedule
-                        self.setCurrentAndTwoNextLessons()
-                    }
-                    self.isLoadingLessons = false
                 }
-                
+            
+            // Если не сохраненная группа
             } else {
                 self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
                     group: group,
@@ -122,10 +117,10 @@ public final class ScheduleViewModel: ObservableObject {
         }
     }
     
-    public func fetchSessionEvents(groupNumber: String, isOnline: Bool) {
+    public func fetchSessionEvents(group: AcademicGroupDTO, isOnline: Bool) {
         if isOnline {
             sessionEventsNetworkManager.getGroupSessionEvents(
-                group: AcademicGroupDTO(fullNumber: groupNumber, departmentCode: selectedDepartmentCode),
+                group: group,
                 resultQueue: .main
             ) { result in
                 switch result {

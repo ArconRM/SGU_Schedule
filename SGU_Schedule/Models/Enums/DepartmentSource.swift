@@ -74,50 +74,95 @@ public enum DepartmentSource: String, CaseIterable {
         }
     }
     
-    var dto: DepartmentDTO {
+    var shortName: String {
         switch self {
         case .bf:
-            return DepartmentDTO(fullName: "Биологический факультет", code: "bf")
+            return "Био"
         case .gf:
-            return DepartmentDTO(fullName: "Географический факультет", code: "gf")
+            return "Гео"
         case .gl:
-            return DepartmentDTO(fullName: "Геологический факультет", code: "gl")
+            return "ГеоЛ"
         case .idpo:
-            return DepartmentDTO(fullName: "Институт дополнительного профессионального образования", code: "idpo")
+            return "ДПО"
         case .ii:
-            return DepartmentDTO(fullName: "Институт искусств", code: "ii")
+            return "Искусств"
         case .imo:
-            return DepartmentDTO(fullName: "Институт истории и международных отношений", code: "imo")
+            return "ИМО"
         case .ff:
-            return DepartmentDTO(fullName: "Институт физики", code: "ff")
+            return "Физ"
         case .ifk:
-            return DepartmentDTO(fullName: "Институт физической культуры и спорта", code: "ifk")
+            return "ФизКульт"
         case .ifg:
-            return DepartmentDTO(fullName: "Институт филологии и журналистики", code: "ifg")
+            return "ФилЖур"
         case .ih:
-            return DepartmentDTO(fullName: "Институт химии", code: "ih")
+            return "Хим"
         case .mm:
-            return DepartmentDTO(fullName: "Механико-математический факультет", code: "mm")
+            return "МехМат"
         case .sf:
-            return DepartmentDTO(fullName: "Социологический факультет", code: "sf")
+            return "Социо"
         case .fi:
-            return DepartmentDTO(fullName: "Факультет иностранных языков и лингводидактики", code: "fi")
+            return "Иностр"
         case .knt:
-            return DepartmentDTO(fullName: "Факультет компьютерных наук и информационных технологий", code: "knt")
+            return "КНИИТ"
         case .fps:
-            return DepartmentDTO(fullName: "Факультет психологии", code: "fps")
+            return "Психолог"
         case .fppso:
-            return DepartmentDTO(fullName: "Факультет психолого-педагогического и специального образования", code: "fppso")
+            return "ППиСО"
         case .fmimt:
-            return DepartmentDTO(fullName: "Факультет фундаментальной медицины и медицинских технологий", code: "fmimt")
+            return "Мед"
         case .fp:
-            return DepartmentDTO(fullName: "Философский факультет", code: "fp")
+            return "Филфак"
         case .ef:
-            return DepartmentDTO(fullName: "Экономический факультет", code: "ef")
+            return "Эконом"
         case .uf:
-            return DepartmentDTO(fullName: "Юридический факультет", code: "uf")
+            return "Юрист"
         }
     }
+    
+//    var dto: DepartmentDTO {
+//        switch self {
+//        case .bf:
+//            return DepartmentDTO(fullName: "Биологический факультет", code: "bf")
+//        case .gf:
+//            return DepartmentDTO(fullName: "Географический факультет", code: "gf")
+//        case .gl:
+//            return DepartmentDTO(fullName: "Геологический факультет", code: "gl")
+//        case .idpo:
+//            return DepartmentDTO(fullName: "Институт дополнительного профессионального образования", code: "idpo")
+//        case .ii:
+//            return DepartmentDTO(fullName: "Институт искусств", code: "ii")
+//        case .imo:
+//            return DepartmentDTO(fullName: "Институт истории и международных отношений", code: "imo")
+//        case .ff:
+//            return DepartmentDTO(fullName: "Институт физики", code: "ff")
+//        case .ifk:
+//            return DepartmentDTO(fullName: "Институт физической культуры и спорта", code: "ifk")
+//        case .ifg:
+//            return DepartmentDTO(fullName: "Институт филологии и журналистики", code: "ifg")
+//        case .ih:
+//            return DepartmentDTO(fullName: "Институт химии", code: "ih")
+//        case .mm:
+//            return DepartmentDTO(fullName: "Механико-математический факультет", code: "mm")
+//        case .sf:
+//            return DepartmentDTO(fullName: "Социологический факультет", code: "sf")
+//        case .fi:
+//            return DepartmentDTO(fullName: "Факультет иностранных языков и лингводидактики", code: "fi")
+//        case .knt:
+//            return DepartmentDTO(fullName: "Факультет компьютерных наук и информационных технологий", code: "knt")
+//        case .fps:
+//            return DepartmentDTO(fullName: "Факультет психологии", code: "fps")
+//        case .fppso:
+//            return DepartmentDTO(fullName: "Факультет психолого-педагогического и специального образования", code: "fppso")
+//        case .fmimt:
+//            return DepartmentDTO(fullName: "Факультет фундаментальной медицины и медицинских технологий", code: "fmimt")
+//        case .fp:
+//            return DepartmentDTO(fullName: "Философский факультет", code: "fp")
+//        case .ef:
+//            return DepartmentDTO(fullName: "Экономический факультет", code: "ef")
+//        case .uf:
+//            return DepartmentDTO(fullName: "Юридический факультет", code: "uf")
+//        }
+//    }
     
     //    kgl
     //    cre

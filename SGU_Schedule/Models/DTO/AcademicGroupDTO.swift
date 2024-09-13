@@ -17,7 +17,7 @@ public struct AcademicGroupDTO: Hashable {
     var fullName: String
     
     public init(fullNumber: String, departmentCode: String) {
-        self.groupId = "\(departmentCode)_\(fullNumber)"
+        self.groupId = AcademicGroupDTO.makeId(fullNumber: fullNumber, departmentCode: departmentCode)
         self.departmentCode = departmentCode
         self.fullNumber = fullNumber
         self.shortName = fullNumber
@@ -31,4 +31,12 @@ public struct AcademicGroupDTO: Hashable {
             self.academicProgram = .BachelorAndSpeciality
         }
     }
+    
+    static func makeId(fullNumber: String, departmentCode: String) -> String {
+        return "\(departmentCode)_\(fullNumber)"
+    }
+    
+//    static func extractDepartmentCodeFromId(groupId: String) -> String {
+//        return String(groupId.split(separator: "_").first!)
+//    }
 }

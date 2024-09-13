@@ -14,29 +14,31 @@ struct GroupSubview: View {
     var group: AcademicGroupDTO
     var isFavourite: Bool
     var isPinned: Bool
+    /// Если группа с другого факультета
+    var differentDepartment: DepartmentDTO?
     
     var body: some View {
         VStack {
             HStack {
-                    ZStack {
-                        if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
-                            buildFilledRectangle()
-                        } else {
-                            buildBorderedRectangle()
-                        }
-                        
-                        Text(String(group.fullNumber))
-                            .foregroundColor(colorScheme == .light ? .black : .white)
-                            .font(.system(size: 20))
-                            .bold()
+                ZStack {
+                    if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
+                        buildFilledRectangle()
+                    } else {
+                        buildBorderedRectangle()
                     }
-                    .frame(maxWidth: 90)
                     
-                    Text(group.fullName)
+                    Text(String(group.fullNumber))
                         .foregroundColor(colorScheme == .light ? .black : .white)
-                        .font(.system(size: 18, weight: .bold))
-                        .multilineTextAlignment(.leading)
-                        .padding(.vertical, 20)
+                        .font(.system(size: 20))
+                        .bold()
+                }
+                .frame(maxWidth: 90)
+                
+                Text(differentDepartment != nil ? "\(group.fullName) (\(differentDepartment!.shortName))" : group.fullName)
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .font(.system(size: 18, weight: .bold))
+                    .multilineTextAlignment(.leading)
+                    .padding(.vertical, 20)
                 
                 Spacer()
                 

@@ -16,7 +16,7 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
     
     public func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
         return GroupsViewModel (
-            department: department,
+            selectedDepartment: department,
             
             networkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
@@ -28,10 +28,8 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
         )
     }
     
-    public func buildScheduleViewModel(selectedDepartmentCode: String) -> ScheduleViewModel {
+    public func buildScheduleViewModel() -> ScheduleViewModel {
         return ScheduleViewModel (
-            selectedDepartmentCode: selectedDepartmentCode,
-            
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
                 lessonParser: LessonHTMLParserSGU(),

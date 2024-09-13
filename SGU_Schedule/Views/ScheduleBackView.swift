@@ -104,6 +104,6 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 }
 
 #Preview {
-    ScheduleBackView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(selectedDepartmentCode: "knt"),
+    ScheduleBackView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
                      selectedGroup: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt"))
 }

@@ -173,12 +173,22 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     if viewModel.favouriteGroup != nil {
                         Button {
                             withAnimation(.easeInOut(duration: 0.5)) {
-                                viewsManager.selectGroup(fullNumber: viewModel.favouriteGroup!.fullNumber, isFavourite: true, isPinned: false)
+                                viewsManager.selectGroup(group: viewModel.favouriteGroup!, isFavourite: true, isPinned: false)
                                 viewsManager.showScheduleView()
                             }
                         } label: {
-                            GroupSubview(group: AcademicGroupDTO(fullNumber: viewModel.favouriteGroup!.fullNumber, departmentCode: selectedDepartment.code), isFavourite: true, isPinned: false)
-                                .environmentObject(appSettings)
+                            GroupSubview(
+                                group: viewModel.favouriteGroup!,
+                                isFavourite: true,
+                                isPinned: false,
+                                differentDepartment: {
+                                    if viewModel.favouriteGroup!.departmentCode != selectedDepartment.code {
+                                        return DepartmentDTO(code: viewModel.favouriteGroup!.departmentCode)
+                                    }
+                                    return nil
+                                }()
+                            )
+                            .environmentObject(appSettings)
                         }
                     }
                     
@@ -186,12 +196,22 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         ForEach(viewModel.savedGroupsWithoutFavourite, id:\.self) { group in
                             Button {
                                 withAnimation(.easeInOut(duration: 0.5)) {
-                                    viewsManager.selectGroup(fullNumber: group.fullNumber, isFavourite: false, isPinned: true)
+                                    viewsManager.selectGroup(group: group, isFavourite: false, isPinned: true)
                                     viewsManager.showScheduleView()
                                 }
                             } label: {
-                                GroupSubview(group: AcademicGroupDTO(fullNumber: group.fullNumber, departmentCode: selectedDepartment.code), isFavourite: false, isPinned: true)
-                                    .environmentObject(appSettings)
+                                GroupSubview(
+                                    group: group,
+                                    isFavourite: false,
+                                    isPinned: true,
+                                    differentDepartment: {
+                                        if group.departmentCode != selectedDepartment.code {
+                                            return DepartmentDTO(code: group.departmentCode)
+                                        }
+                                        return nil
+                                    }()
+                                )
+                                .environmentObject(appSettings)
                             }
                         }
                     }
@@ -209,12 +229,16 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             ForEach(viewModel.groupsWithoutSaved, id:\.self) { group in
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
-                                        viewsManager.selectGroup(fullNumber: group.fullNumber, isFavourite: false, isPinned: false)
+                                        viewsManager.selectGroup(group: group, isFavourite: false, isPinned: false)
                                         viewsManager.showScheduleView()
                                     }
                                 } label: {
-                                    GroupSubview(group: group, isFavourite: false, isPinned: false)
-                                        .environmentObject(appSettings)
+                                    GroupSubview(
+                                        group: group,
+                                        isFavourite: false,
+                                        isPinned: false
+                                    )
+                                    .environmentObject(appSettings)
                                 }
                             }
                         }
@@ -277,6 +301,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(fullName: "КНИИТ", code: "kn1t")), selectedDepartment: DepartmentDTO(fullName: "knt", code: "knt"))
+        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(code: "kn1t")), selectedDepartment: DepartmentDTO(code: "knt"))
     }
 }

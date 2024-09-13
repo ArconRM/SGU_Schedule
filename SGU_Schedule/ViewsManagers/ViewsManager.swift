@@ -80,7 +80,12 @@ public final class ViewsManager: ObservableObject {
         self.viewModelFactory = viewModelFactory
         self.viewModelFactory_old = viewModelFactory_old
         
-        self._selectedDepartment = DepartmentSource(rawValue: UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue) ?? "")?.dto
+        self._selectedDepartment = {
+            if let departmentCode = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue) {
+                return DepartmentDTO(code: departmentCode)
+            }
+            return nil
+        }()
         
         if self._selectedDepartment != nil {
             //TODO: потом поменять со старого
@@ -90,7 +95,7 @@ public final class ViewsManager: ObservableObject {
             // Если открыто с виджета, перебрасывает на вьюшку с избранной группой (если такова есть)
             do {
                 if isOpenedFromWidget, let favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO() {
-                    selectGroup(fullNumber: favouriteGroup.fullNumber, isFavourite: true, isPinned: false)
+                    selectGroup(group: favouriteGroup, isFavourite: true, isPinned: false)
                     showScheduleView()
                 }
             }
@@ -105,35 +110,42 @@ public final class ViewsManager: ObservableObject {
     //Data
     func selectDepartment(department: DepartmentDTO) {
         selectedDepartment = department
-        //TODO: потом поменять со старого
-        groupsViewModel = viewModelFactory_old.buildGroupsViewModel(department: selectedDepartment!) // Не должен пересоздаваться без смены факультета
+        groupsViewModel = currentViewModelFactory.buildGroupsViewModel(department: selectedDepartment!) // Не должен пересоздаваться без смены факультета/парсера
     }
     
-    func resetDepartment() {
+    func changeDepartment() {
         selectedDepartment = nil
         
-        do {
-            try schedulePersistenceManager.clearAllItems()
-            try groupPersistenceManager.clearAllItems()
-        }
-        catch (let error) {
-            showCoreDataError(error: error)
-        }
-        
-        WidgetCenter.shared.reloadAllTimelines()
+//        do {
+//            try schedulePersistenceManager.clearAllItems()
+//            try groupPersistenceManager.clearAllItems()
+//        }
+//        catch (let error) {
+//            showCoreDataError(error: error)
+//        }
+//
+//        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func changeParser() {
+        
+//        do {
+//            print(try groupPersistenceManager.fetchAllItemsDTO().count)
+//            print(try schedulePersistenceManager.fetchAllItemsDTO().count)
+//        }
+//        catch {}
+        
         isNewParserUsed.toggle()
         currentViewModelFactory = isNewParserUsed ? viewModelFactory : viewModelFactory_old
+        groupsViewModel = currentViewModelFactory.buildGroupsViewModel(department: selectedDepartment!) // Не должен пересоздаваться без смены факультета/парсера
     }
     
-    func selectGroup(fullNumber: String, isFavourite: Bool, isPinned: Bool) {
+    func selectGroup(group: AcademicGroupDTO, isFavourite: Bool, isPinned: Bool) {
         guard let _ = selectedDepartment else {
             showUserDefaultsError(error: UserDefaultsError.failedToFetch)
             return
         }
-        selectedGroup = AcademicGroupDTO(fullNumber: fullNumber, departmentCode: selectedDepartment!.code)
+        selectedGroup = group
         isSelectedGroupFavourite = isFavourite
         isSelectedGroupPinned = isPinned
     }
@@ -198,7 +210,7 @@ public final class ViewsManager: ObservableObject {
     }
     
     func buildScheduleView() -> some View {
-        let scheduleViewModel = currentViewModelFactory.buildScheduleViewModel(selectedDepartmentCode: selectedDepartment!.code)
+        let scheduleViewModel = currentViewModelFactory.buildScheduleViewModel()
         
         return ScheduleView(viewModel: scheduleViewModel, group: selectedGroup!, isFavourite: isSelectedGroupFavourite!, isPinned: isSelectedGroupPinned!)
     }

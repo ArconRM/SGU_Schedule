@@ -32,8 +32,8 @@ struct SettingsSideMenuView: View {
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding()
                 
-                Button("Сменить факультет") {
-                    viewsManager.resetDepartment()
+                Button("Другой факультет") {
+                    viewsManager.changeDepartment()
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewsManager.showDepartmentsView()
                     }
@@ -131,7 +131,7 @@ struct SettingsSideMenuView: View {
 }
 
 #Preview {
-    SettingsSideMenuView(selectedDepartment: DepartmentDTO(fullName: "knt", code: "knt"), selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New, showTutorial: .constant(false))
+    SettingsSideMenuView(selectedDepartment: DepartmentDTO(code: "knt"), selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New, showTutorial: .constant(false))
         .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
         .environmentObject(AppSettings())
 }

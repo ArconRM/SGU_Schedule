@@ -42,8 +42,8 @@ struct DepartmentSubview: View {
             .foregroundColor(.blue.opacity(0.1))
             .ignoresSafeArea()
         ScrollView {
-            DepartmentSubview(department: DepartmentDTO(fullName: "Факультет компьютерных наук и информационных технологий", code: "knt"))
-            DepartmentSubview(department: DepartmentDTO(fullName: "Механико-математический факультет", code: "mm"))
+            DepartmentSubview(department: DepartmentDTO(code: "knt"))
+            DepartmentSubview(department: DepartmentDTO(code: "mm"))
         }
     }
 }

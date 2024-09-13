@@ -84,7 +84,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                                 isOnline: networkMonitor.isConnected,
                                 isSaved: isFavourite || isPinned)
         
-        viewModel.fetchSessionEvents(groupNumber: group!.fullNumber,
+        viewModel.fetchSessionEvents(group: group!,
                                      isOnline: networkMonitor.isConnected)
     }
     
@@ -188,7 +188,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(
-            viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(selectedDepartmentCode: "knt"),
+            viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
             group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt1"),
             isFavourite: false,
             isPinned: false
