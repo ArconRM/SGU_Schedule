@@ -88,8 +88,7 @@ public final class ViewsManager: ObservableObject {
         }()
         
         if self._selectedDepartment != nil {
-            //TODO: потом поменять со старого
-            groupsViewModel = self.viewModelFactory_old.buildGroupsViewModel(department: self._selectedDepartment!) // Не должен пересоздаваться без смены факультета
+            groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: self._selectedDepartment!) // Не должен пересоздаваться без смены факультета
             currentView = .GroupsView
             
             // Если открыто с виджета, перебрасывает на вьюшку с избранной группой (если такова есть)
@@ -110,7 +109,7 @@ public final class ViewsManager: ObservableObject {
     //Data
     func selectDepartment(department: DepartmentDTO) {
         selectedDepartment = department
-        groupsViewModel = currentViewModelFactory.buildGroupsViewModel(department: selectedDepartment!) // Не должен пересоздаваться без смены факультета/парсера
+        //TODO: мб чтобы все таки менялся groupsViewModel
     }
     
     func changeDepartment() {

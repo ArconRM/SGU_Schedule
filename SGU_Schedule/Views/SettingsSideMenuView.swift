@@ -46,6 +46,7 @@ struct SettingsSideMenuView: View {
                 .padding(.bottom, 15)
                 
                 Divider()
+                    .padding(.trailing, UIScreen.screenWidth / 2)
                  
                 Text("Темы: ")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
