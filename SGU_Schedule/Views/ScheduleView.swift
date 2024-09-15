@@ -94,21 +94,11 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 viewsManager.showGroupsView(needToReload: false)
             }
         }) {
-            Image(systemName: "multiply")
-                .font(.system(size: 23, weight: .semibold))
-                .padding(7)
-                .foregroundColor(colorScheme == .light ? .black : .white)
-                .background (
-                    ZStack {
-                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                            .cornerRadius(5)
-                            .blur(radius: 2)
-                            .ignoresSafeArea()
-                    }
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(colorScheme == .light ? .white : .clear)
-                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
+            MainButton {
+                Image(systemName: "multiply")
+                    .padding(10)
+                    .font(.system(size: 21, weight: .semibold))
+            }
         }
     }
     
@@ -125,23 +115,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 }
             }
         }) {
-            Image(systemName: isFavourite ? "star.fill" : "star")
-                .font(.system(size: 18, weight: .semibold))
-                .padding(5)
-                .frame(minWidth: 40, minHeight: 40)
-                .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
-                .background (
-                    ZStack {
-                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                            .cornerRadius(5)
-                            .blur(radius: 2)
-                            .ignoresSafeArea()
-                    }
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(colorScheme == .light ? .white : .clear)
-                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+            MainButton {
+                Image(systemName: isFavourite ? "star.fill" : "star")
+                    .padding(8)
+                    .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+            }
+            .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
         .disabled(viewModel.isLoadingLessons)
     }
@@ -162,23 +141,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 }
             }
         }) {
-            Image(systemName: isPinned ? "pin.fill" : "pin")
-                .font(.system(size: 18, weight: .semibold))
-                .padding(5)
-                .frame(minWidth: 40, minHeight: 40)
-                .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
-                .background (
-                    ZStack {
-                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                            .cornerRadius(5)
-                            .blur(radius: 2)
-                            .ignoresSafeArea()
-                    }
-                        .background(
-                            RoundedRectangle(cornerRadius: 5)
-                                .fill(colorScheme == .light ? .white : .clear)
-                                .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
+            MainButton {
+                Image(systemName: isPinned ? "pin.fill" : "pin")
+                    .padding(8)
+                    .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+            }
+            .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
         .disabled(viewModel.isLoadingLessons)
     }

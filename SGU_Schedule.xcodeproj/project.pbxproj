@@ -25,6 +25,7 @@
 		165508322C14369F00A37900 /* DepartmentsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508312C14369F00A37900 /* DepartmentsViewModel.swift */; };
 		165508362C15F1F200A37900 /* ErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508352C15F1F200A37900 /* ErrorView.swift */; };
 		165BCF332C871EB50004C291 /* AccessoryInlineView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165BCF322C871EB50004C291 /* AccessoryInlineView.swift */; };
+		16637A9D2C976BC20082A1AD /* MainButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16637A9C2C976BC20082A1AD /* MainButton.swift */; };
 		16644B582C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */; };
 		166DB20B2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
 		166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
@@ -233,6 +234,7 @@
 		165508312C14369F00A37900 /* DepartmentsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DepartmentsViewModel.swift; sourceTree = "<group>"; };
 		165508352C15F1F200A37900 /* ErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorView.swift; sourceTree = "<group>"; };
 		165BCF322C871EB50004C291 /* AccessoryInlineView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccessoryInlineView.swift; sourceTree = "<group>"; };
+		16637A9C2C976BC20082A1AD /* MainButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainButton.swift; sourceTree = "<group>"; };
 		16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsHTMLParserSGU.swift; sourceTree = "<group>"; };
 		166DB2082C62AC7F001D0688 /* SGU_Schedule.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_Schedule.entitlements; sourceTree = "<group>"; };
 		166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_ScheduleWidgetExtension.entitlements; sourceTree = "<group>"; };
@@ -448,6 +450,14 @@
 				16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */,
 			);
 			path = SGU;
+			sourceTree = "<group>";
+		};
+		16637A9B2C976B930082A1AD /* Buttons */ = {
+			isa = PBXGroup;
+			children = (
+				16637A9C2C976BC20082A1AD /* MainButton.swift */,
+			);
+			path = Buttons;
 			sourceTree = "<group>";
 		};
 		1672487A2C8CBA2B008673DE /* Protocols */ = {
@@ -778,6 +788,7 @@
 				167248702C8844F4008673DE /* TutorialView.swift */,
 				BA2FEEF12B6825D5001F91F5 /* AdditionalViews */,
 				BADAE12A2ABA074F0079E3D7 /* Subviews */,
+				16637A9B2C976B930082A1AD /* Buttons */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -1198,6 +1209,7 @@
 				BA9D79212ABE439F00C36932 /* LessonsNetworkManagerWithParsing.swift in Sources */,
 				BAAD1F152B6FF99B00B58E32 /* DateNetworkManagerForTest.swift in Sources */,
 				BADAE12F2ABA0B240079E3D7 /* DateExtension.swift in Sources */,
+				16637A9D2C976BC20082A1AD /* MainButton.swift in Sources */,
 				167248802C8DA190008673DE /* UserDefaultsError.swift in Sources */,
 				BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */,
 				1650F5182C54492600622205 /* AppStyle.swift in Sources */,

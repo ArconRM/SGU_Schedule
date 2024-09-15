@@ -20,7 +20,6 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
     
     @ObservedObject var viewModel: ViewModel
     
-    
     var body: some View {
         ZStack {
             AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)

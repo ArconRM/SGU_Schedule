@@ -15,7 +15,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var selectedAcademicProgram = AcademicProgram.Masters
+    @State private var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
     @State private var selectedYear = 1
     
     @State var selectedDepartment: DepartmentDTO
@@ -58,25 +58,14 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             showSettingsSideMenuView.toggle()
                         }
                     }) {
-                        Image(systemName: "gear")
-                            .font(.system(size: 30, weight: .semibold))
-                            .padding(5)
-                            .foregroundColor(colorScheme == .light ? .black : .white)
-                            .background (
-                                ZStack {
-                                    (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                        .cornerRadius(5)
-                                        .blur(radius: 2)
-                                }
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 5)
-                                            .fill(colorScheme == .light ? .white : .clear)
-                                            .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)
-                                    )
-                            )
-                            .frame(maxWidth: .infinity, alignment: .leading)
-                            .padding(.trailing, -5)
-                            .offset(x: 10)
+                        MainButton {
+                            Image(systemName: "gear")
+                                .padding(5)
+                                .font(.system(size: 30, weight: .semibold))
+                        }
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.trailing, -5)
+                        .offset(x: 10)
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     
@@ -91,22 +80,10 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 }
                             } label: {}
                         } label: {
-                            HStack {
+                            MainButton {
                                 Text(selectedAcademicProgram.rawValue)
-                                    .bold()
-                                    .foregroundColor(colorScheme == .light ? .black : .white)
-                                    .padding(15)
-                                    .background (
-                                        ZStack {
-                                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                                .cornerRadius(15)
-                                                .blur(radius: 2)
-                                                .ignoresSafeArea()
-                                        }
-                                            .background(
-                                                RoundedRectangle(cornerRadius: 15)
-                                                    .fill(colorScheme == .light ? .white : .clear)
-                                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.2), radius: 6)))
+                                    .padding(14)
+                                    .font(.system(size: 17, weight: .bold))
                             }
                         }
                         .frame(minWidth: 300)
@@ -121,6 +98,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     Spacer()
                         .frame(maxWidth: .infinity, alignment: .trailing)
                 }
+                .padding(.top, 10)
                 
                 if networkMonitor.isConnected {
                     Menu {
@@ -131,23 +109,12 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             }
                         } label: {}
                     } label: {
-                        HStack{
-                            Text(String(selectedYear) + " курс")
-                                .bold()
-                                .foregroundColor(colorScheme == .light ? .black : .white)
-                                .padding(.vertical, 11)
-                                .padding(.horizontal, 25)
-                                .background (
-                                    ZStack {
-                                        (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                            .cornerRadius(15)
-                                            .blur(radius: 2)
-                                            .ignoresSafeArea()
-                                    }
-                                        .background(
-                                            RoundedRectangle(cornerRadius: 15)
-                                                .fill(colorScheme == .light ? .white : .clear)
-                                                .shadow(color: colorScheme == .light ? .gray.opacity(0.4) : .white.opacity(0.2), radius: 6)))
+                        HStack {
+                            MainButton {
+                                Text(String(selectedYear) + " курс")
+                                    .padding(14)
+                                    .font(.system(size: 17, weight: .bold))
+                            }
                         }
                     }
                     .onChange(of: selectedYear) { newValue in
@@ -302,5 +269,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(code: "kn1t")), selectedDepartment: DepartmentDTO(code: "knt"))
+            .environmentObject(NetworkMonitor())
+            .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+            .environmentObject(AppSettings())
     }
 }
