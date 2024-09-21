@@ -24,7 +24,7 @@ struct MainButton<Content: View>: View {
                     .background (
                         RoundedRectangle(cornerRadius: 10)
                             .fill(colorScheme == .light ? .white : .clear)
-                            .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.6), radius: 4)
+                            .shadow(color: colorScheme == .light ? .gray.opacity(0.3) : .white.opacity(0.6), radius: 4, y: 5)
                     )
             )
     }

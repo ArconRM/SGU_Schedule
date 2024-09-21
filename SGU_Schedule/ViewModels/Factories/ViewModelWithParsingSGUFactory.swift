@@ -16,8 +16,6 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
     
     public func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
         return GroupsViewModel (
-            selectedDepartment: department,
-            
             networkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
                 groupsParser: GroupsHTMLParserSGU(),

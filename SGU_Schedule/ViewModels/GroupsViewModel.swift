@@ -14,8 +14,6 @@ public final class GroupsViewModel: ObservableObject {
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
-    public var selectedDepartment: DepartmentDTO
-    
     @Published var favouriteGroup: AcademicGroupDTO? = nil
     @Published var savedGroupsWithoutFavourite = [AcademicGroupDTO]()
     @Published var groupsWithoutSaved = [AcademicGroupDTO]()
@@ -36,11 +34,9 @@ public final class GroupsViewModel: ObservableObject {
     }
     
     init(
-        selectedDepartment: DepartmentDTO,
         networkManager: GroupsNetworkManager,
         groupPersistenceManager: GroupPersistenceManager
     ) {
-        self.selectedDepartment = selectedDepartment
         self.networkManager = networkManager
         self.groupPersistenceManager = groupPersistenceManager
     }
@@ -63,29 +59,38 @@ public final class GroupsViewModel: ObservableObject {
     
     public func setSelectedAcademicProgramAndFetchGroups(
         newValue: AcademicProgram,
+        selectedDepartment: DepartmentDTO,
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
         fetchGroups(
             year: getSelectedYear(), 
             academicProgram: newValue,
+            selectedDepartment: selectedDepartment,
             isOnline: isOnline
         )
     }
     
     public func setSelectedYearAndFetchGroups(
         newValue: Int,
+        selectedDepartment: DepartmentDTO,
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue, forKey: selectedYearKey)
         fetchGroups(
             year: newValue,
             academicProgram: getSelectedAcademicProgram(),
+            selectedDepartment: selectedDepartment,
             isOnline: isOnline
         )
     }
     
-    public func fetchGroups(year: Int, academicProgram: AcademicProgram, isOnline: Bool) {
+    public func fetchGroups(
+        year: Int,
+        academicProgram: AcademicProgram,
+        selectedDepartment: DepartmentDTO,
+        isOnline: Bool
+    ) {
         do {
             self.isLoadingGroups = true
             

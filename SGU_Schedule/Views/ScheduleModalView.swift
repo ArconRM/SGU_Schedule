@@ -15,9 +15,9 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.13 : 0.1)).rounded()
+    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.14 : 0.1)).rounded()
     private let minHeight: CGFloat = 250
-    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.13 : 0.1)).rounded()
+    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.14 : 0.1)).rounded()
     
     @State private var lessonsBySelectedDay = [LessonDTO]()
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay

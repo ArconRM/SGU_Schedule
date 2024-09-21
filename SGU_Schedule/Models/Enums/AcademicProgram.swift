@@ -8,7 +8,7 @@
 import Foundation
 
 public enum AcademicProgram: String, CaseIterable {
-    case BachelorAndSpeciality = "Бакалавриат/Специалитет"
+    case BachelorAndSpeciality = "Бакалавр/Специалитет"
     case Masters = "Магистратура"
     case Postgraduate = "Аспирантура"
     

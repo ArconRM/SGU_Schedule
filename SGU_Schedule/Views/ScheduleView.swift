@@ -53,13 +53,11 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     .environmentObject(networkMonitor)
             })
         }
-        .onAppear {
-            fetchAllData()
-        }
-        
+        .edgesIgnoringSafeArea(.bottom)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 makeCloseToolbarButton()
+                    .padding(.top, 5)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -69,10 +67,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     }
                     makeFavoriteToolbarButton()
                 }
+                .padding(.top, 5)
             }
         }
-        
-        .edgesIgnoringSafeArea(.bottom)
+        .onAppear {
+            fetchAllData()
+        }
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))

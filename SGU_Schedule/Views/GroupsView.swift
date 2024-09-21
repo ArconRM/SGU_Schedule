@@ -25,9 +25,10 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     var body: some View {
         ZStack {
+            // Фон
             if UIDevice.isPhone {
                 LinearGradient(
-                    colors: [ AppTheme(rawValue: appSettings.currentAppTheme)!.backgroundColor(colorScheme: colorScheme), (colorScheme == .light ? .white : .black)],
+                    colors: [AppTheme(rawValue: appSettings.currentAppTheme)!.backgroundColor(colorScheme: colorScheme), (colorScheme == .light ? .white : .black)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -38,6 +39,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     .ignoresSafeArea()
             }
             
+            // Настройки
             if showSettingsSideMenuView {
                 SettingsSideMenuView(
                     selectedDepartment: selectedDepartment, 
@@ -50,6 +52,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     .blur(radius: showTutorialView ? 3 : 0)
             }
             
+            // Группы
             VStack {
                 // Пикеры с программой обучения и курсом
                 HStack(spacing: 0) {
@@ -63,12 +66,10 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 .padding(5)
                                 .font(.system(size: 30, weight: .semibold))
                         }
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                        .padding(.trailing, -5)
-                        .offset(x: 10)
                     }
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.leading)
                     
+                    Spacer()
                     
                     if networkMonitor.isConnected {
                         Menu {
@@ -86,19 +87,18 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                     .font(.system(size: 17, weight: .bold))
                             }
                         }
-                        .frame(minWidth: 300)
+                        .offset(x: -33)
                         .onChange(of: selectedAcademicProgram) { newValue in
                             viewModel.setSelectedAcademicProgramAndFetchGroups(
-                                newValue: newValue,
+                                newValue: newValue, 
+                                selectedDepartment: selectedDepartment,
                                 isOnline: networkMonitor.isConnected
                             )
                         }
                     }
                     
                     Spacer()
-                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-                .padding(.top, 10)
                 
                 if networkMonitor.isConnected {
                     Menu {
@@ -120,6 +120,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     .onChange(of: selectedYear) { newValue in
                         viewModel.setSelectedYearAndFetchGroups(
                             newValue: newValue,
+                            selectedDepartment: selectedDepartment,
                             isOnline: networkMonitor.isConnected
                         )
                     }
@@ -261,6 +262,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         viewModel.fetchGroups(
             year: selectedYear,
             academicProgram: selectedAcademicProgram,
+            selectedDepartment: selectedDepartment,
             isOnline: networkMonitor.isConnected
         )
     }
@@ -268,7 +270,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(code: "kn1t")), selectedDepartment: DepartmentDTO(code: "knt"))
+        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(code: "kn1t")), selectedDepartment: DepartmentDTO(code: "kn1t"))
             .environmentObject(NetworkMonitor())
             .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
             .environmentObject(AppSettings())

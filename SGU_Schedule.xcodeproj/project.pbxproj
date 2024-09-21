@@ -551,6 +551,7 @@
 			isa = PBXGroup;
 			children = (
 				BAFA58142AED25DD0060BD81 /* UserDefaultsKeys.swift */,
+				167248762C8B5D0A008673DE /* ParserOptions.swift */,
 				BADAE1312ABA21430079E3D7 /* Weekdays.swift */,
 				BA9D791B2ABE2E4700C36932 /* GroupsSource.swift */,
 				BA2F67822B75611E00B06667 /* DepartmentSource.swift */,
@@ -561,7 +562,6 @@
 				16F7AD9D2C52F2050057B062 /* AppTheme.swift */,
 				1650F5172C54492600622205 /* AppStyle.swift */,
 				166DB20A2C62AE72001D0688 /* AppGroup.swift */,
-				167248762C8B5D0A008673DE /* ParserOptions.swift */,
 				1636762A2C91EA1400438B86 /* AppUrls.swift */,
 			);
 			path = Enums;

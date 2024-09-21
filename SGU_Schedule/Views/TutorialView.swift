@@ -27,14 +27,14 @@ struct TutorialView: View {
             VStack {
                 HStack {
                     Button(action: {
-                        withAnimation(.bouncy(duration: 0.7)) {
+                        withAnimation(.easeOut(duration: 0.4)) {
                             isShowing.toggle()
                         }
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.gray)
-                            .padding(.top, 20)
-                            .padding(.horizontal)
+                            .padding(.top, 10)
+                            .padding(.leading, 10)
                             .font(.system(size: 20, weight: .heavy, design: .rounded))
                     })
                     
@@ -48,7 +48,7 @@ struct TutorialView: View {
                 }
             }
             .background(colorScheme == .light ? .white : .black)
-            .cornerRadius(30)
+            .cornerRadius(20)
 //            .scaleEffect(CGSize(width: 0.86, height: 0.86))
             .frame(width: UIScreen.screenWidth - 20, height: UIScreen.screenHeight * 0.86)
         }
@@ -98,14 +98,14 @@ struct TutorialView: View {
             }
         }
         .opacity(widgetsViewOpacity)
-        .animation(.easeIn(duration: 0.5), value: widgetsViewOpacity)
+        .animation(.easeIn(duration: 0.4), value: widgetsViewOpacity)
         .onAppear {
             widgetsViewOpacity = 1
         }
         .gesture(
             DragGesture().onEnded({ value in
                 if value.translation.width < -70 {
-                    withAnimation(.bouncy(duration: 0.7)) {
+                    withAnimation(.easeIn(duration: 0.4)) {
                         currentView = .FavoriteGroup
                     }
                 }
@@ -158,7 +158,7 @@ struct TutorialView: View {
                     Spacer()
                     
                     Button("Закрыть") {
-                        withAnimation(.bouncy(duration: 0.7)) {
+                        withAnimation(.easeOut(duration: 0.4)) {
                             isShowing.toggle()
                         }
                     }

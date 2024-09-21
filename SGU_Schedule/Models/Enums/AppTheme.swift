@@ -36,7 +36,7 @@ public enum AppTheme: String, CaseIterable {
         case .Pink:
             return .pink.opacity(colorScheme == .dark ? 0.1 : 0.07)
         case .Gray:
-            return colorScheme == .light ? .white : .black
+            return colorScheme == .light ? .gray.opacity(0.1) : .black
         }
     }
     
