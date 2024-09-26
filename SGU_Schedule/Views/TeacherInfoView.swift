@@ -141,24 +141,12 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
                     viewsManager.showScheduleView()
                 }
             }) {
-                Image(systemName: "multiply")
-                    .font(.system(size: 23, weight: .semibold))
-                    .padding(7)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
-                    .background (
-                        ZStack {
-                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                .cornerRadius(5)
-                                .blur(radius: 2)
-                                .ignoresSafeArea()
-                        }
-                            .background(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(colorScheme == .light ? .white : .clear)
-                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
-                    .opacity(viewModel.isLoadingTeacherInfo ? 0.5 : 1)
+                MainButton {
+                    Image(systemName: "multiply")
+                        .padding(10)
+                        .font(.system(size: 21, weight: .semibold))
+                }
             }
-            .disabled(viewModel.isLoadingTeacherInfo)
         }
     }
 }
@@ -170,6 +158,7 @@ struct TeacherInfoView_Previews: PreviewProvider {
                         teacherEndpoint: "")
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(AppSettings())
     }
 }
 
