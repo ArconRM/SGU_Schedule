@@ -33,7 +33,7 @@ struct TutorialView: View {
                     }, label: {
                         Image(systemName: "xmark")
                             .foregroundColor(.gray)
-                            .padding(.top, 10)
+                            .padding(.top, 15)
                             .padding(.leading, 10)
                             .font(.system(size: 20, weight: .heavy, design: .rounded))
                     })
@@ -93,7 +93,7 @@ struct TutorialView: View {
                         currentView = .FavoriteGroup
                     }
                 }
-                .padding(30)
+                .padding(20)
                 .font(.system(size: 18, weight: .bold, design: .rounded))
             }
         }
@@ -152,7 +152,7 @@ struct TutorialView: View {
                             currentView = .Widgets
                         }
                     }
-                    .padding(30)
+                    .padding(20)
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                     
                     Spacer()
@@ -162,7 +162,7 @@ struct TutorialView: View {
                             isShowing.toggle()
                         }
                     }
-                    .padding(30)
+                    .padding(20)
                     .font(.system(size: 18, weight: .bold, design: .rounded))
                 }
             }

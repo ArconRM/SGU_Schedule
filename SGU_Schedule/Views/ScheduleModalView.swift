@@ -83,7 +83,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 }
-                .disabled(viewModel.isLoadingLessons)
                 
                 Spacer()
                 

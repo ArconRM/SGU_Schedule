@@ -82,7 +82,7 @@ struct ScheduleSubview: View, Equatable {
             Text(lesson.title)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 17, weight: .bold))
-                .padding(.vertical, 19)
+                .padding(.vertical, 7)
             
             HStack {
                 if lesson.subgroup != nil && lesson.subgroup != "" {
@@ -150,7 +150,7 @@ struct ScheduleSubview: View, Equatable {
                 Text(lesson.title)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 17, weight: .bold))
-                    .padding(.vertical, 19)
+                    .padding(.vertical, 7)
                 
                 HStack {
                     if lesson.subgroup != nil && lesson.subgroup != "" {
@@ -222,7 +222,7 @@ struct ScheduleSubview: View, Equatable {
             Text(lesson.title)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 17, weight: .bold))
-                .padding(.vertical, 19)
+                .padding(.vertical, 7)
             
             HStack {
                 if lesson.subgroup == nil || lesson.subgroup == "" {

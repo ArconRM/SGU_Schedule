@@ -110,6 +110,7 @@ public final class ViewsManager: ObservableObject {
     func selectDepartment(department: DepartmentDTO) {
         selectedDepartment = department
         //TODO: мб чтобы все таки менялся groupsViewModel
+        groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: self._selectedDepartment!)
     }
     
     func changeDepartment() {
