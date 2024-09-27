@@ -10,6 +10,14 @@ import SwiftUI
 
 
 class AppSettings: ObservableObject {
-    @AppStorage(UserDefaultsKeys.selectedAppTheme.rawValue, store: UserDefaults(suiteName: "group.com.qwerty.SGUSchedule")) var currentAppTheme: String = AppTheme.Blue.rawValue
-    @AppStorage(UserDefaultsKeys.selectedAppStyle.rawValue, store: UserDefaults(suiteName: "group.com.qwerty.SGUSchedule")) var currentAppStyle: String = AppStyle.Fill.rawValue
+    @AppStorage(UserDefaultsKeys.selectedAppTheme.rawValue, store: UserDefaults(suiteName: "group.com.qwerty.SGUSchedule")) var currentAppThemeValue: String = AppTheme.Blue.rawValue
+    @AppStorage(UserDefaultsKeys.selectedAppStyle.rawValue, store: UserDefaults(suiteName: "group.com.qwerty.SGUSchedule")) var currentAppStyleValue: String = AppStyle.Fill.rawValue
+    
+    public var currentAppTheme: AppTheme {
+        AppTheme(rawValue: currentAppThemeValue) ?? AppTheme.Blue
+    }
+    
+    public var currentAppStyle: AppStyle {
+        AppStyle(rawValue: currentAppStyleValue) ?? AppStyle.Fill
+    }
 }

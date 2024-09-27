@@ -118,7 +118,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             MainButton {
                 Image(systemName: isFavourite ? "star.fill" : "star")
                     .padding(8)
-                    .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+                    .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
             }
             .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
@@ -144,7 +144,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             MainButton {
                 Image(systemName: isPinned ? "pin.fill" : "pin")
                     .padding(8)
-                    .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+                    .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
             }
             .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }

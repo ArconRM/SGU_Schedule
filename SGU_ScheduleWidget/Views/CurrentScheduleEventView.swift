@@ -18,16 +18,16 @@ struct CurrentScheduleEventView: View {
         case .UnknownErrorWhileFetching:
             Text("Произошла ошибка")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill.rawValue ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
         case .NoFavoriteGroup:
             Text("Не выбрана сохраненная группа")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill.rawValue ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
         case .Success:
             if currentEvent == nil {
                 Text("Сейчас нет пар")
                     .bold()
-                    .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill.rawValue ? .white : .none)
+                    .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
             }
             else {
                 VStack {
@@ -49,7 +49,7 @@ struct CurrentScheduleEventView: View {
                     
                     Spacer()
                 }
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill.rawValue ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
             }
         }
     }

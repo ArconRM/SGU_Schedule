@@ -64,7 +64,7 @@ struct SessionEventSubview: View {
     }
     
     private func getBackground() -> AnyView {
-        switch AppStyle(rawValue: appSettings.currentAppStyle)! {
+        switch appSettings.currentAppStyle {
         case .Fill:
             AnyView(
                 getEventColor()

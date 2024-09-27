@@ -28,14 +28,14 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             // Фон
             if UIDevice.isPhone {
                 LinearGradient(
-                    colors: [AppTheme(rawValue: appSettings.currentAppTheme)!.backgroundColor(colorScheme: colorScheme), (colorScheme == .light ? .white : .black)],
+                    colors: [appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme), (colorScheme == .light ? .white : .black)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
                 .blur(radius: 2)
                 .ignoresSafeArea()
             } else if UIDevice.isPad {
-                AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
+                appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .ignoresSafeArea()
             }
             
@@ -43,8 +43,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             if showSettingsSideMenuView {
                 SettingsSideMenuView(
                     selectedDepartment: selectedDepartment, 
-                    selectedTheme: AppTheme(rawValue: appSettings.currentAppTheme)!,
-                    selectedStyle: AppStyle(rawValue: appSettings.currentAppStyle)!,
+                    selectedTheme: appSettings.currentAppTheme,
+                    selectedStyle: appSettings.currentAppStyle,
                     selectedParser: viewsManager.isNewParserUsed ? .New : .Old,
                     showTutorial: $showTutorialView
                 )

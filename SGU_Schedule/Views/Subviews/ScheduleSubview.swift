@@ -187,12 +187,12 @@ struct ScheduleSubview: View, Equatable {
             .padding(15)
             .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
             .background {
-                if AppStyle(rawValue: appSettings.currentAppStyle)! != .Bordered {
+                if appSettings.currentAppStyle != .Bordered {
                     getBackground(lesson: lesson)
                 }
             }
             
-            if AppStyle(rawValue: appSettings.currentAppStyle)! == .Bordered {
+            if appSettings.currentAppStyle == .Bordered {
                 Divider()
             }
         }
@@ -253,7 +253,7 @@ struct ScheduleSubview: View, Equatable {
     }
     
     private func getBackground(lesson: LessonDTO) -> AnyView {
-        switch AppStyle(rawValue: appSettings.currentAppStyle)! {
+        switch appSettings.currentAppStyle {
         case .Fill:
             AnyView(
                 getLessonColor(lesson: lesson).opacity(0.2)

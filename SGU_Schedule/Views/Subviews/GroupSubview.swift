@@ -21,7 +21,7 @@ struct GroupSubview: View {
         VStack {
             HStack {
                 ZStack {
-                    if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
+                    if appSettings.currentAppStyle == AppStyle.Fill {
                         buildFilledRectangle()
                     } else {
                         buildBorderedRectangle()
@@ -46,7 +46,7 @@ struct GroupSubview: View {
                     Image(systemName: "star.fill")
                         .font(.system(size: 25, weight: .semibold))
                         .padding(15)
-                        .foregroundColor(AppTheme(rawValue: appSettings.currentAppTheme)!.foregroundColor(colorScheme: colorScheme))
+                        .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
                 }
             }
         }
@@ -76,7 +76,7 @@ struct GroupSubview: View {
             .padding(2)
         // В сером цвете при темной теме не видно иначе
             .background {
-                if (isFavourite || isPinned) && appSettings.currentAppTheme == AppTheme.Gray.rawValue && colorScheme == .dark {
+                if (isFavourite || isPinned) && appSettings.currentAppTheme == AppTheme.Gray && colorScheme == .dark {
                     getBackgroundColor()
                         .opacity(0.3)
                         .cornerRadius(18)
@@ -85,7 +85,7 @@ struct GroupSubview: View {
     }
     
     private func getBackgroundColor() -> Color {
-        AppTheme(rawValue: appSettings.currentAppTheme)?.foregroundColor(colorScheme: colorScheme) ?? .red
+        appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme)
     }
 }
 

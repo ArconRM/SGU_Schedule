@@ -106,7 +106,7 @@ struct ScheduleEventsView: View {
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
+                if appSettings.currentAppStyle == AppStyle.Fill {
                     buildFilledRectangle(event: currentEvent)
                 } else {
                     buildBorderedRectangle(event: currentEvent)
@@ -121,7 +121,7 @@ struct ScheduleEventsView: View {
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.Fill.rawValue {
+                if appSettings.currentAppStyle == AppStyle.Fill {
                     buildFilledRectangle(event: currentEvent)
                 } else {
                     buildBorderedRectangle(event: currentEvent)

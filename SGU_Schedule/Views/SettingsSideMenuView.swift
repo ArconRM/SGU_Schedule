@@ -22,7 +22,7 @@ struct SettingsSideMenuView: View {
     
     var body: some View {
         ZStack {
-            AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
+            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
             
@@ -65,7 +65,7 @@ struct SettingsSideMenuView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onChange(of: selectedTheme) { newValue in
                     withAnimation(.bouncy(duration: 0.5)) {
-                        appSettings.currentAppTheme = newValue.rawValue
+                        appSettings.currentAppThemeValue = newValue.rawValue
                     }
                 }
                 
@@ -86,7 +86,7 @@ struct SettingsSideMenuView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onChange(of: selectedStyle) { newValue in
                     withAnimation(.bouncy(duration: 0.5)) {
-                        appSettings.currentAppStyle = newValue.rawValue
+                        appSettings.currentAppStyleValue = newValue.rawValue
                         WidgetCenter.shared.reloadAllTimelines()
                     }
                 }

@@ -14,6 +14,7 @@ struct TeacherInfoCardView: View {
     }
     
     @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSettings: AppSettings
     
     @State var teacher: TeacherDTO
     
@@ -68,17 +69,28 @@ struct TeacherInfoCardView: View {
         .padding(.horizontal, 10)
         .padding(.vertical, 10)
         .foregroundColor(colorScheme == .light ? .black : .white)
-        .background(
-            RoundedRectangle(cornerRadius: 20)
-                .fill(colorScheme == .light ? .white : .white.opacity(0.2))
-                .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
-                .blur(radius: 0.5)
-            )
-//        .cornerRadius(20)
+        .background(getBackground())
         .onTapGesture {
             withAnimation(.bouncy(duration: 0.5)) {
                 isCollapsed.toggle()
             }
+        }
+    }
+    
+    private func getBackground() -> AnyView {
+        switch appSettings.currentAppStyle {
+        case .Fill:
+            AnyView(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme))
+                    .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
+                    .blur(radius: 0.5)
+            )
+        case .Bordered:
+            AnyView(
+                RoundedRectangle(cornerRadius: 20)
+                    .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
+            )
         }
     }
 }
@@ -102,5 +114,6 @@ struct TeacherInfoCardView: View {
                 teacherSessionEventsEndpoint: "/schedule/teacher/475#session"
             )
         )
+        .environmentObject(AppSettings())
     }
 }

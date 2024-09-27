@@ -120,7 +120,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .frame(height: curHeight)
         .background (
             ZStack {
-                AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
+                appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .cornerRadius(35)
                     .blur(radius: 2)
                     .ignoresSafeArea()

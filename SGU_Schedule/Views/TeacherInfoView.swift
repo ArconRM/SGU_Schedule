@@ -44,7 +44,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
     
     private func buildUI() -> some View {
         ZStack {
-            AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
+            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
             

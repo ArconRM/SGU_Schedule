@@ -22,7 +22,7 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
     
     var body: some View {
         ZStack {
-            AppTheme(rawValue: appSettings.currentAppTheme)?.backgroundColor(colorScheme: colorScheme)
+            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
             
