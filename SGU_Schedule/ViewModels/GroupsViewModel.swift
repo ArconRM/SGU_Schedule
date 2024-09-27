@@ -14,6 +14,15 @@ public final class GroupsViewModel: ObservableObject {
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
     
+    private var favouriteGroupNumber: String? {
+        get {
+            return UserDefaults.standard.string(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+        }
+        set(newValue) {
+            UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+        }
+    }
+    
     @Published var favouriteGroup: AcademicGroupDTO? = nil
     @Published var savedGroupsWithoutFavourite = [AcademicGroupDTO]()
     @Published var groupsWithoutSaved = [AcademicGroupDTO]()
@@ -95,6 +104,10 @@ public final class GroupsViewModel: ObservableObject {
             self.isLoadingGroups = true
             
             self.favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO()
+            if self.favouriteGroup != nil {
+                favouriteGroupNumber = self.favouriteGroup!.fullNumber
+            }
+            
             self.savedGroupsWithoutFavourite = try groupPersistenceManager.fetchAllItemsDTO().filter {
                 $0.groupId != favouriteGroup?.groupId
             }

@@ -53,6 +53,15 @@ public final class ViewsManager: ObservableObject {
         }
     }
     
+    private var favouriteGroupNumber: String? {
+        get {
+            return UserDefaults.standard.string(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+        }
+        set(newValue) {
+            UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+        }
+    }
+    
     @Published private(set) var currentView: AppViews
     var needToReloadGroupView: Bool = false // Для айпада, ибо на нем вьюшка всегда на экране
     
@@ -162,6 +171,7 @@ public final class ViewsManager: ObservableObject {
     func setFavouriteGroup(group: AcademicGroupDTO) {
         do {
             try groupPersistenceManager.makeGroupFavourite(group.groupId)
+            favouriteGroupNumber = group.fullNumber
         }
         catch (let error) {
             showCoreDataError(error: error)
