@@ -54,10 +54,6 @@ struct ScheduleSubview: View, Equatable {
                  y: 0)
     }
     
-    private func sortLessonsByWeekType(_ lessons: [LessonDTO]) -> [LessonDTO] {
-        return lessons.filter({ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }) + lessons.filter({ !Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) })
-    }
-    
     private func makeSingleLessonView(lesson: LessonDTO) -> some View {
         VStack {
             HStack {
@@ -195,6 +191,10 @@ struct ScheduleSubview: View, Equatable {
                     getBackground(lesson: lesson)
                 }
             }
+            
+            if AppStyle(rawValue: appSettings.currentAppStyle)! == .Bordered {
+                Divider()
+            }
         }
     }
     
@@ -246,6 +246,10 @@ struct ScheduleSubview: View, Equatable {
         .padding(15)
         .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
+    }
+    
+    private func sortLessonsByWeekType(_ lessons: [LessonDTO]) -> [LessonDTO] {
+        return lessons.filter({ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }) + lessons.filter({ !Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) })
     }
     
     private func getBackground(lesson: LessonDTO) -> AnyView {
