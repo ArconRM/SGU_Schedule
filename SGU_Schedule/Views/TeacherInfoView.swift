@@ -124,7 +124,10 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
         }
         
         .toolbar {
-            makeCloseToolbarItem()
+            ToolbarItem(placement: .topBarLeading) {
+                makeCloseToolbarButton()
+                    .padding(.top, 5)
+            }
         }
         
         .alert(isPresented: $viewModel.isShowingError) {
@@ -133,19 +136,16 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
         }
     }
     
-    private func makeCloseToolbarItem() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button(action: {
-                
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    viewsManager.showScheduleView()
-                }
-            }) {
-                MainButton {
-                    Image(systemName: "multiply")
-                        .padding(10)
-                        .font(.system(size: 21, weight: .semibold))
-                }
+    private func makeCloseToolbarButton() -> some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                viewsManager.showScheduleView()
+            }
+        }) {
+            MainButton {
+                Image(systemName: "multiply")
+                    .padding(10)
+                    .font(.system(size: 21, weight: .semibold))
             }
         }
     }

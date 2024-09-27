@@ -131,6 +131,8 @@ struct GroupCoreDataManager: GroupPersistenceManager {
             }
             
             managedGroupToBeFavourite.isFavourite = true
+            
+            try viewContext.save()
         }
         catch {
             throw CoreDataError.failedToUpdate
