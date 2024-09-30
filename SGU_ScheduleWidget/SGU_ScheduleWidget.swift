@@ -43,7 +43,7 @@ struct ScheduleEventsProvider: TimelineProvider {
             if date <= morningUpdateDate {
                 nextUpdateDate = morningUpdateDate
             } else { // Если позже, то обновляем уже на утро следующего дня
-                nextUpdateDate = Calendar.current.date(byAdding: .day, value: 1, to: morningUpdateDate)!
+                nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate)!
             }
         }
         

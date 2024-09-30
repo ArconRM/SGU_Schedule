@@ -50,7 +50,7 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
         self.lessonNumber = lessonNumber
         
         let dateFormatter = DateFormatter()
-        //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//        dateFormatter.timeZone = TimeZone.current
         dateFormatter.dateFormat = "HH:mm"
         
         self.timeStart = dateFormatter.date(from: timeStart) ?? dateFormatter.date(from: "00:00")!
