@@ -36,6 +36,7 @@ struct TeacherInfoCardView: View {
                     .shadow(radius: 3)
             } placeholder: {
                 ProgressView()
+                    .padding(10)
             }
             
             Divider()
@@ -54,16 +55,6 @@ struct TeacherInfoCardView: View {
                 Text("Рабочий телефон: " + (teacher.workPhoneNumber ?? ""))
                 
                 Text("Личный телефон: " + (teacher.personalPhoneNumber ?? ""))
-                
-//                Image(systemName: "chevron.up")
-//                    .font(.system(size: 10))
-//                    .padding(.top, 2)
-                
-            } else {
-//                Image(systemName: "chevron.down")
-//                    .font(.system(size: 20))
-//                    .padding(.top, -1)
-                
             }
         }
         .padding(.horizontal, 10)
@@ -82,14 +73,19 @@ struct TeacherInfoCardView: View {
         case .Fill:
             AnyView(
                 RoundedRectangle(cornerRadius: 20)
-                    .fill(appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme))
+                    .fill(colorScheme == .light ? .white : .white.opacity(0.1))
                     .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
                     .blur(radius: 0.5)
             )
         case .Bordered:
             AnyView(
-                RoundedRectangle(cornerRadius: 20)
-                    .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
+                ZStack {
+                    (colorScheme == .light ? Color.white : Color.white.opacity(0.1))
+                        .cornerRadius(20)
+                    
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
+                }
             )
         }
     }
@@ -104,7 +100,7 @@ struct TeacherInfoCardView: View {
         TeacherInfoCardView(
             teacher: TeacherDTO(
                 fullName: "Осипцев Михаил Анатольевич",
-                profileImageUrl: URL(string: "https://www.old.sgu.ru/sites/default/files/styles/500x375_4x3/public/employee/facepics/7a630f4a70a5310d9152a3d5e5350a35/foto-1.jpg?itok=IILG1z3i")!,
+                profileImageUrl: URL(string: "https://www.old1.sgu.ru/sites/default/files/styles/500x375_4x3/public/employee/facepics/7a630f4a70a5310d9152a3d5e5350a35/foto-1.jpg?itok=IILG1z3i")!,
                 email: "Osipcevm@gmail.com",
                 officeAddress: "9 учебный корпус СГУ, ком. 316",
                 workPhoneNumber: "+7 (8452) 51 - 55 - 37",
