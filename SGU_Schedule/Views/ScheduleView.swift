@@ -91,7 +91,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     private func makeCloseToolbarButton() -> some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.3)) {
-                viewsManager.showGroupsView(needToReload: false)
+                viewsManager.showGroupsView()
             }
         }) {
             MainButton {
@@ -128,7 +128,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     private func makePinToolbarButton() -> some View {
         Button(action: {
             if isPinned {
-                viewsManager.unpinGroup(group: group!)
+                viewsManager.deleteGroupFromPersistence(group: group!)
                 
                 withAnimation(.easeInOut(duration: 0.3)) {
                     viewsManager.showGroupsView(needToReload: UIDevice.isPad)
@@ -163,6 +163,6 @@ struct ScheduleView_Previews: PreviewProvider {
         )
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
     }
 }

@@ -19,6 +19,7 @@ struct SGU_ScheduleApp: App {
             MainView()
                 .environmentObject(
                     ViewsManager(
+                        appSettings: appSettings,
                         viewModelFactory: ViewModelWithParsingSGUFactory(),
                         viewModelFactory_old: ViewModelWithParsingSGUFactory_old(),
                         schedulePersistenceManager: GroupScheduleCoreDataManager(),

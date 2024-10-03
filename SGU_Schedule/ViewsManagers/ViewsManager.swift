@@ -10,7 +10,7 @@ import SwiftUI
 import WidgetKit
 
 
-enum AppViews {
+enum AppViews: Equatable {
     case DepartmentsView
     case GroupsView
     case ScheduleView
@@ -25,6 +25,7 @@ public final class ViewsManager: ObservableObject {
     private var viewModelFactory: ViewModelFactory
     private var viewModelFactory_old: ViewModelFactory
     
+    private let appSettings: AppSettings
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     private let groupPersistenceManager: GroupPersistenceManager
     private var groupsViewModel: GroupsViewModel?
@@ -63,7 +64,10 @@ public final class ViewsManager: ObservableObject {
     }
     
     @Published private(set) var currentView: AppViews
-    var needToReloadGroupView: Bool = false // Для айпада, ибо на нем вьюшка всегда на экране
+    // Отдельно чтобы вьюшка с группами не переебашивалась из-за изменения currentView
+    @Published private(set) var isShowingSettingsView: Bool = false
+    
+    var needToReloadGroupView: Bool = false
     
     @Published var isShowingError = false
     @Published var activeError: LocalizedError?
@@ -75,12 +79,14 @@ public final class ViewsManager: ObservableObject {
     private var teacherEndpoint: String?
     
     init(
+        appSettings: AppSettings,
         viewModelFactory: ViewModelFactory,
         viewModelFactory_old: ViewModelFactory,
         schedulePersistenceManager: GroupSchedulePersistenceManager,
         groupPersistenceManager: GroupPersistenceManager,
         isOpenedFromWidget: Bool
     ) {
+        self.appSettings = appSettings
         self.schedulePersistenceManager = schedulePersistenceManager
         self.groupPersistenceManager = groupPersistenceManager
         
@@ -100,7 +106,7 @@ public final class ViewsManager: ObservableObject {
             groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: self._selectedDepartment!) // Не должен пересоздаваться без смены факультета
             currentView = .GroupsView
             
-            // Если открыто с виджета, перебрасывает на вьюшку с избранной группой (если такова есть)
+            // Если открыто с виджета, перебрасывает на вьюшку с избранной группой (если она выбрана)
             do {
                 if isOpenedFromWidget, let favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO() {
                     selectGroup(group: favouriteGroup, isFavourite: true, isPinned: false)
@@ -122,31 +128,13 @@ public final class ViewsManager: ObservableObject {
         groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: self._selectedDepartment!)
     }
     
-    func changeDepartment() {
+    func clearDepartment() {
         selectedDepartment = nil
-        
-//        do {
-//            try schedulePersistenceManager.clearAllItems()
-//            try groupPersistenceManager.clearAllItems()
-//        }
-//        catch (let error) {
-//            showCoreDataError(error: error)
-//        }
-//
-//        WidgetCenter.shared.reloadAllTimelines()
     }
     
     func changeParser() {
-        
-//        do {
-//            print(try groupPersistenceManager.fetchAllItemsDTO().count)
-//            print(try schedulePersistenceManager.fetchAllItemsDTO().count)
-//        }
-//        catch {}
-        
         isNewParserUsed.toggle()
         currentViewModelFactory = isNewParserUsed ? viewModelFactory : viewModelFactory_old
-        groupsViewModel = currentViewModelFactory.buildGroupsViewModel(department: selectedDepartment!) // Не должен пересоздаваться без смены факультета/парсера
     }
     
     func selectGroup(group: AcademicGroupDTO, isFavourite: Bool, isPinned: Bool) {
@@ -178,7 +166,7 @@ public final class ViewsManager: ObservableObject {
         }
     }
     
-    func unpinGroup(group: AcademicGroupDTO) {
+    func deleteGroupFromPersistence(group: AcademicGroupDTO) {
         do {
             try schedulePersistenceManager.deleteScheduleByGroupId(group.groupId)
             try groupPersistenceManager.deleteItemById(group.groupId)
@@ -191,11 +179,17 @@ public final class ViewsManager: ObservableObject {
     //Transitions
     func showDepartmentsView() {
         currentView = .DepartmentsView
+        isShowingSettingsView = false
     }
     
-    func showGroupsView(needToReload: Bool) {
+    func showGroupsView(needToReload: Bool = false) {
         needToReloadGroupView = needToReload
         currentView = .GroupsView
+        isShowingSettingsView = false
+    }
+    
+    func showSettingsView() {
+        isShowingSettingsView = true
     }
     
     func showScheduleView() {
@@ -215,8 +209,15 @@ public final class ViewsManager: ObservableObject {
     }
     
     func buildGroupsView() -> some View {
-        return GroupsView(viewModel: groupsViewModel!, selectedDepartment: selectedDepartment!)
-        
+        return GroupsView(viewModel: groupsViewModel!, selectedDepartment: selectedDepartment ?? DepartmentDTO(code: "Error"))
+    }
+    
+    func buildSettingsView(showTutorial: Binding<Bool>) -> some View {
+        return SettingsView(selectedDepartment: selectedDepartment ?? DepartmentDTO(code: "Error"),
+                            selectedTheme: appSettings.currentAppTheme,
+                            selectedStyle: appSettings.currentAppStyle,
+                            selectedParser: isNewParserUsed ? .New : .Old,
+                            showTutorial: showTutorial)
     }
     
     func buildScheduleView() -> some View {

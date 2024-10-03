@@ -1,5 +1,5 @@
 //
-//  SettingsSideMenuView.swift
+//  SettingsView.swift
 //  SGU_Schedule
 //
 //  Created by Artemiy MIROTVORTSEV on 24.07.2024.
@@ -8,7 +8,7 @@
 import SwiftUI
 import WidgetKit
 
-struct SettingsSideMenuView: View {
+struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
@@ -24,7 +24,6 @@ struct SettingsSideMenuView: View {
         ZStack {
             appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
-                .shadow(radius: 5)
             
             VStack {
                 Text(selectedDepartment.fullName)
@@ -33,7 +32,7 @@ struct SettingsSideMenuView: View {
                     .padding()
                 
                 Button("Другой факультет") {
-                    viewsManager.changeDepartment()
+                    viewsManager.clearDepartment()
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewsManager.showDepartmentsView()
                     }
@@ -46,7 +45,7 @@ struct SettingsSideMenuView: View {
                 .padding(.bottom, 15)
                 
                 Divider()
-                    .padding(.trailing, UIScreen.screenWidth / 2)
+                    .padding(.trailing, UIDevice.isPhone ? UIScreen.screenWidth / 2 : 0)
                  
                 Text("Темы: ")
                     .font(.system(size: 20, weight: .bold, design: .rounded))
@@ -112,14 +111,16 @@ struct SettingsSideMenuView: View {
                     }
                 }
                 
-                Button("Виджеты") {
-                    showTutorial.toggle()
+                if UIDevice.isPhone {
+                    Button("Виджеты") {
+                        showTutorial.toggle()
+                    }
+                    .buttonStyle(BorderedButtonStyle())
+                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding()
                 }
-                .buttonStyle(BorderedButtonStyle())
-                .font(.system(size: 16, weight: .bold, design: .rounded))
-                .foregroundColor(colorScheme == .light ? .black : .white)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .padding()
                 
                 Spacer()
             }
@@ -132,7 +133,7 @@ struct SettingsSideMenuView: View {
 }
 
 #Preview {
-    SettingsSideMenuView(selectedDepartment: DepartmentDTO(code: "knt"), selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New, showTutorial: .constant(false))
-        .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+    SettingsView(selectedDepartment: DepartmentDTO(code: "knt"), selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New, showTutorial: .constant(false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
         .environmentObject(AppSettings())
 }

@@ -17,11 +17,12 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     @State private var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
     @State private var selectedYear = 1
-    
     @State var selectedDepartment: DepartmentDTO
     
-    @State private var showSettingsSideMenuView: Bool = false
-    @State var showTutorialView: Bool = false
+    @State private var showTutorialView: Bool = false
+    @State private var showAlert: Bool = false
+    @State private var programTappedCount: Int = 0
+    @State private var yearTappedCount: Int = 0
     
     var body: some View {
         ZStack {
@@ -34,96 +35,42 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 )
                 .blur(radius: 2)
                 .ignoresSafeArea()
+                
             } else if UIDevice.isPad {
                 appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .ignoresSafeArea()
+                
             }
             
-            // Настройки
-            if showSettingsSideMenuView {
-                SettingsSideMenuView(
-                    selectedDepartment: selectedDepartment, 
-                    selectedTheme: appSettings.currentAppTheme,
-                    selectedStyle: appSettings.currentAppStyle,
-                    selectedParser: viewsManager.isNewParserUsed ? .New : .Old,
-                    showTutorial: $showTutorialView
-                )
+            if viewsManager.isShowingSettingsView && UIDevice.isPhone {
+                viewsManager.buildSettingsView(showTutorial: $showTutorialView)
                     .environmentObject(appSettings)
                     .blur(radius: showTutorialView ? 3 : 0)
             }
             
             // Группы
             VStack {
-                // Пикеры с программой обучения и курсом
-                HStack(spacing: 0) {
-                    Button(action: {
-                        withAnimation(.bouncy(duration: 0.5)) {
-                            showSettingsSideMenuView.toggle()
+                if UIDevice.isPhone {
+                    HStack(spacing: 0) {
+                        makeShowSettingsButton()
+                        
+                        Spacer()
+                        
+                        if networkMonitor.isConnected {
+                            makeAcademicProgramMenu()
+                                .offset(x: -33)
                         }
-                    }) {
-                        MainButton {
-                            Image(systemName: "gear")
-                                .padding(5)
-                                .font(.system(size: 30, weight: .semibold))
-                        }
+                        
+                        Spacer()
                     }
-                    .padding(.leading)
-                    
-                    Spacer()
-                    
+                } else if UIDevice.isPad {
                     if networkMonitor.isConnected {
-                        Menu {
-                            Picker(selection: $selectedAcademicProgram) {
-                                ForEach(AcademicProgram.allCases, id:\.self) { program in
-                                    Text(program.rawValue)
-                                        .tag(program)
-                                        .font(.system(size: 15, weight: .bold))
-                                }
-                            } label: {}
-                        } label: {
-                            MainButton {
-                                Text(selectedAcademicProgram.rawValue)
-                                    .padding(14)
-                                    .font(.system(size: 17, weight: .bold))
-                            }
-                        }
-                        .offset(x: -33)
-                        .onChange(of: selectedAcademicProgram) { newValue in
-                            viewModel.setSelectedAcademicProgramAndFetchGroups(
-                                newValue: newValue, 
-                                selectedDepartment: selectedDepartment,
-                                isOnline: networkMonitor.isConnected
-                            )
-                        }
+                        makeAcademicProgramMenu()
                     }
-                    
-                    Spacer()
                 }
                 
                 if networkMonitor.isConnected {
-                    Menu {
-                        Picker(selection: $selectedYear) {
-                            ForEach(1..<7) {
-                                Text("\($0) курс")
-                                    .tag($0)
-                            }
-                        } label: {}
-                    } label: {
-                        HStack {
-                            MainButton {
-                                Text(String(selectedYear) + " курс")
-                                    .padding(14)
-                                    .font(.system(size: 17, weight: .bold))
-                            }
-                        }
-                    }
-                    .onChange(of: selectedYear) { newValue in
-                        viewModel.setSelectedYearAndFetchGroups(
-                            newValue: newValue,
-                            selectedDepartment: selectedDepartment,
-                            isOnline: networkMonitor.isConnected
-                        )
-                    }
+                    makeYearMenu()
                 }
                 
                 if !networkMonitor.isConnected {
@@ -213,16 +160,16 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                     Spacer(minLength: 40)
                 }
+                .blur(radius: showTutorialView ? 3 : 0)
             }
-            .cornerRadius(showSettingsSideMenuView ? 20 : 0)
-            .offset(x: showSettingsSideMenuView ? 235 : 0, y: showSettingsSideMenuView ? 100 : 0)
-            .scaleEffect(showSettingsSideMenuView ? 0.8 : 1)
-            .disabled(showSettingsSideMenuView)
-            .blur(radius: showTutorialView ? 3 : 0)
+            .cornerRadius(viewsManager.isShowingSettingsView && UIDevice.isPhone ? 20 : 0)
+            .offset(x: viewsManager.isShowingSettingsView && UIDevice.isPhone ? 235 : 0, y: viewsManager.isShowingSettingsView && UIDevice.isPhone ? 100 : 0)
+            .scaleEffect(viewsManager.isShowingSettingsView && UIDevice.isPhone ? 0.8 : 1)
+            .disabled(viewsManager.isShowingSettingsView && UIDevice.isPhone)
             .onTapGesture {
-                if showSettingsSideMenuView {
+                if viewsManager.isShowingSettingsView && UIDevice.isPhone {
                     withAnimation(.bouncy(duration: 0.5)) {
-                        showSettingsSideMenuView.toggle()
+                        viewsManager.showGroupsView()
                     }
                 }
             }
@@ -230,15 +177,17 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             if showTutorialView {
                 TutorialView(isShowing: $showTutorialView)
             }
+            
+            if showAlert {
+                HeheAlert(show: $showAlert)
+            }
         }
         .ignoresSafeArea(edges: [.bottom])
         .accentColor(colorScheme == .light ? .black : .white)
         .onAppear {
-            showTutorialView = !viewModel.wasLaunched
+            showTutorialView = !viewModel.wasLaunched && !UIDevice.isPad
             fetchAllData()
         }
-        
-        //Для айпада
         .onChange(of: viewsManager.needToReloadGroupView) { newValue in
             if newValue {
                 fetchAllData()
@@ -253,6 +202,90 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         .alert(isPresented: $viewsManager.isShowingError) {
             Alert(title: Text(viewsManager.activeError?.errorDescription ?? "Error"),
                   message: Text(viewsManager.activeError?.failureReason ?? "Unknown"))
+        }
+    }
+    
+    private func makeShowSettingsButton() -> some View {
+        Button(action: {
+            withAnimation(.bouncy(duration: 0.5)) {
+                viewsManager.showSettingsView()
+            }
+        }) {
+            MainButton {
+                Image(systemName: "gear")
+                    .padding(5)
+                    .font(.system(size: 30, weight: .semibold))
+            }
+        }
+        .padding(.leading)
+    }
+    
+    private func makeAcademicProgramMenu() -> some View {
+        Menu {
+            Picker(selection: $selectedAcademicProgram) {
+                ForEach(AcademicProgram.allCases, id:\.self) { program in
+                    Text(program.rawValue)
+                        .tag(program)
+                        .font(.system(size: 15, weight: .bold))
+                }
+            } label: {}
+        } label: {
+            MainButton {
+                Text(selectedAcademicProgram.rawValue)
+                    .padding(14)
+                    .font(.system(size: 17, weight: .bold))
+            }
+        }
+        .onTapGesture {
+            programTappedCount += 1
+            if programTappedCount > 7 {
+                withAnimation(.easeIn(duration: 0.2)) {
+                    showAlert.toggle()
+                }
+                programTappedCount = 0
+            }
+        }
+        .onChange(of: selectedAcademicProgram) { newValue in
+            viewModel.setSelectedAcademicProgramAndFetchGroups(
+                newValue: newValue,
+                selectedDepartment: selectedDepartment,
+                isOnline: networkMonitor.isConnected
+            )
+        }
+    }
+    
+    private func makeYearMenu() -> some View {
+        Menu {
+            Picker(selection: $selectedYear) {
+                ForEach(1..<7) {
+                    Text("\($0) курс")
+                        .tag($0)
+                }
+            } label: {}
+        } label: {
+            HStack {
+                MainButton {
+                    Text(String(selectedYear) + " курс")
+                        .padding(14)
+                        .font(.system(size: 17, weight: .bold))
+                }
+            }
+        }
+        .onTapGesture {
+            yearTappedCount += 1
+            if yearTappedCount > 7 {
+                withAnimation(.easeIn(duration: 0.2)) {
+                    showAlert.toggle()
+                }
+                yearTappedCount = 0
+            }
+        }
+        .onChange(of: selectedYear) { newValue in
+            viewModel.setSelectedYearAndFetchGroups(
+                newValue: newValue,
+                selectedDepartment: selectedDepartment,
+                isOnline: networkMonitor.isConnected
+            )
         }
     }
     
@@ -272,7 +305,7 @@ struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
         GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(code: "kn1t")), selectedDepartment: DepartmentDTO(code: "kn1t"))
             .environmentObject(NetworkMonitor())
-            .environmentObject(ViewsManager(viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+            .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
             .environmentObject(AppSettings())
     }
 }

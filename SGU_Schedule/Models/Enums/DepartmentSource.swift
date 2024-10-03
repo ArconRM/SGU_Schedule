@@ -29,7 +29,7 @@ public enum DepartmentSource: String, CaseIterable {
     case ef = "ef"
     case uf = "uf"
     
-    var fullName: String {
+    public var fullName: String {
         switch self {
         case .bf:
             return "Биологический факультет"
@@ -74,7 +74,7 @@ public enum DepartmentSource: String, CaseIterable {
         }
     }
     
-    var shortName: String {
+    public var shortName: String {
         switch self {
         case .bf:
             return "Био"

@@ -31,7 +31,7 @@ struct ErrorView: View {
         ToolbarItem(placement: .topBarLeading) {
             Button(action: {
                 withAnimation(.easeInOut(duration: 0.3)) {
-                    viewsManager.showGroupsView(needToReload: false)
+                    viewsManager.showGroupsView()
                 }
             }) {
                 Image(systemName: "multiply")

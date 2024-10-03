@@ -19,54 +19,60 @@ struct MainView: View {
             if UIDevice.isPhone {
                 switch viewsManager.currentView {
                 case .DepartmentsView:
-                    self.viewsManager.buildDepartmentsView()
+                    viewsManager.buildDepartmentsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                 
                 case .GroupsView:
-                    self.viewsManager.buildGroupsView()
+                    viewsManager.buildGroupsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                     
                 case .ScheduleView:
-                    self.viewsManager.buildScheduleView()
+                    viewsManager.buildScheduleView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                     
                 case .TeacherInfoView:
-                    self.viewsManager.buildTeacherInfoView()
+                    viewsManager.buildTeacherInfoView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                     
                 }
             } else if UIDevice.isPad {
-                if self.viewsManager.currentView == .DepartmentsView {
-                    self.viewsManager.buildDepartmentsView()
+                if viewsManager.currentView == .DepartmentsView {
+                    viewsManager.buildDepartmentsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                 } else {
                     NavigationView {
-                        self.viewsManager.buildGroupsView()
+                        viewsManager.buildGroupsView()
                             .environmentObject(networkMonitor)
                             .environmentObject(viewsManager)
                             .environmentObject(appSettings)
-                        
-                        if self.viewsManager.currentView == .ScheduleView {
-                            self.viewsManager.buildScheduleView()
+                            .navigationBarHidden(true)
+                            
+                        if viewsManager.currentView == .ScheduleView {
+                            viewsManager.buildScheduleView()
                                 .environmentObject(networkMonitor)
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
                                 .id(UUID())
-                        } else if self.viewsManager.currentView == .TeacherInfoView {
-                            self.viewsManager.buildTeacherInfoView()
+                            
+                        } else if viewsManager.currentView == .TeacherInfoView {
+                            viewsManager.buildTeacherInfoView()
                                 .environmentObject(networkMonitor)
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
+                        } else {
+                            viewsManager.buildSettingsView(showTutorial: .constant(false))
+                                .environmentObject(appSettings)
+                                .navigationBarHidden(true)
                         }
                     }
                     .accentColor(colorScheme == .light ? .black : .white)

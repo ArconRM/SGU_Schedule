@@ -24,4 +24,6 @@ public enum AcademicProgram: String, CaseIterable {
             return nil
         }
     }
+    
+    public static var allStringCases: [String] = ["Бакалавр", "Специалитет", "Магистратура", "Аспирантура"]
 }
