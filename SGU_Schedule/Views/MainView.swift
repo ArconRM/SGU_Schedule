@@ -14,6 +14,8 @@ struct MainView: View {
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
     
+    @State private var columnVisibility = NavigationSplitViewVisibility.all
+    
     var body: some View {
         VStack {
             if UIDevice.isPhone {
@@ -50,13 +52,13 @@ struct MainView: View {
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                 } else {
-                    NavigationView {
+                    NavigationSplitView(columnVisibility: $columnVisibility) {
                         viewsManager.buildGroupsView()
                             .environmentObject(networkMonitor)
                             .environmentObject(viewsManager)
                             .environmentObject(appSettings)
-                            .navigationBarHidden(true)
-                            
+//                            .navigationBarHidden(true)
+                    } detail: {
                         if viewsManager.currentView == .ScheduleView {
                             viewsManager.buildScheduleView()
                                 .environmentObject(networkMonitor)
@@ -72,9 +74,10 @@ struct MainView: View {
                         } else {
                             viewsManager.buildSettingsView(showTutorial: .constant(false))
                                 .environmentObject(appSettings)
-                                .navigationBarHidden(true)
+//                                .navigationBarHidden(true)
                         }
                     }
+                    .navigationSplitViewStyle(.balanced)
                     .accentColor(colorScheme == .light ? .black : .white)
                 }
             }

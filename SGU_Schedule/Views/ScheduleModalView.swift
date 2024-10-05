@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//TODO: Объединить с модалом для сессии
 struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -15,9 +16,10 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     
     @ObservedObject var viewModel: ViewModel
     
-    @State private var curHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.14 : 0.1)).rounded()
-    private let minHeight: CGFloat = 250
-    private let maxHeight: CGFloat = (UIScreen.screenHeight - UIScreen.screenHeight * (UIDevice.isPhone ? 0.14 : 0.1)).rounded()
+    @State private var curPadding: CGFloat = 20
+    @State private var maxPadding: CGFloat = UIScreen.getModalViewMaxPadding(initialOrientation: UIDevice.current.orientation, currentOrientation: UIDevice.current.orientation)
+    private let minPadding: CGFloat = 20
+    private let initialOrientation = UIDevice.current.orientation
     
     @State private var lessonsBySelectedDay = [LessonDTO]()
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
@@ -40,7 +42,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     }
                     if viewModel.currentEvent != nil {
                         withAnimation(.easeInOut(duration: 0.5)) {
-                            curHeight = minHeight
+                            curPadding = maxPadding
                         }
                     }
                 }
@@ -117,7 +119,12 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 Spacer()
             }
         }
-        .frame(height: curHeight)
+        .onRotate(perform: { newOrientation in
+            maxPadding = UIScreen.getModalViewMaxPadding(initialOrientation: initialOrientation, currentOrientation: newOrientation)
+            if curPadding != minPadding {
+                curPadding = maxPadding
+            }
+        })
         .background (
             ZStack {
                 appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
@@ -130,8 +137,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
         )
+        .padding(.top, curPadding)
     }
-    
     
     @State private var prevDragTrans = CGSize.zero
     
@@ -139,24 +146,24 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         DragGesture(minimumDistance: 10, coordinateSpace: .global)
             .onChanged { value in
                 let dragAmount = value.translation.height - prevDragTrans.height
-                if curHeight > maxHeight {
-                    curHeight = maxHeight
-                } else if curHeight < minHeight {
-                    curHeight = minHeight
+                if curPadding > maxPadding {
+                    curPadding = maxPadding
+                } else if curPadding < minPadding {
+                    curPadding = minPadding
                 } else {
                     if dragAmount > 0 { //вниз
-                        if curHeight == maxHeight {
+//                        if curPadding == minPadding {
                             withAnimation(.easeInOut(duration: 0.4)) {
-                                curHeight = minHeight
+                                curPadding = maxPadding
                             }
-                        }
+//                        }
                         
                     } else { //вверх
-                        if curHeight == minHeight {
+//                        if curPadding == maxPadding {
                             withAnimation(.easeInOut(duration: 0.4)) {
-                                curHeight = maxHeight
+                                curPadding = minPadding
                             }
-                        }
+//                        }
                     }
                 }
                 prevDragTrans = value.translation

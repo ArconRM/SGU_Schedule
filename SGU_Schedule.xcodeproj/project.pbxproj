@@ -74,6 +74,8 @@
 		168069CA2C5C217D002D47A6 /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1312ABA21430079E3D7 /* Weekdays.swift */; };
 		168069CB2C5C217D002D47A6 /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
 		168FCC7B2C7C7BDE00D4B3CE /* Scraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168FCC7A2C7C7BDE00D4B3CE /* Scraper.swift */; };
+		16A585402CB063B400D6837A /* DeviceRotationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5853F2CB063B400D6837A /* DeviceRotationViewModifier.swift */; };
+		16A585422CB063E900D6837A /* ViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A585412CB063E900D6837A /* ViewExtension.swift */; };
 		16B3B0CE2C5FE4AE00043B16 /* ScheduleFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B3B0CD2C5FE4AE00043B16 /* ScheduleFetchResult.swift */; };
 		16B3B0D02C61134900043B16 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
 		16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58122AED0EE10060BD81 /* CoreDataError.swift */; };
@@ -121,7 +123,6 @@
 		BA5383612AF571B90004F012 /* GroupScheduleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */; };
 		BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */; };
 		BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
-		BA5701C62BB03DF800347B53 /* WebView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5701C52BB03DF800347B53 /* WebView.swift */; };
 		BA977C022AE6BE3B00F28F22 /* ScheduleEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */; };
 		BA977C042AE6D65000F28F22 /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
 		BA9B4DB02AD0A63C008A6092 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9B4DAF2AD0A63C008A6092 /* ScheduleViewModel.swift */; };
@@ -258,6 +259,8 @@
 		168069AE2C5ADAFF002D47A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		168069B02C5ADAFF002D47A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		168FCC7A2C7C7BDE00D4B3CE /* Scraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scraper.swift; sourceTree = "<group>"; };
+		16A5853F2CB063B400D6837A /* DeviceRotationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRotationViewModifier.swift; sourceTree = "<group>"; };
+		16A585412CB063E900D6837A /* ViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewExtension.swift; sourceTree = "<group>"; };
 		16B3B0CD2C5FE4AE00043B16 /* ScheduleFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFetchResult.swift; sourceTree = "<group>"; };
 		16B3B0D22C6116DA00043B16 /* ScheduleFetchResultVariants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFetchResultVariants.swift; sourceTree = "<group>"; };
 		16DB5F032C04CF9900870B21 /* TeacherDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherDTO.swift; sourceTree = "<group>"; };
@@ -303,7 +306,6 @@
 		BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleDTO.swift; sourceTree = "<group>"; };
 		BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSchedulePersistenceManager.swift; sourceTree = "<group>"; };
 		BA5383642AF692840004F012 /* LessonPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPersistenceManager.swift; sourceTree = "<group>"; };
-		BA5701C52BB03DF800347B53 /* WebView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebView.swift; sourceTree = "<group>"; };
 		BA977C012AE6BE3B00F28F22 /* ScheduleEventDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventDTO.swift; sourceTree = "<group>"; };
 		BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBreakDTO.swift; sourceTree = "<group>"; };
 		BA996A582AC4A00200888BE2 /* SGU_ScheduleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SGU_ScheduleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -454,12 +456,14 @@
 			path = SGU;
 			sourceTree = "<group>";
 		};
-		16637A9B2C976B930082A1AD /* Buttons */ = {
+		16637A9B2C976B930082A1AD /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				BA2FEEEB2B681F2A001F91F5 /* CarouselView.swift */,
 				16637A9C2C976BC20082A1AD /* MainButton.swift */,
+				16A5853F2CB063B400D6837A /* DeviceRotationViewModifier.swift */,
 			);
-			path = Buttons;
+			path = Common;
 			sourceTree = "<group>";
 		};
 		1672487A2C8CBA2B008673DE /* Protocols */ = {
@@ -529,15 +533,6 @@
 				BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */,
 			);
 			path = ViewsManagers;
-			sourceTree = "<group>";
-		};
-		BA2FEEF12B6825D5001F91F5 /* AdditionalViews */ = {
-			isa = PBXGroup;
-			children = (
-				BA2FEEEB2B681F2A001F91F5 /* CarouselView.swift */,
-				BA5701C52BB03DF800347B53 /* WebView.swift */,
-			);
-			path = AdditionalViews;
 			sourceTree = "<group>";
 		};
 		BA996A592AC4A00200888BE2 /* SGU_ScheduleTests */ = {
@@ -788,9 +783,8 @@
 				16F7AD992C51933B0057B062 /* SettingsView.swift */,
 				16DB5F0D2C061D4300870B21 /* TeacherInfoView.swift */,
 				167248702C8844F4008673DE /* TutorialView.swift */,
-				BA2FEEF12B6825D5001F91F5 /* AdditionalViews */,
 				BADAE12A2ABA074F0079E3D7 /* Subviews */,
-				16637A9B2C976B930082A1AD /* Buttons */,
+				16637A9B2C976B930082A1AD /* Common */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -837,6 +831,7 @@
 				BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */,
 				BAA53E512AE920390098F30E /* UIScreenExtension.swift */,
 				BA1256CE2B72A6E60019D2E6 /* UIDeviceExtension.swift */,
+				16A585412CB063E900D6837A /* ViewExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1195,10 +1190,10 @@
 				BAAD1F172B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift in Sources */,
 				BAFA580C2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld in Sources */,
 				16DB5F082C04D55600870B21 /* TeacherHTMLParser.swift in Sources */,
+				16A585422CB063E900D6837A /* ViewExtension.swift in Sources */,
 				BAAD1F1C2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift in Sources */,
 				16DDFFE62C7C7820004A6DA6 /* StaticScraper.swift in Sources */,
 				BA2FEEE22B66952B001F91F5 /* SessionEventsHTMLParser.swift in Sources */,
-				BA5701C62BB03DF800347B53 /* WebView.swift in Sources */,
 				161EFD7C2C074C2B008E281E /* TeacherInfoViewModel.swift in Sources */,
 				16DDFFE42C7C7743004A6DA6 /* DynamicScraper.swift in Sources */,
 				167248822C8F138A008673DE /* CoreData_AcademicGroupExtension.swift in Sources */,
@@ -1219,6 +1214,7 @@
 				1650F5182C54492600622205 /* AppStyle.swift in Sources */,
 				BAAD1F192B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift in Sources */,
 				BA1256CF2B72A6E60019D2E6 /* UIDeviceExtension.swift in Sources */,
+				16A585402CB063B400D6837A /* DeviceRotationViewModifier.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
 				BAAD1F1E2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
@@ -1287,7 +1283,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = SGU_ScheduleWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1325,7 +1321,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = SGU_ScheduleWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1359,9 +1355,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1381,9 +1378,10 @@
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MARKETING_VERSION = 1.0.3;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -1448,7 +1446,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1503,7 +1501,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1523,7 +1521,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SGU_Schedule/Preview Content\"";
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_PREVIEWS = YES;
@@ -1535,9 +1533,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1564,7 +1563,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 2;
 				DEVELOPMENT_ASSET_PATHS = "\"SGU_Schedule/Preview Content\"";
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_PREVIEWS = YES;
@@ -1576,9 +1575,10 @@
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = "Launch Screen.storyboard";
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
+				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
