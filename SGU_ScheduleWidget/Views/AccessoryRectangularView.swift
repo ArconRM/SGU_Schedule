@@ -11,6 +11,7 @@ import WidgetKit
 struct AccessoryRectangularView: View {
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
+    var closeLesson: LessonDTO?
     
     var body: some View {
         ZStack {
@@ -25,23 +26,30 @@ struct AccessoryRectangularView: View {
                 Text("Не выбрана сохраненная группа")
                     .bold()
             case .Success:
-                if currentEvent == nil {
-                    Text("Сейчас нет пар")
-                        .bold()
-                }
-                else {
+                if closeLesson != nil {
+                    VStack {
+                        Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())):")
+                            .font(.system(size: 15, design: .rounded))
+                            .bold()
+                        
+                        Text(closeLesson!.title)
+                            .font(.system(size: 15, design: .rounded))
+                    }
+                    .frame(minHeight: 60)
+                } else if currentEvent != nil {
                     VStack {
                         Text("\(currentEvent!.timeStart.getHoursAndMinutesString()) - \(currentEvent!.timeEnd.getHoursAndMinutesString())")
                             .font(.system(size: 15, design: .rounded))
                             .bold()
-//                            .padding(.top, 0)
                         
                         Text(currentEvent!.title)
                             .font(.system(size: 15, design: .rounded))
-//                            .padding(.top, 1)
-//                            .padding(.bottom, 0.9)
                     }
                     .frame(minHeight: 60)
+                }
+                else {
+                    Text("Сегодня больше нет пар")
+                        .bold()
                 }
             }
         }

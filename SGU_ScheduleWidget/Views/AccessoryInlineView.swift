@@ -11,6 +11,7 @@ import WidgetKit
 struct AccessoryInlineView: View {
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
+    var closeLesson: LessonDTO?
     
     var body: some View {
         ZStack {
@@ -22,12 +23,14 @@ struct AccessoryInlineView: View {
                 Text("Не выбрана сохраненная группа")
                     .bold()
             case .Success:
-                if currentEvent == nil {
-                    Text("Сейчас нет пар")
-                        .bold()
-                }
-                else {
+                if closeLesson != nil {
+                    Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())): \(closeLesson!.title)")
+                    
+                } else if currentEvent != nil {
                     Text("\(currentEvent!.timeStart.getHoursAndMinutesString())-\(currentEvent!.timeEnd.getHoursAndMinutesString()) \(currentEvent!.title)")
+                    
+                } else {
+                    Text("Сейчас нет пар")
                 }
             }
         }

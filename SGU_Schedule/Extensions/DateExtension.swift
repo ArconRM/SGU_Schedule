@@ -9,6 +9,15 @@ import Foundation
 
 extension Date {
     /// If current weekday is Sunday, it will return weekType of next week
+    static var currentWeekType: WeekType {
+        get {
+            let calendar = Calendar.current
+            let weekOfYear = calendar.component(.weekOfYear, from: Date())
+            return (weekOfYear) % 2 == 0 ? .Denumerator : .Numerator
+        }
+    }
+    
+    /// If current weekday is Sunday, it will return weekType of next week
     static var currentWeekTypeWithSundayBeingNextWeek: WeekType {
         get {
             let calendar = Calendar.current
@@ -92,7 +101,7 @@ extension Date {
     }
     
     /// Returns true if weekType equals .All or current weekType
-    static func checkIfWeekTypeIsAllOrCurrent(_ weekType: WeekType) -> Bool {
+    static func checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(_ weekType: WeekType) -> Bool {
         return [.All, self.currentWeekTypeWithSundayBeingNextWeek].contains(weekType)
     }
     

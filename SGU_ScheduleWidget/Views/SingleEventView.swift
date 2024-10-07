@@ -1,5 +1,5 @@
 //
-//  CurrentScheduleEventView.swift
+//  SingleEventView.swift
 //  SGU_ScheduleWidgetExtension
 //
 //  Created by Artemiy MIROTVORTSEV on 03.08.2024.
@@ -7,11 +7,12 @@
 
 import SwiftUI
 
-struct CurrentScheduleEventView: View {
+struct SingleEventView: View {
     @EnvironmentObject var appSettings: AppSettings
     
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
+    var closeLesson: LessonDTO?
     
     var body: some View {
         switch fetchResultVariant {
@@ -24,12 +25,27 @@ struct CurrentScheduleEventView: View {
                 .bold()
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
         case .Success:
-            if currentEvent == nil {
-                Text("Сейчас нет пар")
-                    .bold()
-                    .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
-            }
-            else {
+            if closeLesson != nil {
+                VStack {
+                    Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())):")
+                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .padding(.bottom, 0.5)
+                    
+                    Text(closeLesson!.title)
+                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .padding(.vertical, 2)
+                        .multilineTextAlignment(.center)
+                    
+                    Text(closeLesson!.cabinet)
+                        .font(.system(size: 13, weight: .light, design: .rounded))
+                        .italic()
+                        .padding(.top, 1)
+                    
+                    Spacer()
+                }
+                .padding(.trailing, 10)
+                
+            } else if currentEvent != nil {
                 VStack {
                     Text("\(currentEvent!.timeStart.getHoursAndMinutesString()) - \(currentEvent!.timeEnd.getHoursAndMinutesString())")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
@@ -50,6 +66,11 @@ struct CurrentScheduleEventView: View {
                     Spacer()
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
+                
+            } else {
+                Text("Сейчас нет пар")
+                    .bold()
+                    .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
             }
         }
     }

@@ -9,17 +9,21 @@ import Foundation
 
 public struct TimeBreakDTO: ScheduleEventDTO {
     
-    public var title: String = "Перемена"
+    public var title: String
     public var timeStart: Date
     public var timeEnd: Date
     
-    init(timeStart: Date, timeEnd: Date) {
+    init(timeStart: Date, timeEnd: Date, isWindow: Bool) {
+        self.title = isWindow ? "Окно" : "Перемена"
+        
         self.timeStart = timeStart
         self.timeEnd = timeEnd
     }
     
     /// TimeStart and TimeEnd must be in "HH:mm" format
-    init(timeStart: String, timeEnd: String) {
+    init(timeStart: String, timeEnd: String, isWindow: Bool) {
+        self.title = isWindow ? "Окно" : "Перемена"
+        
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_GB")
         dateFormatter.dateStyle = .none

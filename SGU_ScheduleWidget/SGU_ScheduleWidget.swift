@@ -13,6 +13,7 @@ struct ScheduleEventsEntry: TimelineEntry {
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
     var nextEvent: (any ScheduleEventDTO)?
+    var closeLesson: LessonDTO?
 }
 
 struct ScheduleEventsProvider: TimelineProvider {
@@ -25,12 +26,14 @@ struct ScheduleEventsProvider: TimelineProvider {
         let resultVariant = viewModel.fetchResult.resultVariant
         let currentEvent = viewModel.fetchResult.currentEvent
         let nextLesson = viewModel.fetchResult.nextLesson
+        let closeLesson = viewModel.fetchResult.closeLesson
         
         let entry = ScheduleEventsEntry(
             date: date, 
             fetchResultVariant: resultVariant,
             currentEvent: currentEvent,
-            nextEvent: nextLesson
+            nextEvent: nextLesson,
+            closeLesson: closeLesson
         )
         
         var nextUpdateDate = date
@@ -69,7 +72,8 @@ struct ScheduleEventsProvider: TimelineProvider {
                 date: date,
                 fetchResultVariant: viewModel.fetchResult.resultVariant,
                 currentEvent: viewModel.fetchResult.currentEvent,
-                nextEvent: viewModel.fetchResult.nextLesson
+                nextEvent: viewModel.fetchResult.nextLesson,
+                closeLesson: viewModel.fetchResult.closeLesson
             )
         }
         
@@ -95,29 +99,16 @@ struct ScheduleEventsView: View {
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEventDTO)?
     var nextEvent: (any ScheduleEventDTO)?
+    var closeLesson: LessonDTO?
 
     @ViewBuilder
     var body: some View {
         switch family {
         case .systemSmall: 
-            CurrentScheduleEventView(
-                fetchResultVariant: fetchResultVariant,
-                currentEvent: currentEvent
-            )
-            .environmentObject(appSettings)
-            .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.Fill {
-                    buildFilledRectangle(event: currentEvent)
-                } else {
-                    buildBorderedRectangle(event: currentEvent)
-                }
-            }
-            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
-        case .systemMedium:
-            CurrentAndNextScheduleEventsView(
+            SingleEventView(
                 fetchResultVariant: fetchResultVariant,
                 currentEvent: currentEvent,
-                nextEvent: nextEvent
+                closeLesson: closeLesson
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
@@ -128,20 +119,42 @@ struct ScheduleEventsView: View {
                 }
             }
             .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            
+        case .systemMedium:
+            TwoEventsView(
+                fetchResultVariant: fetchResultVariant,
+                currentEvent: currentEvent,
+                nextEvent: nextEvent,
+                closeLesson: closeLesson
+            )
+            .environmentObject(appSettings)
+            .containerBackground(for: .widget) {
+                if appSettings.currentAppStyle == AppStyle.Fill {
+                    buildFilledRectangle(event: currentEvent)
+                } else {
+                    buildBorderedRectangle(event: currentEvent)
+                }
+            }
+            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            
         case .accessoryRectangular:
             AccessoryRectangularView(
                 fetchResultVariant: fetchResultVariant,
-                currentEvent: currentEvent
+                currentEvent: currentEvent,
+                closeLesson: closeLesson
             )
             .containerBackground(.clear, for: .widget)
             .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            
         case .accessoryInline:
             AccessoryInlineView(
                 fetchResultVariant: fetchResultVariant,
-                currentEvent: currentEvent
+                currentEvent: currentEvent,
+                closeLesson: closeLesson
             )
             .containerBackground(.clear, for: .widget)
             .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            
         default:
             NotAvailableView()
         }
@@ -187,7 +200,8 @@ struct SGU_ScheduleWidget: Widget {
             ScheduleEventsView(
                 fetchResultVariant: entry.fetchResultVariant,
                 currentEvent: entry.currentEvent,
-                nextEvent: entry.nextEvent
+                nextEvent: entry.nextEvent,
+                closeLesson: entry.closeLesson
             )
             .environmentObject(AppSettings())
         }

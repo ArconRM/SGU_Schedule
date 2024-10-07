@@ -8,7 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		1602CA852C5D77E500E8F89F /* NotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA842C5D77E500E8F89F /* NotAvailableView.swift */; };
-		1602CA872C5D786000E8F89F /* CurrentScheduleEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */; };
+		1602CA872C5D786000E8F89F /* SingleEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA862C5D786000E8F89F /* SingleEventView.swift */; };
 		1602CA882C5D79B900E8F89F /* DateExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* DateExtension.swift */; };
 		1602CAB02C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CAAF2C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift */; };
 		16150C2B2C09BFB6006BA964 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */; };
@@ -29,7 +29,7 @@
 		16644B582C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16644B572C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift */; };
 		166DB20B2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
 		166DB20C2C62AE72001D0688 /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
-		166DB20E2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */; };
+		166DB20E2C62B188001D0688 /* TwoEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20D2C62B188001D0688 /* TwoEventsView.swift */; };
 		167248712C8844F4008673DE /* TutorialView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248702C8844F4008673DE /* TutorialView.swift */; };
 		167248752C8B5711008673DE /* ViewModelWithParsingSGUFactory_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248742C8B5711008673DE /* ViewModelWithParsingSGUFactory_old.swift */; };
 		167248772C8B5D0A008673DE /* ParserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248762C8B5D0A008673DE /* ParserOptions.swift */; };
@@ -222,7 +222,7 @@
 
 /* Begin PBXFileReference section */
 		1602CA842C5D77E500E8F89F /* NotAvailableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotAvailableView.swift; sourceTree = "<group>"; };
-		1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentScheduleEventView.swift; sourceTree = "<group>"; };
+		1602CA862C5D786000E8F89F /* SingleEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleEventView.swift; sourceTree = "<group>"; };
 		1602CAAF2C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleWidgetViewModel.swift; sourceTree = "<group>"; };
 		16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithParsingSGUFactory.swift; sourceTree = "<group>"; };
@@ -241,7 +241,7 @@
 		166DB2082C62AC7F001D0688 /* SGU_Schedule.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_Schedule.entitlements; sourceTree = "<group>"; };
 		166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SGU_ScheduleWidgetExtension.entitlements; sourceTree = "<group>"; };
 		166DB20A2C62AE72001D0688 /* AppGroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppGroup.swift; sourceTree = "<group>"; };
-		166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CurrentAndNextScheduleEventsView.swift; sourceTree = "<group>"; };
+		166DB20D2C62B188001D0688 /* TwoEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoEventsView.swift; sourceTree = "<group>"; };
 		167248702C8844F4008673DE /* TutorialView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TutorialView.swift; sourceTree = "<group>"; };
 		167248742C8B5711008673DE /* ViewModelWithParsingSGUFactory_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithParsingSGUFactory_old.swift; sourceTree = "<group>"; };
 		167248762C8B5D0A008673DE /* ParserOptions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParserOptions.swift; sourceTree = "<group>"; };
@@ -398,8 +398,8 @@
 			isa = PBXGroup;
 			children = (
 				1602CA842C5D77E500E8F89F /* NotAvailableView.swift */,
-				1602CA862C5D786000E8F89F /* CurrentScheduleEventView.swift */,
-				166DB20D2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift */,
+				1602CA862C5D786000E8F89F /* SingleEventView.swift */,
+				166DB20D2C62B188001D0688 /* TwoEventsView.swift */,
 				16FC5A692C873E6500E2563F /* AccessoryRectangularView.swift */,
 				165BCF322C871EB50004C291 /* AccessoryInlineView.swift */,
 			);
@@ -1095,7 +1095,7 @@
 				163676272C8F2F4A00438B86 /* CoreData_AcademicGroupExtension.swift in Sources */,
 				168069C62C5C217D002D47A6 /* GroupsSource.swift in Sources */,
 				168069C72C5C217D002D47A6 /* LessonType.swift in Sources */,
-				166DB20E2C62B188001D0688 /* CurrentAndNextScheduleEventsView.swift in Sources */,
+				166DB20E2C62B188001D0688 /* TwoEventsView.swift in Sources */,
 				168069C82C5C217D002D47A6 /* SessionEventType.swift in Sources */,
 				16FC5A6A2C873E6500E2563F /* AccessoryRectangularView.swift in Sources */,
 				168069C92C5C217D002D47A6 /* AppTheme.swift in Sources */,
@@ -1126,7 +1126,7 @@
 				16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */,
 				168069A92C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift in Sources */,
 				167EE42A2C5F79BD00701C8A /* GroupSchedulePersistenceManager.swift in Sources */,
-				1602CA872C5D786000E8F89F /* CurrentScheduleEventView.swift in Sources */,
+				1602CA872C5D786000E8F89F /* SingleEventView.swift in Sources */,
 				167EE42E2C5F7D0800701C8A /* PersistenceController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1283,7 +1283,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = SGU_ScheduleWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1298,7 +1298,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1321,7 +1321,7 @@
 				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
 				CODE_SIGN_ENTITLEMENTS = SGU_ScheduleWidgetExtension.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
@@ -1336,7 +1336,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1521,7 +1521,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SGU_Schedule/Preview Content\"";
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_PREVIEWS = YES;
@@ -1541,7 +1541,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1563,7 +1563,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_ASSET_PATHS = "\"SGU_Schedule/Preview Content\"";
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				ENABLE_PREVIEWS = YES;
@@ -1583,7 +1583,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
+				MARKETING_VERSION = 1.0.4;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -117,7 +117,7 @@ struct ScheduleSubview: View, Equatable {
         }
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
-        .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+        .opacity(Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
     }
     
@@ -185,7 +185,7 @@ struct ScheduleSubview: View, Equatable {
             }
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
-            .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+            .opacity(Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ? 1 : 0.5)
             .background {
                 if appSettings.currentAppStyle != .Bordered {
                     getBackground(lesson: lesson)
@@ -244,12 +244,12 @@ struct ScheduleSubview: View, Equatable {
         }
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
-        .opacity(Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ? 1 : 0.5)
+        .opacity(Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
     }
     
     private func sortLessonsByWeekType(_ lessons: [LessonDTO]) -> [LessonDTO] {
-        return lessons.filter({ Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }) + lessons.filter({ !Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) })
+        return lessons.filter({ Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek($0.weekType) }) + lessons.filter({ !Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek($0.weekType) })
     }
     
     private func getBackground(lesson: LessonDTO) -> AnyView {
@@ -267,7 +267,7 @@ struct ScheduleSubview: View, Equatable {
     }
     
     private func getLessonColor(lesson: LessonDTO) -> Color {
-        Date.checkIfWeekTypeIsAllOrCurrent(lesson.weekType) ?
+        Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ?
         (lesson.lessonType == .Lecture ? Color.green : Color.blue)
         : Color.gray
     }

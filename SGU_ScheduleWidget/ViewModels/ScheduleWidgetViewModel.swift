@@ -24,85 +24,18 @@ public final class ScheduleWidgetViewModel: ObservableObject {
             if schedule == nil {
                 fetchResult = ScheduleFetchResult(resultVariant: .NoFavoriteGroup)
             } else {
-                let (currentEvent, nextLesson) = getCurrentAndNextLesson(schedule: schedule!)
-                fetchResult = ScheduleFetchResult(resultVariant: .Success, currentEvent: currentEvent, nextLesson: nextLesson)
+                let (currentEvent, nextLesson, _) = schedule?.getCurrentAndNextLessons() ?? (nil, nil, nil)
+                let closeLesson = schedule?.getFirstCloseToNowLesson()
+                fetchResult = ScheduleFetchResult(
+                    resultVariant: .Success,
+                    currentEvent: currentEvent,
+                    nextLesson: nextLesson,
+                    closeLesson: closeLesson
+                )
             }
         }
         catch {
             fetchResult = ScheduleFetchResult(resultVariant: .UnknownErrorWhileFetching)
         }
-    }
-    
-    private func getCurrentAndNextLesson(schedule: GroupScheduleDTO) -> ((any ScheduleEventDTO)?, LessonDTO?) {
-        // Проверяем есть ли вообще занятия
-        let currentDayNumber = Date.currentWeekDay.number
-        let currentTime = Date.currentHoursAndMinutes
-        
-        if currentDayNumber == 7 {
-            return (nil, nil)
-        }
-        
-        let todayLessons = schedule.lessons.filter { $0.weekDay.number == currentDayNumber && Date.checkIfWeekTypeIsAllOrCurrent($0.weekType) }
-        if todayLessons.isEmpty {
-            return (nil, nil)
-        }
-        
-        for lessonNumber in 1...8 {
-            let todayLessonsByNumber = todayLessons.filter { $0.lessonNumber == lessonNumber }
-            if todayLessonsByNumber.isEmpty {
-                continue
-            }
-            
-            // Ищем пару
-            if Date.checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeStart,
-                                            dateMiddle: currentTime,
-                                            dateEnd: todayLessonsByNumber[0].timeEnd)
-            {
-                var currentLesson = todayLessonsByNumber[0]
-                if todayLessonsByNumber.count > 1 { // Значит есть подгруппы и общего кабинета нет
-                    currentLesson.cabinet = "По подгруппам"
-                }
-                return (currentLesson, getNextLesson(lessons: todayLessons, from: lessonNumber))
-                
-            // Ищем перемену
-            } else if lessonNumber != 8 { // Смотрим следующую пару, когда находим - выходим
-                for nextLessonNumber in (lessonNumber + 1)...8 {
-                    let todayLessonsByNumberNext = todayLessons.filter { $0.lessonNumber == nextLessonNumber }
-                    if todayLessonsByNumberNext.isEmpty {
-                        continue
-                    }
-                    
-                    if Date.checkIfTimeIsBetweenTwoTimes(dateStart: todayLessonsByNumber[0].timeEnd,
-                                                    dateMiddle: currentTime,
-                                                    dateEnd: todayLessonsByNumberNext[0].timeStart,
-                                                    strictInequality: true)
-                    {
-                        let currentTimeBreak = TimeBreakDTO(timeStart: todayLessonsByNumber[0].timeEnd, timeEnd: todayLessonsByNumberNext[0].timeStart)
-                        return (currentTimeBreak, getNextLesson(lessons: todayLessons, from: lessonNumber))
-                    }
-                    
-                    if !todayLessonsByNumberNext.isEmpty {
-                        break
-                    }
-                }
-            }
-        }
-        
-        return (nil, nil)
-    }
-    
-    /// If possible, sets twoNextLessons to two nearest lessons from given array, which have greater lessonNumber than given one
-    private func getNextLesson(lessons: [LessonDTO], from number: Int) -> LessonDTO? {
-        for nextLessonNumber in (number + 1)...8 {
-            let lessonsByNumber = lessons.filter { $0.lessonNumber == nextLessonNumber }
-            if !lessonsByNumber.isEmpty {
-                var nextLesson = lessonsByNumber[0]
-                if lessonsByNumber.count > 1 {
-                    nextLesson.cabinet = "По подгруппам"
-                }
-                return nextLesson
-            }
-        }
-        return nil
     }
 }

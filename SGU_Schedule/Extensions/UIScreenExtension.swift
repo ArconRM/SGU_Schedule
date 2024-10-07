@@ -15,7 +15,7 @@ extension UIScreen {
     
     static func getModalViewMaxPadding(initialOrientation: UIDeviceOrientation, currentOrientation: UIDeviceOrientation) -> CGFloat {
         if UIDevice.isPhone {
-            return self.screenHeight * 0.5
+            return self.screenHeight * 0.6
         } else if initialOrientation.isLandscape {
             return currentOrientation.isLandscape ?
             self.screenHeight * 0.6 :
