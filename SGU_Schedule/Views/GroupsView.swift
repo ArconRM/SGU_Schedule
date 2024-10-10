@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+//TODO: .contentShape(Rectangle()) для ios 18, без него не работает tapGesture
 struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -160,6 +161,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                     Spacer(minLength: 40)
                 }
+                .contentShape(Rectangle())
                 .blur(radius: showTutorialView ? 3 : 0)
             }
             .cornerRadius(viewsManager.isShowingSettingsView && UIDevice.isPhone ? 20 : 0)
@@ -236,6 +238,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     .font(.system(size: 17, weight: .bold))
             }
         }
+        .contentShape(Rectangle())
         .onTapGesture {
             programTappedCount += 1
             if programTappedCount > 7 {
@@ -263,14 +266,13 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 }
             } label: {}
         } label: {
-            HStack {
-                MainButton {
-                    Text(String(selectedYear) + " курс")
-                        .padding(14)
-                        .font(.system(size: 17, weight: .bold))
-                }
+            MainButton {
+                Text(String(selectedYear) + " курс")
+                    .padding(14)
+                    .font(.system(size: 17, weight: .bold))
             }
         }
+        .contentShape(Rectangle())
         .onTapGesture {
             yearTappedCount += 1
             if yearTappedCount > 7 {

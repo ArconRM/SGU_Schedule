@@ -109,11 +109,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     viewsManager.saveGroup(group: group!)
                 }
                 viewsManager.setFavouriteGroup(group: group!)
-                
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    viewsManager.showGroupsView(needToReload: UIDevice.isPad)
-                }
+                isFavourite = true
+                fetchAllData()
             }
+            
+            let impact = UIImpactFeedbackGenerator(style: .medium)
+            impact.impactOccurred()
         }) {
             MainButton {
                 Image(systemName: isFavourite ? "star.fill" : "star")
@@ -135,11 +136,13 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 }
             } else {
                 viewsManager.saveGroup(group: group!)
-                
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    viewsManager.showGroupsView(needToReload: UIDevice.isPad)
-                }
+                isPinned = true
+                fetchAllData()
             }
+            
+            let impact = UIImpactFeedbackGenerator(style: .medium)
+            impact.impactOccurred()
+
         }) {
             MainButton {
                 Image(systemName: isPinned ? "pin.fill" : "pin")

@@ -14,7 +14,7 @@ struct HeheAlert: View {
     
     var body: some View {
         ZStack {
-            Color.gray
+            (colorScheme == .light ? Color.gray : Color.black)
                 .opacity(0.4)
                 .ignoresSafeArea()
             
@@ -31,7 +31,7 @@ struct HeheAlert: View {
                     .multilineTextAlignment(.center)
                     .foregroundColor(.primary)
                     .padding(.top, 5)
-                    .padding(.bottom, 10)
+                    .padding(.bottom, 20)
                 
                 Divider()
                 

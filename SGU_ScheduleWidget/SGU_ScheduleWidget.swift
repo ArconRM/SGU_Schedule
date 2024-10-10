@@ -24,31 +24,40 @@ struct ScheduleEventsProvider: TimelineProvider {
         viewModel.fetchSavedSchedule()
         
         let resultVariant = viewModel.fetchResult.resultVariant
+        let firstLesson = viewModel.fetchResult.firstLesson
         let currentEvent = viewModel.fetchResult.currentEvent
         let nextLesson = viewModel.fetchResult.nextLesson
-        let closeLesson = viewModel.fetchResult.closeLesson
+        var closeLesson: LessonDTO? = nil
+        
+        var nextUpdateDate = date
+        
+        if firstLesson == nil { // Если сегодня нет пар  - обновляем на следующий учебный день
+            let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 1, of: date) ?? date
+            nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate) ?? date
+            
+        } else if currentEvent != nil { // Если сейчас что-то есть, то обновляем после окончания текущего
+            nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes(), second: 1, of: date) ?? date
+            
+        } else if date.getHours() < firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время сейчас до первой пары
+            if firstLesson!.timeStart.getHours() - date.getHours() <= 2 { // Если первая пара ближе, чем через 2 часа, ставим что она скоро и обновляем когда она начнется
+                closeLesson = firstLesson!
+                nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours(), minute: firstLesson!.timeStart.getMinutes(), second: 1, of: date) ?? date
+            } else { // Иначе обновляем за два часа до первой
+                nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours() - 2, minute: firstLesson!.timeStart.getMinutes(), second: 1, of: date) ?? date
+            }
+            
+        } else if date.getHours() > firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время позже первой пары, значит сегодня больше ничего нет и обновляем на след учебный день
+            let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 1, of: date) ?? date
+            nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate) ?? date
+        }
         
         let entry = ScheduleEventsEntry(
-            date: date, 
+            date: date,
             fetchResultVariant: resultVariant,
             currentEvent: currentEvent,
             nextEvent: nextLesson,
             closeLesson: closeLesson
         )
-        
-        var nextUpdateDate = date
-        // Если сейчас что-то есть, то обновляем после окончания текущего
-        if currentEvent != nil {
-            nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes() + 1, second: 0, of: date)!
-        } else { // Если сейчас ничего нет (значит дальше тоже ничего нет, ибо тогда была бы перемена), значит обновляем утром
-            let morningUpdateDate = Calendar.current.date(bySettingHour: 8, minute: 20, second: 0, of: date)!
-            // Если сейчас не позже чем 8:20
-            if date <= morningUpdateDate {
-                nextUpdateDate = morningUpdateDate
-            } else { // Если позже, то обновляем уже на утро следующего дня
-                nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate)!
-            }
-        }
         
         let timeline = Timeline(
             entries:[entry],
@@ -72,8 +81,7 @@ struct ScheduleEventsProvider: TimelineProvider {
                 date: date,
                 fetchResultVariant: viewModel.fetchResult.resultVariant,
                 currentEvent: viewModel.fetchResult.currentEvent,
-                nextEvent: viewModel.fetchResult.nextLesson,
-                closeLesson: viewModel.fetchResult.closeLesson
+                nextEvent: viewModel.fetchResult.nextLesson
             )
         }
         

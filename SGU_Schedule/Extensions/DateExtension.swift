@@ -101,6 +101,11 @@ extension Date {
     }
     
     /// Returns true if weekType equals .All or current weekType
+    static func checkIfWeekTypeIsAllOrCurrent(_ weekType: WeekType) -> Bool {
+        return [.All, self.currentWeekType].contains(weekType)
+    }
+    
+    /// Returns true if weekType equals .All or current weekType
     static func checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(_ weekType: WeekType) -> Bool {
         return [.All, self.currentWeekTypeWithSundayBeingNextWeek].contains(weekType)
     }
@@ -117,8 +122,8 @@ extension Date {
         var dateToCompare1 = Date.init(timeIntervalSinceReferenceDate: 0)
         var dateToCompare2 = Date.init(timeIntervalSinceReferenceDate: 0)
         
-        let date1Components = calendar.dateComponents([.hour, .minute], from: date1)
-        let date2Components = calendar.dateComponents([.hour, .minute], from: date2)
+        let date1Components = calendar.dateComponents([.hour, .minute, .second], from: date1)
+        let date2Components = calendar.dateComponents([.hour, .minute, .second], from: date2)
         
         dateToCompare1 = calendar.date(byAdding: date1Components, to: dateToCompare1) ?? Date.now
         dateToCompare2 = calendar.date(byAdding: date2Components, to: dateToCompare2) ?? Date.now

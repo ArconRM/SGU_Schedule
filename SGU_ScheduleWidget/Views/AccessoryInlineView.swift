@@ -30,7 +30,7 @@ struct AccessoryInlineView: View {
                     Text("\(currentEvent!.timeStart.getHoursAndMinutesString())-\(currentEvent!.timeEnd.getHoursAndMinutesString()) \(currentEvent!.title)")
                     
                 } else {
-                    Text("Сейчас нет пар")
+                    Text("Пока нет пар")
                 }
             }
         }

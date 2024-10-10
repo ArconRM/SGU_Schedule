@@ -48,7 +48,7 @@ struct AccessoryRectangularView: View {
                     .frame(minHeight: 60)
                 }
                 else {
-                    Text("Сегодня больше нет пар")
+                    Text("Пока нет пар")
                         .bold()
                 }
             }

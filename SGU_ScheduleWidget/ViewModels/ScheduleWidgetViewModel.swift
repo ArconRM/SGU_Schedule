@@ -12,7 +12,7 @@ public final class ScheduleWidgetViewModel: ObservableObject {
     
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     
-    @Published var fetchResult = ScheduleFetchResult(resultVariant: .UnknownErrorWhileFetching)
+    @Published var fetchResult = ScheduleFetchResultForWidget(resultVariant: .UnknownErrorWhileFetching)
     
     init(schedulePersistenceManager: GroupSchedulePersistenceManager) {
         self.schedulePersistenceManager = schedulePersistenceManager
@@ -22,20 +22,21 @@ public final class ScheduleWidgetViewModel: ObservableObject {
         do {
             let schedule = try self.schedulePersistenceManager.getFavouriteGroupScheduleDTO()
             if schedule == nil {
-                fetchResult = ScheduleFetchResult(resultVariant: .NoFavoriteGroup)
+                fetchResult = ScheduleFetchResultForWidget(resultVariant: .NoFavoriteGroup)
             } else {
-                let (currentEvent, nextLesson, _) = schedule?.getCurrentAndNextLessons() ?? (nil, nil, nil)
-                let closeLesson = schedule?.getFirstCloseToNowLesson()
-                fetchResult = ScheduleFetchResult(
+                let firstLesson = schedule!.getTodayFirstLesson()
+                let (currentEvent, nextLesson, _) = schedule!.getCurrentAndNextLessons()
+                
+                fetchResult = ScheduleFetchResultForWidget(
                     resultVariant: .Success,
+                    firstLesson: firstLesson,
                     currentEvent: currentEvent,
-                    nextLesson: nextLesson,
-                    closeLesson: closeLesson
+                    nextLesson: nextLesson
                 )
             }
         }
         catch {
-            fetchResult = ScheduleFetchResult(resultVariant: .UnknownErrorWhileFetching)
+            fetchResult = ScheduleFetchResultForWidget(resultVariant: .UnknownErrorWhileFetching)
         }
     }
 }

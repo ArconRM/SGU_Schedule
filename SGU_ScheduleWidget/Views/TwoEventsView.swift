@@ -99,7 +99,7 @@ struct TwoEventsView: View {
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
                 
             } else {
-                Text("Сейчас нет пар")
+                Text("Пока нет пар")
                     .bold()
                     .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
             }

@@ -66,6 +66,9 @@ struct SettingsView: View {
                     withAnimation(.bouncy(duration: 0.5)) {
                         appSettings.currentAppThemeValue = newValue.rawValue
                     }
+                    
+                    let impact = UIImpactFeedbackGenerator(style: .medium)
+                    impact.impactOccurred()
                 }
                 
                Text("Стили: ")
@@ -88,6 +91,9 @@ struct SettingsView: View {
                         appSettings.currentAppStyleValue = newValue.rawValue
                         WidgetCenter.shared.reloadAllTimelines()
                     }
+                    
+                    let impact = UIImpactFeedbackGenerator(style: .medium)
+                    impact.impactOccurred()
                 }
                 
                 Text("Версия сайта\nдля парсинга:")
