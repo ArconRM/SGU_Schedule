@@ -85,6 +85,10 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 }
+                .onChange(of: viewModel.isLoadingLessons) { _ in
+                    let impact = UIImpactFeedbackGenerator(style: .light)
+                    impact.impactOccurred()
+                }
                 
                 Spacer()
                 

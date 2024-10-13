@@ -212,6 +212,9 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             withAnimation(.bouncy(duration: 0.5)) {
                 viewsManager.showSettingsView()
             }
+            
+            let impact = UIImpactFeedbackGenerator(style: .light)
+            impact.impactOccurred()
         }) {
             MainButton {
                 Image(systemName: "gear")

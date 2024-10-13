@@ -115,6 +115,9 @@ struct SettingsView: View {
                     withAnimation(.easeInOut(duration: 0.5)) {
                         viewsManager.changeParser()
                     }
+                    
+                    let impact = UIImpactFeedbackGenerator(style: .medium)
+                    impact.impactOccurred()
                 }
                 
                 if UIDevice.isPhone {
