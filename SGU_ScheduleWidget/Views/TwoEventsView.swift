@@ -44,6 +44,7 @@ struct TwoEventsView: View {
                     
                     Spacer()
                 }
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
                 .padding(.trailing, 10)
                 
             } else if currentEvent != nil {
