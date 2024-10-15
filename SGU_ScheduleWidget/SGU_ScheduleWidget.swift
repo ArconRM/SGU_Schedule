@@ -239,24 +239,42 @@ struct Widget_Previews: PreviewProvider {
                                      timeStart: "08:20",
                                      timeEnd: "09:50")
         
-//        let nextEvent = LessonDTO(subject: "Дифференциальные уравнения и еще что-нибудь для длины",
-//                                  teacherFullName: "Бредихин Д. А.",
-//                                  lessonType: .Practice,
-//                                  weekDay: .Monday,
-//                                  weekType: .Denumerator,
-//                                  cabinet: "12 корпус ауд.304",
-//                                  lessonNumber: 1,
-//                                  timeStart: "10:00",
-//                                  timeEnd: "11:30")
+        let nextEvent = LessonDTO(subject: "Дифференциальные уравнения и еще что-нибудь для длины",
+                                  teacherFullName: "Бредихин Д. А.",
+                                  lessonType: .Practice,
+                                  weekDay: .Monday,
+                                  weekType: .Denumerator,
+                                  cabinet: "12 корпус ауд.304",
+                                  lessonNumber: 1,
+                                  timeStart: "10:00",
+                                  timeEnd: "11:30")
         Group {
             ScheduleEventsView(
                 fetchResultVariant: .Success,
-                currentEvent: nil,
+                currentEvent: lesson,
                 nextEvent: nil,
-                closeLesson: lesson
+                closeLesson: nil
             )
             .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .environmentObject(AppSettings())
+            
+            ScheduleEventsView(
+            fetchResultVariant: .Success,
+            currentEvent: lesson,
+            nextEvent: nextEvent,
+            closeLesson: nil
+        )
+            .previewContext(WidgetPreviewContext(family: .systemMedium))
+            .environmentObject(AppSettings())
+            
+            ScheduleEventsView(
+            fetchResultVariant: .Success,
+            currentEvent: lesson,
+            nextEvent: nil,
+            closeLesson: nil
+        )
+            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+            .environmentObject(AppSettings())
         }
     }
 }

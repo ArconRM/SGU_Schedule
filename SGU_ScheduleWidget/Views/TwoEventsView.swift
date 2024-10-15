@@ -73,7 +73,9 @@ struct TwoEventsView: View {
                     Divider()
                     
                     if nextEvent == nil {
+                        Spacer()
                         Text("Дальше пар нет, кайфуем")
+                        Spacer()
                     } else {
                         VStack {
                             Text("\(nextEvent!.timeStart.getHoursAndMinutesString()) - \(nextEvent!.timeEnd.getHoursAndMinutesString())")

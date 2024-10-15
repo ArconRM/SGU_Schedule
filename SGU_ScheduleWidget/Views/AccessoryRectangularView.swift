@@ -28,7 +28,7 @@ struct AccessoryRectangularView: View {
             case .Success:
                 if closeLesson != nil {
                     VStack {
-                        Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())):")
+                        Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString()))")
                             .font(.system(size: 15, design: .rounded))
                             .bold()
                         
