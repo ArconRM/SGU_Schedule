@@ -24,7 +24,7 @@ struct AccessoryInlineView: View {
                     .bold()
             case .Success:
                 if closeLesson != nil {
-                    Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())): \(closeLesson!.title)")
+                    Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())) \(closeLesson!.title)")
                     
                 } else if currentEvent != nil {
                     Text("\(currentEvent!.timeStart.getHoursAndMinutesString())-\(currentEvent!.timeEnd.getHoursAndMinutesString()) \(currentEvent!.title)")

@@ -28,24 +28,24 @@ struct TwoEventsView: View {
         case .Success:
             if closeLesson != nil {
                 VStack {
-                    Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())):")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                    Spacer()
+                    Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString()))")
+                        .font(.system(size: 20, weight: .bold, design: .rounded))
                         .padding(.bottom, 0.5)
                     
                     Text(closeLesson!.title)
-                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .font(.system(size: 20, weight: .medium, design: .rounded))
                         .padding(.vertical, 2)
                         .multilineTextAlignment(.center)
                     
                     Text(closeLesson!.cabinet)
-                        .font(.system(size: 13, weight: .light, design: .rounded))
+                        .font(.system(size: 18, weight: .light, design: .rounded))
                         .italic()
                         .padding(.top, 1)
                     
                     Spacer()
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
-                .padding(.trailing, 10)
                 
             } else if currentEvent != nil {
                 HStack {

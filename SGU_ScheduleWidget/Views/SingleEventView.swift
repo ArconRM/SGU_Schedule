@@ -28,25 +28,24 @@ struct SingleEventView: View {
             if closeLesson != nil {
                 VStack {
                     Text("Скоро")
-                        .font(.system(size: 16, weight: .bold, design: .rounded))
+                        .font(.system(size: 12, weight: .bold, design: .rounded))
                     
-                    Text("(\(closeLesson!.timeStart.getHoursAndMinutesString())):")
+                    Text("(\(closeLesson!.timeStart.getHoursAndMinutesString()))")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .padding(.bottom, 0.5)
                     
                     Text(closeLesson!.title)
                         .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .padding(.vertical, 2)
                         .multilineTextAlignment(.center)
                     
                     Text(closeLesson!.cabinet)
                         .font(.system(size: 13, weight: .light, design: .rounded))
                         .italic()
-                        .padding(.top, 1)
                     
                     Spacer()
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
-                .padding(.trailing, 10)
                 
             } else if currentEvent != nil {
                 VStack {

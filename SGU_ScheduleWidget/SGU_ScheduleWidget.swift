@@ -228,7 +228,7 @@ struct SGU_ScheduleWidget: Widget {
 struct Widget_Previews: PreviewProvider {
     
     static var previews: some View {
-        let currentEvent = LessonDTO(subject: "Линейная алгебра",
+        let lesson = LessonDTO(subject: "Линейная алгебра",
                                      teacherFullName: "Бредихин Д. А.",
                                      teacherEndpoint: "/person/bredihin-dmitriy-aleksandrovich",
                                      lessonType: .Lecture,
@@ -251,10 +251,11 @@ struct Widget_Previews: PreviewProvider {
         Group {
             ScheduleEventsView(
                 fetchResultVariant: .Success,
-                currentEvent: currentEvent,
-                nextEvent: nil
+                currentEvent: nil,
+                nextEvent: nil,
+                closeLesson: lesson
             )
-                .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
                 .environmentObject(AppSettings())
         }
     }
