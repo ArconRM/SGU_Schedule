@@ -188,7 +188,7 @@ struct ScheduleEventsView: View {
     
     private func getBackgroundColor(event: (any ScheduleEventDTO)?) -> Color {
         if event == nil {
-            return .gray
+            return .gray.opacity(0.7)
         } else if let lesson = event as? LessonDTO {
             return lesson.lessonType == .Lecture ?
             AppTheme.Green.foregroundColor(colorScheme: colorScheme) :
@@ -228,7 +228,7 @@ struct SGU_ScheduleWidget: Widget {
 struct Widget_Previews: PreviewProvider {
     
     static var previews: some View {
-        let lesson = LessonDTO(subject: "Линейная алгебра",
+        let lesson = LessonDTO(subject: "Иностранный язык",
                                      teacherFullName: "Бредихин Д. А.",
                                      teacherEndpoint: "/person/bredihin-dmitriy-aleksandrovich",
                                      lessonType: .Lecture,
@@ -255,7 +255,7 @@ struct Widget_Previews: PreviewProvider {
                 nextEvent: nil,
                 closeLesson: lesson
             )
-            .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
+            .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .environmentObject(AppSettings())
         }
     }
