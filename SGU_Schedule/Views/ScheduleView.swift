@@ -7,6 +7,7 @@
 
 import SwiftUI
 import UIKit
+import WidgetKit
 
 //TODO: По башке бы понадавать за !
 struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
@@ -60,8 +61,8 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             
             if showSubgroups {
                 SubgroupsView(viewModel: viewModel, isShowing: $showSubgroups)
-                    .onDisappear { 
-                        fetchAllData()
+                    .onChange(of: viewModel.subgroupsByLessons) { _ in
+                        WidgetCenter.shared.reloadAllTimelines()
                     }
             }
         }
