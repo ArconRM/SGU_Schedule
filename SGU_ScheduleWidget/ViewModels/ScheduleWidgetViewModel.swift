@@ -11,11 +11,14 @@ import Foundation
 public final class ScheduleWidgetViewModel: ObservableObject {
     
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
+    private let lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager
     
     @Published var fetchResult = ScheduleFetchResultForWidget(resultVariant: .UnknownErrorWhileFetching)
     
-    init(schedulePersistenceManager: GroupSchedulePersistenceManager) {
+    init(schedulePersistenceManager: GroupSchedulePersistenceManager,
+         lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager) {
         self.schedulePersistenceManager = schedulePersistenceManager
+        self.lessonSubgroupsPersistenceManager = lessonSubgroupsPersistenceManager
     }
     
     public func fetchSavedSchedule() {
@@ -24,8 +27,10 @@ public final class ScheduleWidgetViewModel: ObservableObject {
             if schedule == nil {
                 fetchResult = ScheduleFetchResultForWidget(resultVariant: .NoFavoriteGroup)
             } else {
-                let firstLesson = schedule!.getTodayFirstLesson()
-                let (currentEvent, nextLesson, _) = schedule!.getCurrentAndNextLessons()
+                let subgroupsByLessons = schedule!.getSubgroupsByLessons(savedSubgroups: lessonSubgroupsPersistenceManager.getSavedSubgroups())
+                
+                let firstLesson = schedule!.getTodayFirstLesson(subgroupsByLessons: subgroupsByLessons)
+                let (currentEvent, nextLesson, _) = schedule!.getCurrentAndNextLessons(subgroupsByLessons: subgroupsByLessons)
                 
                 fetchResult = ScheduleFetchResultForWidget(
                     resultVariant: .Success,

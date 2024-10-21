@@ -10,7 +10,7 @@ import SwiftUI
 struct DepartmentSubview: View {
     @Environment(\.colorScheme) var colorScheme
     
-    var department: DepartmentDTO
+    var department: Department
     
     var body: some View {
         VStack {
@@ -42,8 +42,8 @@ struct DepartmentSubview: View {
             .foregroundColor(.blue.opacity(0.1))
             .ignoresSafeArea()
         ScrollView {
-            DepartmentSubview(department: DepartmentDTO(code: "knt"))
-            DepartmentSubview(department: DepartmentDTO(code: "mm"))
+            DepartmentSubview(department: Department(code: "knt"))
+            DepartmentSubview(department: Department(code: "mm"))
         }
     }
 }

@@ -72,7 +72,7 @@ struct MainView: View {
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
                         } else {
-                            viewsManager.buildSettingsView(showTutorial: .constant(false))
+                            viewsManager.buildSettingsView()
                                 .environmentObject(appSettings)
 //                                .navigationBarHidden(true)
                         }

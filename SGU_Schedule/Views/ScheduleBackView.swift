@@ -40,7 +40,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                     .font(.system(size: 20, weight: .bold))
                     .padding(.horizontal, 5)
                 
-            } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
+            } else if let timeBreak = viewModel.currentEvent as? TimeBreak {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
                      timeBreak.timeEnd.getHoursAndMinutesString())
                     .font(.system(size: 20, weight: .bold))
@@ -105,5 +105,5 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 
 #Preview {
     ScheduleBackView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
-                     selectedGroup: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt"))
+                     selectedGroup: AcademicGroupDTO.mock)
 }

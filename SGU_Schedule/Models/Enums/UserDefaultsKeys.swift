@@ -11,6 +11,7 @@ public enum UserDefaultsKeys: String {
     case wasLaunched = "wasLaunched"
     
     case favoriteGroupNumberKey = "favoriteGroupNumber"
+    case favouriteGroupSubgroupsKey = "favouriteGroupSubgroups"
     case selectedDepartmentKey = "selectedDepartment"
     case isNewParserUsed = "isNewParserUsed"
     case isSlowInternet = "isSlowInternet"

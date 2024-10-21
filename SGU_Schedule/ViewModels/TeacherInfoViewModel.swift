@@ -12,7 +12,7 @@ public final class TeacherInfoViewModel: ObservableObject {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
     
-    @Published var teacher: TeacherDTO? = nil
+    @Published var teacher: Teacher? = nil
     @Published var teacherLessons: [LessonDTO] = []
     @Published var teacherSessionEvents: [SessionEventDTO] = []
     

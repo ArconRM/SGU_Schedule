@@ -11,8 +11,8 @@ struct TwoEventsView: View {
     @EnvironmentObject var appSettings: AppSettings
     
     var fetchResultVariant: ScheduleFetchResultVariants
-    var currentEvent: (any ScheduleEventDTO)?
-    var nextEvent: (any ScheduleEventDTO)?
+    var currentEvent: (any ScheduleEvent)?
+    var nextEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
     
     var body: some View {

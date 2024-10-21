@@ -12,47 +12,22 @@ fileprivate enum TutorialViews {
     case FavoriteGroup
 }
 
-struct TutorialView: View {
+/// Deprecated
+fileprivate struct TutorialView: View {
     @Environment(\.colorScheme) var colorScheme
     
     @Binding var isShowing: Bool
     @State fileprivate var currentView: TutorialViews = .Widgets
-    @State private var widgetsViewOpacity = 0.2
     
     var body: some View {
-        ZStack {
-            Color.gray
-                .opacity(0.4)
-            
-            VStack {
-                HStack {
-                    Button(action: {
-                        withAnimation(.easeOut(duration: 0.4)) {
-                            isShowing.toggle()
-                        }
-                    }, label: {
-                        Image(systemName: "xmark")
-                            .foregroundColor(.gray)
-                            .padding(.top, 15)
-                            .padding(.leading, 10)
-                            .font(.system(size: 20, weight: .heavy, design: .rounded))
-                    })
-                    
-                    Spacer()
-                }
-                switch currentView {
-                case .Widgets:
-                    getWidgetsTutorialView()
-                case .FavoriteGroup:
-                    getFavouriteTutorialView()
-                }
+        OverlayView(isShowing: $isShowing) {
+            switch currentView {
+            case .Widgets:
+                getWidgetsTutorialView()
+            case .FavoriteGroup:
+                getFavouriteTutorialView()
             }
-            .background(colorScheme == .light ? .white : .black)
-            .cornerRadius(20)
-//            .scaleEffect(CGSize(width: 0.86, height: 0.86))
-            .frame(width: UIScreen.screenWidth - 20, height: UIScreen.screenHeight * 0.86)
         }
-        .ignoresSafeArea()
     }
     
     private func getWidgetsTutorialView() -> some View {
@@ -96,11 +71,6 @@ struct TutorialView: View {
                 .padding(20)
                 .font(.system(size: 18, weight: .bold, design: .rounded))
             }
-        }
-        .opacity(widgetsViewOpacity)
-        .animation(.easeIn(duration: 0.4), value: widgetsViewOpacity)
-        .onAppear {
-            widgetsViewOpacity = 1
         }
         .gesture(
             DragGesture().onEnded({ value in

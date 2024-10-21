@@ -11,13 +11,13 @@ import SwiftUI
 struct ScheduleEventsEntry: TimelineEntry {
     var date: Date
     var fetchResultVariant: ScheduleFetchResultVariants
-    var currentEvent: (any ScheduleEventDTO)?
-    var nextEvent: (any ScheduleEventDTO)?
+    var currentEvent: (any ScheduleEvent)?
+    var nextEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
 }
 
 struct ScheduleEventsProvider: TimelineProvider {
-    @ObservedObject var viewModel = ScheduleWidgetViewModel(schedulePersistenceManager: GroupScheduleCoreDataManager())
+    @ObservedObject var viewModel = ScheduleWidgetViewModel(schedulePersistenceManager: GroupScheduleCoreDataManager(), lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager())
     
     func getTimeline(in context: Context, completion: @escaping (Timeline<ScheduleEventsEntry>) -> Void) {
         let date = Date()
@@ -38,7 +38,7 @@ struct ScheduleEventsProvider: TimelineProvider {
         } else if currentEvent != nil { // Если сейчас что-то есть, то обновляем после окончания текущего
             nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes(), second: 1, of: date) ?? date
             
-        } else if date.getHours() < firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время сейчас до первой пары
+        } else if date.getHours() <= firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время сейчас до первой пары
             if firstLesson!.timeStart.getHours() - date.getHours() <= 2 { // Если первая пара ближе, чем через 2 часа, ставим что она скоро и обновляем когда она начнется
                 closeLesson = firstLesson!
                 nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours(), minute: firstLesson!.timeStart.getMinutes(), second: 1, of: date) ?? date
@@ -105,8 +105,8 @@ struct ScheduleEventsView: View {
     @EnvironmentObject var appSettings: AppSettings
     
     var fetchResultVariant: ScheduleFetchResultVariants
-    var currentEvent: (any ScheduleEventDTO)?
-    var nextEvent: (any ScheduleEventDTO)?
+    var currentEvent: (any ScheduleEvent)?
+    var nextEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
 
     @ViewBuilder
@@ -168,7 +168,7 @@ struct ScheduleEventsView: View {
         }
     }
     
-    private func buildFilledRectangle(event: (any ScheduleEventDTO)?) -> some View {
+    private func buildFilledRectangle(event: (any ScheduleEvent)?) -> some View {
         ZStack {
             Color.black.opacity(colorScheme == .light ? 0.8 : 1)
             getBackgroundColor(event: event).opacity(0.3)
@@ -180,13 +180,13 @@ struct ScheduleEventsView: View {
         }
     }
     
-    private func buildBorderedRectangle(event: (any ScheduleEventDTO)?) -> some View {
+    private func buildBorderedRectangle(event: (any ScheduleEvent)?) -> some View {
         RoundedRectangle(cornerRadius: 18)
             .stroke(getBackgroundColor(event: event), lineWidth: 4)
             .padding(2)
     }
     
-    private func getBackgroundColor(event: (any ScheduleEventDTO)?) -> Color {
+    private func getBackgroundColor(event: (any ScheduleEvent)?) -> Color {
         if event == nil {
             return .gray.opacity(0.7)
         } else if let lesson = event as? LessonDTO {

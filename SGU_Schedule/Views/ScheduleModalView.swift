@@ -85,9 +85,11 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 }
-                .onChange(of: viewModel.isLoadingLessons) { _ in
-                    let impact = UIImpactFeedbackGenerator(style: .light)
-                    impact.impactOccurred()
+                .onChange(of: viewModel.isLoadingLessons) { newValue in
+                    if !newValue {
+                        let impact = UIImpactFeedbackGenerator(style: .light)
+                        impact.impactOccurred()
+                    }
                 }
                 
                 Spacer()
@@ -102,7 +104,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                             let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
                             if !lessonsByNumber.isEmpty {
                                 //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
-                                ScheduleSubview(lessons: lessonsByNumber)
+                                ScheduleSubview(lessons: lessonsByNumber, subgroupsByLessons: viewModel.subgroupsByLessons)
                                     .environmentObject(networkMonitor)
                                     .environmentObject(viewsManager)
                                     .id(UUID())

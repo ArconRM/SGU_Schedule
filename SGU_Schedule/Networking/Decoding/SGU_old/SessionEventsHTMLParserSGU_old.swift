@@ -59,8 +59,16 @@ struct SessionEventsHTMLParserSGU_old: SessionEventsHTMLParser {
         let teacherFullName = getValueByElementIds(doc: doc, trId: baseId+1, tdId: 2) ?? " Noone"
         let cabinet = getValueByElementIds(doc: doc, trId: baseId+2, tdId: 2) ?? " Nowhere"
         
-        let date = getValueByElementIds(doc: doc, trId: baseId, tdId: 1)
-        let time = getValueByElementIds(doc: doc, trId: baseId, tdId: 2)
+        let date = getValueByElementIds(doc: doc, trId: baseId, tdId: 1)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "\u{00A0}", with: " ")
+            .replacingOccurrences(of: "  ", with: " ")
+
+        let time = getValueByElementIds(doc: doc, trId: baseId, tdId: 2)?
+            .trimmingCharacters(in: .whitespacesAndNewlines)
+            .replacingOccurrences(of: "\u{00A0}", with: " ")
+            .replacingOccurrences(of: "  ", with: " ")
+        
         var fullDate = "01 января 2000 00:00"
         if date != nil && time != nil {
             fullDate = String(date!.dropLast(2)) + " " + time!

@@ -13,12 +13,11 @@ struct SettingsView: View {
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
     
-    public var selectedDepartment: DepartmentDTO
+    public var selectedDepartment: Department
     
     @State var selectedTheme: AppTheme
     @State var selectedStyle: AppStyle
     @State var selectedParser: ParserOptions
-    @Binding var showTutorial: Bool
     
     var body: some View {
         ZStack {
@@ -120,17 +119,6 @@ struct SettingsView: View {
                     impact.impactOccurred()
                 }
                 
-                if UIDevice.isPhone {
-                    Button("Виджеты") {
-                        showTutorial.toggle()
-                    }
-                    .buttonStyle(BorderedButtonStyle())
-                    .font(.system(size: 16, weight: .bold, design: .rounded))
-                    .foregroundColor(colorScheme == .light ? .black : .white)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding()
-                }
-                
                 Spacer()
             }
         }
@@ -142,7 +130,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(selectedDepartment: DepartmentDTO(code: "knt"), selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New, showTutorial: .constant(false))
+    SettingsView(selectedDepartment: Department.mock, selectedTheme: .Blue, selectedStyle: .Fill, selectedParser: .New)
         .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
         .environmentObject(AppSettings())
 }

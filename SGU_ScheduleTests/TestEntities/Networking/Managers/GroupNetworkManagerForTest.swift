@@ -11,7 +11,7 @@ class GroupNetworkManagerForTest: GroupsNetworkManager {
     func getGroupsByYearAndAcademicProgram(
         year: Int,
         program: AcademicProgram,
-        department: DepartmentDTO,
+        department: Department,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void) {
         Task { () -> Result<[AcademicGroupDTO], Error> in

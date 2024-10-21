@@ -32,8 +32,8 @@ public final class ViewsManager: ObservableObject {
     
     //https://stackoverflow.com/questions/34474545/self-used-before-all-stored-properties-are-initialized
     //TODO: мб получше решение есть
-    private var _selectedDepartment: DepartmentDTO?
-    private var selectedDepartment: DepartmentDTO? {
+    private var _selectedDepartment: Department?
+    private var selectedDepartment: Department? {
         get {
             return _selectedDepartment
         }
@@ -97,7 +97,7 @@ public final class ViewsManager: ObservableObject {
         
         self._selectedDepartment = {
             if let departmentCode = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue) {
-                return DepartmentDTO(code: departmentCode)
+                return Department(code: departmentCode)
             }
             return nil
         }()
@@ -122,7 +122,7 @@ public final class ViewsManager: ObservableObject {
     }
     
     //Data
-    func selectDepartment(department: DepartmentDTO) {
+    func selectDepartment(department: Department) {
         selectedDepartment = department
         //TODO: мб чтобы все таки менялся groupsViewModel
         groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: self._selectedDepartment!)
@@ -209,15 +209,14 @@ public final class ViewsManager: ObservableObject {
     }
     
     func buildGroupsView() -> some View {
-        return GroupsView(viewModel: groupsViewModel!, selectedDepartment: selectedDepartment ?? DepartmentDTO(code: "Error"))
+        return GroupsView(viewModel: groupsViewModel!, selectedDepartment: selectedDepartment ?? Department(code: "Error"))
     }
     
-    func buildSettingsView(showTutorial: Binding<Bool>) -> some View {
-        return SettingsView(selectedDepartment: selectedDepartment ?? DepartmentDTO(code: "Error"),
+    func buildSettingsView() -> some View {
+        return SettingsView(selectedDepartment: selectedDepartment ?? Department(code: "Error"),
                             selectedTheme: appSettings.currentAppTheme,
                             selectedStyle: appSettings.currentAppStyle,
-                            selectedParser: isNewParserUsed ? .New : .Old,
-                            showTutorial: showTutorial)
+                            selectedParser: isNewParserUsed ? .New : .Old)
     }
     
     func buildScheduleView() -> some View {

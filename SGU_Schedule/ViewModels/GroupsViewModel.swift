@@ -68,7 +68,7 @@ public final class GroupsViewModel: ObservableObject {
     
     public func setSelectedAcademicProgramAndFetchGroups(
         newValue: AcademicProgram,
-        selectedDepartment: DepartmentDTO,
+        selectedDepartment: Department,
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
@@ -82,7 +82,7 @@ public final class GroupsViewModel: ObservableObject {
     
     public func setSelectedYearAndFetchGroups(
         newValue: Int,
-        selectedDepartment: DepartmentDTO,
+        selectedDepartment: Department,
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue, forKey: selectedYearKey)
@@ -97,7 +97,7 @@ public final class GroupsViewModel: ObservableObject {
     public func fetchGroups(
         year: Int,
         academicProgram: AcademicProgram,
-        selectedDepartment: DepartmentDTO,
+        selectedDepartment: Department,
         isOnline: Bool
     ) {
         do {

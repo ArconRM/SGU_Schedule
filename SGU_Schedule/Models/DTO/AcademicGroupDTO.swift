@@ -32,11 +32,15 @@ public struct AcademicGroupDTO: Hashable {
         }
     }
     
-    static func makeId(fullNumber: String, departmentCode: String) -> String {
+    public static func makeId(fullNumber: String, departmentCode: String) -> String {
         return "\(departmentCode)_\(fullNumber)"
     }
     
 //    static func extractDepartmentCodeFromId(groupId: String) -> String {
 //        return String(groupId.split(separator: "_").first!)
 //    }
+    
+    public static var mock: AcademicGroupDTO {
+        return .init(fullNumber: "123", departmentCode: "test")
+    }
 }

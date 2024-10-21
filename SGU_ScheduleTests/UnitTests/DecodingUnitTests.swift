@@ -139,7 +139,7 @@ final class DecodingUnitTests: XCTestCase {
     
     func testTeacherParserGetsTeacher() {
         var html: String?
-        var result: TeacherDTO?
+        var result: Teacher?
         
         do {
             html = try String(contentsOf: URL(string:"https://www.old.sgu.ru/person/osipcev-mihail-anatolevich")!, encoding: .utf8) //легенда
@@ -171,7 +171,7 @@ final class DecodingUnitTests: XCTestCase {
 //                print("return \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a").first!.text! + "\"")
                 
                 print("case ." + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a/@href").first!.text!.split(separator: "/")[1] + ":")
-                print("return DepartmentDTO(fullName: \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a").first!.text! + "\", code: \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a/@href").first!.text!.split(separator: "/")[1] + "\")")
+                print("return Department(fullName: \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a").first!.text! + "\", code: \"" + doc.xpath("//div[@class='panes_item panes_item__type_group']/ul[1]/li[\(i)]/a/@href").first!.text!.split(separator: "/")[1] + "\")")
             }
         }
         catch {

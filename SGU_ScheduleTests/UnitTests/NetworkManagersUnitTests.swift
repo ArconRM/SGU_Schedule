@@ -99,7 +99,7 @@ final class NetworkManagersUnitTests: XCTestCase {
         }
         
         let groupsNetworkManager = GroupsNetworkManagerWithParsing(urlSource: urlSource, groupsParser: groupsParser, scraper: DynamicScraper())
-        groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 1, program: .BachelorAndSpeciality, department: DepartmentDTO(code: "knt")) { result in
+        groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 1, program: .BachelorAndSpeciality, department: Department(code: "knt")) { result in
             switch result {
             case .success(let groups):
                 groupsToCheck = groups

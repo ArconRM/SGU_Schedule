@@ -18,6 +18,7 @@ struct ScheduleSubview: View, Equatable {
     @EnvironmentObject var appSettings: AppSettings
     
     var lessons: [LessonDTO]
+    var subgroupsByLessons: [String: [LessonSubgroup]]
     
     @State var areMultipleLessonsCollapsed: Bool = true
     
@@ -27,14 +28,14 @@ struct ScheduleSubview: View, Equatable {
                 makeSingleLessonView(lesson: lessons.first!)
             } else if lessons.count >= 1 {
                 if areMultipleLessonsCollapsed {
-                    makeCollapsedMultipleLessonsView(firstLesson: sortLessonsByWeekType(lessons).first!)
+                    makeCollapsedMultipleLessonsView(firstLesson: sortLessonsByActive(lessons).first!)
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.5)) {
                                 areMultipleLessonsCollapsed.toggle()
                             }
                         }
                 } else {
-                    makeFullMultipleLessonsView(lessons: sortLessonsByWeekType(lessons))
+                    makeFullMultipleLessonsView(lessons: sortLessonsByActive(lessons))
                         .onTapGesture {
                             withAnimation(.spring(duration: 0.5)) {
                                 areMultipleLessonsCollapsed.toggle()
@@ -117,7 +118,7 @@ struct ScheduleSubview: View, Equatable {
         }
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
-        .opacity(Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ? 1 : 0.5)
+        .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
     }
     
@@ -185,7 +186,7 @@ struct ScheduleSubview: View, Equatable {
             }
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
-            .opacity(Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ? 1 : 0.5)
+            .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
             .background {
                 if appSettings.currentAppStyle != .Bordered {
                     getBackground(lesson: lesson)
@@ -244,12 +245,13 @@ struct ScheduleSubview: View, Equatable {
         }
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
-        .opacity(Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ? 1 : 0.5)
+        .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
     }
     
-    private func sortLessonsByWeekType(_ lessons: [LessonDTO]) -> [LessonDTO] {
-        return lessons.filter({ Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek($0.weekType) }) + lessons.filter({ !Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek($0.weekType) })
+    private func sortLessonsByActive(_ lessons: [LessonDTO]) -> [LessonDTO] {
+        return lessons.filter({ $0.isActive(subgroupsByLessons: subgroupsByLessons) }) +
+        lessons.filter({ !$0.isActive(subgroupsByLessons: subgroupsByLessons) })
     }
     
     private func getBackground(lesson: LessonDTO) -> AnyView {
@@ -267,83 +269,45 @@ struct ScheduleSubview: View, Equatable {
     }
     
     private func getLessonColor(lesson: LessonDTO) -> Color {
-        Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(lesson.weekType) ?
+        lesson.isActive(subgroupsByLessons: subgroupsByLessons) ?
         (lesson.lessonType == .Lecture ? Color.green : Color.blue)
         : Color.gray
     }
 }
 
-struct ScheduleSubview_Previews: PreviewProvider {
-    static var previews: some View {
-        ZStack {
-            Rectangle()
-                .foregroundColor(.blue.opacity(0.07))
-                .ignoresSafeArea()
-            ScrollView {
-                ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
-                                                    teacherFullName: "Бредихин Д. А.",
-                                                    teacherEndpoint: "/person/bredihin-dmitriy-aleksandrovich",
-                                                    lessonType: .Lecture,
-                                                    weekDay: .Monday,
-                                                    weekType: .Numerator,
-                                                    cabinet: "12 корпус ауд.303",
-                                                    lessonNumber: 1,
-                                                    timeStart: "08:20",
-                                                    timeEnd: "09:50"),
-                                          
-                                          LessonDTO(subject: "Основы Российской государственности",
-                                                    teacherFullName: "Бредихин Д. А.",
-                                                    lessonType: .Practice,
-                                                    weekDay: .Monday,
-                                                    weekType: .Denumerator,
-                                                    cabinet: "12 корпус ауд.303",
-                                                    lessonNumber: 1,
-                                                    timeStart: "08:20",
-                                                    timeEnd: "09:50")])
-                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
-                .environmentObject(NetworkMonitor())
-                .environmentObject(AppSettings())
-                
-                ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
-                                                    teacherFullName: "Бредихин Д. А.",
-                                                    lessonType: .Lecture,
-                                                    weekDay: .Monday,
-                                                    weekType: .All,
-                                                    cabinet: "12 корпус ауд.303",
-                                                    lessonNumber: 1,
-                                                    timeStart: "08:20",
-                                                    timeEnd: "09:50")])
-                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
-                .environmentObject(NetworkMonitor())
-                .environmentObject(AppSettings())
-                
-                ScheduleSubview(lessons: [LessonDTO(subject: "Основы Российской государственности",
-                                                    teacherFullName: "Бредихин Д. А.",
-                                                    lessonType: .Practice,
-                                                    weekDay: .Monday,
-                                                    weekType: .All,
-                                                    cabinet: "12 корпус ауд.303",
-                                                    lessonNumber: 1,
-                                                    timeStart: "08:20",
-                                                    timeEnd: "09:50")])
-                .environmentObject(NetworkMonitor())
-                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
-                .environmentObject(AppSettings())
-            }
-        }
-    }
-}
-
-//.cornerRadius(20)
-//.background(
-//    RoundedRectangle(cornerRadius: 20)
-//        .fill(Color.white)
-//        .padding(.bottom, 0.4)
-//        .shadow(color: colorScheme == .light ?
-//                        .gray.opacity(0.25) :
-//                        .white.opacity(0.5),
-//                radius: 5,
-//                x: 0,
-//                y: 0)
-//)
-//.padding(.horizontal, 13)
+//struct ScheduleSubview_Previews: PreviewProvider {
+//    static var previews: some View {
+//        ZStack {
+//            Rectangle()
+//                .foregroundColor(.blue.opacity(0.07))
+//                .ignoresSafeArea()
+//            ScrollView {
+//                ScheduleSubview(
+//                    lessons: [LessonDTO(subject: "Основы Российской государственности",
+//                                        teacherFullName: "Бредихин Д. А.",
+//                                        teacherEndpoint: "/person/bredihin-dmitriy-aleksandrovich",
+//                                        lessonType: .Lecture,
+//                                        weekDay: .Monday,
+//                                        weekType: .Numerator,
+//                                        cabinet: "12 корпус ауд.303",
+//                                        lessonNumber: 1,
+//                                        timeStart: "08:20",
+//                                        timeEnd: "09:50"),
+//                              
+//                              LessonDTO(subject: "Основы Российской государственности",
+//                                        teacherFullName: "Бредихин Д. А.",
+//                                        lessonType: .Practice,
+//                                        weekDay: .Monday,
+//                                        weekType: .Denumerator,
+//                                        cabinet: "12 корпус ауд.303",
+//                                        lessonNumber: 1,
+//                                        timeStart: "08:20",
+//                                        timeEnd: "09:50")]
+//                )
+//                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+//                .environmentObject(NetworkMonitor())
+//                .environmentObject(AppSettings())
+//            }
+//        }
+//    }
+//}

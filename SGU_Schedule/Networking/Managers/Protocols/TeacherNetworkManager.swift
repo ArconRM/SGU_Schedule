@@ -11,6 +11,6 @@ public protocol TeacherNetworkManager {
     func getTeacher(
         teacherEndpoint: String,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping (Result<TeacherDTO, Error>) -> Void
+        completionHandler: @escaping (Result<Teacher, Error>) -> Void
     )
 }

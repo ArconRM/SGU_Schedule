@@ -48,7 +48,7 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
         }
         
         for i in stride(from: 0, to: elements!.count, by: 5) {
-            let date = String(elements![i].dropLast(2))
+            let date = String(elements![i].dropLast(2)).trimmingCharacters(in: .whitespacesAndNewlines) + " 00:00"
             let eventType = elements![i+1]
             let subject = elements![i+2]
             let teacher = elements![i+3]

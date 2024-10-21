@@ -1,5 +1,5 @@
 //
-//  TeacherDTO.swift
+//  Teacher.swift
 //  SGU_Schedule
 //
 //  Created by Artemiy MIROTVORTSEV on 27.05.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct TeacherDTO: Hashable {
+public struct Teacher: Hashable {
     
     var fullName: String
     var profileImageUrl: URL?
@@ -39,5 +39,9 @@ public struct TeacherDTO: Hashable {
         self.birthdate = birthdate
         self.teacherLessonsEndpoint = teacherLessonsEndpoint
         self.teacherSessionEventsEndpoint = teacherSessionEventsEndpoint
+    }
+    
+    public static var mock: Self {
+        .init(fullName: "Мухаммед Абдуллук")
     }
 }

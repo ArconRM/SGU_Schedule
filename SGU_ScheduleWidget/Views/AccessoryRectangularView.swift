@@ -10,7 +10,7 @@ import WidgetKit
 
 struct AccessoryRectangularView: View {
     var fetchResultVariant: ScheduleFetchResultVariants
-    var currentEvent: (any ScheduleEventDTO)?
+    var currentEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
     
     var body: some View {

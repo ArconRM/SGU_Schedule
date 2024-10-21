@@ -87,7 +87,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
                                     let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
                                     if !lessonsByNumber.isEmpty {
                                         //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
-                                        ScheduleSubview(lessons: lessonsByNumber)
+                                        ScheduleSubview(lessons: lessonsByNumber, subgroupsByLessons: [:])
                                             .environmentObject(networkMonitor)
                                             .environmentObject(viewsManager)
                                             .id(UUID())
@@ -121,6 +121,10 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoV
         
         .onAppear {
             self.viewModel.fetchTeacherInfo(teacherEndpoint: self.teacherEndpoint)
+        }
+        .onChange(of: self.viewModel.isLoadingTeacherLessons) { newValue in
+            let impact = UIImpactFeedbackGenerator(style: .light)
+            impact.impactOccurred()
         }
         
         .toolbar {
@@ -162,7 +166,7 @@ struct TeacherInfoView_Previews: PreviewProvider {
     }
 }
 
-//teacher: TeacherDTO(
+//teacher: Teacher(
 //    fullName: "Осипцев Михаил Анатольевич",
 //    profileImageUrl: URL(string: "https://www.old1.sgu.ru/sites/default/files/styles/500x375_4x3/public/employee/facepics/7a630f4a70a5310d9152a3d5e5350a35/foto-1.jpg?itok=IILG1z3i")!,
 //    email: "Osipcevm@gmail.com",

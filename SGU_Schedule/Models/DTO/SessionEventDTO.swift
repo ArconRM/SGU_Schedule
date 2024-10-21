@@ -34,8 +34,18 @@ public struct SessionEventDTO: Hashable {
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
         dateFormatter.locale = Locale(identifier: "ru_RU")
 //        dateFormatter.dateFormat = "d MMMM yyyy HH:mm"
-        dateFormatter.dateFormat = "d MMMM yyyy"
+        dateFormatter.dateFormat = "d MMMM yyyy HH:mm"
         
-        self.date = dateFormatter.date(from: date) ?? dateFormatter.date(from: "01 января 2000")!
+        self.date = dateFormatter.date(from: date) ?? dateFormatter.date(from: "01 января 2000 00:00")!
+    }
+    
+    public static var mock: SessionEventDTO {
+        .init(
+            title: "Mock title",
+            date: .now,
+            sessionEventType: .Exam,
+            teacherFullName: "Mock teacher",
+            cabinet: "Mock cabinet"
+        )
     }
 }

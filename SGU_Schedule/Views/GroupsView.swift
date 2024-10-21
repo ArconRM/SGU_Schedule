@@ -18,9 +18,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     
     @State private var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
     @State private var selectedYear = 1
-    @State var selectedDepartment: DepartmentDTO
+    @State var selectedDepartment: Department
     
-    @State private var showTutorialView: Bool = false
     @State private var showAlert: Bool = false
     @State private var programTappedCount: Int = 0
     @State private var yearTappedCount: Int = 0
@@ -44,9 +43,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             }
             
             if viewsManager.isShowingSettingsView && UIDevice.isPhone {
-                viewsManager.buildSettingsView(showTutorial: $showTutorialView)
+                viewsManager.buildSettingsView()
                     .environmentObject(appSettings)
-                    .blur(radius: showTutorialView ? 3 : 0)
             }
             
             // Группы
@@ -99,7 +97,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 isPinned: false,
                                 differentDepartment: {
                                     if viewModel.favouriteGroup!.departmentCode != selectedDepartment.code {
-                                        return DepartmentDTO(code: viewModel.favouriteGroup!.departmentCode)
+                                        return Department(code: viewModel.favouriteGroup!.departmentCode)
                                     }
                                     return nil
                                 }()
@@ -122,7 +120,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                     isPinned: true,
                                     differentDepartment: {
                                         if group.departmentCode != selectedDepartment.code {
-                                            return DepartmentDTO(code: group.departmentCode)
+                                            return Department(code: group.departmentCode)
                                         }
                                         return nil
                                     }()
@@ -162,7 +160,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     Spacer(minLength: 40)
                 }
                 .contentShape(Rectangle())
-                .blur(radius: showTutorialView ? 3 : 0)
             }
             .cornerRadius(viewsManager.isShowingSettingsView && UIDevice.isPhone ? 20 : 0)
             .offset(x: viewsManager.isShowingSettingsView && UIDevice.isPhone ? 235 : 0, y: viewsManager.isShowingSettingsView && UIDevice.isPhone ? 100 : 0)
@@ -176,10 +173,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 }
             }
             
-            if showTutorialView {
-                TutorialView(isShowing: $showTutorialView)
-            }
-            
             if showAlert {
                 HeheAlert(show: $showAlert)
             }
@@ -187,7 +180,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         .ignoresSafeArea(edges: [.bottom])
         .accentColor(colorScheme == .light ? .black : .white)
         .onAppear {
-            showTutorialView = !viewModel.wasLaunched && !UIDevice.isPad
             fetchAllData()
         }
         .onChange(of: viewsManager.needToReloadGroupView) { newValue in
@@ -308,7 +300,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: DepartmentDTO(code: "kn1t")), selectedDepartment: DepartmentDTO(code: "kn1t"))
+        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: Department.mock), selectedDepartment: Department.mock)
             .environmentObject(NetworkMonitor())
             .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
             .environmentObject(AppSettings())

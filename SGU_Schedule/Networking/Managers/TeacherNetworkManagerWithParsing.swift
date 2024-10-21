@@ -20,7 +20,7 @@ public class TeacherNetworkManagerWithParsing: TeacherNetworkManager {
     public func getTeacher(
         teacherEndpoint: String,
         resultQueue: DispatchQueue = .main,
-        completionHandler: @escaping (Result<TeacherDTO, any Error>) -> Void
+        completionHandler: @escaping (Result<Teacher, any Error>) -> Void
     ) {
         let teacherUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacherEndpoint)
         

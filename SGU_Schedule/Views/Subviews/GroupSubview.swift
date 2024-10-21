@@ -15,7 +15,7 @@ struct GroupSubview: View {
     var isFavourite: Bool
     var isPinned: Bool
     /// Если группа с другого факультета
-    var differentDepartment: DepartmentDTO?
+    var differentDepartment: Department?
     
     var body: some View {
         VStack {
@@ -27,7 +27,7 @@ struct GroupSubview: View {
                         buildBorderedRectangle()
                     }
                     
-                    Text(String(group.fullNumber))
+                    Text(group.fullNumber)
                         .foregroundColor(colorScheme == .light ? .black : .white)
                         .font(.system(size: 20))
                         .bold()

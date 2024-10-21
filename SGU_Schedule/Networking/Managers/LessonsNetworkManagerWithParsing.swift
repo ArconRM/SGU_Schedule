@@ -48,7 +48,7 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
     }
     
     public func getTeacherScheduleForCurrentWeek(
-        teacher: TeacherDTO,
+        teacher: Teacher,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void
     ) {

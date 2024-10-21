@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
+public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
     
     public var id: UUID
     /// subject
@@ -98,5 +98,32 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEventDTO {
                 lhs.lessonNumber == rhs.lessonNumber &&
                 lhs.timeStart == rhs.timeStart &&
                 lhs.timeEnd == rhs.timeEnd)
+    }
+    
+    public func isActive(subgroupsByLessons: [String: [LessonSubgroup]]) -> Bool {
+        if let _ = subgroupsByLessons[self.title] {
+            if let requiredSubgroup = subgroupsByLessons[self.title]!.first(where: { $0.number == self.subgroup }) {
+                return Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(self.weekType) &&
+                (!subgroupsByLessons[self.title]!.contains(where: { $0.isSaved }) ||
+                 subgroupsByLessons[self.title]!.contains(where: { $0.isSaved }) &&
+                 requiredSubgroup.isSaved)
+            }
+        }
+        return Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(self.weekType)
+    }
+    
+    public static var mock: Self {
+        .init(
+            subject: "Mock subject",
+            teacherFullName: "Mock teacher",
+            lessonType: .Lecture,
+            weekDay: .Monday,
+            weekType: .All,
+            cabinet: "Mock",
+            subgroup: "Mock sub",
+            lessonNumber: 0,
+            timeStart: .now,
+            timeEnd: .now
+        )
     }
 }

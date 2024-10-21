@@ -14,7 +14,7 @@ public final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
         return DepartmentsViewModel()
     }
     
-    public func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
+    public func buildGroupsViewModel(department: Department) -> GroupsViewModel {
         return GroupsViewModel (
             networkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
@@ -40,7 +40,9 @@ public final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
                 scraper: StaticScraper()
             ),
             
-            schedulePersistenceManager: GroupScheduleCoreDataManager()
+            schedulePersistenceManager: GroupScheduleCoreDataManager(),
+            
+            lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager()
         )
     }
     

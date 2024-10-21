@@ -10,13 +10,13 @@ import Foundation
 class ScheduleFetchResultForWidget {
     private(set) var resultVariant: ScheduleFetchResultVariants
     private(set) var firstLesson: LessonDTO?
-    private(set) var currentEvent: (any ScheduleEventDTO)?
+    private(set) var currentEvent: (any ScheduleEvent)?
     private(set) var nextLesson: LessonDTO?
     
     init(
         resultVariant: ScheduleFetchResultVariants,
         firstLesson: LessonDTO? = nil,
-        currentEvent: (any ScheduleEventDTO)? = nil,
+        currentEvent: (any ScheduleEvent)? = nil,
         nextLesson: LessonDTO? = nil
     ) {
         self.resultVariant = resultVariant
