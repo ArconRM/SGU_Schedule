@@ -62,7 +62,7 @@ struct OverlayView<Content: View>: View {
                         .background(
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(colorScheme == .light ? .white : .black)
-                                .shadow(color: .gray.opacity(0.2), radius: 5, x: 0, y: -2)
+                                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 0)
                         )
                 )
                 .frame(width: geometry.size.width - 20, height: geometry.size.height * 0.7)
