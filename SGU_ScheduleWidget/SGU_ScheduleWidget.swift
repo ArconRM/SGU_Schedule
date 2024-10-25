@@ -32,22 +32,22 @@ struct ScheduleEventsProvider: TimelineProvider {
         var nextUpdateDate = date
         
         if firstLesson == nil { // Если сегодня нет пар  - обновляем на следующий учебный день
-            let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 1, of: date) ?? date
+            let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 5, of: date) ?? date
             nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate) ?? date
             
         } else if currentEvent != nil { // Если сейчас что-то есть, то обновляем после окончания текущего
-            nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes(), second: 1, of: date) ?? date
+            nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes(), second: 5, of: date) ?? date
             
         } else if date.getHours() <= firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время сейчас до первой пары
             if firstLesson!.timeStart.getHours() - date.getHours() <= 2 { // Если первая пара ближе, чем через 2 часа, ставим что она скоро и обновляем когда она начнется
                 closeLesson = firstLesson!
-                nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours(), minute: firstLesson!.timeStart.getMinutes(), second: 1, of: date) ?? date
+                nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours(), minute: firstLesson!.timeStart.getMinutes(), second: 5, of: date) ?? date
             } else { // Иначе обновляем за два часа до первой
-                nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours() - 2, minute: firstLesson!.timeStart.getMinutes(), second: 1, of: date) ?? date
+                nextUpdateDate = Calendar.current.date(bySettingHour: firstLesson!.timeStart.getHours() - 2, minute: firstLesson!.timeStart.getMinutes(), second: 5, of: date) ?? date
             }
             
         } else if date.getHours() > firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время позже первой пары, значит сегодня больше ничего нет и обновляем на след учебный день
-            let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 1, of: date) ?? date
+            let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 5, of: date) ?? date
             nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate) ?? date
         }
         
