@@ -27,7 +27,7 @@ struct AccessoryInlineView: View {
                     Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())) \(closeLesson!.title)")
                     
                 } else if currentEvent != nil {
-                    Text("До \(currentEvent!.timeEnd.getHoursAndMinutesString()): \(currentEvent!.title)")
+                    Text("до \(currentEvent!.timeEnd.getHoursAndMinutesString()): \(currentEvent!.title)")
                     
                 } else {
                     Text("Пока нет пар")
