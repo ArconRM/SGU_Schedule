@@ -30,16 +30,16 @@ struct TwoEventsView: View {
                 VStack {
                     Spacer()
                     Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString()))")
-                        .font(.system(size: 20, weight: .bold, design: .rounded))
+                        .font(.system(size: 15, weight: .bold, design: .rounded))
                         .padding(.bottom, 0.5)
                     
                     Text(closeLesson!.title)
-                        .font(.system(size: 20, weight: .medium, design: .rounded))
+                        .font(.system(size: 17, weight: .medium, design: .rounded))
                         .padding(.vertical, 2)
                         .multilineTextAlignment(.center)
                     
                     Text(closeLesson!.cabinet)
-                        .font(.system(size: 18, weight: .light, design: .rounded))
+                        .font(.system(size: 16, weight: .light, design: .rounded))
                         .italic()
                         .padding(.top, 1)
                     

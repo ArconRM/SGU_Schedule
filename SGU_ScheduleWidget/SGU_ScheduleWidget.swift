@@ -253,7 +253,7 @@ struct Widget_Previews: PreviewProvider {
                 fetchResultVariant: .Success,
                 currentEvent: lesson,
                 nextEvent: nil,
-                closeLesson: nil
+                closeLesson: nextEvent
             )
             .previewContext(WidgetPreviewContext(family: .systemSmall))
                 .environmentObject(AppSettings())
@@ -262,7 +262,7 @@ struct Widget_Previews: PreviewProvider {
             fetchResultVariant: .Success,
             currentEvent: lesson,
             nextEvent: nextEvent,
-            closeLesson: nil
+            closeLesson: nextEvent
         )
             .previewContext(WidgetPreviewContext(family: .systemMedium))
             .environmentObject(AppSettings())
