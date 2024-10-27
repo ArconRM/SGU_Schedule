@@ -79,7 +79,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                .padding(.bottom)
                 .onChange(of: selectedDay) { newDay in
                     if viewModel.groupSchedule != nil {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
@@ -92,7 +91,10 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     }
                 }
                 
-                Spacer()
+                if Date.currentWeekDay == .Sunday {
+                    Text("Следующая неделя")
+                        .padding(.vertical, 5)
+                }
                 
                 if viewModel.groupSchedule == nil && networkMonitor.isConnected {
                     Text("Загрузка...")

@@ -134,7 +134,7 @@ public struct GroupScheduleDTO {
                 }
             }
         }
-        return subgroupsByLessons.filter({ $0.value.count > 1 })
+        return subgroupsByLessons.filter({ $0.value.count > 1 }).mapValues({ $0.sorted(by: { $0.displayNumber < $1.displayNumber })})
     }
     
     public func getUniqueLessonsTitles() -> [String] {

@@ -25,7 +25,7 @@ public struct LessonSubgroup: Hashable, Codable {
                 result += " " + numberPart
             }
         }
-        return result
+        return result.trimmingCharacters(in: .whitespaces)
     }
     
     init(teacher: String, number: String, isSaved: Bool) {
