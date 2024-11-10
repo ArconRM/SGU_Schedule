@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum UserDefaultsError: Error, LocalizedError {
+public enum UserDefaultsError: Error, LocalizedError {
     case failedToSave
     case failedToFetch
     case failedToClear
     case unexpectedError
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .failedToSave:
             return "Ошибка сохранения"
@@ -26,7 +26,7 @@ enum UserDefaultsError: Error, LocalizedError {
         }
     }
     
-    var failureReason: String? {
+    public var failureReason: String? {
         switch self {
         case .failedToSave:
             return "Не удалось сохранить данные на устройство"

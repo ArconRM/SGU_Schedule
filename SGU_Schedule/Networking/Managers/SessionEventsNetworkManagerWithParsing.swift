@@ -48,12 +48,12 @@ public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager
     }
     
     public func getTeacherSessionEvents (
-        teacher: Teacher,
+        teacherEndpoint: String?,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void
     ) {
-        guard let _ = teacher.teacherLessonsEndpoint else { return }
-        let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacher.teacherLessonsEndpoint!)
+        guard let _ = teacherEndpoint else { return }
+        let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacherEndpoint!)
         
         do {
             try self.scraper.scrapeUrl(teacherLessonsUrl, needToWaitLonger: false) { html in

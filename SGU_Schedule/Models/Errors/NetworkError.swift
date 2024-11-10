@@ -7,13 +7,13 @@
 
 import Foundation
 
-enum NetworkError: Error, LocalizedError {
+public enum NetworkError: Error, LocalizedError {
     case scraperError
     case htmlParserError
     case networkManagerError
     case unexpectedError
     
-    var errorDescription: String? {
+    public var errorDescription: String? {
         switch self {
         case .scraperError:
             return "Ошибка при получении html"
@@ -26,7 +26,7 @@ enum NetworkError: Error, LocalizedError {
         }
     }
     
-    var failureReason: String? {
+    public var failureReason: String? {
         switch self {
         case .scraperError:
             return "Не получилось получить html сайта"

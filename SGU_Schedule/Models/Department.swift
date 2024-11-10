@@ -31,6 +31,6 @@ public struct Department: Hashable {
     }
     
     public static var mock: Self {
-        .init(code: "test_dep")
+        .init(code: "Ошибка")
     }
 }

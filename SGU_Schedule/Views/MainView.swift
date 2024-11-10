@@ -38,12 +38,17 @@ struct MainView: View {
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                     
-                case .TeacherInfoView:
-                    viewsManager.buildTeacherInfoView()
+                case .TeacherView:
+                    viewsManager.buildTeacherView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                     
+                case .TeachersSearchView:
+                    viewsManager.buildTeachersSearchView()
+//                        .environmentObject(networkMonitor)
+                        .environmentObject(viewsManager)
+                        .environmentObject(appSettings)
                 }
             } else if UIDevice.isPad {
                 if viewsManager.currentView == .DepartmentsView {
@@ -66,11 +71,18 @@ struct MainView: View {
                                 .environmentObject(appSettings)
                                 .id(UUID())
                             
-                        } else if viewsManager.currentView == .TeacherInfoView {
-                            viewsManager.buildTeacherInfoView()
+                        } else if viewsManager.currentView == .TeacherView {
+                            viewsManager.buildTeacherView()
                                 .environmentObject(networkMonitor)
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
+                            
+                        } else if viewsManager.currentView == .TeachersSearchView {
+                            viewsManager.buildTeachersSearchView()
+                                .environmentObject(networkMonitor)
+                                .environmentObject(viewsManager)
+                                .environmentObject(appSettings)
+                            
                         } else {
                             viewsManager.buildSettingsView()
                                 .environmentObject(appSettings)

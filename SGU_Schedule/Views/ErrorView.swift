@@ -23,34 +23,12 @@ struct ErrorView: View {
             .font(.system(size: 20))
         
             .toolbar {
-                makeCloseToolbarItem()
-            }
-    }
-    
-    private func makeCloseToolbarItem() -> some ToolbarContent {
-        ToolbarItem(placement: .topBarLeading) {
-            Button(action: {
-                withAnimation(.easeInOut(duration: 0.3)) {
-                    viewsManager.showGroupsView()
+                CloseButton {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        viewsManager.showGroupsView()
+                    }
                 }
-            }) {
-                Image(systemName: "multiply")
-                    .font(.system(size: 23, weight: .semibold))
-                    .padding(7)
-                    .foregroundColor(colorScheme == .light ? .black : .white)
-                    .background (
-                        ZStack {
-                            (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                                .cornerRadius(5)
-                                .blur(radius: 2)
-                                .ignoresSafeArea()
-                        }
-                            .background(
-                                RoundedRectangle(cornerRadius: 5)
-                                    .fill(colorScheme == .light ? .white : .clear)
-                                    .shadow(color: colorScheme == .light ? .gray.opacity(0.7) : .white.opacity(0.2), radius: 4)))
             }
-        }
     }
 }
 

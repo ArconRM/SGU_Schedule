@@ -13,6 +13,22 @@ public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
     
+    public func saveItem(lesson: String, item: LessonSubgroup) throws {
+        var prevSaved = getSavedSubgroups()
+        prevSaved[lesson] = item
+        prevSaved[lesson]!.isSaved = true
+        
+        if let encoded = try? encoder.encode(prevSaved) {
+            defaults.set(encoded, forKey: subgroupsKey)
+        }
+    }
+    
+    public func saveDict(_ dict: [String: LessonSubgroup]) {
+        if let encoded = try? encoder.encode(dict) {
+            defaults.set(encoded, forKey: subgroupsKey)
+        }
+    }
+    
     public func getSavedSubgroups(lessonsInSchedule: [String]) -> [String: LessonSubgroup] {
         if let saved = defaults.object(forKey: subgroupsKey) as? Data {
             if var decoded = try? decoder.decode([String: LessonSubgroup].self, from: saved) {
@@ -44,22 +60,6 @@ public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
         } else {
             saveDict([:])
             return [:]
-        }
-    }
-    
-    public func saveItem(lesson: String, item: LessonSubgroup) throws {
-        var prevSaved = getSavedSubgroups()
-        prevSaved[lesson] = item
-        prevSaved[lesson]!.isSaved = true
-        
-        if let encoded = try? encoder.encode(prevSaved) {
-            defaults.set(encoded, forKey: subgroupsKey)
-        }
-    }
-    
-    public func saveDict(_ dict: [String: LessonSubgroup]) {
-        if let encoded = try? encoder.encode(dict) {
-            defaults.set(encoded, forKey: subgroupsKey)
         }
     }
     

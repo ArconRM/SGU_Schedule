@@ -120,6 +120,13 @@ struct SettingsView: View {
                 }
                 
                 Spacer()
+                
+                Text("Версия: \(Bundle.main.appVersion ?? "Хз") (\(Bundle.main.appBuild ?? "Тоже хз")) ")
+                    .font(.system(size: 15, weight: .bold, design: .rounded))
+                    .foregroundColor(.gray)
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.bottom, 50)
+                    .padding(.horizontal)
             }
         }
         .alert(isPresented: $viewsManager.isShowingError) {

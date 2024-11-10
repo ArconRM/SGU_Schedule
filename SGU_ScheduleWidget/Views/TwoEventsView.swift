@@ -14,6 +14,7 @@ struct TwoEventsView: View {
     var currentEvent: (any ScheduleEvent)?
     var nextEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
+    var nextUpdateDate: Date?
     
     var body: some View {
         switch fetchResultVariant {
@@ -48,47 +49,20 @@ struct TwoEventsView: View {
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
                 
             } else if currentEvent != nil {
-                HStack {
-                    VStack {
-                        Text("\(currentEvent!.timeStart.getHoursAndMinutesString()) - \(currentEvent!.timeEnd.getHoursAndMinutesString())")
-                            .font(.system(size: 16, weight: .bold, design: .rounded))
-                            .padding(.bottom, 0.5)
-                        
-                        Text(currentEvent!.title)
-                            .font(.system(size: 15, weight: .medium, design: .rounded))
-                            .padding(.vertical, 2)
-                            .multilineTextAlignment(.center)
-                        
-                        if let currentLesson = currentEvent as? LessonDTO {
-                            Text(currentLesson.cabinet)
-                                .font(.system(size: 13, weight: .light, design: .rounded))
-                                .italic()
-                                .padding(.top, 1)
-                        }
-                        
-                        Spacer()
-                    }
-                    .padding(.trailing, 10)
-                    
-                    Divider()
-                    
-                    if nextEvent == nil {
-                        Spacer()
-                        Text("Дальше пар нет, кайфуем")
-                        Spacer()
-                    } else {
+                VStack {
+                    HStack {
                         VStack {
-                            Text("\(nextEvent!.timeStart.getHoursAndMinutesString()) - \(nextEvent!.timeEnd.getHoursAndMinutesString())")
+                            Text("\(currentEvent!.timeStart.getHoursAndMinutesString()) - \(currentEvent!.timeEnd.getHoursAndMinutesString())")
                                 .font(.system(size: 16, weight: .bold, design: .rounded))
                                 .padding(.bottom, 0.5)
                             
-                            Text(nextEvent!.title)
+                            Text(currentEvent!.title)
                                 .font(.system(size: 15, weight: .medium, design: .rounded))
                                 .padding(.vertical, 2)
                                 .multilineTextAlignment(.center)
                             
-                            if let nextEvent = nextEvent as? LessonDTO {
-                                Text(nextEvent.cabinet)
+                            if let currentLesson = currentEvent as? LessonDTO {
+                                Text(currentLesson.cabinet)
                                     .font(.system(size: 13, weight: .light, design: .rounded))
                                     .italic()
                                     .padding(.top, 1)
@@ -96,8 +70,38 @@ struct TwoEventsView: View {
                             
                             Spacer()
                         }
-                        .padding(.leading, 10)
+                        .padding(.trailing, 10)
+                        
+                        Divider()
+                        
+                        if nextEvent == nil {
+                            Spacer()
+                            Text("Дальше пар нет, кайфуем")
+                            Spacer()
+                        } else {
+                            VStack {
+                                Text("\(nextEvent!.timeStart.getHoursAndMinutesString()) - \(nextEvent!.timeEnd.getHoursAndMinutesString())")
+                                    .font(.system(size: 16, weight: .bold, design: .rounded))
+                                    .padding(.bottom, 0.5)
+                                
+                                Text(nextEvent!.title)
+                                    .font(.system(size: 15, weight: .medium, design: .rounded))
+                                    .padding(.vertical, 2)
+                                    .multilineTextAlignment(.center)
+                                
+                                if let nextEvent = nextEvent as? LessonDTO {
+                                    Text(nextEvent.cabinet)
+                                        .font(.system(size: 13, weight: .light, design: .rounded))
+                                        .italic()
+                                        .padding(.top, 1)
+                                }
+                                
+                                Spacer()
+                            }
+                            .padding(.leading, 10)
+                        }
                     }
+                    Text(nextUpdateDate?.getHoursAndMinutesString() ?? "нет следующего обновления")
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
                 

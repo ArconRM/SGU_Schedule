@@ -17,29 +17,38 @@ struct MainButton<Content: View>: View {
             .foregroundColor(colorScheme == .light ? .black : .white)
             .background (
                 ZStack {
-                    (colorScheme == .light ? Color.white : Color.gray.opacity(0.4))
-                        .cornerRadius(10)
-                        .blur(radius: 2)
-                }
-                    .background (
-                        RoundedRectangle(cornerRadius: 10)
-                            .fill(colorScheme == .light ? .white : .clear)
-                            .shadow(color: colorScheme == .light ? .gray.opacity(0.3) : .white.opacity(0.6), radius: 4, y: 5)
-                    )
-            )
+                    RoundedRectangle(cornerRadius: 10)
+                        .fill(colorScheme == .light ? .white.opacity(0.6) : .gray.opacity(0.2))
+                    
+                    RoundedRectangle(cornerRadius: 10)
+                        .stroke(colorScheme == .light ? .black.opacity(0.2) : .gray.opacity(0.4))
+                        .blur(radius: 0.5)
+                })
     }
 }
 
 #Preview {
-    VStack(spacing: 20) {
-        MainButton {
-            Text("Бакалавриат/Армия не вариант")
-                .padding(7)
-                .font(.system(size: 17, weight: .bold))
-        }
-        MainButton {
-            Image(systemName: "gear")
-                .font(.system(size: 25, weight: .semibold))
+    ZStack(alignment: .top) {
+        Color.blue.opacity(0.1)
+            .ignoresSafeArea()
+        
+        HStack(spacing: 20) {
+            MainButton {
+                Image(systemName: "gear")
+                    .padding(10)
+                    .font(.system(size: 25, weight: .semibold))
+            }
+            
+            MainButton {
+                Text("Бакалавриаттттттттт")
+                    .padding(10)
+                    .font(.system(size: 17, weight: .bold))
+            }
+            MainButton {
+                Image(systemName: "gear")
+                    .padding(10)
+                    .font(.system(size: 25, weight: .semibold))
+            }
         }
     }
 }

@@ -15,7 +15,7 @@ public protocol SessionEventsNetworkManager {
     )
     
     func getTeacherSessionEvents(
-        teacher: Teacher,
+        teacherEndpoint: String?,
         resultQueue: DispatchQueue,
         completionHandler: @escaping(Result<[SessionEventDTO], Error>) -> Void
     )

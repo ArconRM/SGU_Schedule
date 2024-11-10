@@ -47,20 +47,21 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
             return []
         }
         
-        for i in stride(from: 0, to: elements!.count, by: 5) {
+        for i in stride(from: 0, to: elements!.count, by: 6) {
             let date = elements![i]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .replacingOccurrences(of: "г. ", with: "")
             let eventType = elements![i+1]
             let subject = elements![i+2]
-            let teacher = elements![i+3]
-            let cabinet = elements![i+4]
+            let group = elements![i+3]
+            let cabinet = elements![i+5]
             
             sessionEvents.append(
                 SessionEventDTO(
                     title: subject,
-                    date: date, sessionEventType: SessionEventType(rawValue: eventType) ?? .Consultation,
-                    teacherFullName: teacher,
+                    date: date,
+                    sessionEventType: SessionEventType(rawValue: eventType) ?? .Consultation,
+                    teacherFullName: group,
                     cabinet: cabinet
                 )
             )

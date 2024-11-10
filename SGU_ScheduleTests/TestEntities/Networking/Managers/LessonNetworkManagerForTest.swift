@@ -37,7 +37,7 @@ class LessonNetworkManagerForTest: LessonNetworkManager {
         }
     }
     
-    func getTeacherScheduleForCurrentWeek(teacher: Teacher,
+    func getTeacherScheduleForCurrentWeek(teacherEndpoint: String?,
                                           resultQueue: DispatchQueue,
                                           completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void) {
         Task { () -> Result<[LessonDTO], Error> in

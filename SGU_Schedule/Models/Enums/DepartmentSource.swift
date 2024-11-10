@@ -119,6 +119,60 @@ public enum DepartmentSource: String, CaseIterable {
         }
     }
     
+    init?(fullName: String) {
+            switch fullName {
+            case DepartmentSource.bf.fullName: self = .bf
+            case DepartmentSource.gf.fullName: self = .gf
+            case DepartmentSource.gl.fullName: self = .gl
+            case DepartmentSource.idpo.fullName: self = .idpo
+            case DepartmentSource.ii.fullName: self = .ii
+            case DepartmentSource.imo.fullName: self = .imo
+            case DepartmentSource.ff.fullName: self = .ff
+            case DepartmentSource.ifk.fullName: self = .ifk
+            case DepartmentSource.ifg.fullName: self = .ifg
+            case DepartmentSource.ih.fullName: self = .ih
+            case DepartmentSource.mm.fullName: self = .mm
+            case DepartmentSource.sf.fullName: self = .sf
+            case DepartmentSource.fi.fullName: self = .fi
+            case DepartmentSource.knt.fullName: self = .knt
+            case DepartmentSource.fps.fullName: self = .fps
+            case DepartmentSource.fppso.fullName: self = .fppso
+            case DepartmentSource.fmimt.fullName: self = .fmimt
+            case DepartmentSource.fp.fullName: self = .fp
+            case DepartmentSource.ef.fullName: self = .ef
+            case DepartmentSource.uf.fullName: self = .uf
+            default: return nil
+            }
+        }
+
+        init?(shortName: String) {
+            switch shortName {
+            case DepartmentSource.bf.shortName: self = .bf
+            case DepartmentSource.gf.shortName: self = .gf
+            case DepartmentSource.gl.shortName: self = .gl
+            case DepartmentSource.idpo.shortName: self = .idpo
+            case DepartmentSource.ii.shortName: self = .ii
+            case DepartmentSource.imo.shortName: self = .imo
+            case DepartmentSource.ff.shortName: self = .ff
+            case DepartmentSource.ifk.shortName: self = .ifk
+            case DepartmentSource.ifg.shortName: self = .ifg
+            case DepartmentSource.ih.shortName: self = .ih
+            case DepartmentSource.mm.shortName: self = .mm
+            case DepartmentSource.sf.shortName: self = .sf
+            case DepartmentSource.fi.shortName: self = .fi
+            case DepartmentSource.knt.shortName: self = .knt
+            case DepartmentSource.fps.shortName: self = .fps
+
+
+            case DepartmentSource.fppso.shortName: self = .fppso
+            case DepartmentSource.fmimt.shortName: self = .fmimt
+            case DepartmentSource.fp.shortName: self = .fp
+            case DepartmentSource.ef.shortName: self = .ef
+            case DepartmentSource.uf.shortName: self = .uf
+            default: return nil
+            }
+        }
+    
 //    var dto: Department {
 //        switch self {
 //        case .bf:

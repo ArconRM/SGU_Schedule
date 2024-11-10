@@ -67,13 +67,12 @@ struct SessionEventSubview: View {
         switch appSettings.currentAppStyle {
         case .Fill:
             AnyView(
-                getEventColor()
-                    .opacity(0.6)
+                getEventColor().opacity(sessionEvent.date.isAroundNow() ? 0.5 : 0.2)
             )
         case .Bordered:
             AnyView(
                 RoundedRectangle(cornerRadius: 10)
-                    .stroke(getEventColor().opacity(0.7), lineWidth: 7)
+                    .stroke(getEventColor().opacity(0.5), lineWidth: 7)
             )
         }
     }
@@ -83,13 +82,9 @@ struct SessionEventSubview: View {
             .gray
         } else {
             if sessionEvent.sessionEventType == .Consultation {
-                .green.opacity(sessionEvent.date.isAroundNow() ? 1 : 0.5)
+                .green
             } else {
-                if sessionEvent.date.isAroundNow() {
-                    .yellow
-                } else {
-                    .blue.opacity(0.5)
-                }
+                sessionEvent.date.isAroundNow() ? .yellow : .blue
             }
         }
     }

@@ -48,14 +48,14 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             ZStack {
                 ScheduleBackView(viewModel: viewModel, selectedGroup: group!)
                 
-                CarouselView(pageCount: 2, pageTitles: ["Занятия", "Экзамены"], currentIndex: 0, content: {
+                CarouselView(pages: ["Занятия", "Экзамены"], currentIndex: 0, viewsAlignment: .bottom) {
                     ScheduleModalView(viewModel: viewModel)
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                     
                     SessionEventsModalView(viewModel: viewModel)
                         .environmentObject(networkMonitor)
-                })
+                }
             }
             .blur(radius: showSubgroups ? 3 : 0)
             
@@ -69,9 +69,13 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         .edgesIgnoringSafeArea(.bottom)
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
-                makeCloseToolbarButton()
-                    .opacity(showSubgroups ? 0 : 1)
-                    .padding(.top, 5)
+                CloseButton {
+                    withAnimation(.easeInOut(duration: 0.3)) {
+                        viewsManager.showGroupsView()
+                    }
+                }
+                .opacity(showSubgroups ? 0 : 1)
+                .padding(.top, 5)
             }
             
             ToolbarItem(placement: .topBarTrailing) {
@@ -104,20 +108,6 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         
         viewModel.fetchSessionEvents(group: group!,
                                      isOnline: networkMonitor.isConnected)
-    }
-    
-    private func makeCloseToolbarButton() -> some View {
-        Button(action: {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                viewsManager.showGroupsView()
-            }
-        }) {
-            MainButton {
-                Image(systemName: "multiply")
-                    .padding(10)
-                    .font(.system(size: 21, weight: .semibold))
-            }
-        }
     }
     
     private func makeShowGroupsToolbarButton() -> some View {

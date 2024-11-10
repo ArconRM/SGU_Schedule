@@ -12,7 +12,7 @@ import Kanna
 fileprivate enum LessonPropertiesEndpoints: String {
     case Subject = "div[@class='schedule-table__lesson-name']"
     case Teacher = "div[@class='schedule-table__lesson-teacher']"
-    case TeacherUrl = "div[@class='l-tn']/a/@href"
+    case TeacherEndpoint = "div[@class='l-tn']/a/@href"
     case Cabinet = "div[@class='schedule-table__lesson-room']/span"
     case LectureType = "div[@class='schedule-table__lesson-props']/div[@class='lesson-prop__lecture']"
     case PracticeType = "div[@class='schedule-table__lesson-props']/div[@class='lesson-prop__practice']"
@@ -96,7 +96,7 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
             
             let subject = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Subject)?.trimmingCharacters(in: .whitespacesAndNewlines)
             let teacherName = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Teacher)?.trimmingCharacters(in: .whitespacesAndNewlines)
-            let teacherEndpoint = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .TeacherUrl)?.trimmingCharacters(in: .whitespacesAndNewlines)
+            let teacherEndpoint = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .TeacherEndpoint)?.trimmingCharacters(in: .whitespacesAndNewlines)
             let cabinet = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Cabinet)?.trimmingCharacters(in: .whitespacesAndNewlines)
             let subgroup = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .Subgroup)?.trimmingCharacters(in: .whitespacesAndNewlines)
             

@@ -8,6 +8,24 @@
 import Foundation
 
 extension Date {
+    static var startOfCurrentWeek: Date? {
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
+        return gregorian.date(byAdding: .day, value: 1, to: sunday)
+    }
+    
+    static var endOfCurrentWeek: Date? {
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
+        return gregorian.date(byAdding: .day, value: 7, to: sunday)
+    }
+    
+    static func getDayOfCurrentWeek(dayNumber: Int) -> Date? {
+        let gregorian = Calendar(identifier: .gregorian)
+        guard let sunday = gregorian.date(from: gregorian.dateComponents([.yearForWeekOfYear, .weekOfYear], from: Date())) else { return nil }
+        return gregorian.date(byAdding: .day, value: dayNumber, to: sunday)
+    }
+    
     /// If current weekday is Sunday, it will return weekType of next week
     static var currentWeekType: WeekType {
         get {
@@ -159,6 +177,14 @@ extension Date {
         return dateFormatter.string(from: self)
     }
     
+    func getDayAndMonthWordString(divider: String = " ") -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "ru_RU")
+//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.dateFormat = "dd\(divider)MMMM"
+        return dateFormatter.string(from: self)
+    }
+    
     func getDayMonthAndYearString(divider: String = " ") -> String {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
@@ -178,29 +204,4 @@ extension Date {
     func passed() -> Bool {
         return Date() > Calendar.current.date(byAdding: .hour, value: 2, to: self)!
     }
-    
-//    static func getCurrentWeekType() -> WeekType {
-//        let calendar = Calendar.current
-//        let weekOfYear = calendar.component(.weekOfYear, from: Date())
-//        return weekOfYear % 2 == 0 ? .Denumerator : .Numerator
-//    }
-    
-//    static func getTodaysDay() -> Weekdays {
-//        let date = Date()
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "EEEE"
-//        let day = dateFormatter.string(from: date)
-//        
-//        return Weekdays(rawValue: day) ?? .Monday
-//    }
-    
-//    static func getTodaysTime() -> Date {
-//        let date = Date()
-//        let dateFormatter = DateFormatter()
-//        dateFormatter.dateFormat = "HH:mm"
-//        
-//        let dateString = dateFormatter.string(from: date)
-//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-//        return dateFormatter.date(from: dateString) ?? Date.distantPast
-//    }
 }

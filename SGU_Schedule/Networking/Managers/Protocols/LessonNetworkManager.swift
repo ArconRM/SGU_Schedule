@@ -15,7 +15,7 @@ public protocol LessonNetworkManager {
     )
     
     func getTeacherScheduleForCurrentWeek(
-        teacher: Teacher,
+        teacherEndpoint: String?,
         resultQueue: DispatchQueue,
         completionHandler: @escaping(Result<[LessonDTO], Error>) -> Void
     )

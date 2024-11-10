@@ -91,10 +91,13 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     }
                 }
                 
-                if Date.currentWeekDay == .Sunday {
-                    Text("Следующая неделя")
-                        .padding(.vertical, 5)
-                }
+//                Text("\(Date.startOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка") - \(Date.endOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка")")
+//                    .font(.system(size: 19, design: .rounded))
+//                    .padding(.vertical, 5)
+                
+                Text(Date.getDayOfCurrentWeek(dayNumber: selectedDay.number)?.getDayAndMonthWordString() ?? "Хз")
+                    .font(.system(size: 19, weight: .bold, design: .rounded))
+                    .padding(.vertical, 5)
                 
                 if viewModel.groupSchedule == nil && networkMonitor.isConnected {
                     Text("Загрузка...")

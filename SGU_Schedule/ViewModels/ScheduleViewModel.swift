@@ -8,7 +8,7 @@
 import Foundation
 import WidgetKit
 
-public final class ScheduleViewModel: ObservableObject {
+public class ScheduleViewModel: ObservableObject {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
     private let schedulePersistenceManager: GroupSchedulePersistenceManager

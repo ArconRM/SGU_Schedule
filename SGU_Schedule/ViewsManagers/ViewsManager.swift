@@ -14,7 +14,8 @@ enum AppViews: Equatable {
     case DepartmentsView
     case GroupsView
     case ScheduleView
-    case TeacherInfoView
+    case TeacherView
+    case TeachersSearchView
 }
 
 // TODO: через DI с протоколом сделать
@@ -76,7 +77,8 @@ public final class ViewsManager: ObservableObject {
     private var isSelectedGroupFavourite: Bool?
     private var isSelectedGroupPinned: Bool?
     
-    private var teacherEndpoint: String?
+    private var selectedTeacherUrlEndpoint: String?
+    private var selectedTeacherLessonsUrlEndpoint: String?
     
     init(
         appSettings: AppSettings,
@@ -180,12 +182,14 @@ public final class ViewsManager: ObservableObject {
     func showDepartmentsView() {
         currentView = .DepartmentsView
         isShowingSettingsView = false
+        selectedGroup = nil
     }
     
     func showGroupsView(needToReload: Bool = false) {
         needToReloadGroupView = needToReload
         currentView = .GroupsView
         isShowingSettingsView = false
+        selectedGroup = nil
     }
     
     func showSettingsView() {
@@ -193,12 +197,32 @@ public final class ViewsManager: ObservableObject {
     }
     
     func showScheduleView() {
-        currentView = .ScheduleView
+        selectedTeacherUrlEndpoint = nil
+        selectedTeacherLessonsUrlEndpoint = nil
+        
+        if selectedGroup == nil {
+            showBaseError(error: BaseError.noSavedDataError)
+        } else {
+            currentView = .ScheduleView
+        }
     }
     
-    func showTeacherInfoView(teacherEndpoint: String) {
-        self.teacherEndpoint = teacherEndpoint
-        currentView = .TeacherInfoView
+    /// Если передана ссылка на самого преподавателя, показывает всю инфу.
+    /// Если передана ссылка на его расписание, то только расписание.
+    func showTeacherView(teacherUrlEndpoint: String) {
+        self.selectedTeacherUrlEndpoint = teacherUrlEndpoint
+        currentView = .TeacherView
+    }
+    
+    /// Если передана ссылка на самого преподавателя, показывает всю инфу.
+    /// Если передана ссылка на его расписание, то только расписание.
+    func showTeacherView(teacherLessonsUrlEndpoint: String) {
+        self.selectedTeacherLessonsUrlEndpoint = teacherLessonsUrlEndpoint
+        currentView = .TeacherView
+    }
+    
+    func showTeachersSearchView() {
+        currentView = .TeachersSearchView
     }
     
     //Factory
@@ -225,10 +249,20 @@ public final class ViewsManager: ObservableObject {
         return ScheduleView(viewModel: scheduleViewModel, group: selectedGroup!, isFavourite: isSelectedGroupFavourite!, isPinned: isSelectedGroupPinned!)
     }
     
-    func buildTeacherInfoView() -> some View {
-        let teacherInfoViewModel = currentViewModelFactory.buildTeacherInfoViewModel()
+    func buildTeacherView() -> some View {
+        let teacherViewModel = currentViewModelFactory.buildTeacherViewModel()
         
-        return TeacherInfoView(viewModel: teacherInfoViewModel, teacherEndpoint: teacherEndpoint ?? "")
+        if selectedTeacherUrlEndpoint != nil {
+            return TeacherView(viewModel: teacherViewModel, teacherEndpoint: selectedTeacherUrlEndpoint)
+        } else {
+            return TeacherView(viewModel: teacherViewModel, teacherLessonsEndpoint: selectedTeacherLessonsUrlEndpoint)
+        }
+    }
+    
+    func buildTeachersSearchView() -> some View {
+        let teachersSearchViewModel = currentViewModelFactory.buildTeachersSearchViewModel()
+        
+        return TeachersSearchView(viewModel: teachersSearchViewModel)
     }
     
     //Error handling
@@ -249,6 +283,16 @@ public final class ViewsManager: ObservableObject {
             self.activeError = userDefaultsError
         } else {
             self.activeError = UserDefaultsError.unexpectedError
+        }
+    }
+    
+    private func showBaseError(error: Error) {
+        self.isShowingError = true
+        
+        if let baseError = error as? BaseError {
+            self.activeError = baseError
+        } else {
+            self.activeError = BaseError.unknownError
         }
     }
 }

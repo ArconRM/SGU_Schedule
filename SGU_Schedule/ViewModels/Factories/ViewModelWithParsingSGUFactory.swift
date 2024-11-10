@@ -16,7 +16,7 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
     
     public func buildGroupsViewModel(department: Department) -> GroupsViewModel {
         return GroupsViewModel (
-            networkManager: GroupsNetworkManagerWithParsing(
+            groupsNetworkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
                 groupsParser: GroupsHTMLParserSGU(),
                 scraper: DynamicScraper()
@@ -46,11 +46,10 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
         )
     }
     
-    public func buildTeacherInfoViewModel() -> TeacherInfoViewModel {
-        return TeacherInfoViewModel (
+    public func buildTeacherViewModel() -> TeacherViewModel {
+        return TeacherViewModel (
             teacherNetworkManager: TeacherNetworkManagerWithParsing(
-                urlSource: urlSource,
-                teacherParser: TeacherHTMLParserSGU_old()
+                scraper: StaticScraper()
             ),
             
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
@@ -64,6 +63,13 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
                 sessionEventsParser: SessionEventsHTMLParserSGU(),
                 scraper: DynamicScraper()
             )
+        )
+    }
+    
+    public func buildTeachersSearchViewModel() -> TeachersSearchViewModel {
+        return TeachersSearchViewModel(
+            teacherNetworkManager: TeacherNetworkManagerWithParsing(scraper: StaticScraper()),
+            teacherSearchResultsUDManager: TeacherSearchResultsUDManager()
         )
     }
 }

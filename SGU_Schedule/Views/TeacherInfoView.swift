@@ -2,177 +2,116 @@
 //  TeacherInfoView.swift
 //  SGU_Schedule
 //
-//  Created by Artemiy MIROTVORTSEV on 28.05.2024.
+//  Created by Artemiy MIROTVORTSEV on 31.05.2024.
 //
 
 import SwiftUI
-import UIKit
 
-struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherInfoViewModel {
+struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel {
     //чтобы не вью не переебашивалось при смене темы (и также источника инета)
-    static func == (lhs: TeacherInfoView<ViewModel>, rhs: TeacherInfoView<ViewModel>) -> Bool {
+    static func == (lhs: TeacherInfoView, rhs: TeacherInfoView) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
     
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var networkMonitor: NetworkMonitor
-    @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
     
     @ObservedObject var viewModel: ViewModel
     
-    var teacherEndpoint: String
+//    @State var isCollapsed: Bool = false
     
-    @State private var selectedTeacherScheduleVariant: TeacherSchedulePickerVariants = .Lessons
-    @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
-    @State private var lessonsBySelectedDay = [LessonDTO]()
-    
-    private enum TeacherSchedulePickerVariants: String, CaseIterable {
-        case Lessons = "Занятия"
-        case Session = "Сессия"
-    }
-    
-    var body : some View {
-        if UIDevice.isPhone {
-            NavigationView {
-                buildUI()
-            }
-        } else if UIDevice.isPad {
-            buildUI()
-        }
-    }
-    
-    private func buildUI() -> some View {
-        ZStack {
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
-                .ignoresSafeArea()
-                .shadow(radius: 5)
-            
-            if viewModel.isLoadingTeacherInfo {
-                ProgressView()
-            } else {
-                ScrollView {
-                    // TODO: Опять !
-                    TeacherInfoCardView(teacher: self.viewModel.teacher!)
-                        .padding(.horizontal, 10)
-                        .padding(.top, 5)
-                    
-                    Picker("", selection: $selectedTeacherScheduleVariant) {
-                        ForEach(TeacherSchedulePickerVariants.allCases, id: \.self) { variant in
-                            Text(variant.rawValue)
-                        }
-                    }
-                    .pickerStyle(SegmentedPickerStyle())
-                    .padding(.horizontal)
-                    .padding(.top)
-                    
-                    if selectedTeacherScheduleVariant == .Lessons {
-                        if viewModel.isLoadingTeacherLessons {
-                            ProgressView()
-                        } else {
-                            Picker("", selection: $selectedDay) {
-                                ForEach(Weekdays.allCases.dropLast(), id: \.self) { day in
-                                    Text(day.rawValue)
-                                }
-                            }
-                            .pickerStyle(SegmentedPickerStyle())
-                            .padding(.horizontal)
-                            .padding(.bottom)
-                            .onChange(of: selectedDay) { newDay in
-                                lessonsBySelectedDay = viewModel.teacherLessons.filter { $0.weekDay == selectedDay }
-                            }
-                            
-                            ScrollView(.vertical, showsIndicators: false) {
-                                ForEach(1...8, id:\.self) { lessonNumber in
-                                    let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
-                                    if !lessonsByNumber.isEmpty {
-                                        //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
-                                        ScheduleSubview(lessons: lessonsByNumber, subgroupsByLessons: [:])
-                                            .environmentObject(networkMonitor)
-                                            .environmentObject(viewsManager)
-                                            .id(UUID())
-                                    }
-                                }
-                                .padding(.top, 5)
-                                .padding(.bottom, 30)
-                            }
-                            .onAppear {
-                                lessonsBySelectedDay = viewModel.teacherLessons.filter { $0.weekDay == selectedDay }
-                            }
-                        }
-                    } else if selectedTeacherScheduleVariant == .Session {
-                        if viewModel.isLoadingTeacherSessionEvents {
-                            ProgressView()
-                        } else {
-                            ScrollView(.vertical, showsIndicators: false) {
-                                ForEach(viewModel.teacherSessionEvents.filter ({ $0.date >= Date() }) + viewModel.teacherSessionEvents.filter ({ $0.date < Date() }), id:\.self) { sessionEvent in
-                                    SessionEventSubview(sessionEvent: sessionEvent)
-                                }
-                                .padding(.top, 5)
-                                .padding(.bottom, 30)
-                            }
-                        }
-                    }
+    var body: some View {
+        VStack(alignment: .leading) {
+            //            Image("foto-1")
+            //                .resizable()
+            //                .aspectRatio(contentMode: ContentMode.fit)
+            //                .cornerRadius(20)
+            //                .padding(2)
+            VStack {
+                AsyncImage(url: viewModel.teacher?.profileImageUrl) { image in
+                    image
+                        .resizable()
+                        .aspectRatio(contentMode: ContentMode.fit)
+                        .cornerRadius(20)
+                        .shadow(radius: 3)
+                } placeholder: {
+                    ProgressView()
+                        .padding(10)
                 }
+                
+                Divider()
+                
+                Text(viewModel.isLoadingTeacherInfo ? "Загрузка..." : viewModel.teacher?.fullName ?? "Ошибка")
+                    .font(.system(size: 18))
+                    .bold()
+                    .multilineTextAlignment(.center)
+                    .padding(.top, 10)
+                
+                if let departmentFullName = viewModel.teacher?.departmentFullName {
+                    Text(departmentFullName)
+                        .font(.system(size: 18, weight: .thin))
+                        .italic()
+                        .padding(.top, 3)
+                }
+            }
+            
+            //                if !self.isCollapsed {
+            
+            Text("Дата рождения: " + (viewModel.teacher?.birthdate?.getDayMonthAndYearString() ?? ""))
                 .padding(.top, 10)
-            }
+            
+            Text("Email: " + (viewModel.teacher?.email ?? ""))
+                .padding(.top, 10)
+            
+            Text("Рабочий телефон: " + (viewModel.teacher?.workPhoneNumber ?? ""))
+                .padding(.top, 10)
+            
+            Text("Личный телефон: " + (viewModel.teacher?.personalPhoneNumber ?? ""))
+                .padding(.top, 10)
+            //                }
         }
-        .edgesIgnoringSafeArea(.bottom)
-        
-        .onAppear {
-            self.viewModel.fetchTeacherInfo(teacherEndpoint: self.teacherEndpoint)
-        }
-        .onChange(of: self.viewModel.isLoadingTeacherLessons) { newValue in
-            let impact = UIImpactFeedbackGenerator(style: .light)
-            impact.impactOccurred()
-        }
-        
-        .toolbar {
-            ToolbarItem(placement: .topBarLeading) {
-                makeCloseToolbarButton()
-                    .padding(.top, 5)
-            }
-        }
-        
-        .alert(isPresented: $viewModel.isShowingError) {
-            Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
-                  message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
-        }
+        .padding(.horizontal, 20)
+        .padding(.top, 20)
+        .padding(.bottom, 20)
+        .foregroundColor(colorScheme == .light ? .black : .white)
+        .background(getBackground())
+        .frame(maxHeight: UIScreen.screenHeight * 0.8)
+        .padding(.horizontal, 20)
     }
     
-    private func makeCloseToolbarButton() -> some View {
-        Button(action: {
-            withAnimation(.easeInOut(duration: 0.3)) {
-                viewsManager.showScheduleView()
-            }
-        }) {
-            MainButton {
-                Image(systemName: "multiply")
-                    .padding(10)
-                    .font(.system(size: 21, weight: .semibold))
-            }
+    private func getBackground() -> AnyView {
+        switch appSettings.currentAppStyle {
+        case .Fill:
+            AnyView(
+                RoundedRectangle(cornerRadius: 20)
+                    .fill(colorScheme == .light ? .white : .white.opacity(0.1))
+                    .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
+                    .blur(radius: 0.5)
+                    .opacity(0.8)
+            )
+        case .Bordered:
+            AnyView(
+                ZStack {
+                    (colorScheme == .light ? Color.white : Color.white.opacity(0.1))
+                        .cornerRadius(20)
+                    
+                    RoundedRectangle(cornerRadius: 20)
+                        .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
+                }
+            )
         }
     }
 }
 
-
-struct TeacherInfoView_Previews: PreviewProvider {
-    static var previews: some View {
-        TeacherInfoView(viewModel: ViewModelWithParsingSGUFactory().buildTeacherInfoViewModel(),
-                        teacherEndpoint: "")
-        .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+#Preview {
+    ZStack {
+        AppTheme.Blue.backgroundColor(colorScheme: .dark)
+            .ignoresSafeArea()
+            .shadow(radius: 5)
+        
+        TeacherInfoView(
+            viewModel: ViewModelWithParsingSGUFactory().buildTeacherViewModel()
+        )
         .environmentObject(AppSettings())
     }
 }
-
-//teacher: Teacher(
-//    fullName: "Осипцев Михаил Анатольевич",
-//    profileImageUrl: URL(string: "https://www.old1.sgu.ru/sites/default/files/styles/500x375_4x3/public/employee/facepics/7a630f4a70a5310d9152a3d5e5350a35/foto-1.jpg?itok=IILG1z3i")!,
-//    email: "Osipcevm@gmail.com",
-//    officeAddress: "9 учебный корпус СГУ, ком. 316",
-//    workPhoneNumber: "+7 (8452) 51 - 55 - 37",
-//    personalPhoneNumber: "",
-//    birthdate: Date.now,
-//    teacherLessonsUrl: URL(string: "https://www.sgu.ru/schedule/teacher/475")!,
-//teacherSessionEventsUrl: URL(string: "https://www.sgu.ru/schedule/teacher/475#session")!,

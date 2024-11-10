@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class TeacherInfoViewModel: ObservableObject {
+public class TeacherViewModel: ObservableObject {
     private let teacherNetworkManager: TeacherNetworkManager
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
@@ -33,15 +33,30 @@ public final class TeacherInfoViewModel: ObservableObject {
         self.sessionEventsNetworkManager = sessionEventsNetworkManager
     }
     
-    func fetchTeacherInfo(teacherEndpoint: String) {
+    public func fetchAll(teacherUrlEndpoint: String) {
         self.isLoadingTeacherInfo = true
         
-        teacherNetworkManager.getTeacher(teacherEndpoint: teacherEndpoint, resultQueue: .main) { result in
+        teacherNetworkManager.getTeacher(teacherEndpoint: teacherUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let teacher):
                 self.teacher = teacher
-                self.fetchTeacherLessons()
-                self.fetchTeacherSessionEvents()
+                self.isLoadingTeacherInfo = false
+                
+                self.fetchTeacherLessons(teacherLessonsUrlEndpoint: teacher.lessonsUrlEndpoint)
+                self.fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: teacher.sessionEventsUrlEndpoint)
+            case .failure(let error):
+                self.showNetworkError(error: error)
+            }
+        }
+    }
+    
+    public func fetchTeacherInfo(teacherUrlEndpoint: String) {
+        self.isLoadingTeacherInfo = true
+        
+        teacherNetworkManager.getTeacher(teacherEndpoint: teacherUrlEndpoint, resultQueue: .main) { result in
+            switch result {
+            case .success(let teacher):
+                self.teacher = teacher
             case .failure(let error):
                 self.showNetworkError(error: error)
             }
@@ -49,15 +64,15 @@ public final class TeacherInfoViewModel: ObservableObject {
         }
     }
     
-    func fetchTeacherLessons() {
+    public func fetchTeacherLessons(teacherLessonsUrlEndpoint: String) {
         self.isLoadingTeacherLessons = true
         
-        guard let _ = self.teacher else {
-            self.showNetworkError(error: NetworkError.unexpectedError)
-            return
-        }
+//        guard let _ = self.teacher else {
+//            self.showNetworkError(error: NetworkError.unexpectedError)
+//            return
+//        }
         
-        lessonsNetworkManager.getTeacherScheduleForCurrentWeek(teacher: self.teacher!, resultQueue: .main) { result in
+        lessonsNetworkManager.getTeacherScheduleForCurrentWeek(teacherEndpoint: teacherLessonsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let lessons):
                 self.teacherLessons = lessons
@@ -68,15 +83,15 @@ public final class TeacherInfoViewModel: ObservableObject {
         }
     }
     
-    func fetchTeacherSessionEvents() {
+    public func fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: String) {
         self.isLoadingTeacherSessionEvents = true
         
-        guard let _ = self.teacher else {
-            self.showNetworkError(error: NetworkError.unexpectedError)
-            return
-        }
+//        guard let _ = self.teacher else {
+//            self.showNetworkError(error: NetworkError.unexpectedError)
+//            return
+//        }
         
-        sessionEventsNetworkManager.getTeacherSessionEvents(teacher: self.teacher!, resultQueue: .main) { result in
+        sessionEventsNetworkManager.getTeacherSessionEvents(teacherEndpoint: teacherSessionEventsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let sessionEvents):
                 self.teacherSessionEvents = sessionEvents
@@ -84,6 +99,16 @@ public final class TeacherInfoViewModel: ObservableObject {
                 self.showNetworkError(error: error)
             }
             self.isLoadingTeacherSessionEvents = false
+        }
+    }
+    
+    public func showBaseError(error: Error) {
+        self.isShowingError = true
+        
+        if let baseError = error as? BaseError {
+            self.activeError = baseError
+        } else {
+            self.activeError = BaseError.unknownError
         }
     }
     

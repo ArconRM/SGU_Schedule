@@ -59,11 +59,15 @@ struct OverlayView<Content: View>: View {
                             .blur(radius: 2)
                             .ignoresSafeArea()
                     }
-                        .background(
+                        .background {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(colorScheme == .light ? .white : .black)
-                                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 0)
-                        )
+//                                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 0)
+                            
+                            RoundedRectangle(cornerRadius: 20)
+                                .stroke(.gray.opacity(0.4))
+                                .blur(radius: 0.5)
+                        }
                 )
                 .frame(width: geometry.size.width - 20, height: geometry.size.height * 0.7)
             }

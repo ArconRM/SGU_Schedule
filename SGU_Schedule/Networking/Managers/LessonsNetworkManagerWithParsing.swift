@@ -48,12 +48,12 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
     }
     
     public func getTeacherScheduleForCurrentWeek(
-        teacher: Teacher,
+        teacherEndpoint: String?,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void
     ) {
-        guard let _ = teacher.teacherLessonsEndpoint else { return }
-        let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacher.teacherLessonsEndpoint!)
+        guard let _ = teacherEndpoint else { return }
+        let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacherEndpoint!)
         
         URLSession.shared.dataTask(with: teacherLessonsUrl as URL) { data, _, error in
             guard error == nil else {

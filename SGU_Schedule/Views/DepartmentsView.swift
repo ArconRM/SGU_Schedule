@@ -37,7 +37,7 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
                             viewsManager.showGroupsView()
                         }
                     } label: {
-                        DepartmentSubview(department: department)
+                        PlainTextSubview(text: department.fullName)
                     }
                 }
             }

@@ -7,8 +7,8 @@
 
 import Foundation
 
-public final class GroupsViewModel: ObservableObject {
-    private let networkManager: GroupsNetworkManager
+public class GroupsViewModel: ObservableObject {
+    private let groupsNetworkManager: GroupsNetworkManager
     private let groupPersistenceManager: GroupPersistenceManager
     
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
@@ -43,10 +43,10 @@ public final class GroupsViewModel: ObservableObject {
     }
     
     init(
-        networkManager: GroupsNetworkManager,
+        groupsNetworkManager: GroupsNetworkManager,
         groupPersistenceManager: GroupPersistenceManager
     ) {
-        self.networkManager = networkManager
+        self.groupsNetworkManager = groupsNetworkManager
         self.groupPersistenceManager = groupPersistenceManager
     }
     
@@ -113,7 +113,7 @@ public final class GroupsViewModel: ObservableObject {
             }
             
             if isOnline {
-                networkManager.getGroupsByYearAndAcademicProgram(
+                groupsNetworkManager.getGroupsByYearAndAcademicProgram(
                     year: year,
                     program: academicProgram,
                     department: selectedDepartment,

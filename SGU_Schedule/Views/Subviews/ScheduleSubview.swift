@@ -90,7 +90,7 @@ struct ScheduleSubview: View, Equatable {
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
-                                    viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                    viewsManager.showTeacherView(teacherUrlEndpoint: lesson.teacherEndpoint!)
                                 }
                             }
                         }
@@ -103,7 +103,7 @@ struct ScheduleSubview: View, Equatable {
                         .onTapGesture {
                             withAnimation(.easeInOut(duration: 0.3)) {
                                 if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
-                                    viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                    viewsManager.showTeacherView(teacherUrlEndpoint: lesson.teacherEndpoint!)
                                 }
                             }
                         }
@@ -158,7 +158,7 @@ struct ScheduleSubview: View, Equatable {
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 0.3)) {
                                     if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
-                                        viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                        viewsManager.showTeacherView(teacherUrlEndpoint: lesson.teacherEndpoint!)
                                     }
                                 }
                             }
@@ -171,7 +171,7 @@ struct ScheduleSubview: View, Equatable {
                             .onTapGesture {
                                 withAnimation(.easeInOut(duration: 0.3)) {
                                     if lesson.teacherEndpoint != nil && networkMonitor.isConnected {
-                                        viewsManager.showTeacherInfoView(teacherEndpoint: lesson.teacherEndpoint!)
+                                        viewsManager.showTeacherView(teacherUrlEndpoint: lesson.teacherEndpoint!)
                                     }
                                 }
                             }

@@ -30,7 +30,7 @@ class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
     }
     
     func getTeacherSessionEvents(
-        teacher: Teacher,
+        teacherEndpoint: String?,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void
     ) {

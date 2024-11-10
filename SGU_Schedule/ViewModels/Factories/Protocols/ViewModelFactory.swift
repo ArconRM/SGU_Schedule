@@ -14,5 +14,7 @@ public protocol ViewModelFactory {
     
     func buildScheduleViewModel() -> ScheduleViewModel
     
-    func buildTeacherInfoViewModel() -> TeacherInfoViewModel
+    func buildTeacherViewModel() -> TeacherViewModel
+    
+    func buildTeachersSearchViewModel() -> TeachersSearchViewModel
 }

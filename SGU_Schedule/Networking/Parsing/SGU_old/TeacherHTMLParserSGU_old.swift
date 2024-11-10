@@ -18,6 +18,8 @@ struct TeacherHTMLParserSGU_old: TeacherHTMLParser {
             String(doc.xpath("//div[@class='field field-name-field-employee-name field-type-text field-label-hidden']").first?.text ?? "Error") + " " +
             String(doc.xpath("//div[@class='field field-name-field-employee-patronim field-type-text field-label-hidden']").first?.text ?? "Error")
             
+            let departmentFullName = String(doc.xpath("//fieldset[@id='edit-older-subjects']/div[@class='fieldset-wrapper']/h2").first?.text ?? "Error")
+            
             let profileImageUrl = URL(string: String(doc.xpath("//div[@class='field field-name-field-employee-photo field-type-image field-label-hidden']/div[@class='field-items']/div[@class='field-item even']/img/@src").first?.text ?? ""))
             
             let email = String(doc.xpath("//div[@class='field field-name-field-employee-email field-type-email field-label-inline clearfix']/div[@class='field-items']/div[@class='field-item even']/a").first?.text ?? "")
@@ -41,18 +43,24 @@ struct TeacherHTMLParserSGU_old: TeacherHTMLParser {
             
             return Teacher(
                 fullName: fullName,
+                lessonsUrlEndpoint: teacherLessonsEndpoint,
+                sessionEventsUrlEndpoint: teacherSessionEventsEndpoint,
+                departmentFullName: departmentFullName,
                 profileImageUrl: profileImageUrl,
                 email: email,
                 officeAddress: officeAddress,
                 workPhoneNumber: workPhoneNumber,
                 personalPhoneNumber: personalPhoneNumber,
-                birthdate: birthdate,
-                teacherLessonsEndpoint: teacherLessonsEndpoint,
-                teacherSessionEventsEndpoint: teacherSessionEventsEndpoint
+                birthdate: birthdate
             )
         }
         catch {
             throw NetworkError.htmlParserError
         }
+    }
+    
+    /// Not implemented
+    func getAllTeachersDTOFromSource(source html: String) throws -> Set<TeacherSearchResult> {
+        throw NetworkError.htmlParserError
     }
 }

@@ -57,11 +57,15 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         
                         if networkMonitor.isConnected {
                             makeAcademicProgramMenu()
-                                .offset(x: -33)
+//                                .offset(x: -33)
                         }
                         
                         Spacer()
+                        
+                        makeShowTeachersSearchButton()
+                        
                     }
+                    .padding(.top, 2)
                 } else if UIDevice.isPad {
                     if networkMonitor.isConnected {
                         makeAcademicProgramMenu()
@@ -84,6 +88,9 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 
                 // Список групп
                 ScrollView {
+                    Spacer()
+                        .frame(height: 10)
+                    
                     if viewModel.favouriteGroup != nil {
                         Button {
                             withAnimation(.easeInOut(duration: 0.5)) {
@@ -173,6 +180,11 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 }
             }
             
+            .alert(isPresented: $viewsManager.isShowingError) {
+                Alert(title: Text(viewsManager.activeError?.errorDescription ?? "Error"),
+                      message: Text(viewsManager.activeError?.failureReason ?? "Unknown"))
+            }
+            
             if showAlert {
                 HeheAlert(show: $showAlert)
             }
@@ -193,10 +205,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
-        .alert(isPresented: $viewsManager.isShowingError) {
-            Alert(title: Text(viewsManager.activeError?.errorDescription ?? "Error"),
-                  message: Text(viewsManager.activeError?.failureReason ?? "Unknown"))
-        }
     }
     
     private func makeShowSettingsButton() -> some View {
@@ -215,6 +223,24 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             }
         }
         .padding(.leading)
+    }
+    
+    private func makeShowTeachersSearchButton() -> some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.3)) {
+                viewsManager.showTeachersSearchView()
+            }
+            
+            let impact = UIImpactFeedbackGenerator(style: .light)
+            impact.impactOccurred()
+        }) {
+            MainButton {
+                Image(systemName: "magnifyingglass")
+                    .padding(5)
+                    .font(.system(size: 30, weight: .semibold))
+            }
+        }
+        .padding(.trailing)
     }
     
     private func makeAcademicProgramMenu() -> some View {

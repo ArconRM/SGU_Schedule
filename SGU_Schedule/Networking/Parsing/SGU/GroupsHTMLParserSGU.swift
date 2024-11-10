@@ -28,7 +28,11 @@ final class GroupsHTMLParserSGU: GroupsHTMLParser {
         let baseXpath = "//div[@class='accordion-container']/div[@class='accordion__content']/div[@id='\(departmentCode)']/div[@class='schedule__form-education    schedule__form-education_do _active-form-schedule']/li[@class='schedule-type__item']"
         var result = [AcademicGroupDTO]()
         
-//        // Подбор нужной программы обучения и добавление в список
+        //        po doc.at_css("ul.schedule__wrap_fio")?.content.split("\n")
+        //ul[@class='schedule__wrap_fio']/\(i)/a[@class='schedule__fio_item-link']
+        // //li[@class='schedule__fio_item fio-show'][1]/a[@class='schedule__fio_item-link']/@href
+        
+        // Подбор нужной программы обучения и добавление в список
         for i in 1...4 {
             if let curAcademicProgram = AcademicProgram(rawValue: doc.xpath(baseXpath + "[\(i)]/span").first?.text ?? "error") {
                 if curAcademicProgram == program {

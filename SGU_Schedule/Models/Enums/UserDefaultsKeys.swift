@@ -13,6 +13,9 @@ public enum UserDefaultsKeys: String {
     case favoriteGroupNumberKey = "favoriteGroupNumber"
     case favouriteGroupSubgroupsKey = "favouriteGroupSubgroups"
     case selectedDepartmentKey = "selectedDepartment"
+    
+    case teacherSearchResultsKey = "teacherSearchResults"
+    
     case isNewParserUsed = "isNewParserUsed"
     case isSlowInternet = "isSlowInternet"
     

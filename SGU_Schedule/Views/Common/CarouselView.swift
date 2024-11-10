@@ -12,9 +12,10 @@ struct CarouselView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSettings: AppSettings
     
-    let pageCount: Int
-    let pageTitles: [String]
+    let pages: [String]
     @State var currentIndex: Int
+    
+    let viewsAlignment: VerticalAlignment
     @ViewBuilder let content: Content
     
     @GestureState private var translation: CGFloat = 0
@@ -22,7 +23,7 @@ struct CarouselView<Content: View>: View {
     var body: some View {
         ZStack(alignment: .bottom) {
             GeometryReader { geometry in
-                LazyHStack(alignment: .bottom, spacing: 0) {
+                LazyHStack(alignment: viewsAlignment, spacing: 0) {
                     self.content.frame(width: geometry.size.width)
                 }
                 .frame(width: geometry.size.width, alignment: .leading)
@@ -45,12 +46,12 @@ struct CarouselView<Content: View>: View {
             }
             
             HStack {
-                ForEach(pageTitles, id:\.self) { title in
+                ForEach(pages, id:\.self) { title in
                     Text(title)
-                        .font(.system(size: pageTitles[currentIndex] == title ? 18 : 13))
-                        .fontWeight(pageTitles[currentIndex] == title ? .bold : .regular)
+                        .font(.system(size: pages[currentIndex] == title ? 18 : 13))
+                        .fontWeight(pages[currentIndex] == title ? .bold : .regular)
                         .onTapGesture {
-                            currentIndex = pageTitles.firstIndex(of: title) ?? 0
+                            currentIndex = pages.firstIndex(of: title) ?? 0
                         }
                 }
             }
@@ -71,9 +72,9 @@ struct CarouselView<Content: View>: View {
 
 #Preview {
     CarouselView(
-        pageCount: 2,
-        pageTitles: ["Цыган", "Чё"],
-        currentIndex: 0
+        pages: ["Цыган", "Чё"],
+        currentIndex: 0,
+        viewsAlignment: .bottom
     ) {
         Text("Теперь я цыган")
             .frame(width: 393, height: 500)

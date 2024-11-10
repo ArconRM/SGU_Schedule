@@ -1,5 +1,5 @@
 //
-//  DepartmentSubview.swift
+//  PlainTextSubview.swift
 //  SGU_Schedule
 //
 //  Created by Artemiy MIROTVORTSEV on 08.06.2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct DepartmentSubview: View {
+struct PlainTextSubview: View {
     @Environment(\.colorScheme) var colorScheme
     
     var department: Department
@@ -42,8 +42,8 @@ struct DepartmentSubview: View {
             .foregroundColor(.blue.opacity(0.1))
             .ignoresSafeArea()
         ScrollView {
-            DepartmentSubview(department: Department(code: "knt"))
-            DepartmentSubview(department: Department(code: "mm"))
+            PlainTextSubview(department: Department(code: "knt"))
+            PlainTextSubview(department: Department(code: "mm"))
         }
     }
 }

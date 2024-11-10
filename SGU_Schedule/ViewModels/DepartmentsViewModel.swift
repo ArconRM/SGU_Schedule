@@ -7,7 +7,7 @@
 
 import Foundation
 
-public final class DepartmentsViewModel: ObservableObject {
+public class DepartmentsViewModel: ObservableObject {
     
     @Published var departments: [Department] = []
     
