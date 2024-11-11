@@ -14,7 +14,6 @@ struct ScheduleEventsEntry: TimelineEntry {
     var currentEvent: (any ScheduleEvent)?
     var nextEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
-    var nextUpdateDate: Date?
 }
 
 struct ScheduleEventsProvider: TimelineProvider {
@@ -57,8 +56,7 @@ struct ScheduleEventsProvider: TimelineProvider {
             fetchResultVariant: resultVariant,
             currentEvent: currentEvent,
             nextEvent: nextLesson,
-            closeLesson: closeLesson,
-            nextUpdateDate: nextUpdateDate
+            closeLesson: closeLesson
         )
         
         let timeline = Timeline(
@@ -110,7 +108,6 @@ struct ScheduleEventsView: View {
     var currentEvent: (any ScheduleEvent)?
     var nextEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?
-    var nextUpdateDate: Date?
 
     @ViewBuilder
     var body: some View {
@@ -136,8 +133,7 @@ struct ScheduleEventsView: View {
                 fetchResultVariant: fetchResultVariant,
                 currentEvent: currentEvent,
                 nextEvent: nextEvent,
-                closeLesson: closeLesson,
-                nextUpdateDate: nextUpdateDate
+                closeLesson: closeLesson
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
@@ -213,8 +209,7 @@ struct SGU_ScheduleWidget: Widget {
                 fetchResultVariant: entry.fetchResultVariant,
                 currentEvent: entry.currentEvent,
                 nextEvent: entry.nextEvent,
-                closeLesson: entry.closeLesson,
-                nextUpdateDate: entry.nextUpdateDate
+                closeLesson: entry.closeLesson
             )
             .environmentObject(AppSettings())
         }

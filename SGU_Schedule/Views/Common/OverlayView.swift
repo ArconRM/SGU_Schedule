@@ -21,9 +21,9 @@ struct OverlayView<Content: View>: View {
             ZStack {
                 (colorScheme == .light ?
                  Color.gray
-                    .opacity(0.2) :
+                    .opacity(0.6) :
                     Color.black
-                    .opacity(0.2))
+                    .opacity(0.4))
                 .contentShape(Rectangle())
                 .onTapGesture {
                     withAnimation(.easeOut(duration: 0.4)) {
