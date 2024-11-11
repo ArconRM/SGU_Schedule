@@ -68,15 +68,18 @@ struct GroupSubview: View {
     private func getMainBackgroundLight() -> some View {
         RoundedRectangle(cornerRadius: 20)
             .fill(
-                  LinearGradient(
-                    stops: [
-                        .init(color: Color.white.opacity(0.6), location: 0.0),
-                        .init(color: Color.white, location: 0.3)
-                    ],
-                    startPoint: .topLeading,
-                    endPoint: .bottomTrailing
-                  ))
+//                  LinearGradient(
+//                    stops: [
+//                        .init(color: Color.white.opacity(0.6), location: 0.0),
+//                        .init(color: Color.white, location: 0.3)
+//                    ],
+//                    startPoint: .topLeading,
+//                    endPoint: .bottomTrailing
+//                  )
+                Color.white.opacity(0.95)
+            )
             .shadow(color: .gray.opacity(0.4), radius: 4, y: 0)
+            .opacity(0.8)
     }
     
     private func getMainBackgroundDark() -> some View {
@@ -87,7 +90,7 @@ struct GroupSubview: View {
                         stops:
                             [
                                 .init(color: appSettings.currentAppTheme != .Gray ? getBackgroundColor().opacity(0.25) : Color.gray.opacity(0.1), location: 0.0),
-                                .init(color: appSettings.currentAppTheme != .Gray ? Color.gray.opacity(0.2) :  Color.gray.opacity(0.1), location: 0.9)
+                                .init(color: appSettings.currentAppTheme != .Gray ? Color.gray.opacity(0.2) : Color.gray.opacity(0.1), location: 0.9)
                             ],
                         startPoint: .leading,
                         endPoint: .trailing)
@@ -109,7 +112,7 @@ struct GroupSubview: View {
     
     private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.3), lineWidth: 4)
+            .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.5), lineWidth: 4)
             .padding(2)
         // В сером цвете при темной теме не видно иначе
             .background {

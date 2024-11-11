@@ -47,14 +47,16 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
             return []
         }
         
-        for i in stride(from: 0, to: elements!.count, by: 6) {
+        let containsGroupType = elements!.count % 5 == 0
+        
+        for i in stride(from: 0, to: elements!.count, by: containsGroupType ? 5 : 6) {
             let date = elements![i]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .replacingOccurrences(of: "г. ", with: "")
-            let eventType = elements![i+1]
-            let subject = elements![i+2]
-            let group = elements![i+3]
-            let cabinet = elements![i+5]
+            let eventType = elements![i + 1]
+            let subject = elements![i + 2]
+            let group = elements![i + 3]
+            let cabinet = elements![i + (containsGroupType ? 4 : 5)]
             
             sessionEvents.append(
                 SessionEventDTO(

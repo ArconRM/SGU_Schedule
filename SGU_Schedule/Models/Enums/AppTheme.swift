@@ -30,13 +30,39 @@ public enum AppTheme: String, CaseIterable {
     func backgroundColor(colorScheme: ColorScheme) -> Color {
         switch self {
         case .Blue:
-            return .blue.opacity(colorScheme == .dark ? 0.1 : 0.07)
+            return .blue.opacity(colorScheme == .light ? 0.1 : 0.1)
         case .Green:
-            return .green.opacity(colorScheme == .dark ? 0.1 : 0.07)
+            return .green.opacity(colorScheme == .light ? 0.1 : 0.1)
         case .Pink:
-            return .pink.opacity(colorScheme == .dark ? 0.1 : 0.07)
+            return .pink.opacity(colorScheme == .light ? 0.1 : 0.1)
         case .Gray:
-            return colorScheme == .light ? .gray.opacity(0.1) : .black
+            return colorScheme == .light ? .gray.opacity(0.1) : .gray.opacity(0.1)
+        }
+    }
+    
+    func mainGradientColor(colorScheme: ColorScheme) -> Color {
+        switch self {
+        case .Blue:
+            return .blue.opacity(colorScheme == .light ? 0.12 : 0.1)
+        case .Green:
+            return .green.opacity(colorScheme == .light ? 0.15 : 0.1)
+        case .Pink:
+            return .pink.opacity(colorScheme == .light ? 0.1 : 0.1)
+        case .Gray:
+            return colorScheme == .light ? .gray.opacity(0.17) : .gray.opacity(0.1)
+        }
+    }
+    
+    func pairedGradientColor(colorScheme: ColorScheme) -> Color {
+        switch self {
+        case .Blue:
+            return .cyan.opacity(colorScheme == .light ? 0.1 : 0)
+        case .Green:
+            return .blue.opacity(colorScheme == .light ? 0.07 : 0.08)
+        case .Pink:
+            return .purple.opacity(colorScheme == .light ? 0.1 : 0.12)
+        case .Gray:
+            return colorScheme == .light ? .white : .gray.opacity(0.03)
         }
     }
     

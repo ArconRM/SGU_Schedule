@@ -8,6 +8,11 @@
 import SwiftUI
 
 struct TeachersSearchView<ViewModel>: View where ViewModel: TeachersSearchViewModel {
+    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
+    static func == (lhs: TeachersSearchView<TeachersSearchViewModel>, rhs: TeachersSearchView<TeachersSearchViewModel>) -> Bool {
+        return lhs.colorScheme == rhs.colorScheme
+    }
+    
     @Environment(\.colorScheme) var colorScheme
     
     @ObservedObject var viewModel: ViewModel
@@ -52,6 +57,7 @@ struct TeachersSearchView<ViewModel>: View where ViewModel: TeachersSearchViewMo
                             }
                         }
                         .searchable(text: $queryString, prompt: "Введите фамилию преподавателя")
+                        
                         Button(
                             action: {
                                 viewModel.needToLoad = true
@@ -74,7 +80,7 @@ struct TeachersSearchView<ViewModel>: View where ViewModel: TeachersSearchViewMo
                                         viewModel.fetchNetworkTeachersAndSave()
                                     }
                                   ),
-                                  secondaryButton: .destructive(
+                                  secondaryButton: .default(
                                     Text("Нет"),
                                     action: {
                                         viewModel.needToLoad = false
@@ -84,7 +90,9 @@ struct TeachersSearchView<ViewModel>: View where ViewModel: TeachersSearchViewMo
                         
                         Text("Сохранено: \(viewModel.allTeachers.count)")
                             .padding(.bottom, 5)
+                            .padding(.top, 10)
                     }
+                    .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
                 
             }
@@ -100,6 +108,7 @@ struct TeachersSearchView<ViewModel>: View where ViewModel: TeachersSearchViewMo
             .navigationTitle("Поиск")
         }
         .edgesIgnoringSafeArea(.bottom)
+        .ignoresSafeArea(.keyboard, edges: .bottom)
         
         .onAppear {
             viewModel.fetchSavedTeachers()

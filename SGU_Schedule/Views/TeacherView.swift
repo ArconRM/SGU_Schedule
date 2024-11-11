@@ -42,6 +42,7 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
             appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
+            
             if teacherEndpoint != nil {
                 CarouselView(pages: ["Инфа", "Расписание"], currentIndex: 0, viewsAlignment: .center) {
                     TeacherInfoView(viewModel: viewModel)

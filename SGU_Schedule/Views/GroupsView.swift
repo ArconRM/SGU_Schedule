@@ -29,7 +29,8 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             // Фон
             if UIDevice.isPhone {
                 LinearGradient(
-                    colors: [appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme), (colorScheme == .light ? .white : .black)],
+                    colors: [appSettings.currentAppTheme.mainGradientColor(colorScheme: colorScheme),
+                             appSettings.currentAppTheme.pairedGradientColor(colorScheme: colorScheme)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
@@ -57,7 +58,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         
                         if networkMonitor.isConnected {
                             makeAcademicProgramMenu()
-//                                .offset(x: -33)
                         }
                         
                         Spacer()

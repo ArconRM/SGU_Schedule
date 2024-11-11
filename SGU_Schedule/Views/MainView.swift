@@ -77,12 +77,6 @@ struct MainView: View {
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
                             
-                        } else if viewsManager.currentView == .TeachersSearchView {
-                            viewsManager.buildTeachersSearchView()
-                                .environmentObject(networkMonitor)
-                                .environmentObject(viewsManager)
-                                .environmentObject(appSettings)
-                            
                         } else {
                             viewsManager.buildSettingsView()
                                 .environmentObject(appSettings)

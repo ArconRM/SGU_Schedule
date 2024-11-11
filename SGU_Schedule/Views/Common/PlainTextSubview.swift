@@ -27,7 +27,7 @@ struct PlainTextSubview: View {
         .cornerRadius(20)
         .background(
             RoundedRectangle(cornerRadius: 20)
-                .fill(colorScheme == .light ? .white : .white.opacity(0.2))
+                .fill(colorScheme == .light ? Color.white.opacity(0.95) : Color.gray.opacity(0.2))
                 .shadow(color: .gray.opacity(0.25), radius: 5, x: 0, y: 5)
                 .blur(radius: 0.5)
         )
