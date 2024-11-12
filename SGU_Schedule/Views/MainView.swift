@@ -46,7 +46,7 @@ struct MainView: View {
                     
                 case .TeachersSearchView:
                     viewsManager.buildTeachersSearchView()
-//                        .environmentObject(networkMonitor)
+                        .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                 }

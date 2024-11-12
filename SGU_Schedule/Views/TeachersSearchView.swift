@@ -7,18 +7,18 @@
 
 import SwiftUI
 
-struct TeachersSearchView<ViewModel>: View where ViewModel: TeachersSearchViewModel {
+struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersSearchViewModel {
     //чтобы не вью не переебашивалось при смене темы (и также источника инета)
-    static func == (lhs: TeachersSearchView<TeachersSearchViewModel>, rhs: TeachersSearchView<TeachersSearchViewModel>) -> Bool {
+    static func == (lhs: TeachersSearchView<ViewModel>, rhs: TeachersSearchView<ViewModel>) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
     
     @Environment(\.colorScheme) var colorScheme
-    
-    @ObservedObject var viewModel: ViewModel
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
+    
+    @ObservedObject var viewModel: ViewModel
     
     @State private var queryString = ""
     var filteredTeachers: Set<TeacherSearchResult> {
