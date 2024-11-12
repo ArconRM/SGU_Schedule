@@ -29,14 +29,14 @@ public enum Weekdays: String, CaseIterable {
     }
     
     public init?(rawValue: String) {
-        switch rawValue {
-        case "Monday": self = .Monday
-        case "Tuesday": self = .Tuesday
-        case "Wednesday": self = .Wednesday
-        case "Thursday": self = .Thursday
-        case "Friday": self = .Friday
-        case "Saturday": self = .Saturday
-        case "Sunday": self = .Sunday
+        switch rawValue.lowercased() {
+        case "monday", "понедельник": self = .Monday
+        case "tuesday", "вторник": self = .Tuesday
+        case "wednesday", "среда": self = .Wednesday
+        case "thursday", "четверг": self = .Thursday
+        case "friday", "пятница": self = .Friday
+        case "saturday", "суббота": self = .Saturday
+        case "sunday", "воскресенье": self = .Sunday
         default:
             return nil
         }
