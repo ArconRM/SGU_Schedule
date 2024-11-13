@@ -74,7 +74,19 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         .padding(.top, 20)
         .padding(.bottom, 20)
         .foregroundColor(colorScheme == .light ? .black : .white)
-        .background(getBackground())
+        .background(
+            getBackground()
+                .overlay {
+                    if appSettings.currentAppTheme == .PinkHelloKitty {
+                        Image("patternImageRofl3")
+                            .resizable()
+                            .ignoresSafeArea()
+                            .scaledToFit()
+                            .clipped()
+                            .opacity(0.1)
+                    }
+                }
+        )
         .frame(maxHeight: UIScreen.screenHeight * 0.8)
         .padding(.horizontal, 20)
     }

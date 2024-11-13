@@ -35,10 +35,31 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     endPoint: .bottomTrailing
                 )
                 .blur(radius: 2)
+                .overlay {
+                    if appSettings.currentAppTheme == .PinkHelloKitty && !viewsManager.isShowingSettingsView {
+                        Image("patternImageRofl")
+                            .resizable()
+                            .ignoresSafeArea()
+                            .scaledToFill()
+                            .clipped()
+                            .opacity(colorScheme == .light ? 0.4 : 0.1)
+                    }
+                }
                 .ignoresSafeArea()
+                
                 
             } else if UIDevice.isPad {
                 appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                    .overlay {
+                        if appSettings.currentAppTheme == .PinkHelloKitty && !viewsManager.isShowingSettingsView {
+                            Image("patternImageRofl")
+                                .resizable()
+                                .ignoresSafeArea()
+                                .scaledToFill()
+                                .clipped()
+                                .opacity(colorScheme == .light ? 0.4 : 0.1)
+                        }
+                    }
                     .ignoresSafeArea()
                 
             }

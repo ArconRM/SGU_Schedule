@@ -68,7 +68,7 @@ struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherV
                             }
                         }
                         .padding(.top, 5)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 60)
                     }
                     .onAppear {
                         lessonsBySelectedDay = viewModel.teacherLessons.filter { $0.weekDay == selectedDay }
@@ -83,7 +83,7 @@ struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherV
                             SessionEventSubview(sessionEvent: sessionEvent)
                         }
                         .padding(.top, 5)
-                        .padding(.bottom, 30)
+                        .padding(.bottom, 60)
                     }
                 }
             }

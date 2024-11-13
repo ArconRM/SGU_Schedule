@@ -38,6 +38,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                 appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .ignoresSafeArea()
                     .shadow(radius: 5)
+                    .ignoresSafeArea()
                 
                 if viewModel.isLoading {
                     Text("Загрузка всех преподавателей...")
@@ -68,6 +69,16 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                                     .font(.system(size: 19, weight: .bold, design: .rounded))
                                     .frame(maxWidth: .infinity)
                                     .padding(.vertical, 15)
+                            }
+                            .overlay {
+                                if appSettings.currentAppTheme == .PinkHelloKitty {
+                                    Image("patternImageRofl1")
+                                        .resizable()
+                                        .ignoresSafeArea()
+                                        .scaledToFit()
+                                        .clipped()
+                                        .opacity(colorScheme == .light ? 0.2 : 0.1)
+                                }
                             }
                             .padding(.horizontal)
                         }

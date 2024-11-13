@@ -24,6 +24,7 @@ public struct TeacherHTMLParserSGU: TeacherHTMLParser {
         var result = Set<TeacherSearchResult>()
         
         // 2482 на 30 октября 2024
+        // 1576 на 12 ноября 2024
         for i in 0...doc.xpath(teacherNameXpath).count-1 {
             if let teacherName = doc.xpath(teacherNameXpath)[i].text,
                let teacherLessonsEndpoint = doc.xpath(teacherEndpointXpath)[i].text {

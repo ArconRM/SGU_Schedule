@@ -18,7 +18,7 @@ struct MainButton<Content: View>: View {
             .background (
                 ZStack {
                     RoundedRectangle(cornerRadius: 10)
-                        .fill(colorScheme == .light ? .white.opacity(0.8) : .gray.opacity(0.2))
+                        .fill(colorScheme == .light ? .white.opacity(0.9) : .gray.opacity(0.2))
                     
                     RoundedRectangle(cornerRadius: 10)
                         .stroke(colorScheme == .light ? .black.opacity(0.2) : .gray.opacity(0.4))

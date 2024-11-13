@@ -44,7 +44,7 @@ struct ScheduleSubview: View, Equatable {
                 }
             }
         }
-        .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
+        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .Fill ? 0.3 : 0.2))
         .cornerRadius(10)
         .padding(.horizontal, 13)
         .shadow(color: colorScheme == .light ?
@@ -258,7 +258,7 @@ struct ScheduleSubview: View, Equatable {
         switch appSettings.currentAppStyle {
         case .Fill:
             AnyView(
-                getLessonColor(lesson: lesson).opacity(0.2)
+                getLessonColor(lesson: lesson).opacity(0.3)
             )
         case .Bordered:
             AnyView(

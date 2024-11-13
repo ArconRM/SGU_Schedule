@@ -76,10 +76,10 @@ struct GroupSubview: View {
 //                    startPoint: .topLeading,
 //                    endPoint: .bottomTrailing
 //                  )
-                Color.white.opacity(0.95)
+                Color.white
             )
             .shadow(color: .gray.opacity(0.4), radius: 4, y: 0)
-            .opacity(0.8)
+            .opacity(0.9)
     }
     
     private func getMainBackgroundDark() -> some View {
@@ -116,7 +116,7 @@ struct GroupSubview: View {
             .padding(2)
         // В сером цвете при темной теме не видно иначе
             .background {
-                if (isFavourite || isPinned) && appSettings.currentAppTheme == .Gray && colorScheme == .dark {
+                if (isFavourite || isPinned) {
                     getBackgroundColor()
                         .opacity(0.3)
                         .cornerRadius(18)

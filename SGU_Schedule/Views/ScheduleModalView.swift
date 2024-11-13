@@ -137,16 +137,29 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
             }
         })
         .background (
-            ZStack {
-                appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
-                    .cornerRadius(35)
-                    .blur(radius: 2)
-                    .ignoresSafeArea()
-            }
+            GeometryReader { geometry in
+                ZStack {
+                    appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                        .cornerRadius(35)
+                        .blur(radius: 2)
+                        .ignoresSafeArea()
+                }
                 .background(
                     RoundedRectangle(cornerRadius: 35)
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
+                .overlay {
+                    if appSettings.currentAppTheme == .PinkHelloKitty {
+                        Image("patternImageRofl2")
+                            .resizable()
+                            .ignoresSafeArea()
+                            .aspectRatio(contentMode: .fill) // Maintain aspect ratio
+                            .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
+                            .clipped()
+                            .opacity(colorScheme == .light ? 0.2 : 0.1)
+                    }
+                }
+            }
         )
         .padding(.top, curPadding)
     }

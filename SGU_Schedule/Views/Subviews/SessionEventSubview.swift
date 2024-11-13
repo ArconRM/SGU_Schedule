@@ -52,7 +52,7 @@ struct SessionEventSubview: View {
             .opacity(sessionEvent.date.passed() ? 0.5 : 1)
             .background(getBackground())
         }
-        .background(colorScheme == .light ? Color.white : Color.gray.opacity(0.2))
+        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .Fill ? 0.3 : 0.2))
         .cornerRadius(10)
         .padding(.horizontal, 13)
         .shadow(color: colorScheme == .light ?
@@ -67,7 +67,7 @@ struct SessionEventSubview: View {
         switch appSettings.currentAppStyle {
         case .Fill:
             AnyView(
-                getEventColor().opacity(sessionEvent.date.isAroundNow() ? 0.5 : 0.2)
+                getEventColor().opacity(sessionEvent.date.isAroundNow() ? 0.5 : 0.3)
             )
         case .Bordered:
             AnyView(
