@@ -12,7 +12,7 @@ import WebKit
 // При норм инете работает все еще медленнее ожидания в тупую
 // Вроде тоже при медленном инете не робит
 
-//class Delegate: NSObject, WKNavigationDelegate {
+// class Delegate: NSObject, WKNavigationDelegate {
 //    var onHTMLExtracted: ((String?) -> ())?
 //
 //    func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
@@ -96,19 +96,19 @@ import WebKit
 //            self.onHTMLExtracted?(result as? String)
 //        }
 //    }
-//}
+// }
 
 // С ожиданием в тупую, с медленным инетом просто может не успеть загрузить
 class Delegate: NSObject, WKNavigationDelegate {
     // Факультеты в конце не успевают прогрузиться за две секунды, xddd
     var needToWaitLonger: Bool = false
-    var onHTMLExtracted: ((String?) -> ())?
-    
+    var onHTMLExtracted: ((String?) -> Void)?
+
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         DispatchQueue.main.asyncAfter(deadline: .now() + (needToWaitLonger ? 4.0 : 2.0)) {
             let javascriptToExtractContent = "document.documentElement.outerHTML.toString()"
 
-            webView.evaluateJavaScript(javascriptToExtractContent) { (result, error) in
+            webView.evaluateJavaScript(javascriptToExtractContent) { (result, _) in
                 self.onHTMLExtracted?(result as? String)
             }
         }
@@ -118,15 +118,15 @@ class Delegate: NSObject, WKNavigationDelegate {
 class DynamicScraper: Scraper {
     var delegate = Delegate()
     var webView = WKWebView(frame: CGRect.zero)
-    
-    func scrapeUrl(_ url: URL, needToWaitLonger: Bool = false, completionHandler: @escaping (String?) -> ()) throws {
+
+    func scrapeUrl(_ url: URL, needToWaitLonger: Bool = false, completionHandler: @escaping (String?) -> Void) throws {
         self.delegate.onHTMLExtracted = completionHandler
 //        self.delegate.needToWaitLonger = needToWaitLonger
-        
+
         self.webView.navigationDelegate = self.delegate
         self.webView.load(URLRequest(url: url))
     }
-    
+
 //    deinit {
 //        print("deinited scraper")
 //    }

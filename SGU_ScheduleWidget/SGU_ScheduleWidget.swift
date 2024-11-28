@@ -33,7 +33,7 @@ struct ScheduleEventsProvider: TimelineProvider {
         
         if firstLesson == nil { // Если сегодня нет пар  - обновляем на следующий учебный день
             let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 5, of: date) ?? date
-            nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate) ?? date
+            nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .saturday ? 2 : 1, to: morningUpdateDate) ?? date
             
         } else if currentEvent != nil { // Если сейчас что-то есть, то обновляем после окончания текущего
             nextUpdateDate = Calendar.current.date(bySettingHour: currentEvent!.timeEnd.getHours(), minute: currentEvent!.timeEnd.getMinutes(), second: 5, of: date) ?? date
@@ -48,7 +48,7 @@ struct ScheduleEventsProvider: TimelineProvider {
             
         } else if date.getHours() > firstLesson!.timeStart.getHours() { // Если сейчас ничего нет и время позже первой пары, значит сегодня больше ничего нет и обновляем на след учебный день
             let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 5, of: date) ?? date
-            nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .Saturday ? 2 : 1, to: morningUpdateDate) ?? date
+            nextUpdateDate = Calendar.current.date(byAdding: .day, value: Date.currentWeekDay == .saturday ? 2 : 1, to: morningUpdateDate) ?? date
         }
         
         let entry = ScheduleEventsEntry(
@@ -120,13 +120,13 @@ struct ScheduleEventsView: View {
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.Fill {
+                if appSettings.currentAppStyle == AppStyle.fill {
                     buildFilledRectangle(event: currentEvent)
                 } else {
                     buildBorderedRectangle(event: currentEvent)
                 }
             }
-            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.openedFromWidget.rawValue)!)
             
         case .systemMedium:
             TwoEventsView(
@@ -137,13 +137,13 @@ struct ScheduleEventsView: View {
             )
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.Fill {
+                if appSettings.currentAppStyle == AppStyle.fill {
                     buildFilledRectangle(event: currentEvent)
                 } else {
                     buildBorderedRectangle(event: currentEvent)
                 }
             }
-            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.openedFromWidget.rawValue)!)
             
         case .accessoryRectangular:
             AccessoryRectangularView(
@@ -152,7 +152,7 @@ struct ScheduleEventsView: View {
                 closeLesson: closeLesson
             )
             .containerBackground(.clear, for: .widget)
-            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.openedFromWidget.rawValue)!)
             
         case .accessoryInline:
             AccessoryInlineView(
@@ -161,7 +161,7 @@ struct ScheduleEventsView: View {
                 closeLesson: closeLesson
             )
             .containerBackground(.clear, for: .widget)
-            .widgetURL(URL(string: AppUrls.OpenedFromWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.openedFromWidget.rawValue)!)
             
         default:
             NotAvailableView()
@@ -190,9 +190,9 @@ struct ScheduleEventsView: View {
         if event == nil {
             return .gray.opacity(0.7)
         } else if let lesson = event as? LessonDTO {
-            return lesson.lessonType == .Lecture ?
-            AppTheme.Green.foregroundColor(colorScheme: colorScheme) :
-            AppTheme.Blue.foregroundColor(colorScheme: colorScheme)
+            return lesson.lessonType == .lecture ?
+            AppTheme.green.foregroundColor(colorScheme: colorScheme) :
+            AppTheme.blue.foregroundColor(colorScheme: colorScheme)
         }
         
         return .gray
@@ -231,9 +231,9 @@ struct Widget_Previews: PreviewProvider {
         let lesson = LessonDTO(subject: "Иностранный язык",
                                      teacherFullName: "Бредихин Д. А.",
                                      teacherEndpoint: "/person/bredihin-dmitriy-aleksandrovich",
-                                     lessonType: .Lecture,
-                                     weekDay: .Monday,
-                                     weekType: .Numerator,
+                                     lessonType: .lecture,
+                                     weekDay: .monday,
+                                     weekType: .numerator,
                                      cabinet: "12 корпус ауд.303",
                                      lessonNumber: 1,
                                      timeStart: "08:20",
@@ -241,9 +241,9 @@ struct Widget_Previews: PreviewProvider {
         
         let nextEvent = LessonDTO(subject: "Дифференциальные уравнения и еще что-нибудь для длины",
                                   teacherFullName: "Бредихин Д. А.",
-                                  lessonType: .Practice,
-                                  weekDay: .Monday,
-                                  weekType: .Denumerator,
+                                  lessonType: .practice,
+                                  weekDay: .monday,
+                                  weekType: .denumerator,
                                   cabinet: "12 корпус ауд.304",
                                   lessonNumber: 1,
                                   timeStart: "10:00",

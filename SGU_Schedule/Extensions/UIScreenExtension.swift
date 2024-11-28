@@ -12,7 +12,7 @@ extension UIScreen {
     static let screenWidth = UIScreen.main.bounds.size.width
     static let screenHeight = UIScreen.main.bounds.size.height
     static let screenSize = UIScreen.main.bounds.size
-    
+
     static func getModalViewMaxPadding(initialOrientation: UIDeviceOrientation, currentOrientation: UIDeviceOrientation) -> CGFloat {
         if UIDevice.isPhone {
             return self.screenHeight * 0.7
@@ -25,7 +25,7 @@ extension UIScreen {
             self.screenHeight * 0.6 :
             self.screenWidth * 0.6
         }
-        
+
     }
 }
 
@@ -33,5 +33,5 @@ extension UIScreen {
 // С вертикального w820 и h1180
 
 /// Должно быть:
-///в горизонтальном 820 * 0.6
-///в вертикальном 1180 * 0.6
+/// в горизонтальном 820 * 0.6
+/// в вертикальном 1180 * 0.6

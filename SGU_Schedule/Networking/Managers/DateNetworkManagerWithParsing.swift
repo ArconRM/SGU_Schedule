@@ -5,9 +5,9 @@
 //  Created by Артемий on 13.10.2023.
 //
 
-//import Foundation
+// import Foundation
 //
-//public class DateNetworkManagerWithParsing: DateNetworkManager {
+// public class DateNetworkManagerWithParsing: DateNetworkManager {
 //    
 //    private var urlSource: URLSource
 //    private var dateParser: DateHTMLParser
@@ -46,4 +46,4 @@
 //        }.resume()
 //    }
 //    
-//}
+// }

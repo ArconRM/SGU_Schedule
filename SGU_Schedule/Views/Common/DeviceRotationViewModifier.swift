@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-//https://www.hackingwithswift.com/quick-start/swiftui/how-to-detect-device-rotation xd
+// https://www.hackingwithswift.com/quick-start/swiftui/how-to-detect-device-rotation xd
 struct DeviceRotationViewModifier: ViewModifier {
     let action: (UIDeviceOrientation) -> Void
 

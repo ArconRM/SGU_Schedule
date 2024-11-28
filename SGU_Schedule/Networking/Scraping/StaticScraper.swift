@@ -8,8 +8,8 @@
 import Foundation
 
 class StaticScraper: Scraper {
-    func scrapeUrl(_ url: URL, needToWaitLonger: Bool = false, completionHandler: @escaping (String?) -> ()) throws {
-        URLSession.shared.dataTask(with: url) { data, _, error in
+    func scrapeUrl(_ url: URL, needToWaitLonger: Bool = false, completionHandler: @escaping (String?) -> Void) throws {
+        URLSession.shared.dataTask(with: url) { _, _, error in
             guard error == nil else {
                 completionHandler("")
                 return
@@ -17,8 +17,7 @@ class StaticScraper: Scraper {
             do {
                 let html = try String(contentsOf: url, encoding: .utf8)
                 completionHandler(html)
-            }
-            catch {
+            } catch {
                 completionHandler("")
             }
         }.resume()

@@ -12,13 +12,13 @@ public struct TeacherSearchResultsUDManager: TeacherSearchResultsPersistenceMana
     private let defaults = UserDefaults(suiteName: "group.com.qwerty.SGUSchedule") ?? UserDefaults.standard
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
-    
+
     public func save(_ results: Set<TeacherSearchResult>) {
         if let encoded = try? encoder.encode(results) {
             defaults.set(encoded, forKey: teacherResultsKey)
         }
     }
-    
+
     public func getAll() -> Set<TeacherSearchResult>? {
         if let saved = defaults.object(forKey: teacherResultsKey) as? Data {
             if let decoded = try? decoder.decode(Set<TeacherSearchResult>.self, from: saved) {

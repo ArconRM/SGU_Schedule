@@ -8,20 +8,20 @@
 import SwiftUI
 
 struct ErrorView: View {
-    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
+    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: ErrorView, rhs: ErrorView) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewsManager: ViewsManager
-    
+
     @State var error: String
-    
+
     var body: some View {
         Text(error)
             .font(.system(size: 20))
-        
+
             .toolbar {
                 CloseButton {
                     withAnimation(.easeInOut(duration: 0.3)) {

@@ -9,9 +9,9 @@ import SwiftUI
 
 struct PlainTextSubview: View {
     @Environment(\.colorScheme) var colorScheme
-    
+
     var text: String
-    
+
     var body: some View {
         VStack {
             HStack {
@@ -20,7 +20,7 @@ struct PlainTextSubview: View {
                     .font(.system(size: 18, weight: .bold))
                     .multilineTextAlignment(.leading)
                     .padding(20)
-                
+
                 Spacer()
             }
         }
@@ -32,7 +32,7 @@ struct PlainTextSubview: View {
                 .blur(radius: 0.5)
         )
         .padding(.horizontal, 13)
-        .frame(minHeight:50)
+        .frame(minHeight: 50)
     }
 }
 

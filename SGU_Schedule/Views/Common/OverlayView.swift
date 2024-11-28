@@ -10,12 +10,12 @@ import SwiftUI
 struct OverlayView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @Binding var isShowing: Bool
     @ViewBuilder let content: Content
-    
+
     @State private var widgetsViewOpacity = 0.2
-    
+
     var body: some View {
         GeometryReader { geometry in
             ZStack {
@@ -30,7 +30,7 @@ struct OverlayView<Content: View>: View {
                         isShowing.toggle()
                     }
                 }
-                
+
                 VStack {
                     HStack {
                         Button(action: {
@@ -44,15 +44,15 @@ struct OverlayView<Content: View>: View {
                                 .padding(.leading, 15)
                                 .font(.system(size: 20, weight: .heavy, design: .rounded))
                         })
-                        
+
                         Spacer()
                     }
-                    
+
                     content
                         .opacity(widgetsViewOpacity)
                         .animation(.easeIn(duration: 0.4), value: widgetsViewOpacity)
                 }
-                .background (
+                .background(
                     ZStack {
                         appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                             .cornerRadius(20)
@@ -63,7 +63,7 @@ struct OverlayView<Content: View>: View {
                             RoundedRectangle(cornerRadius: 20)
                                 .fill(colorScheme == .light ? .white : .black)
 //                                .shadow(color: .gray.opacity(0.5), radius: 5, x: 0, y: 0)
-                            
+
                             RoundedRectangle(cornerRadius: 20)
                                 .stroke(.gray.opacity(0.4))
                                 .blur(radius: 0.5)

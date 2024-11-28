@@ -12,13 +12,13 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
     private var urlSource: URLSource
     private var groupsParser: GroupsHTMLParser
     private let scraper: Scraper
-    
+
     init(urlSource: URLSource, groupsParser: GroupsHTMLParser, scraper: Scraper) {
         self.urlSource = urlSource
         self.groupsParser = groupsParser
         self.scraper = scraper
     }
-    
+
     public func getGroupsByYearAndAcademicProgram(
         year: Int,
         program: AcademicProgram,
@@ -27,7 +27,7 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
         completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void
     ) {
         let url = urlSource.getBaseScheduleURL(departmentCode: department.code)
-        
+
         do {
             try self.scraper.scrapeUrl(url, needToWaitLonger: department.number > 15) { html in
                 do {
@@ -37,17 +37,15 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
                         departmentCode: department.code,
                         program: program
                     )
-                    
+
                     resultQueue.async { completionHandler(.success(groups)) }
-                }
-                catch {
+                } catch {
                     resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
                 }
             }
-        }
-        catch {
+        } catch {
             resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
         }
     }
-    
+
 }

@@ -8,5 +8,5 @@
 import Foundation
 
 public protocol Scraper {
-    func scrapeUrl(_ url: URL, needToWaitLonger: Bool, completionHandler: @escaping (String?) -> ()) throws
+    func scrapeUrl(_ url: URL, needToWaitLonger: Bool, completionHandler: @escaping (String?) -> Void) throws
 }

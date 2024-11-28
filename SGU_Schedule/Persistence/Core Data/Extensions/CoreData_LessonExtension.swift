@@ -10,25 +10,25 @@ import Foundation
 extension Lesson {
     var lessonType: LessonType {
         get {
-            return LessonType(rawValue: self.lessonTypeRawValue ?? "") ?? .Lecture
+            return LessonType(rawValue: self.lessonTypeRawValue ?? "") ?? .lecture
         }
         set {
             self.lessonTypeRawValue = newValue.rawValue
         }
     }
-    
+
     var weekType: WeekType {
         get {
-            return WeekType(rawValue: self.weekTypeRawValue ?? "") ?? .All
+            return WeekType(rawValue: self.weekTypeRawValue ?? "") ?? .all
         }
         set {
             self.weekTypeRawValue = newValue.rawValue
         }
     }
-    
+
     var weekDay: Weekdays {
         get {
-            return Weekdays(dayNumber: Int(self.weekDayNumber)) ?? .Monday
+            return Weekdays(dayNumber: Int(self.weekDayNumber)) ?? .monday
         }
         set {
             self.weekDayNumber = Int16(newValue.number)

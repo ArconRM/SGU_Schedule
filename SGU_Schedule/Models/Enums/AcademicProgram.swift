@@ -8,22 +8,22 @@
 import Foundation
 
 public enum AcademicProgram: String, CaseIterable {
-    case BachelorAndSpeciality = "Бакалавр/Специалитет"
-    case Masters = "Магистратура"
-    case Postgraduate = "Аспирантура"
-    
+    case bachelorAndSpeciality = "Бакалавр/Специалитет"
+    case masters = "Магистратура"
+    case postgraduate = "Аспирантура"
+
     public init?(rawValue: String) {
         switch rawValue {
         case "Бакалавриат", "Специалитет":
-            self = .BachelorAndSpeciality
+            self = .bachelorAndSpeciality
         case "Магистратура":
-            self = .Masters
+            self = .masters
         case "Аспирантура":
-            self = .Postgraduate
+            self = .postgraduate
         default:
             return nil
         }
     }
-    
+
     public static var allStringCases: [String] = ["Бакалавр", "Специалитет", "Магистратура", "Аспирантура"]
 }

@@ -10,10 +10,10 @@ import Foundation
 public class GroupsViewModel: ObservableObject {
     private let groupsNetworkManager: GroupsNetworkManager
     private let groupPersistenceManager: GroupPersistenceManager
-    
+
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
-    
+
     private var favouriteGroupNumber: String? {
         get {
             return UserDefaults.standard.string(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
@@ -22,26 +22,26 @@ public class GroupsViewModel: ObservableObject {
             UserDefaults.standard.setValue(newValue, forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
         }
     }
-    
-    @Published var favouriteGroup: AcademicGroupDTO? = nil
+
+    @Published var favouriteGroup: AcademicGroupDTO?
     @Published var savedGroupsWithoutFavourite = [AcademicGroupDTO]()
     @Published var groupsWithoutSaved = [AcademicGroupDTO]()
-    
+
     @Published var isLoadingGroups: Bool = true
     @Published var isLoadingFavoriteGroup: Bool = true
-    
+
     @Published var isShowingError = false
     @Published var activeError: LocalizedError?
-    
+
     var wasLaunched: Bool {
         let wasLaunched = UserDefaults.standard.bool(forKey: UserDefaultsKeys.wasLaunched.rawValue)
         if !wasLaunched {
             UserDefaults.standard.setValue(true, forKey: UserDefaultsKeys.wasLaunched.rawValue)
         }
-        
+
         return wasLaunched
     }
-    
+
     init(
         groupsNetworkManager: GroupsNetworkManager,
         groupPersistenceManager: GroupPersistenceManager
@@ -49,23 +49,23 @@ public class GroupsViewModel: ObservableObject {
         self.groupsNetworkManager = groupsNetworkManager
         self.groupPersistenceManager = groupPersistenceManager
     }
-    
+
     public func getSelectedAcademicProgram() -> AcademicProgram {
         if UserDefaults.standard.string(forKey: selectedAcademicProgramKey) == nil {
-            UserDefaults.standard.set(AcademicProgram.BachelorAndSpeciality.rawValue, forKey: selectedAcademicProgramKey)
+            UserDefaults.standard.set(AcademicProgram.bachelorAndSpeciality.rawValue, forKey: selectedAcademicProgramKey)
         }
-        
-        return AcademicProgram(rawValue: UserDefaults.standard.string(forKey: selectedAcademicProgramKey) ?? "Error") ?? .BachelorAndSpeciality
+
+        return AcademicProgram(rawValue: UserDefaults.standard.string(forKey: selectedAcademicProgramKey) ?? "Error") ?? .bachelorAndSpeciality
     }
-    
+
     public func getSelectedYear() -> Int {
         if UserDefaults.standard.value(forKey: selectedYearKey) == nil {
             UserDefaults.standard.set(1, forKey: selectedYearKey)
         }
-        
+
         return UserDefaults.standard.integer(forKey: selectedYearKey)
     }
-    
+
     public func setSelectedAcademicProgramAndFetchGroups(
         newValue: AcademicProgram,
         selectedDepartment: Department,
@@ -73,13 +73,13 @@ public class GroupsViewModel: ObservableObject {
     ) {
         UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
         fetchGroups(
-            year: getSelectedYear(), 
+            year: getSelectedYear(),
             academicProgram: newValue,
             selectedDepartment: selectedDepartment,
             isOnline: isOnline
         )
     }
-    
+
     public func setSelectedYearAndFetchGroups(
         newValue: Int,
         selectedDepartment: Department,
@@ -93,7 +93,7 @@ public class GroupsViewModel: ObservableObject {
             isOnline: isOnline
         )
     }
-    
+
     public func fetchGroups(
         year: Int,
         academicProgram: AcademicProgram,
@@ -102,16 +102,16 @@ public class GroupsViewModel: ObservableObject {
     ) {
         do {
             self.isLoadingGroups = true
-            
+
             self.favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO()
             if self.favouriteGroup != nil {
                 favouriteGroupNumber = self.favouriteGroup!.fullNumber
             }
-            
+
             self.savedGroupsWithoutFavourite = try groupPersistenceManager.fetchAllItemsDTO().filter {
                 $0.groupId != favouriteGroup?.groupId
             }
-            
+
             if isOnline {
                 groupsNetworkManager.getGroupsByYearAndAcademicProgram(
                     year: year,
@@ -134,25 +134,24 @@ public class GroupsViewModel: ObservableObject {
             } else {
                 self.isLoadingGroups = false
             }
-        }
-        catch (let error) {
+        } catch let error {
             showCoreDataError(error)
         }
     }
-    
+
     private func showCoreDataError(_ error: Error) {
         self.isShowingError = true
-        
+
         if let coreDataError = error as? CoreDataError {
             self.activeError = coreDataError
         } else {
             self.activeError = CoreDataError.unexpectedError
         }
     }
-    
+
     private func showNetworkError(_ error: Error) {
         isShowingError = true
-        
+
         if let networkError = error as? NetworkError {
             activeError = networkError
         } else {

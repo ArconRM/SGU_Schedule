@@ -9,11 +9,11 @@ import SwiftUI
 
 @main
 struct SGU_ScheduleApp: App {
-    
+
     @State var isOpenedFromWidget: Bool = false
     let favouriteGroupNumber = UserDefaults.standard.string(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
     let appSettings = AppSettings()
-    
+
     var body: some Scene {
         WindowGroup {
             MainView()
@@ -26,12 +26,12 @@ struct SGU_ScheduleApp: App {
                         groupPersistenceManager: GroupCoreDataManager(),
                         isOpenedFromWidget: isOpenedFromWidget
                     )
-                    
+
                 )
                 .environmentObject(NetworkMonitor())
                 .environmentObject(appSettings)
                 .onOpenURL { url in
-                    if url.absoluteString == AppUrls.OpenedFromWidget.rawValue {
+                    if url.absoluteString == AppUrls.openedFromWidget.rawValue {
                         isOpenedFromWidget = true && favouriteGroupNumber != nil
                     }
                 }

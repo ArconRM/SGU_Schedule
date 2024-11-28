@@ -18,7 +18,7 @@ class SessionEventsParserForTest: SessionEventsHTMLParser {
                                      departmentCode: departmentCode,
                                      sessionEvents: [SessionEventDTO(title: "МАТАН",
                                                                      date: date,
-                                                                     sessionEventType: .Consultation,
+                                                                     sessionEventType: .consultation,
                                                                      teacherFullName: "Легенда",
                                                                      cabinet: "Ад")])
     }
@@ -31,7 +31,7 @@ class SessionEventsParserForTest: SessionEventsHTMLParser {
         
         return [SessionEventDTO(title: "МАТАН",
                                 date: date,
-                                sessionEventType: .Consultation,
+                                sessionEventType: .consultation,
                                 teacherFullName: "Легенда",
                                 cabinet: "Ад")]
     }

@@ -8,7 +8,7 @@
 import Foundation
 
 public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
-    
+
     public var id: UUID
     /// subject
     public var title: String
@@ -22,8 +22,7 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
     var lessonNumber: Int
     public var timeStart: Date
     public var timeEnd: Date
-    
-    
+
     /// TimeStart and TimeEnd must be in "HH:mm" format
     init(
         subject: String,
@@ -48,16 +47,16 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
         self.cabinet = cabinet
         self.subgroup = subgroup
         self.lessonNumber = lessonNumber
-        
+
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_GB")
         dateFormatter.dateStyle = .none
         dateFormatter.timeStyle = .short
-        
+
         self.timeStart = dateFormatter.date(from: timeStart) ?? dateFormatter.date(from: "00:00")!
         self.timeEnd = dateFormatter.date(from: timeEnd) ?? dateFormatter.date(from: "00:00")!
     }
-    
+
     init(
         subject: String,
         teacherFullName: String,
@@ -84,7 +83,7 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
         self.timeStart = timeStart
         self.timeEnd = timeEnd
     }
-    
+
     /// All but id, because it needs to compare the one gotten from site and the one which is already in store
     public static func == (lhs: LessonDTO, rhs: LessonDTO) -> Bool {
         return (lhs.title == rhs.title &&
@@ -99,9 +98,9 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
                 lhs.timeStart == rhs.timeStart &&
                 lhs.timeEnd == rhs.timeEnd)
     }
-    
+
     public func isActive(subgroupsByLessons: [String: [LessonSubgroup]]) -> Bool {
-        if let _ = subgroupsByLessons[self.title] {
+        if subgroupsByLessons[self.title] != nil {
             if let requiredSubgroup = subgroupsByLessons[self.title]!.first(where: { $0.number == self.subgroup }) {
                 return Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(self.weekType) &&
                 (!subgroupsByLessons[self.title]!.contains(where: { $0.isSaved }) ||
@@ -111,14 +110,14 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
         }
         return Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(self.weekType)
     }
-    
+
     public static var mock: Self {
         .init(
             subject: "Mock subject",
             teacherFullName: "Mock teacher",
-            lessonType: .Lecture,
-            weekDay: .Monday,
-            weekType: .All,
+            lessonType: .lecture,
+            weekDay: .monday,
+            weekType: .all,
             cabinet: "Mock",
             subgroup: "Mock sub",
             lessonNumber: 0,

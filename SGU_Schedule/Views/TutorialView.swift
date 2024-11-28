@@ -7,29 +7,29 @@
 
 import SwiftUI
 
-fileprivate enum TutorialViews {
-    case Widgets
-    case FavoriteGroup
+private enum TutorialViews {
+    case widgets
+    case favoriteGroup
 }
 
 /// Deprecated
-fileprivate struct TutorialView: View {
+private struct TutorialView: View {
     @Environment(\.colorScheme) var colorScheme
-    
+
     @Binding var isShowing: Bool
-    @State fileprivate var currentView: TutorialViews = .Widgets
-    
+    @State fileprivate var currentView: TutorialViews = .widgets
+
     var body: some View {
         OverlayView(isShowing: $isShowing) {
             switch currentView {
-            case .Widgets:
+            case .widgets:
                 getWidgetsTutorialView()
-            case .FavoriteGroup:
+            case .favoriteGroup:
                 getFavouriteTutorialView()
             }
         }
     }
-    
+
     private func getWidgetsTutorialView() -> some View {
         return VStack {
             Text("Виджеты на экране \"Домой\"")
@@ -38,34 +38,34 @@ fileprivate struct TutorialView: View {
                 .padding(.top, 5)
                 .padding(.horizontal, 5)
                 .frame(maxWidth: .infinity)
-            
+
             Image("WidgetsOnHomeScreen")
                 .resizable()
                 .aspectRatio(contentMode: ContentMode.fit)
                 .cornerRadius(20)
                 .padding(.horizontal)
-            
+
             Text("Виджеты на экране блокировки")
                 .font(.system(size: 23, design: .rounded))
                 .bold()
                 .padding(.top, 30)
                 .padding(.horizontal, 5)
                 .frame(maxWidth: .infinity)
-            
+
             Image("WidgetsOnLockScreen")
                 .resizable()
                 .aspectRatio(contentMode: ContentMode.fit)
                 .cornerRadius(20)
                 .padding(.horizontal)
-            
+
             Spacer()
-            
+
             HStack {
                 Spacer()
-                
+
                 Button("Далее") {
                     withAnimation(.bouncy(duration: 0.7)) {
-                        currentView = .FavoriteGroup
+                        currentView = .favoriteGroup
                     }
                 }
                 .padding(20)
@@ -76,13 +76,13 @@ fileprivate struct TutorialView: View {
             DragGesture().onEnded({ value in
                 if value.translation.width < -70 {
                     withAnimation(.easeIn(duration: 0.4)) {
-                        currentView = .FavoriteGroup
+                        currentView = .favoriteGroup
                     }
                 }
             })
         )
     }
-    
+
     private func getFavouriteTutorialView() -> some View {
         VStack {
             VStack {
@@ -93,40 +93,40 @@ fileprivate struct TutorialView: View {
                     .padding(.horizontal, 5)
                     .frame(maxWidth: .infinity)
                     .multilineTextAlignment(.center)
-                
+
                 Image("SetFavouriteGroup")
                     .resizable()
                     .aspectRatio(contentMode: ContentMode.fit)
                     .cornerRadius(20)
                     .padding(.horizontal)
-                
+
                 Text("Доступ к ней будет и в оффлайне")
                     .font(.system(size: 23, design: .rounded))
                     .bold()
                     .padding(.top, 50)
                     .padding(.horizontal, 5)
                     .frame(maxWidth: .infinity)
-                
+
                 Image("OfflineFavouriteGroup")
                     .resizable()
                     .aspectRatio(contentMode: ContentMode.fit)
                     .cornerRadius(20)
                     .padding(.horizontal)
                     .multilineTextAlignment(.center)
-                
+
                 Spacer()
-                
+
                 HStack {
                     Button("Назад") {
                         withAnimation(.bouncy(duration: 0.7)) {
-                            currentView = .Widgets
+                            currentView = .widgets
                         }
                     }
                     .padding(20)
                     .font(.system(size: 18, weight: .bold, design: .rounded))
-                    
+
                     Spacer()
-                    
+
                     Button("Закрыть") {
                         withAnimation(.easeOut(duration: 0.4)) {
                             isShowing.toggle()
@@ -141,7 +141,7 @@ fileprivate struct TutorialView: View {
             DragGesture().onEnded({ value in
                 if value.translation.width > 70 {
                     withAnimation(.bouncy(duration: 0.7)) {
-                        currentView = .Widgets
+                        currentView = .widgets
                     }
                 }
             })
@@ -153,7 +153,7 @@ fileprivate struct TutorialView: View {
     ZStack {
         LinearGradient(colors: [.red, .blue], startPoint: .topLeading, endPoint: .bottomTrailing)
             .ignoresSafeArea()
-        
+
         TutorialView(isShowing: .constant(true))
     }
 }

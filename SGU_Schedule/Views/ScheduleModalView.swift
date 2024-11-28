@@ -7,23 +7,23 @@
 
 import SwiftUI
 
-//TODO: Объединить с модалом для сессии
+// TODO: Объединить с модалом для сессии
 struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
+
     @State private var curPadding: CGFloat = 20
     @State private var maxPadding: CGFloat = UIScreen.getModalViewMaxPadding(initialOrientation: UIDevice.current.orientation, currentOrientation: UIDevice.current.orientation)
     private let minPadding: CGFloat = 20
     private let initialOrientation = UIDevice.current.orientation
-    
+
     @State private var lessonsBySelectedDay = [LessonDTO]()
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
-    
+
     var body: some View {
         ZStack {
             VStack {
@@ -36,7 +36,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .frame(maxWidth: .infinity)
                 .background(Color.white.opacity(0.00001))
                 .gesture(dragGesture)
-                .onChange(of: viewModel.groupSchedule?.lessons) { newLessons in
+                .onChange(of: viewModel.groupSchedule?.lessons) { _ in
                     if viewModel.groupSchedule != nil {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
@@ -46,7 +46,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         }
                     }
                 }
-                
+
                 if networkMonitor.isConnected {
                     if viewModel.isLoadingLessons {
                         Text("Не обновлено")
@@ -71,7 +71,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .padding(.top, -10)
                         .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
-                
+
                 Picker("", selection: $selectedDay) {
                     ForEach(Weekdays.allCases.dropLast(), id: \.self) { day in
                         Text(day.rawValue)
@@ -79,7 +79,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                .onChange(of: selectedDay) { newDay in
+                .onChange(of: selectedDay) { _ in
                     if viewModel.groupSchedule != nil {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
@@ -90,25 +90,25 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         impact.impactOccurred()
                     }
                 }
-                
+
 //                Text("\(Date.startOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка") - \(Date.endOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка")")
 //                    .font(.system(size: 19, design: .rounded))
 //                    .padding(.vertical, 5)
-                
+
                 Text(Date.getDayOfCurrentWeek(dayNumber: selectedDay.number)?.getDayAndMonthWordString() ?? "Хз")
                     .font(.system(size: 19, weight: .bold, design: .rounded))
                     .padding(.vertical, 5)
-                
+
                 if viewModel.groupSchedule == nil && networkMonitor.isConnected {
                     Text("Загрузка...")
                         .font(.system(size: 19, design: .rounded))
                         .bold()
                 } else if viewModel.groupSchedule != nil {
                     ScrollView {
-                        ForEach(1...8, id:\.self) { lessonNumber in
+                        ForEach(1...8, id: \.self) { lessonNumber in
                             let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
                             if !lessonsByNumber.isEmpty {
-                                //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
+                                // id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
                                 ScheduleSubview(lessons: lessonsByNumber, subgroupsByLessons: viewModel.subgroupsByLessons)
                                     .environmentObject(networkMonitor)
                                     .environmentObject(viewsManager)
@@ -126,7 +126,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .padding(.top, -10)
                         .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
-                
+
                 Spacer()
             }
         }
@@ -136,7 +136,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 curPadding = maxPadding
             }
         })
-        .background (
+        .background(
             GeometryReader { geometry in
                 ZStack {
                     appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
@@ -149,7 +149,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
                 .overlay {
-                    if appSettings.currentAppTheme == .PinkHelloKitty {
+                    if appSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl2")
                             .resizable()
                             .ignoresSafeArea()
@@ -163,9 +163,9 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         )
         .padding(.top, curPadding)
     }
-    
+
     @State private var prevDragTrans = CGSize.zero
-    
+
     var dragGesture: some Gesture {
         DragGesture(minimumDistance: 10, coordinateSpace: .global)
             .onChanged { value in
@@ -175,14 +175,14 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else if curPadding < minPadding {
                     curPadding = minPadding
                 } else {
-                    if dragAmount > 0 { //вниз
+                    if dragAmount > 0 { // вниз
 //                        if curPadding == minPadding {
                             withAnimation(.easeInOut(duration: 0.4)) {
                                 curPadding = maxPadding
                             }
 //                        }
-                        
-                    } else { //вверх
+
+                    } else { // вверх
 //                        if curPadding == maxPadding {
                             withAnimation(.easeInOut(duration: 0.4)) {
                                 curPadding = minPadding
@@ -192,12 +192,11 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 prevDragTrans = value.translation
             }
-            .onEnded { value in
+            .onEnded { _ in
                 prevDragTrans = .zero
             }
     }
 }
-
 
 #Preview {
     ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())

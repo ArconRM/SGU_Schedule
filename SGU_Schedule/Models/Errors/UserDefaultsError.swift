@@ -12,7 +12,7 @@ public enum UserDefaultsError: Error, LocalizedError {
     case failedToFetch
     case failedToClear
     case unexpectedError
-    
+
     public var errorDescription: String? {
         switch self {
         case .failedToSave:
@@ -25,7 +25,7 @@ public enum UserDefaultsError: Error, LocalizedError {
             return "Неожиданная ошибка"
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .failedToSave:

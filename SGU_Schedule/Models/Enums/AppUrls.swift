@@ -8,5 +8,5 @@
 import Foundation
 
 public enum AppUrls: String {
-    case OpenedFromWidget = "OpenedFromWidget"
+    case openedFromWidget = "OpenedFromWidget"
 }

@@ -8,27 +8,27 @@
 import Foundation
 
 public enum DepartmentSource: String, CaseIterable {
-    case bf = "bf"
-    case gf = "gf"
-    case gl = "gl"
-    case idpo = "idpo"
-    case ii = "ii"
-    case imo = "imo"
-    case ff = "ff"
-    case ifk = "ifk"
-    case ifg = "ifg"
-    case ih = "ih"
-    case mm = "mm"
-    case sf = "sf"
-    case fi = "fi"
-    case knt = "knt"
-    case fps = "fps"
-    case fppso = "fppso"
-    case fmimt = "fmimt"
-    case fp = "fp"
-    case ef = "ef"
-    case uf = "uf"
-    
+    case bf
+    case gf
+    case gl
+    case idpo
+    case ii
+    case imo
+    case ff
+    case ifk
+    case ifg
+    case ih
+    case mm
+    case sf
+    case fi
+    case knt
+    case fps
+    case fppso
+    case fmimt
+    case fp
+    case ef
+    case uf
+
     public var fullName: String {
         switch self {
         case .bf:
@@ -73,7 +73,7 @@ public enum DepartmentSource: String, CaseIterable {
             return "Юридический факультет"
         }
     }
-    
+
     public var shortName: String {
         switch self {
         case .bf:
@@ -118,7 +118,7 @@ public enum DepartmentSource: String, CaseIterable {
             return "Юрист"
         }
     }
-    
+
     init?(fullName: String) {
             switch fullName {
             case DepartmentSource.bf.fullName: self = .bf
@@ -163,7 +163,6 @@ public enum DepartmentSource: String, CaseIterable {
             case DepartmentSource.knt.shortName: self = .knt
             case DepartmentSource.fps.shortName: self = .fps
 
-
             case DepartmentSource.fppso.shortName: self = .fppso
             case DepartmentSource.fmimt.shortName: self = .fmimt
             case DepartmentSource.fp.shortName: self = .fp
@@ -172,7 +171,7 @@ public enum DepartmentSource: String, CaseIterable {
             default: return nil
             }
         }
-    
+
 //    var dto: Department {
 //        switch self {
 //        case .bf:
@@ -217,7 +216,7 @@ public enum DepartmentSource: String, CaseIterable {
 //            return Department(fullName: "Юридический факультет", code: "uf")
 //        }
 //    }
-    
+
     //    kgl
     //    cre
     //    bippf

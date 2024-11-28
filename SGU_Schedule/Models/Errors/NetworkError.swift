@@ -12,7 +12,7 @@ public enum NetworkError: Error, LocalizedError {
     case htmlParserError
     case networkManagerError
     case unexpectedError
-    
+
     public var errorDescription: String? {
         switch self {
         case .scraperError:
@@ -25,7 +25,7 @@ public enum NetworkError: Error, LocalizedError {
             return "Неожиданная ошибка"
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .scraperError:

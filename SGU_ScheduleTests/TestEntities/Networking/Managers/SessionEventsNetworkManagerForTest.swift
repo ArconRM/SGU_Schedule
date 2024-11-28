@@ -23,7 +23,7 @@ class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
                                                   departmentCode: group.departmentCode,
                                                   sessionEvents: [SessionEventDTO(title: "МАТАН",
                                                                                   date: date,
-                                                                                  sessionEventType: .Consultation,
+                                                                                  sessionEventType: .consultation,
                                                                                   teacherFullName: "Легенда",
                                                                                   cabinet: "Ад")]))
         }
@@ -42,7 +42,7 @@ class SessionEventsNetworkManagerForTest: SessionEventsNetworkManager {
             
             return .success([SessionEventDTO(title: "МАТАН",
                                              date: date,
-                                             sessionEventType: .Consultation,
+                                             sessionEventType: .consultation,
                                              teacherFullName: "Легенда",
                                              cabinet: "Ад")])
         }

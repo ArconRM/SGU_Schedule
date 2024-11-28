@@ -9,26 +9,26 @@ import SwiftUI
 import UIKit
 import WidgetKit
 
-//TODO: По башке бы понадавать за !
+// TODO: По башке бы понадавать за !
 struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
-    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
+    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: ScheduleView<ViewModel>, rhs: ScheduleView<ViewModel>) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
+
     @State var group: AcademicGroupDTO?
     @State var isFavourite: Bool
     @State var isPinned: Bool
-    
+
     @State var showSubgroups: Bool = false
-    
+
     var body: some View {
         if group == nil {
             Text("Ошибка при выборе группы")
@@ -42,23 +42,23 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             buildUI()
         }
     }
-    
+
     private func buildUI() -> some View {
         ZStack {
             ZStack {
                 ScheduleBackView(viewModel: viewModel, selectedGroup: group!)
-                
+
                 CarouselView(pages: ["Занятия", "Экзамены"], currentIndex: 0, viewsAlignment: .bottom) {
                     ScheduleModalView(viewModel: viewModel)
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
-                    
+
                     SessionEventsModalView(viewModel: viewModel)
                         .environmentObject(networkMonitor)
                 }
             }
             .blur(radius: showSubgroups ? 3 : 0)
-            
+
             if showSubgroups {
                 SubgroupsView(viewModel: viewModel, isShowing: $showSubgroups)
                     .onChange(of: viewModel.subgroupsByLessons) { _ in
@@ -77,7 +77,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 .opacity(showSubgroups ? 0 : 1)
                 .padding(.top, 5)
             }
-            
+
             ToolbarItem(placement: .topBarTrailing) {
                 HStack {
                     if isFavourite {
@@ -99,17 +99,17 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
     }
-    
+
     private func fetchAllData() {
         viewModel.fetchSchedule(group: group!,
                                 isOnline: networkMonitor.isConnected,
                                 isSaved: isFavourite || isPinned,
                                 isFavourite: isFavourite)
-        
+
         viewModel.fetchSessionEvents(group: group!,
                                      isOnline: networkMonitor.isConnected)
     }
-    
+
     private func makeShowGroupsToolbarButton() -> some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.3)) {
@@ -125,7 +125,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         }
         .disabled(viewModel.isLoadingLessons)
     }
-    
+
     private func makeFavoriteToolbarButton() -> some View {
         Button(action: {
             if !isFavourite {
@@ -137,11 +137,11 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 viewModel.clearSubgroups()
                 fetchAllData()
             }
-            
+
             if UIDevice.isPad {
                 viewsManager.showGroupsView(needToReload: true)
             }
-            
+
             let impact = UIImpactFeedbackGenerator(style: .medium)
             impact.impactOccurred()
         }) {
@@ -154,12 +154,12 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         }
         .disabled(viewModel.isLoadingLessons)
     }
-    
+
     private func makePinToolbarButton() -> some View {
         Button(action: {
             if isPinned {
                 viewsManager.deleteGroupFromPersistence(group: group!)
-                
+
                 withAnimation(.easeInOut(duration: 0.3)) {
                     viewsManager.showGroupsView(needToReload: UIDevice.isPad)
                 }
@@ -168,11 +168,11 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 isPinned = true
                 fetchAllData()
             }
-            
+
             if UIDevice.isPad {
                 viewsManager.showGroupsView(needToReload: true)
             }
-            
+
             let impact = UIImpactFeedbackGenerator(style: .medium)
             impact.impactOccurred()
 
@@ -187,7 +187,6 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         .disabled(viewModel.isLoadingLessons)
     }
 }
-
 
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {

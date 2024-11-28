@@ -11,13 +11,12 @@ public protocol SessionEventsNetworkManager {
     func getGroupSessionEvents(
         group: AcademicGroupDTO,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping(Result<GroupSessionEventsDTO, Error>) -> Void
+        completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void
     )
-    
+
     func getTeacherSessionEvents(
         teacherEndpoint: String?,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping(Result<[SessionEventDTO], Error>) -> Void
+        completionHandler: @escaping (Result<[SessionEventDTO], Error>) -> Void
     )
 }
-

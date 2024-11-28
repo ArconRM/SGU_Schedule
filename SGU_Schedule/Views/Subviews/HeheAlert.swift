@@ -9,15 +9,15 @@ import SwiftUI
 
 struct HeheAlert: View {
     @Environment(\.colorScheme) var colorScheme
-    
+
     @Binding var show: Bool
-    
+
     var body: some View {
         ZStack {
             (colorScheme == .light ? Color.gray : Color.black)
                 .opacity(0.4)
                 .ignoresSafeArea()
-            
+
             VStack {
                 Text("Это не хомяк")
                     .font(.system(size: 26, weight: .bold, design: .rounded))
@@ -25,16 +25,16 @@ struct HeheAlert: View {
                     .foregroundColor(.primary)
                     .padding(.top, 10)
                     .padding(.bottom, 5)
-                
+
                 Text("По лбу себе потыкай")
                     .font(.system(size: 23, design: .rounded))
                     .multilineTextAlignment(.center)
                     .foregroundColor(.primary)
                     .padding(.top, 5)
                     .padding(.bottom, 20)
-                
+
                 Divider()
-                
+
                 withAnimation(.easeInOut(duration: 0.5)) {
                     Button("OK") {
                         withAnimation(.easeOut(duration: 0.1)) {
@@ -57,7 +57,7 @@ struct HeheAlert: View {
 #Preview {
     ZStack {
         Color.red.ignoresSafeArea()
-        
+
         HeheAlert(show: .constant(true))
     }
 }

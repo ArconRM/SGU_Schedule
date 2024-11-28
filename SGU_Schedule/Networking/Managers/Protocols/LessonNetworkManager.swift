@@ -11,12 +11,12 @@ public protocol LessonNetworkManager {
     func getGroupScheduleForCurrentWeek(
         group: AcademicGroupDTO,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping(Result<GroupScheduleDTO, Error>) -> Void
+        completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void
     )
-    
+
     func getTeacherScheduleForCurrentWeek(
         teacherEndpoint: String?,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping(Result<[LessonDTO], Error>) -> Void
+        completionHandler: @escaping (Result<[LessonDTO], Error>) -> Void
     )
 }

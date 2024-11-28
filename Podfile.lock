@@ -1,16 +1,20 @@
 PODS:
   - Kanna (5.2.7)
+  - SwiftLint (0.57.1)
 
 DEPENDENCIES:
   - Kanna (~> 5.2.2)
+  - SwiftLint
 
 SPEC REPOS:
   trunk:
     - Kanna
+    - SwiftLint
 
 SPEC CHECKSUMS:
   Kanna: 01cfbddc127f5ff0963692f285fcbc8a9d62d234
+  SwiftLint: 92196976e597b9afec5dbe374810103e6c1d9d7c
 
-PODFILE CHECKSUM: 5e49a919a1353bcd9130a13cd03eb07252081e33
+PODFILE CHECKSUM: 53fc912ccbfda12533b82b1a8c63b5f93ce41410
 
 COCOAPODS: 1.15.2

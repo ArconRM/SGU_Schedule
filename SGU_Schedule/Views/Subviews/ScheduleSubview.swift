@@ -11,17 +11,17 @@ struct ScheduleSubview: View, Equatable {
     static func == (lhs: ScheduleSubview, rhs: ScheduleSubview) -> Bool {
         return lhs.lessons == rhs.lessons
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     var lessons: [LessonDTO]
     var subgroupsByLessons: [String: [LessonSubgroup]]
-    
+
     @State var areMultipleLessonsCollapsed: Bool = true
-    
+
     var body: some View {
         VStack {
             if lessons.count == 1 {
@@ -44,7 +44,7 @@ struct ScheduleSubview: View, Equatable {
                 }
             }
         }
-        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .Fill ? 0.3 : 0.2))
+        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
         .cornerRadius(10)
         .padding(.horizontal, 13)
         .shadow(color: colorScheme == .light ?
@@ -54,33 +54,33 @@ struct ScheduleSubview: View, Equatable {
                  x: 0,
                  y: 0)
     }
-    
+
     private func makeSingleLessonView(lesson: LessonDTO) -> some View {
         VStack {
             HStack {
                 Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
                     .font(.system(size: 17))
                     .bold()
-                
-                if lesson.weekType != .All {
+
+                if lesson.weekType != .all {
                     Text("(\(lesson.weekType.rawValue))")
                         .font(.system(size: 17))
                         .bold()
                 }
-                
+
                 Spacer()
-                
+
                 Text(lesson.lessonType.rawValue)
                     .foregroundColor(getLessonColor(lesson: lesson))
                     .font(.system(size: 17))
                     .bold()
             }
-            
+
             Text(lesson.title)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 17, weight: .bold))
                 .padding(.vertical, 7)
-            
+
             HStack {
                 if lesson.subgroup != nil && lesson.subgroup != "" {
                     Text("\(lesson.teacherFullName) \n\(lesson.subgroup!)")
@@ -94,7 +94,7 @@ struct ScheduleSubview: View, Equatable {
                                 }
                             }
                         }
-                    
+
                 } else {
                     Text(lesson.teacherFullName)
                         .font(.system(size: 17))
@@ -108,9 +108,9 @@ struct ScheduleSubview: View, Equatable {
                             }
                         }
                 }
-                
+
                 Spacer()
-                
+
                 Text("\(lesson.cabinet)")
                     .font(.system(size: 17))
                     .bold()
@@ -121,34 +121,34 @@ struct ScheduleSubview: View, Equatable {
         .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
     }
-    
+
     private func makeFullMultipleLessonsView(lessons: [LessonDTO]) -> some View {
-        ForEach(lessons, id:\.self) { lesson in
+        ForEach(lessons, id: \.self) { lesson in
             VStack {
                 HStack {
                     Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
                         .font(.system(size: 17))
                         .bold()
-                    
-                    if lesson.weekType != .All {
+
+                    if lesson.weekType != .all {
                         Text("(\(lesson.weekType.rawValue))")
                             .font(.system(size: 17))
                             .bold()
                     }
-                    
+
                     Spacer()
-                    
+
                     Text(lesson.lessonType.rawValue)
                         .foregroundColor(getLessonColor(lesson: lesson))
                         .font(.system(size: 17))
                         .bold()
                 }
-                
+
                 Text(lesson.title)
                     .multilineTextAlignment(.center)
                     .font(.system(size: 17, weight: .bold))
                     .padding(.vertical, 7)
-                
+
                 HStack {
                     if lesson.subgroup != nil && lesson.subgroup != "" {
                         Text("\(lesson.teacherFullName) \n\(lesson.subgroup!)")
@@ -162,7 +162,7 @@ struct ScheduleSubview: View, Equatable {
                                     }
                                 }
                             }
-                        
+
                     } else {
                         Text(lesson.teacherFullName)
                             .font(.system(size: 17))
@@ -176,9 +176,9 @@ struct ScheduleSubview: View, Equatable {
                                 }
                             }
                     }
-                    
+
                     Spacer()
-                    
+
                     Text("\(lesson.cabinet)")
                         .font(.system(size: 17))
                         .bold()
@@ -188,57 +188,57 @@ struct ScheduleSubview: View, Equatable {
             .padding(15)
             .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
             .background {
-                if appSettings.currentAppStyle != .Bordered {
+                if appSettings.currentAppStyle != .bordered {
                     getBackground(lesson: lesson)
                 }
             }
-            
-            if appSettings.currentAppStyle == .Bordered {
+
+            if appSettings.currentAppStyle == .bordered {
                 Divider()
             }
         }
     }
-    
+
     private func makeCollapsedMultipleLessonsView(firstLesson lesson: LessonDTO) -> some View {
         VStack {
             HStack {
                 Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
                     .font(.system(size: 17))
                     .bold()
-                
-                if lesson.weekType != .All {
+
+                if lesson.weekType != .all {
                     Text("(\(lesson.weekType.rawValue))")
                         .font(.system(size: 17))
                         .bold()
                 }
-                
+
                 Spacer()
-                
+
                 Text(lesson.lessonType.rawValue)
                     .foregroundColor(getLessonColor(lesson: lesson))
                     .font(.system(size: 17))
                     .bold()
             }
-            
+
             Text(lesson.title)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 17, weight: .bold))
                 .padding(.vertical, 7)
-            
+
             HStack {
                 if lesson.subgroup == nil || lesson.subgroup == "" {
                     Text(lesson.teacherFullName)
                         .font(.system(size: 17))
                         .italic()
-                    
+
                     Spacer()
-                    
+
                     Text("\(lesson.cabinet)")
                         .font(.system(size: 17))
                         .bold()
                 }
             }
-            
+
             Image(systemName: "chevron.down")
                 .font(.system(size: 20, weight: .bold))
                 .padding(.top, 2)
@@ -248,34 +248,34 @@ struct ScheduleSubview: View, Equatable {
         .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
         .background(getBackground(lesson: lesson))
     }
-    
+
     private func sortLessonsByActive(_ lessons: [LessonDTO]) -> [LessonDTO] {
         return lessons.filter({ $0.isActive(subgroupsByLessons: subgroupsByLessons) }) +
         lessons.filter({ !$0.isActive(subgroupsByLessons: subgroupsByLessons) })
     }
-    
+
     private func getBackground(lesson: LessonDTO) -> AnyView {
         switch appSettings.currentAppStyle {
-        case .Fill:
+        case .fill:
             AnyView(
                 getLessonColor(lesson: lesson).opacity(0.3)
             )
-        case .Bordered:
+        case .bordered:
             AnyView(
                 RoundedRectangle(cornerRadius: 10)
                     .stroke(getLessonColor(lesson: lesson).opacity(0.5), lineWidth: 7)
             )
         }
     }
-    
+
     private func getLessonColor(lesson: LessonDTO) -> Color {
         lesson.isActive(subgroupsByLessons: subgroupsByLessons) ?
-        (lesson.lessonType == .Lecture ? Color.green : Color.blue)
+        (lesson.lessonType == .lecture ? Color.green : Color.blue)
         : Color.gray
     }
 }
 
-//struct ScheduleSubview_Previews: PreviewProvider {
+// struct ScheduleSubview_Previews: PreviewProvider {
 //    static var previews: some View {
 //        ZStack {
 //            Rectangle()
@@ -310,4 +310,4 @@ struct ScheduleSubview: View, Equatable {
 //            }
 //        }
 //    }
-//}
+// }

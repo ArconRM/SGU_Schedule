@@ -8,9 +8,9 @@
 import SwiftUI
 
 struct CloseButton: View {
-    
-    var action: () -> ()
-    
+
+    var action: () -> Void
+
     var body: some View {
         Button(
             action: { action() }

@@ -9,6 +9,6 @@ import Foundation
 
 public protocol TeacherSearchResultsPersistenceManager {
     func save(_ results: Set<TeacherSearchResult> )
-    
+
     func getAll() -> Set<TeacherSearchResult>?
 }

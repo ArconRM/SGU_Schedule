@@ -11,13 +11,13 @@ public struct Department: Hashable {
     var fullName: String
     var shortName: String
     var code: String
-    
+
     init(code: String) {
         self.code = code
         self.fullName = DepartmentSource(rawValue: code)?.fullName ?? "Error"
         self.shortName = DepartmentSource(rawValue: code)?.shortName ?? "Error"
     }
-    
+
     var number: Int {
         var value = 1
         for depCase in DepartmentSource.allCases {
@@ -29,7 +29,7 @@ public struct Department: Hashable {
         }
         return value
     }
-    
+
     public static var mock: Self {
         .init(code: "Ошибка")
     }

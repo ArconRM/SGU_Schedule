@@ -20,11 +20,11 @@ struct TwoEventsView: View {
         case .UnknownErrorWhileFetching:
             Text("Произошла ошибка")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
         case .NoFavoriteGroup:
             Text("Не выбрана сохраненная группа")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
         case .Success:
             if closeLesson != nil {
                 VStack {
@@ -45,7 +45,7 @@ struct TwoEventsView: View {
                     
                     Spacer()
                 }
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
                 
             } else if currentEvent != nil {
                 HStack {
@@ -99,12 +99,12 @@ struct TwoEventsView: View {
                         .padding(.leading, 10)
                     }
                 }
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
+                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
                 
             } else {
                 Text("Пока нет пар")
                     .bold()
-                    .foregroundColor(appSettings.currentAppStyle == AppStyle.Fill ? .white : .none)
+                    .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             }
         }
     }

@@ -8,7 +8,7 @@
 import Foundation
 import Kanna
 
-//final class DateHTMLParserSGU_old: DateHTMLParser {
+// final class DateHTMLParserSGU_old: DateHTMLParser {
 //    func getLastUpdateDateFromSource(source html: String) throws -> Date {
 //        do {
 //            let doc = try HTML(html: html, encoding: .utf8)
@@ -25,4 +25,4 @@ import Kanna
 //            throw NetworkError.htmlParserError
 //        }
 //    }
-//}
+// }

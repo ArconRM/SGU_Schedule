@@ -8,16 +8,15 @@
 import Foundation
 
 public enum AppStyle: String, CaseIterable {
-    case Fill = "fill"
-    case Bordered = "bordered"
-    
+    case fill
+    case bordered
+
     var rusValue: String {
         switch self {
-        case .Fill:
+        case .fill:
             return "заполн"
-        case .Bordered:
+        case .bordered:
             return "обвод"
         }
     }
 }
-

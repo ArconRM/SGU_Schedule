@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel {
-    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
+    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: TeacherInfoView, rhs: TeacherInfoView) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
+
 //    @State var isCollapsed: Bool = false
-    
+
     var body: some View {
         VStack(alignment: .leading) {
             //            Image("foto-1")
@@ -38,15 +38,15 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                     ProgressView()
                         .padding(10)
                 }
-                
+
                 Divider()
-                
+
                 Text(viewModel.isLoadingTeacherInfo ? "Загрузка..." : viewModel.teacher?.fullName ?? "Ошибка")
                     .font(.system(size: 18))
                     .bold()
                     .multilineTextAlignment(.center)
                     .padding(.top, 10)
-                
+
                 if let departmentFullName = viewModel.teacher?.departmentFullName {
                     Text(departmentFullName)
                         .font(.system(size: 18, weight: .thin))
@@ -54,18 +54,18 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                         .padding(.top, 3)
                 }
             }
-            
+
             //                if !self.isCollapsed {
-            
+
             Text("Дата рождения: " + (viewModel.teacher?.birthdate?.getDayMonthAndYearString() ?? ""))
                 .padding(.top, 10)
-            
+
             Text("Email: " + (viewModel.teacher?.email ?? ""))
                 .padding(.top, 10)
-            
+
             Text("Рабочий телефон: " + (viewModel.teacher?.workPhoneNumber ?? ""))
                 .padding(.top, 10)
-            
+
             Text("Личный телефон: " + (viewModel.teacher?.personalPhoneNumber ?? ""))
                 .padding(.top, 10)
             //                }
@@ -77,7 +77,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         .background(
             getBackground()
                 .overlay {
-                    if appSettings.currentAppTheme == .PinkHelloKitty {
+                    if appSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl3")
                             .resizable()
                             .ignoresSafeArea()
@@ -90,10 +90,10 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         .frame(maxHeight: UIScreen.screenHeight * 0.8)
         .padding(.horizontal, 20)
     }
-    
+
     private func getBackground() -> AnyView {
         switch appSettings.currentAppStyle {
-        case .Fill:
+        case .fill:
             AnyView(
                 RoundedRectangle(cornerRadius: 20)
                     .fill(colorScheme == .light ? .white : .white.opacity(0.1))
@@ -101,12 +101,12 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                     .blur(radius: 0.5)
                     .opacity(0.8)
             )
-        case .Bordered:
+        case .bordered:
             AnyView(
                 ZStack {
                     (colorScheme == .light ? Color.white : Color.white.opacity(0.1))
                         .cornerRadius(20)
-                    
+
                     RoundedRectangle(cornerRadius: 20)
                         .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
                 }
@@ -117,10 +117,10 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
 
 #Preview {
     ZStack {
-        AppTheme.Blue.backgroundColor(colorScheme: .dark)
+        AppTheme.blue.backgroundColor(colorScheme: .dark)
             .ignoresSafeArea()
             .shadow(radius: 5)
-        
+
         TeacherInfoView(
             viewModel: ViewModelWithParsingSGUFactory().buildTeacherViewModel()
         )

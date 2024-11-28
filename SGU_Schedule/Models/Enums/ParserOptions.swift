@@ -8,6 +8,6 @@
 import Foundation
 
 enum ParserOptions: String, CaseIterable {
-    case New = "Новая"
-    case Old = "Старая"
+    case new = "Новая"
+    case old = "Старая"
 }

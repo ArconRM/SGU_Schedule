@@ -8,14 +8,14 @@
 import Foundation
 
 enum LessonType: String, Decodable {
-    case Lecture = "Лекция"
-    case Practice = "Практика"
-    
+    case lecture = "Лекция"
+    case practice = "Практика"
+
     init?(rawValue: String) {
         if rawValue.lowercased() == "лек." || rawValue.lowercased() == "лекция" {
-            self = .Lecture
+            self = .lecture
         } else if rawValue.lowercased() == "пр." || rawValue.lowercased() == "практика" {
-            self = .Practice
+            self = .practice
         } else {
             return nil
         }

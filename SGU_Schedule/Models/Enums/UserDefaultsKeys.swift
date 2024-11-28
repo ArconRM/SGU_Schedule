@@ -9,16 +9,16 @@ import Foundation
 
 public enum UserDefaultsKeys: String {
     case wasLaunched = "wasLaunched"
-    
+
     case favoriteGroupNumberKey = "favoriteGroupNumber"
     case favouriteGroupSubgroupsKey = "favouriteGroupSubgroups"
     case selectedDepartmentKey = "selectedDepartment"
-    
+
     case teacherSearchResultsKey = "teacherSearchResults"
-    
+
     case isNewParserUsed = "isNewParserUsed"
     case isSlowInternet = "isSlowInternet"
-    
+
     case selectedAppTheme = "selectedAppTheme"
     case selectedAppStyle = "selectedAppStyle"
 }

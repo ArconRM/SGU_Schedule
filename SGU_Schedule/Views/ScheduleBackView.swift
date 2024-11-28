@@ -9,19 +9,19 @@ import SwiftUI
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     @ObservedObject var viewModel: ViewModel
-    
+
     var selectedGroup: AcademicGroupDTO
-    
-    var body : some View {
+
+    var body: some View {
         VStack {
             Text(selectedGroup.shortName)
                 .font(.system(size: 30, weight: .bold))
                 .padding(.top, -35)
-            
+
             Text("Сейчас:")
                 .font(.system(size: 20, weight: .bold))
                 .padding()
-            
+
             if let lesson = viewModel.currentEvent as? LessonDTO {
                 Text(lesson.timeStart.getHoursAndMinutesString() + " - " +
                      lesson.timeEnd.getHoursAndMinutesString() + " " +
@@ -29,7 +29,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                     .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 5)
-                
+
                 Text(lesson.lessonType.rawValue)
                     .padding(.top, 2)
                     .padding(.bottom, 10)
@@ -39,29 +39,29 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.horizontal, 5)
-                
+
             } else if let timeBreak = viewModel.currentEvent as? TimeBreak {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
                      timeBreak.timeEnd.getHoursAndMinutesString())
                     .font(.system(size: 20, weight: .bold))
                     .multilineTextAlignment(.center)
                     .padding(.horizontal, 5)
-                
+
                 Text(timeBreak.title)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.horizontal, 5)
-                
+
             } else {
                 Text("-")
                     .font(.system(size: 20, weight: .bold))
             }
-            
+
             Divider()
-            
+
             Text("Далее:")
                 .font(.system(size: 19, weight: .semibold))
                 .padding()
-            
+
             HStack {
                 VStack {
                     if let nextLesson1 = viewModel.nextLesson1 {
@@ -71,7 +71,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                         .font(.system(size: 17, weight: .semibold))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 5)
-                        
+
                         Text(nextLesson1.cabinet)
                             .padding()
                             .font(.system(size: 15, weight: .semibold))
@@ -81,7 +81,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                             .font(.system(size: 20, weight: .bold))
                     }
                 }
-                
+
                 VStack {
                     if let nextLesson2 = viewModel.nextLesson2 {
                         Text(nextLesson2.timeStart.getHoursAndMinutesString() + "-" +
@@ -90,7 +90,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                         .font(.system(size: 17, weight: .semibold))
                         .multilineTextAlignment(.center)
                         .padding(.horizontal, 5)
-                        
+
                         Text(nextLesson2.cabinet)
                             .padding()
                             .font(.system(size: 15, weight: .semibold))

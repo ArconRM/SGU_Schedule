@@ -10,7 +10,7 @@ import Foundation
 public enum BaseError: Error, LocalizedError {
     case noSavedDataError
     case unknownError
-    
+
     public var errorDescription: String? {
         switch self {
         case .noSavedDataError:
@@ -19,7 +19,7 @@ public enum BaseError: Error, LocalizedError {
             return "Зря вы сюда жмакнули"
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .noSavedDataError:

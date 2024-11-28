@@ -7,9 +7,9 @@
 
 import Foundation
 
-enum SessionEventType : String, Decodable {
-    case Test = "Зачет"
-    case TestWithMark = "Дифференцированный зачет"
-    case Consultation = "Консультация"
-    case Exam = "Экзамен"
+enum SessionEventType: String, Decodable {
+    case test = "Зачет"
+    case testWithMark = "Дифференцированный зачет"
+    case consultation = "Консультация"
+    case exam = "Экзамен"
 }

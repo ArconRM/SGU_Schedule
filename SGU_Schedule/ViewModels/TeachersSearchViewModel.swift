@@ -10,15 +10,15 @@ import Foundation
 public class TeachersSearchViewModel: ObservableObject {
     private let teacherNetworkManager: TeacherNetworkManager
     private let teacherSearchResultsUDManager: TeacherSearchResultsPersistenceManager
-    
+
     @Published var allTeachers: Set<TeacherSearchResult> = []
-    
+
     @Published var isLoading = true
-    
+
     @Published var needToLoad = false
     @Published var isShowingError = false
     @Published var activeError: LocalizedError?
-    
+
     init(
         teacherNetworkManager: TeacherNetworkManager,
         teacherSearchResultsUDManager: TeacherSearchResultsPersistenceManager
@@ -26,23 +26,23 @@ public class TeachersSearchViewModel: ObservableObject {
         self.teacherNetworkManager = teacherNetworkManager
         self.teacherSearchResultsUDManager = teacherSearchResultsUDManager
     }
-    
+
     public func fetchSavedTeachers() {
         isLoading = true
-        
+
         if let savedTeachers = teacherSearchResultsUDManager.getAll() {
             allTeachers = savedTeachers
         } else {
             needToLoad = true
         }
-        
+
         isLoading = false
     }
-    
+
     public func fetchNetworkTeachersAndSave() {
         isLoading = true
         needToLoad = false
-        
+
         teacherNetworkManager.getAllTeachers(resultQueue: .main) { result in
             switch result {
             case .success(let teachers):
@@ -54,10 +54,10 @@ public class TeachersSearchViewModel: ObservableObject {
             }
         }
     }
-    
+
     private func showNetworkError(error: Error) {
         self.isShowingError = true
-        
+
         if let networkError = error as? NetworkError {
             self.activeError = networkError
         } else {

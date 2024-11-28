@@ -11,15 +11,15 @@ import SwiftUI
 struct CarouselView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSettings: AppSettings
-    
+
     let pages: [String]
     @State var currentIndex: Int
-    
+
     let viewsAlignment: VerticalAlignment
     @ViewBuilder let content: Content
-    
+
     @GestureState private var translation: CGFloat = 0
-    
+
     var body: some View {
         ZStack(alignment: .bottom) {
             GeometryReader { geometry in
@@ -44,9 +44,9 @@ struct CarouselView<Content: View>: View {
                         }
                 )
             }
-            
+
             HStack {
-                ForEach(pages, id:\.self) { title in
+                ForEach(pages, id: \.self) { title in
                     Text(title)
                         .font(.system(size: pages[currentIndex] == title ? 18 : 13))
                         .fontWeight(pages[currentIndex] == title ? .bold : .regular)
@@ -61,7 +61,7 @@ struct CarouselView<Content: View>: View {
             .background {
                 ZStack {
                     colorScheme == .light ? Color.white : Color.black
-                    
+
                     appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme).blur(radius: 2)
                 }
             }
@@ -79,7 +79,7 @@ struct CarouselView<Content: View>: View {
         Text("Теперь я цыган")
             .frame(width: 393, height: 500)
             .background(.red)
-        
+
         Text("Гы")
             .frame(width: 393, height: 400)
             .background(.blue)

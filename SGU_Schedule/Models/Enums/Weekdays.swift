@@ -8,49 +8,49 @@
 import Foundation
 
 public enum Weekdays: String, CaseIterable {
-    case Monday = "Пн"
-    case Tuesday = "Вт"
-    case Wednesday = "Ср"
-    case Thursday = "Чт"
-    case Friday = "Пт"
-    case Saturday = "Сб"
-    case Sunday = "Вс"
-    
+    case monday = "Пн"
+    case tuesday = "Вт"
+    case wednesday = "Ср"
+    case thursday = "Чт"
+    case friday = "Пт"
+    case saturday = "Сб"
+    case sunday = "Вс"
+
     var number: Int {
         switch self {
-        case .Monday: return 1
-        case .Tuesday: return 2
-        case .Wednesday: return 3
-        case .Thursday: return 4
-        case .Friday: return 5
-        case .Saturday: return 6
-        case .Sunday: return 7
+        case .monday: return 1
+        case .tuesday: return 2
+        case .wednesday: return 3
+        case .thursday: return 4
+        case .friday: return 5
+        case .saturday: return 6
+        case .sunday: return 7
         }
     }
-    
+
     public init?(rawValue: String) {
         switch rawValue.lowercased() {
-        case "monday", "понедельник": self = .Monday
-        case "tuesday", "вторник": self = .Tuesday
-        case "wednesday", "среда": self = .Wednesday
-        case "thursday", "четверг": self = .Thursday
-        case "friday", "пятница": self = .Friday
-        case "saturday", "суббота": self = .Saturday
-        case "sunday", "воскресенье": self = .Sunday
+        case "monday", "понедельник": self = .monday
+        case "tuesday", "вторник": self = .tuesday
+        case "wednesday", "среда": self = .wednesday
+        case "thursday", "четверг": self = .thursday
+        case "friday", "пятница": self = .friday
+        case "saturday", "суббота": self = .saturday
+        case "sunday", "воскресенье": self = .sunday
         default:
             return nil
         }
     }
-    
+
     public init?(dayNumber: Int) {
         switch dayNumber {
-        case 1: self = .Monday
-        case 2: self = .Tuesday
-        case 3: self = .Wednesday
-        case 4: self = .Thursday
-        case 5: self = .Friday
-        case 6: self = .Saturday
-        case 7: self = .Sunday
+        case 1: self = .monday
+        case 2: self = .tuesday
+        case 3: self = .wednesday
+        case 4: self = .thursday
+        case 5: self = .friday
+        case 6: self = .saturday
+        case 7: self = .sunday
         default:
             return nil
         }

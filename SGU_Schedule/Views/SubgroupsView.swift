@@ -7,14 +7,14 @@
 
 import SwiftUI
 
-struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel  {
+struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appSettings: AppSettings
 
     @ObservedObject var viewModel: ViewModel
 
     @Binding var isShowing: Bool
-    
+
     var body: some View {
         OverlayView(isShowing: $isShowing) {
             ScrollView {
@@ -23,8 +23,8 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel  {
                         Text(lesson)
                             .font(.system(size: 18, weight: .semibold))
                             .padding(.horizontal)
-                        
-                        Picker("", selection: Binding (
+
+                        Picker("", selection: Binding(
                             get: {
                                 viewModel.subgroupsByLessons[lesson]!.first { $0.isSaved }
                             },
@@ -34,7 +34,7 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel  {
                                 }
                             }
                         )) {
-                            ForEach(viewModel.subgroupsByLessons[lesson]!, id:\.self) { subgroup in
+                            ForEach(viewModel.subgroupsByLessons[lesson]!, id: \.self) { subgroup in
                                 Text("\(subgroup.displayNumber)")
                                     .tag(subgroup)
                             }
@@ -47,9 +47,9 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel  {
                     .padding(.vertical)
                 }
             }
-            
+
             Divider()
-            
+
             Button("Очистить выбор") {
                 viewModel.clearSubgroups()
             }
@@ -57,7 +57,7 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel  {
             .padding(.bottom, 2)
             .padding(.top, 10)
             .foregroundColor(colorScheme == .light ? .black : .white)
-            
+
             Text("Сохраненных: \(viewModel.savedSubgroupsCount)")
                 .opacity(0.4)
                 .padding(.bottom, 5)

@@ -7,7 +7,7 @@
 
 import Foundation
 
-//public final class ViewModelForTestFactory: ViewModelFactory {
+// public final class ViewModelForTestFactory: ViewModelFactory {
 //    public func buildDepartmentsViewModel() -> DepartmentsViewModel {
 //        return DepartmentsViewModel()
 //    }
@@ -29,4 +29,4 @@ import Foundation
 //    }
 //    
 //    
-//}
+// }

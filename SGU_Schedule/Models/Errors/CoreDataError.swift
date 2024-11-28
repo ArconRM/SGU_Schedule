@@ -13,7 +13,7 @@ public enum CoreDataError: Error, LocalizedError {
     case failedToDelete
     case failedToUpdate
     case unexpectedError
-    
+
     public var errorDescription: String? {
         switch self {
         case .failedToSave:
@@ -28,7 +28,7 @@ public enum CoreDataError: Error, LocalizedError {
             return "Неожиданная ошибка"
         }
     }
-    
+
     public var failureReason: String? {
         switch self {
         case .failedToSave:

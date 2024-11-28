@@ -11,14 +11,14 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
+
     @State private var curPadding: CGFloat = 20
     @State private var maxPadding: CGFloat = UIScreen.getModalViewMaxPadding(initialOrientation: UIDevice.current.orientation, currentOrientation: UIDevice.current.orientation)
     private let minPadding: CGFloat = 20
     private let initialOrientation = UIDevice.current.orientation
-    
+
     var body: some View {
         ZStack {
             VStack {
@@ -29,9 +29,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 }
                 .frame(height: 30)
                 .frame(maxWidth: .infinity)
-                .background (Color.white.opacity (0.00001))
+                .background(Color.white.opacity(0.00001))
                 .gesture(dragGesture)
-                
+
                 if networkMonitor.isConnected {
                     if viewModel.isLoadingSessionEvents {
                         Text("Не обновлено")
@@ -47,7 +47,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         .padding(.top, -10)
                         .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
-                
+
                 if networkMonitor.isConnected {
                     if viewModel.isLoadingSessionEvents {
                         Text("Загрузка...")
@@ -56,9 +56,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                     } else if viewModel.groupSessionEvents != nil {
                         ScrollView {
                             ForEach(
-                                viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date.isAroundNow() }) +
-                                viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date.inFuture() }) +
-                                viewModel.groupSessionEvents!.sessionEvents.filter ({ $0.date.passed() }), id:\.self
+                                viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.isAroundNow() }) +
+                                viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.inFuture() }) +
+                                viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.passed() }), id: \.self
                             ) { sessionEvent in
                                 SessionEventSubview(sessionEvent: sessionEvent)
                             }
@@ -67,7 +67,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         }
                     }
                 }
-                
+
                 Spacer()
             }
         }
@@ -77,7 +77,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 curPadding = maxPadding
             }
         })
-        .background (
+        .background(
             GeometryReader { geometry in
                 ZStack {
                     appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
@@ -90,7 +90,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
                 .overlay {
-                    if appSettings.currentAppTheme == .PinkHelloKitty {
+                    if appSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl")
                             .resizable()
                             .ignoresSafeArea()
@@ -104,9 +104,9 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
         )
         .padding(.top, curPadding)
     }
-    
+
     @State private var prevDragTrans = CGSize.zero
-    
+
     var dragGesture: some Gesture {
         DragGesture(minimumDistance: 10, coordinateSpace: .global)
             .onChanged { value in
@@ -116,14 +116,14 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 } else if curPadding < minPadding {
                     curPadding = minPadding
                 } else {
-                    if dragAmount > 0 { //вниз
+                    if dragAmount > 0 { // вниз
 //                        if curPadding == minPadding {
                             withAnimation(.easeInOut(duration: 0.4)) {
                                 curPadding = maxPadding
                             }
 //                        }
-                        
-                    } else { //вверх
+
+                    } else { // вверх
 //                        if curPadding == maxPadding {
                             withAnimation(.easeInOut(duration: 0.4)) {
                                 curPadding = minPadding
@@ -133,7 +133,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 }
                 prevDragTrans = value.translation
             }
-            .onEnded { value in
+            .onEnded { _ in
                 prevDragTrans = .zero
             }
     }

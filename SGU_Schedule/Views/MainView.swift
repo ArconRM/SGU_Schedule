@@ -7,51 +7,51 @@
 
 import SwiftUI
 
-//TODO: мб все таки через интерфейсы как-то, пока для теста нужно создавать отдельную mainview
+// TODO: мб все таки через интерфейсы как-то, пока для теста нужно создавать отдельную mainview
 struct MainView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @State private var columnVisibility = NavigationSplitViewVisibility.all
-    
+
     var body: some View {
         VStack {
             if UIDevice.isPhone {
                 switch viewsManager.currentView {
-                case .DepartmentsView:
+                case .departmentsView:
                     viewsManager.buildDepartmentsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
-                
-                case .GroupsView:
+
+                case .groupsView:
                     viewsManager.buildGroupsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
-                    
-                case .ScheduleView:
+
+                case .scheduleView:
                     viewsManager.buildScheduleView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
-                    
-                case .TeacherView:
+
+                case .teacherView:
                     viewsManager.buildTeacherView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
-                    
-                case .TeachersSearchView:
+
+                case .teachersSearchView:
                     viewsManager.buildTeachersSearchView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
                 }
             } else if UIDevice.isPad {
-                if viewsManager.currentView == .DepartmentsView {
+                if viewsManager.currentView == .departmentsView {
                     viewsManager.buildDepartmentsView()
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
@@ -64,19 +64,19 @@ struct MainView: View {
                             .environmentObject(appSettings)
 //                            .navigationBarHidden(true)
                     } detail: {
-                        if viewsManager.currentView == .ScheduleView {
+                        if viewsManager.currentView == .scheduleView {
                             viewsManager.buildScheduleView()
                                 .environmentObject(networkMonitor)
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
                                 .id(UUID())
-                            
-                        } else if viewsManager.currentView == .TeacherView {
+
+                        } else if viewsManager.currentView == .teacherView {
                             viewsManager.buildTeacherView()
                                 .environmentObject(networkMonitor)
                                 .environmentObject(viewsManager)
                                 .environmentObject(appSettings)
-                            
+
                         } else {
                             viewsManager.buildSettingsView()
                                 .environmentObject(appSettings)

@@ -11,18 +11,18 @@ public class TeacherViewModel: ObservableObject {
     private let teacherNetworkManager: TeacherNetworkManager
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
-    
-    @Published var teacher: Teacher? = nil
+
+    @Published var teacher: Teacher?
     @Published var teacherLessons: [LessonDTO] = []
     @Published var teacherSessionEvents: [SessionEventDTO] = []
-    
+
     @Published var isLoadingTeacherInfo = true
     @Published var isLoadingTeacherLessons = true
     @Published var isLoadingTeacherSessionEvents = true
-    
+
     @Published var isShowingError = false
-    @Published var activeError: LocalizedError? = nil
-    
+    @Published var activeError: LocalizedError?
+
     init(
         teacherNetworkManager: TeacherNetworkManager,
         lessonsNetworkManager: LessonNetworkManager,
@@ -32,16 +32,16 @@ public class TeacherViewModel: ObservableObject {
         self.lessonsNetworkManager = lessonsNetworkManager
         self.sessionEventsNetworkManager = sessionEventsNetworkManager
     }
-    
+
     public func fetchAll(teacherUrlEndpoint: String) {
         self.isLoadingTeacherInfo = true
-        
+
         teacherNetworkManager.getTeacher(teacherEndpoint: teacherUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let teacher):
                 self.teacher = teacher
                 self.isLoadingTeacherInfo = false
-                
+
                 self.fetchTeacherLessons(teacherLessonsUrlEndpoint: teacher.lessonsUrlEndpoint)
                 self.fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: teacher.sessionEventsUrlEndpoint)
             case .failure(let error):
@@ -49,10 +49,10 @@ public class TeacherViewModel: ObservableObject {
             }
         }
     }
-    
+
     public func fetchTeacherInfo(teacherUrlEndpoint: String) {
         self.isLoadingTeacherInfo = true
-        
+
         teacherNetworkManager.getTeacher(teacherEndpoint: teacherUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let teacher):
@@ -63,15 +63,15 @@ public class TeacherViewModel: ObservableObject {
             self.isLoadingTeacherInfo = false
         }
     }
-    
+
     public func fetchTeacherLessons(teacherLessonsUrlEndpoint: String) {
         self.isLoadingTeacherLessons = true
-        
+
 //        guard let _ = self.teacher else {
 //            self.showNetworkError(error: NetworkError.unexpectedError)
 //            return
 //        }
-        
+
         lessonsNetworkManager.getTeacherScheduleForCurrentWeek(teacherEndpoint: teacherLessonsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let lessons):
@@ -82,15 +82,15 @@ public class TeacherViewModel: ObservableObject {
             self.isLoadingTeacherLessons = false
         }
     }
-    
+
     public func fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: String) {
         self.isLoadingTeacherSessionEvents = true
-        
+
 //        guard let _ = self.teacher else {
 //            self.showNetworkError(error: NetworkError.unexpectedError)
 //            return
 //        }
-        
+
         sessionEventsNetworkManager.getTeacherSessionEvents(teacherEndpoint: teacherSessionEventsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let sessionEvents):
@@ -101,20 +101,20 @@ public class TeacherViewModel: ObservableObject {
             self.isLoadingTeacherSessionEvents = false
         }
     }
-    
+
     public func showBaseError(error: Error) {
         self.isShowingError = true
-        
+
         if let baseError = error as? BaseError {
             self.activeError = baseError
         } else {
             self.activeError = BaseError.unknownError
         }
     }
-    
+
     private func showNetworkError(error: Error) {
         self.isShowingError = true
-        
+
         if let networkError = error as? NetworkError {
             self.activeError = networkError
         } else {

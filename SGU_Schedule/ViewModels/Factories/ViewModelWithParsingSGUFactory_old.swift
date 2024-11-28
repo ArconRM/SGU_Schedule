@@ -9,55 +9,55 @@ import Foundation
 
 public final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
     private var urlSource = URLSourceSGU_old()
-    
+
     public func buildDepartmentsViewModel() -> DepartmentsViewModel {
         return DepartmentsViewModel()
     }
-    
+
     public func buildGroupsViewModel(department: Department) -> GroupsViewModel {
-        return GroupsViewModel (
+        return GroupsViewModel(
             groupsNetworkManager: GroupsNetworkManagerWithParsing(
                 urlSource: urlSource,
                 groupsParser: GroupsHTMLParserSGU_old(),
                 scraper: StaticScraper()
-            ), 
-            
+            ),
+
             groupPersistenceManager: GroupCoreDataManager()
         )
     }
-    
+
     public func buildScheduleViewModel() -> ScheduleViewModel {
-        return ScheduleViewModel (
+        return ScheduleViewModel(
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
                 lessonParser: LessonHTMLParserSGU_old(),
                 scraper: StaticScraper()
             ),
-            
+
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
                 urlSource: urlSource,
                 sessionEventsParser: SessionEventsHTMLParserSGU_old(),
                 scraper: StaticScraper()
             ),
-            
+
             schedulePersistenceManager: GroupScheduleCoreDataManager(),
-            
+
             lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager()
         )
     }
-    
+
     public func buildTeacherViewModel() -> TeacherViewModel {
-        return TeacherViewModel (
+        return TeacherViewModel(
             teacherNetworkManager: TeacherNetworkManagerWithParsing(
                 scraper: StaticScraper()
             ),
-            
+
             lessonsNetworkManager: LessonNetworkManagerWithParsing(
                 urlSource: urlSource,
                 lessonParser: LessonHTMLParserSGU_old(),
                 scraper: StaticScraper()
             ),
-            
+
             sessionEventsNetworkManager: SessionEventsNetworkManagerWithParsing(
                 urlSource: urlSource,
                 sessionEventsParser: SessionEventsHTMLParserSGU_old(),
@@ -65,7 +65,7 @@ public final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
             )
         )
     }
-    
+
     public func buildTeachersSearchViewModel() -> TeachersSearchViewModel {
         return TeachersSearchViewModel(
             teacherNetworkManager: TeacherNetworkManagerWithParsing(scraper: StaticScraper()),

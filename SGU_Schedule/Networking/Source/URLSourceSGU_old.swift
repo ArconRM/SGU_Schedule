@@ -11,18 +11,18 @@ public struct URLSourceSGU_old: URLSource {
     private var baseUrl: URL {
         return URL(string: "https://old.sgu.ru")!
     }
-    
+
     public func getBaseTeacherURL(teacherEndPoint: String) -> URL {
         return self.baseUrl.appendingPathComponent(teacherEndPoint)
     }
-    
+
     public func getBaseScheduleURL(departmentCode: String) -> URL {
         return self.baseUrl.appendingPathComponent("schedule").appendingPathComponent(departmentCode)
     }
-    
+
     public func getGroupScheduleURL(departmentCode: String, groupNumber: String) -> URL {
         return self.getBaseScheduleURL(departmentCode: departmentCode).appendingPathComponent("do").appendingPathComponent(String(groupNumber))
     }
-    
+
     public init() { }
 }

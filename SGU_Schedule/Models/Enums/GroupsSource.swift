@@ -15,7 +15,7 @@ enum GroupsSource: Int { // костыль
     case PI = 5 // пи
     case PO = 6 // по
     case SAU = 8 // сау
-    
+
     var shortName: String {
         switch self {
         case .FIIT:
@@ -34,7 +34,7 @@ enum GroupsSource: Int { // костыль
             return "САУ"
         }
     }
-    
+
     var fullName: String {
         switch self {
         case .FIIT:
@@ -53,7 +53,7 @@ enum GroupsSource: Int { // костыль
             return "Системный анализ и управление"
         }
     }
-    
+
     init?(rawValue: Int) {
         if String(rawValue).count > 1 {
             switch Array(String(rawValue))[1] {

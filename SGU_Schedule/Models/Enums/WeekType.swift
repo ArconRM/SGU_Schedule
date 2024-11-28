@@ -8,17 +8,17 @@
 import Foundation
 
 enum WeekType: String, Decodable {
-    case All = ""
-    case Numerator = "Числ."
-    case Denumerator = "Знам."
-    
+    case all = ""
+    case numerator = "Числ."
+    case denumerator = "Знам."
+
     init?(rawValue: String) {
         if rawValue == "чис." || rawValue == "Числ." || rawValue == "Ч" {
-            self = .Numerator
+            self = .numerator
         } else if rawValue == "знам." || rawValue == "Знам." || rawValue == "З" {
-            self = .Denumerator
+            self = .denumerator
         } else {
-            self = .All
+            self = .all
         }
     }
 }

@@ -12,7 +12,7 @@ public struct Teacher: Hashable {
     var fullName: String
     var lessonsUrlEndpoint: String
     var sessionEventsUrlEndpoint: String
-    
+
     var departmentFullName: String?
     var profileImageUrl: URL?
     var email: String?
@@ -20,7 +20,7 @@ public struct Teacher: Hashable {
     var workPhoneNumber: String?
     var personalPhoneNumber: String?
     var birthdate: Date?
-    
+
     init(
         fullName: String,
         lessonsUrlEndpoint: String,
@@ -36,7 +36,7 @@ public struct Teacher: Hashable {
         self.fullName = fullName
         self.lessonsUrlEndpoint = lessonsUrlEndpoint
         self.sessionEventsUrlEndpoint = sessionEventsUrlEndpoint
-        
+
         self.departmentFullName = departmentFullName
         self.profileImageUrl = profileImageUrl
         self.email = email
@@ -45,7 +45,7 @@ public struct Teacher: Hashable {
         self.personalPhoneNumber = personalPhoneNumber
         self.birthdate = birthdate
     }
-    
+
     public static var mock: Self {
         .init(fullName: "Пример ФИО", lessonsUrlEndpoint: "", sessionEventsUrlEndpoint: "")
     }

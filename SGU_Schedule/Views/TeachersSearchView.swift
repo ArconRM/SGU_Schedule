@@ -8,18 +8,18 @@
 import SwiftUI
 
 struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersSearchViewModel {
-    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
+    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: TeachersSearchView<ViewModel>, rhs: TeachersSearchView<ViewModel>) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
+
     @State private var queryString = ""
     var filteredTeachers: Set<TeacherSearchResult> {
             if queryString.isEmpty {
@@ -31,7 +31,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                 }
             }
         }
-    
+
     var body: some View {
         NavigationView {
             ZStack {
@@ -39,7 +39,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                     .ignoresSafeArea()
                     .shadow(radius: 5)
                     .ignoresSafeArea()
-                
+
                 if viewModel.isLoading {
                     Text("Загрузка всех преподавателей...")
                         .padding(.top)
@@ -47,7 +47,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                 } else {
                     VStack {
                         ScrollView {
-                            //TODO: Мб поэффективнее можно
+                            // TODO: Мб поэффективнее можно
                             ForEach(Array(filteredTeachers), id: \.self) { teacher in
                                 PlainTextSubview(text: teacher.fullName)
                                     .onTapGesture {
@@ -58,7 +58,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                             }
                         }
                         .searchable(text: $queryString, prompt: "Введите фамилию преподавателя")
-                        
+
                         Button(
                             action: {
                                 viewModel.needToLoad = true
@@ -71,7 +71,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                                     .padding(.vertical, 15)
                             }
                             .overlay {
-                                if appSettings.currentAppTheme == .PinkHelloKitty {
+                                if appSettings.currentAppTheme == .pinkHelloKitty {
                                     Image("patternImageRofl1")
                                         .resizable()
                                         .ignoresSafeArea()
@@ -98,14 +98,14 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                                     }
                                   ))
                         }
-                        
+
                         Text("Сохранено: \(viewModel.allTeachers.count)")
                             .padding(.bottom, 5)
                             .padding(.top, 10)
                     }
                     .ignoresSafeArea(.keyboard, edges: .bottom)
                 }
-                
+
             }
             .toolbar {
                 ToolbarItem(placement: .topBarLeading) {
@@ -120,7 +120,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
         }
         .edgesIgnoringSafeArea(.bottom)
         .ignoresSafeArea(.keyboard, edges: .bottom)
-        
+
         .onAppear {
             viewModel.fetchSavedTeachers()
         }

@@ -9,75 +9,75 @@ import Foundation
 import SwiftUI
 
 public enum AppTheme: String, CaseIterable {
-    case Blue = "blue"
-    case Green = "green"
-    case Pink = "pink"
-    case PinkHelloKitty = "pink HK" // люти рофл
-    case Gray = "gray"
-    
+    case blue = "blue"
+    case green = "green"
+    case pink = "pink"
+    case pinkHelloKitty = "pink HK" // люти рофл
+    case gray = "gray"
+
     var rusValue: String {
         switch self {
-        case .Blue:
+        case .blue:
             return "син"
-        case .Green:
+        case .green:
             return "зел"
-        case .Pink:
+        case .pink:
             return "роз"
-        case .PinkHelloKitty:
+        case .pinkHelloKitty:
             return "HK"
-        case .Gray:
+        case .gray:
             return "сер"
         }
     }
-    
+
     func backgroundColor(colorScheme: ColorScheme) -> Color {
         switch self {
-        case .Blue:
+        case .blue:
             return .blue.opacity(colorScheme == .light ? 0.1 : 0.1)
-        case .Green:
+        case .green:
             return .green.opacity(colorScheme == .light ? 0.1 : 0.1)
-        case .Pink, .PinkHelloKitty:
+        case .pink, .pinkHelloKitty:
             return .pink.opacity(colorScheme == .light ? 0.1 : 0.1)
-        case .Gray:
+        case .gray:
             return colorScheme == .light ? .gray.opacity(0.1) : .gray.opacity(0.1)
         }
     }
-    
+
     func mainGradientColor(colorScheme: ColorScheme) -> Color {
         switch self {
-        case .Blue:
+        case .blue:
             return .blue.opacity(colorScheme == .light ? 0.12 : 0.1)
-        case .Green:
+        case .green:
             return .green.opacity(colorScheme == .light ? 0.15 : 0.1)
-        case .Pink, .PinkHelloKitty:
+        case .pink, .pinkHelloKitty:
             return .pink.opacity(colorScheme == .light ? 0.1 : 0.1)
-        case .Gray:
+        case .gray:
             return colorScheme == .light ? .gray.opacity(0.17) : .gray.opacity(0.1)
         }
     }
-    
+
     func pairedGradientColor(colorScheme: ColorScheme) -> Color {
         switch self {
-        case .Blue:
+        case .blue:
             return .cyan.opacity(colorScheme == .light ? 0.1 : 0)
-        case .Green:
+        case .green:
             return .blue.opacity(colorScheme == .light ? 0.07 : 0.08)
-        case .Pink, .PinkHelloKitty:
+        case .pink, .pinkHelloKitty:
             return .purple.opacity(colorScheme == .light ? 0.1 : 0.12)
-        case .Gray:
+        case .gray:
             return colorScheme == .light ? .white : .gray.opacity(0.03)
         }
     }
-    
+
     func foregroundColor(colorScheme: ColorScheme) -> Color {
         switch self {
-        case .Blue:
+        case .blue:
             return .blue.opacity(colorScheme == .dark ? 1 : 0.8)
-        case .Green:
+        case .green:
             return .green.opacity(colorScheme == .dark ? 1 : 0.8)
-        case .Pink, .PinkHelloKitty:
+        case .pink, .pinkHelloKitty:
             return .pink.opacity(colorScheme == .dark ? 1 : 0.8)
-        case .Gray:
+        case .gray:
             return colorScheme == .light ? .black.opacity(0.3) : .gray.opacity(0.5)
         }
     }

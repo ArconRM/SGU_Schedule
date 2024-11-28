@@ -8,27 +8,27 @@
 import SwiftUI
 
 struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel {
-    //чтобы не вью не переебашивалось при смене темы (и также источника инета)
+    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: TeacherScheduleView<ViewModel>, rhs: TeacherScheduleView<ViewModel>) -> Bool {
         return lhs.colorScheme == rhs.colorScheme
     }
-    
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
-    @State private var selectedTeacherScheduleVariant: TeacherSchedulePickerVariants = .Lessons
+
+    @State private var selectedTeacherScheduleVariant: TeacherSchedulePickerVariants = .lessons
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
     @State private var lessonsBySelectedDay = [LessonDTO]()
-    
+
     private enum TeacherSchedulePickerVariants: String, CaseIterable {
-        case Lessons = "Занятия"
-        case Session = "Сессия"
+        case lessons = "Занятия"
+        case session = "Сессия"
     }
-    
+
     var body: some View {
         ScrollView {
             Picker("", selection: $selectedTeacherScheduleVariant) {
@@ -39,8 +39,8 @@ struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherV
             .pickerStyle(SegmentedPickerStyle())
             .padding(.horizontal)
             .padding(.top)
-            
-            if selectedTeacherScheduleVariant == .Lessons {
+
+            if selectedTeacherScheduleVariant == .lessons {
                 if viewModel.isLoadingTeacherLessons {
                     ProgressView()
                 } else {
@@ -52,15 +52,15 @@ struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherV
                     .pickerStyle(SegmentedPickerStyle())
                     .padding(.horizontal)
                     .padding(.bottom)
-                    .onChange(of: selectedDay) { newDay in
+                    .onChange(of: selectedDay) { _ in
                         lessonsBySelectedDay = viewModel.teacherLessons.filter { $0.weekDay == selectedDay }
                     }
-                    
+
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(1...8, id:\.self) { lessonNumber in
+                        ForEach(1...8, id: \.self) { lessonNumber in
                             let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
                             if !lessonsByNumber.isEmpty {
-                                //id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
+                                // id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
                                 ScheduleSubview(lessons: lessonsByNumber, subgroupsByLessons: [:])
                                     .environmentObject(networkMonitor)
                                     .environmentObject(viewsManager)
@@ -74,12 +74,12 @@ struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherV
                         lessonsBySelectedDay = viewModel.teacherLessons.filter { $0.weekDay == selectedDay }
                     }
                 }
-            } else if selectedTeacherScheduleVariant == .Session {
+            } else if selectedTeacherScheduleVariant == .session {
                 if viewModel.isLoadingTeacherSessionEvents {
                     ProgressView()
                 } else {
                     ScrollView(.vertical, showsIndicators: false) {
-                        ForEach(viewModel.teacherSessionEvents.filter ({ $0.date >= Date() }) + viewModel.teacherSessionEvents.filter ({ $0.date < Date() }), id:\.self) { sessionEvent in
+                        ForEach(viewModel.teacherSessionEvents.filter({ $0.date >= Date() }) + viewModel.teacherSessionEvents.filter({ $0.date < Date() }), id: \.self) { sessionEvent in
                             SessionEventSubview(sessionEvent: sessionEvent)
                         }
                         .padding(.top, 5)

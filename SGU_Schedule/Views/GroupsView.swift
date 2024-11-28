@@ -7,23 +7,23 @@
 
 import SwiftUI
 
-//TODO: .contentShape(Rectangle()) для ios 18, без него не работает tapGesture
+// TODO: .contentShape(Rectangle()) для ios 18, без него не работает tapGesture
 struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
-    
+
     @ObservedObject var viewModel: ViewModel
-    
-    @State private var selectedAcademicProgram = AcademicProgram.BachelorAndSpeciality
+
+    @State private var selectedAcademicProgram = AcademicProgram.bachelorAndSpeciality
     @State private var selectedYear = 1
     @State var selectedDepartment: Department
-    
+
     @State private var showAlert: Bool = false
     @State private var programTappedCount: Int = 0
     @State private var yearTappedCount: Int = 0
-    
+
     var body: some View {
         ZStack {
             // Фон
@@ -36,7 +36,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 )
                 .blur(radius: 2)
                 .overlay {
-                    if appSettings.currentAppTheme == .PinkHelloKitty && !viewsManager.isShowingSettingsView {
+                    if appSettings.currentAppTheme == .pinkHelloKitty && !viewsManager.isShowingSettingsView {
                         Image("patternImageRofl")
                             .resizable()
                             .ignoresSafeArea()
@@ -46,12 +46,11 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                 }
                 .ignoresSafeArea()
-                
-                
+
             } else if UIDevice.isPad {
                 appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .overlay {
-                        if appSettings.currentAppTheme == .PinkHelloKitty && !viewsManager.isShowingSettingsView {
+                        if appSettings.currentAppTheme == .pinkHelloKitty && !viewsManager.isShowingSettingsView {
                             Image("patternImageRofl")
                                 .resizable()
                                 .ignoresSafeArea()
@@ -61,30 +60,30 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         }
                     }
                     .ignoresSafeArea()
-                
+
             }
-            
+
             if viewsManager.isShowingSettingsView && UIDevice.isPhone {
                 viewsManager.buildSettingsView()
                     .environmentObject(appSettings)
             }
-            
+
             // Группы
             VStack {
                 if UIDevice.isPhone {
                     HStack(spacing: 0) {
                         makeShowSettingsButton()
-                        
+
                         Spacer()
-                        
+
                         if networkMonitor.isConnected {
                             makeAcademicProgramMenu()
                         }
-                        
+
                         Spacer()
-                        
+
                         makeShowTeachersSearchButton()
-                        
+
                     }
                     .padding(.top, 2)
                 } else if UIDevice.isPad {
@@ -92,26 +91,26 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         makeAcademicProgramMenu()
                     }
                 }
-                
+
                 if networkMonitor.isConnected {
                     makeYearMenu()
                 }
-                
+
                 if !networkMonitor.isConnected {
                     Spacer()
-                    
+
                     Text("Нет соединения с интернетом")
                         .padding(.top)
                         .font(.system(size: 19, weight: .bold, design: .rounded))
-                    
+
                     Spacer()
                 }
-                
+
                 // Список групп
                 ScrollView {
                     Spacer()
                         .frame(height: 10)
-                    
+
                     if viewModel.favouriteGroup != nil {
                         Button {
                             withAnimation(.easeInOut(duration: 0.5)) {
@@ -133,9 +132,9 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             .environmentObject(appSettings)
                         }
                     }
-                    
+
                     if !viewModel.savedGroupsWithoutFavourite.isEmpty {
-                        ForEach(viewModel.savedGroupsWithoutFavourite, id:\.self) { group in
+                        ForEach(viewModel.savedGroupsWithoutFavourite, id: \.self) { group in
                             Button {
                                 withAnimation(.easeInOut(duration: 0.5)) {
                                     viewsManager.selectGroup(group: group, isFavourite: false, isPinned: true)
@@ -157,18 +156,18 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                             }
                         }
                     }
-                    
+
                     if networkMonitor.isConnected {
                         if viewModel.isLoadingGroups {
                             Spacer()
-                            
+
                             Text("Загрузка...")
                                 .padding(.top)
                                 .font(.system(size: 19, weight: .bold))
-                            
+
                             Spacer()
                         } else {
-                            ForEach(viewModel.groupsWithoutSaved, id:\.self) { group in
+                            ForEach(viewModel.groupsWithoutSaved, id: \.self) { group in
                                 Button {
                                     withAnimation(.easeInOut(duration: 0.5)) {
                                         viewsManager.selectGroup(group: group, isFavourite: false, isPinned: false)
@@ -200,12 +199,12 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                 }
             }
-            
+
             .alert(isPresented: $viewsManager.isShowingError) {
                 Alert(title: Text(viewsManager.activeError?.errorDescription ?? "Error"),
                       message: Text(viewsManager.activeError?.failureReason ?? "Unknown"))
             }
-            
+
             if showAlert {
                 HeheAlert(show: $showAlert)
             }
@@ -221,19 +220,19 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             }
             viewsManager.needToReloadGroupView = false
         }
-        
+
         .alert(isPresented: $viewModel.isShowingError) {
             Alert(title: Text(viewModel.activeError?.errorDescription ?? "Error"),
                   message: Text(viewModel.activeError?.failureReason ?? "Unknown"))
         }
     }
-    
+
     private func makeShowSettingsButton() -> some View {
         Button(action: {
             withAnimation(.bouncy(duration: 0.5)) {
                 viewsManager.showSettingsView()
             }
-            
+
             let impact = UIImpactFeedbackGenerator(style: .light)
             impact.impactOccurred()
         }) {
@@ -245,13 +244,13 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         }
         .padding(.leading)
     }
-    
+
     private func makeShowTeachersSearchButton() -> some View {
         Button(action: {
             withAnimation(.easeInOut(duration: 0.3)) {
                 viewsManager.showTeachersSearchView()
             }
-            
+
             let impact = UIImpactFeedbackGenerator(style: .light)
             impact.impactOccurred()
         }) {
@@ -263,11 +262,11 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
         }
         .padding(.trailing)
     }
-    
+
     private func makeAcademicProgramMenu() -> some View {
         Menu {
             Picker(selection: $selectedAcademicProgram) {
-                ForEach(AcademicProgram.allCases, id:\.self) { program in
+                ForEach(AcademicProgram.allCases, id: \.self) { program in
                     Text(program.rawValue)
                         .tag(program)
                         .font(.system(size: 15, weight: .bold))
@@ -298,7 +297,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             )
         }
     }
-    
+
     private func makeYearMenu() -> some View {
         Menu {
             Picker(selection: $selectedYear) {
@@ -332,7 +331,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             )
         }
     }
-    
+
     private func fetchAllData() {
         selectedYear = viewModel.getSelectedYear()
         selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
