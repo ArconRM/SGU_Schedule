@@ -121,7 +121,7 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
-    // Data
+    // MARK: - Data
     func selectDepartment(department: Department) {
         selectedDepartment = department
         // TODO: мб чтобы все таки менялся groupsViewModel
@@ -173,7 +173,7 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
-    // Transitions
+    //MARK: - Transitions
     func showDepartmentsView() {
         currentView = .departmentsView
         isShowingSettingsView = false
@@ -220,7 +220,7 @@ public final class ViewsManager: ObservableObject {
         currentView = .teachersSearchView
     }
 
-    // Factory
+    // MARK: - Factory
     func buildDepartmentsView() -> some View {
         let departmentsViewModel = currentViewModelFactory.buildDepartmentsViewModel()
 
@@ -260,7 +260,7 @@ public final class ViewsManager: ObservableObject {
         return TeachersSearchView(viewModel: teachersSearchViewModel)
     }
 
-    // Error handling
+    // MARK: - Error handling
     private func showCoreDataError(error: Error) {
         self.isShowingError = true
 
