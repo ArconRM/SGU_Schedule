@@ -8,6 +8,14 @@
 import Foundation
 import Kanna
 
+private enum SessionEventPropertiesEndpoints: String {
+    case title = "td[2]/p[@class='schedule-discipline']"
+    case date = "td[1]"
+    case sessionEventType = "td[2]/p[@class='schedule-form']"
+    case teacherFullName = "td[3]"
+    case cabinet = "td[4]"
+}
+
 struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
     private let baseXpath = "//div[@class='container']/table/tbody"
 
@@ -33,11 +41,39 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
         var sessionEvents = [SessionEventDTO]()
         let doc = try HTML(html: html, encoding: .utf8)
 
-        if doc.xpath(baseXpath).count < 2 {
-            return []
-        }
+        // Нормальный способ, но нахуевертили в верстке и это не для всех работает 😐
+//        for i in 1...doc.xpath(baseXpath).count {
+//            let xpathForInnerNumber = baseXpath + "/tr[\(i)]"
+//
+//            let title = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .title)?
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//            let sessionEventType = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .sessionEventType)?
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//            let room = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .sessionEventType)?
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//            let date = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .date)?
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//                .replacingOccurrences(of: "г. ", with: "")
+//
+//            let teacherFullName = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .teacherFullName)?
+//                .trimmingCharacters(in: .whitespacesAndNewlines)
+//
+//            sessionEvents.append(
+//                SessionEventDTO(
+//                    title: title ?? "Error",
+//                    date: date ?? "",
+//                    sessionEventType: SessionEventType(rawValue: sessionEventType ?? "") ?? .exam,
+//                    teacherFullName: teacherFullName ?? "Error",
+//                    cabinet: room ?? "Error"
+//                )
+//            )
+//        }
 
-        let elements = doc.xpath(baseXpath)[1].text?
+        // Всратый способ, но вроде для всех работает
+        let elements = doc.xpath(baseXpath)[doc.xpath(baseXpath).count - 1].text?
             .split(separator: "\n")
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }
             .map { $0.trimmingCharacters(in: .whitespacesAndNewlines) }
@@ -60,7 +96,7 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
                 SessionEventDTO(
                     title: subject,
                     date: date,
-                    sessionEventType: SessionEventType(rawValue: eventType) ?? .consultation,
+                    sessionEventType: SessionEventType(rawValue: eventType) ?? .exam,
                     teacherFullName: group,
                     cabinet: cabinet
                 )
@@ -68,5 +104,9 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
         }
 
         return sessionEvents
+    }
+
+    private func getValueByXpathQuery(doc: HTMLDocument, baseXpath: String, propertyEndpoint: SessionEventPropertiesEndpoints) -> String? {
+        return doc.xpath(baseXpath + "/" + propertyEndpoint.rawValue).first?.text
     }
 }

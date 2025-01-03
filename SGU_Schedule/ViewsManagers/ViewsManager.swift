@@ -173,7 +173,7 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
-    //MARK: - Transitions
+    // MARK: - Transitions
     func showDepartmentsView() {
         currentView = .departmentsView
         isShowingSettingsView = false

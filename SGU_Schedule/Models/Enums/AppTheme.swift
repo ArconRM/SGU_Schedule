@@ -72,7 +72,7 @@ public enum AppTheme: String, CaseIterable {
     func foregroundColor(colorScheme: ColorScheme) -> Color {
         switch self {
         case .blue:
-            return .blue.opacity(colorScheme == .dark ? 1 : 0.8)
+            return .blue.opacity(colorScheme == .dark ? 1 : 0.6)
         case .green:
             return .green.opacity(colorScheme == .dark ? 1 : 0.8)
         case .pink, .pinkHelloKitty:

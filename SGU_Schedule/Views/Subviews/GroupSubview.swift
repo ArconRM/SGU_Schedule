@@ -114,13 +114,12 @@ struct GroupSubview: View {
         RoundedRectangle(cornerRadius: 18)
             .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.5), lineWidth: 4)
             .padding(2)
-        // В сером цвете при темной теме не видно иначе
             .background {
-                if isFavourite || isPinned {
+//                if isFavourite || isPinned {
                     getBackgroundColor()
-                        .opacity(0.3)
+                    .opacity(isFavourite || isPinned ? 0.25 : 0.1)
                         .cornerRadius(18)
-                }
+//                }
             }
     }
 
