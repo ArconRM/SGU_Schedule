@@ -21,7 +21,7 @@ struct LessonHTMLParserSGU_old: LessonHTMLParser {
 
     func getScheduleFromSource(source html: String) throws -> [LessonDTO] {
         do {
-            let lessonsByDays = try getLessonsByDaysFromSource(source: html)
+            let lessonsByDays = try getLessonsFromSource(source: html)
             return lessonsByDays
         } catch {
             throw NetworkError.htmlParserError
@@ -30,47 +30,54 @@ struct LessonHTMLParserSGU_old: LessonHTMLParser {
 
     func getGroupScheduleFromSource(source html: String, groupNumber: String, departmentCode: String) throws -> GroupScheduleDTO {
         do {
-            let lessonsByDays = try getLessonsByDaysFromSource(source: html)
+            let lessonsByDays = try getLessonsFromSource(source: html)
             return GroupScheduleDTO(groupNumber: groupNumber, departmentCode: departmentCode, lessonsByDays: lessonsByDays)
         } catch {
             throw NetworkError.htmlParserError
         }
     }
 
-    private func getLessonsByDaysFromSource(source html: String) throws -> [LessonDTO] {
-        var lessonsByDays = [LessonDTO]()
+    private func getLessonsFromSource(source html: String) throws -> [LessonDTO] {
+        let doc = try HTML(html: html, encoding: .utf8)
+        let lessons = ThreadSafeArray<LessonDTO>()
+
+        let dispatchGroup = DispatchGroup()
+
+        let lessonsCount = 8
+        let divsCount = 16
 
         for dayNumber in 1...6 {
-            try lessonsByDays.append(contentsOf: getLessonsByDayNumberFromSource(source: html, dayNumber: dayNumber))
-        }
+            for lessonNumber in 1...lessonsCount {
+                for divClassId1 in 0..<divsCount {
+                    for divClassId2 in 0..<divsCount {
 
-        return lessonsByDays
-    }
+                        dispatchGroup.enter()
 
-    private func getLessonsByDayNumberFromSource(source html: String, dayNumber: Int) throws -> [LessonDTO] {
-        var result = [LessonDTO]()
-        do {
-            let doc = try HTML(html: html, encoding: .utf8)
-            var lesson: LessonDTO?
+                        DispatchQueue.global().async {
+                            let lesson = decodeLesson(
+                                doc: doc,
+                                lessonNumber: lessonNumber,
+                                dayNumber: dayNumber,
+                                divClassId1: divClassId1,
+                                divClassId2: divClassId2
+                            )
 
-            for lessonNumber in 1...8 {
-                for divClassId1 in 0...15 { // подбор айдишника
-                    for divClassId2 in 0...15 {
-                        lesson = decodeLesson(doc: doc,
-                                              lessonNumber: lessonNumber,
-                                              dayNumber: dayNumber,
-                                              divClassId1: divClassId1,
-                                              divClassId2: divClassId2)
-                        if lesson != nil {
-                            result.append(lesson!)
+                            if let lesson = lesson {
+                                lessons.append(lesson)
+                            }
+
+                            dispatchGroup.leave()
                         }
                     }
                 }
             }
-        } catch {
-            throw NetworkError.htmlParserError
         }
-        return result
+        dispatchGroup.wait()
+//        dispatchGroup.notify(queue: .main) {
+//            print(lessons.count)
+//        }
+        print(lessons.count)
+        return lessons.getAllElements()
     }
 
     private func decodeLesson(doc: HTMLDocument,

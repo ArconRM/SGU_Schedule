@@ -73,16 +73,16 @@ public class ScheduleViewModel: ObservableObject {
                         switch result {
                         case .success(let networkSchedule):
                             do {
-                                if persistenceSchedule == nil || networkSchedule.lessons != persistenceSchedule!.lessons {
+                                if persistenceSchedule == nil || Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons) {
                                     self.groupSchedule = networkSchedule
                                     try self.saveNewScheduleWithDeletingPreviousVersion(schedule: networkSchedule)
-
+                                    
                                     if isFavourite {
                                         self.fetchSubgroups()
                                     }
                                     self.setCurrentAndTwoNextLessons()
-
-                                    if persistenceSchedule != nil && networkSchedule.lessons != persistenceSchedule!.lessons {
+                                    
+                                    if persistenceSchedule != nil && Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons) {
                                         self.loadedLessonsWithChanges = true
                                     }
                                 } else {

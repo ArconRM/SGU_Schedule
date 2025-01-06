@@ -7,9 +7,8 @@
 
 import Foundation
 
-public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
+public struct LessonDTO: Equatable, ScheduleEvent {
 
-    public var id: UUID
     /// subject
     public var title: String
     var teacherFullName: String
@@ -37,7 +36,6 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
         timeStart: String,
         timeEnd: String
     ) {
-        self.id = UUID()
         self.title = subject
         self.teacherFullName = teacherFullName
         self.teacherEndpoint = teacherEndpoint
@@ -70,7 +68,6 @@ public struct LessonDTO: Identifiable, Equatable, ScheduleEvent {
         timeStart: Date,
         timeEnd: Date
     ) {
-        self.id = UUID()
         self.title = subject
         self.teacherFullName = teacherFullName
         self.teacherEndpoint = teacherEndpoint
