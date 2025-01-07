@@ -48,35 +48,41 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
 
-                if networkMonitor.isConnected {
-                    if viewModel.isLoadingSessionEvents {
-                        Text("Загрузка...")
-                            .padding(.top, -10)
-                            .font(.system(size: 19, weight: .bold, design: .rounded))
-                    } else if viewModel.groupSessionEvents != nil {
-                        ScrollView {
-                            ForEach(
-                                viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.isAroundNow() }) +
-                                viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.inFuture() }) +
-                                viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.passed() }), id: \.self
-                            ) { sessionEvent in
-                                SessionEventSubview(sessionEvent: sessionEvent)
-                            }
-                            .padding(.top, 5)
-                            .padding(.bottom, 50)
+                if viewModel.groupSessionEvents == nil && networkMonitor.isConnected {
+                    Text("Загрузка...")
+                        .padding(.top, -10)
+                        .font(.system(size: 19, weight: .bold, design: .rounded))
+                } else if viewModel.groupSessionEvents != nil {
+                    ScrollView {
+                        ForEach(
+                            viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.isAroundNow() }) +
+                            viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.inFuture() }) +
+                            viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.passed() }), id: \.self
+                        ) { sessionEvent in
+                            SessionEventSubview(sessionEvent: sessionEvent)
                         }
+                        .padding(.top, 5)
+                        .padding(.bottom, 50)
                     }
                 }
 
                 Spacer()
             }
         }
+        .onChange(of: viewModel.isLoadingLessons) { newValue in
+            if !newValue {
+                let impact = UIImpactFeedbackGenerator(style: .light)
+                impact.impactOccurred()
+            }
+        }
+
         .onRotate(perform: { newOrientation in
             maxPadding = UIScreen.getModalViewMaxPadding(initialOrientation: initialOrientation, currentOrientation: newOrientation)
             if curPadding != minPadding {
                 curPadding = maxPadding
             }
         })
+
         .background(
             GeometryReader { geometry in
                 ZStack {

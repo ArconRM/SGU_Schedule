@@ -18,7 +18,7 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
             if let group = try groupsManager.fetchAllItems().first(where: { $0.groupId == itemDto.group.groupId }) {
                 schedule.group = group
             } else {
-              throw CoreDataError.failedToSave
+                throw CoreDataError.failedToSave
             }
 
             var newLessons: [Lesson] = []
@@ -61,16 +61,16 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
 
                 for managedLesson in managedSchedule.lessons?.array as? [Lesson] ?? [] {
                     let lessonDto = LessonDTO(subject: managedLesson.title ?? "Error",
-                                                 teacherFullName: managedLesson.teacherFullName ?? "Error",
-                                                 teacherEndpoint: managedLesson.teacherEndpoint,
-                                                 lessonType: managedLesson.lessonType,
-                                                 weekDay: managedLesson.weekDay,
-                                                 weekType: managedLesson.weekType,
-                                                 cabinet: managedLesson.cabinet ?? "Error",
-                                                 subgroup: managedLesson.subgroup,
-                                                 lessonNumber: Int(managedLesson.lessonNumber),
-                                                 timeStart: managedLesson.timeStart ?? Date(),
-                                                 timeEnd: managedLesson.timeEnd ?? Date())
+                                              teacherFullName: managedLesson.teacherFullName ?? "Error",
+                                              teacherEndpoint: managedLesson.teacherEndpoint,
+                                              lessonType: managedLesson.lessonType,
+                                              weekDay: managedLesson.weekDay,
+                                              weekType: managedLesson.weekType,
+                                              cabinet: managedLesson.cabinet ?? "Error",
+                                              subgroup: managedLesson.subgroup,
+                                              lessonNumber: Int(managedLesson.lessonNumber),
+                                              timeStart: managedLesson.timeStart ?? Date(),
+                                              timeEnd: managedLesson.timeEnd ?? Date())
                     resultLessons.append(lessonDto)
                 }
 

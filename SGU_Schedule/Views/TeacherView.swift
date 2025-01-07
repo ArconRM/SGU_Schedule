@@ -99,7 +99,7 @@ struct TeacherView_Previews: PreviewProvider {
     static var previews: some View {
         TeacherView(viewModel: ViewModelWithParsingSGUFactory().buildTeacherViewModel())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
         .environmentObject(AppSettings())
     }
 }

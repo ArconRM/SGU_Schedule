@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="22758" systemVersion="23F79" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
+<model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="23605" systemVersion="24C101" minimumToolsVersion="Automatic" sourceLanguage="Swift" usedWithSwiftData="YES" userDefinedModelVersionIdentifier="">
     <entity name="AcademicGroup" representedClassName=".AcademicGroup" syncable="YES" codeGenerationType="class">
         <attribute name="departmentCode" attributeType="String"/>
         <attribute name="fullNumber" attributeType="String"/>
@@ -8,6 +8,10 @@
     <entity name="GroupSchedule" representedClassName=".GroupSchedule" syncable="YES" codeGenerationType="class">
         <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AcademicGroup"/>
         <relationship name="lessons" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="Lesson"/>
+    </entity>
+    <entity name="GroupSessionEvents" representedClassName="GroupSessionEvents" syncable="YES" codeGenerationType="class">
+        <relationship name="group" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="AcademicGroup"/>
+        <relationship name="sessionEvents" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="SessionEvent"/>
     </entity>
     <entity name="Lesson" representedClassName=".Lesson" syncable="YES" codeGenerationType="class">
         <attribute name="cabinet" attributeType="String"/>
@@ -21,5 +25,12 @@
         <attribute name="title" attributeType="String"/>
         <attribute name="weekDayNumber" attributeType="Integer 16" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="weekTypeRawValue" attributeType="String"/>
+    </entity>
+    <entity name="SessionEvent" representedClassName="SessionEvent" syncable="YES" codeGenerationType="class">
+        <attribute name="cabinet" attributeType="String"/>
+        <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
+        <attribute name="sessionEventTypeRawValue" attributeType="String"/>
+        <attribute name="teacherFullName" attributeType="String"/>
+        <attribute name="title" attributeType="String"/>
     </entity>
 </model>

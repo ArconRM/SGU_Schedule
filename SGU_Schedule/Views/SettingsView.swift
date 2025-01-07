@@ -138,6 +138,6 @@ struct SettingsView: View {
 
 #Preview {
     SettingsView(selectedDepartment: Department.mock, selectedTheme: .blue, selectedStyle: .fill, selectedParser: .new)
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
         .environmentObject(AppSettings())
 }

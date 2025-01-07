@@ -40,9 +40,11 @@ public final class ViewModelWithParsingSGUFactory: ViewModelFactory {
                 scraper: DynamicScraper()
             ),
 
-            schedulePersistenceManager: GroupScheduleCoreDataManager(),
+            groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
 
-            lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager()
+            lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager(),
+
+            groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager()
         )
     }
 

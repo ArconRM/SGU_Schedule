@@ -101,13 +101,18 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     }
 
     private func fetchAllData() {
-        viewModel.fetchSchedule(group: group!,
-                                isOnline: networkMonitor.isConnected,
-                                isSaved: isFavourite || isPinned,
-                                isFavourite: isFavourite)
+        viewModel.fetchSchedule(
+            group: group!,
+            isOnline: networkMonitor.isConnected,
+            isSaved: isFavourite || isPinned,
+            isFavourite: isFavourite
+        )
 
-        viewModel.fetchSessionEvents(group: group!,
-                                     isOnline: networkMonitor.isConnected)
+        viewModel.fetchSessionEvents(
+            group: group!,
+            isOnline: networkMonitor.isConnected,
+            isSaved: isFavourite || isPinned
+        )
     }
 
     private func makeShowGroupsToolbarButton() -> some View {
@@ -198,6 +203,6 @@ struct ScheduleView_Previews: PreviewProvider {
         )
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
     }
 }

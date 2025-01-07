@@ -97,6 +97,16 @@
 		16C6673E2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */; };
 		16C667402D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */; };
 		16C667412D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */; };
+		16C667432D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */; };
+		16C667442D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */; };
+		16C667462D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667452D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift */; };
+		16C667472D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667452D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift */; };
+		16C667492D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667482D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift */; };
+		16C6674A2D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667482D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift */; };
+		16C6674C2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6674B2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift */; };
+		16C6674D2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6674B2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift */; };
+		16C6674F2D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6674E2D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift */; };
+		16C667502D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6674E2D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift */; };
 		16D2F6622CD5329700217C45 /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D2F6612CD5329700217C45 /* BaseError.swift */; };
 		16DB5F042C04CF9900870B21 /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F032C04CF9900870B21 /* Teacher.swift */; };
 		16DB5F062C04D53900870B21 /* TeacherHTMLParserSGU_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */; };
@@ -300,6 +310,11 @@
 		16B3B0D22C6116DA00043B16 /* ScheduleFetchResultVariants.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleFetchResultVariants.swift; sourceTree = "<group>"; };
 		16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
 		16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeSet.swift; sourceTree = "<group>"; };
+		16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_SessionEventExtension.swift; sourceTree = "<group>"; };
+		16C667452D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventPersistenceManager.swift; sourceTree = "<group>"; };
+		16C667482D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSessionEventsPersistenceManager.swift; sourceTree = "<group>"; };
+		16C6674B2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventCoreDataManager.swift; sourceTree = "<group>"; };
+		16C6674E2D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSessionEventsCoreDataManager.swift; sourceTree = "<group>"; };
 		16D2F6612CD5329700217C45 /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
 		16DB5F032C04CF9900870B21 /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHTMLParserSGU_old.swift; sourceTree = "<group>"; };
@@ -461,9 +476,11 @@
 		163676282C8F326500438B86 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				1672487B2C8CF99C008673DE /* GroupCoreDataManager.swift */,
 				BAFA580D2AEC621D0060BD81 /* LessonCoreDataManager.swift */,
 				BA53835E2AF56FE40004F012 /* GroupScheduleCoreDataManager.swift */,
-				1672487B2C8CF99C008673DE /* GroupCoreDataManager.swift */,
+				16C6674B2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift */,
+				16C6674E2D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift */,
 			);
 			path = Managers;
 			sourceTree = "<group>";
@@ -474,6 +491,7 @@
 				BAFA58082AEC5D8D0060BD81 /* CoreData_LessonExtension.swift */,
 				BA53835C2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift */,
 				167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */,
+				16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -517,9 +535,11 @@
 		1672487A2C8CBA2B008673DE /* Protocols */ = {
 			isa = PBXGroup;
 			children = (
+				167248782C8CB651008673DE /* GroupPersistenceManager.swift */,
 				BA5383642AF692840004F012 /* LessonPersistenceManager.swift */,
 				BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */,
-				167248782C8CB651008673DE /* GroupPersistenceManager.swift */,
+				16C667452D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift */,
+				16C667482D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift */,
 				16A776222CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift */,
 				16F315D52CE0FA2A001FFB21 /* TeacherSearchResultsPersistenceManager.swift */,
 			);
@@ -943,8 +963,8 @@
 		BAFA580F2AECFCD30060BD81 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				16A776212CC2535F00875A8E /* UserDefaults */,
 				1672487A2C8CBA2B008673DE /* Protocols */,
+				16A776212CC2535F00875A8E /* UserDefaults */,
 				BAFA57DF2AEC510E0060BD81 /* Core Data */,
 			);
 			path = Persistence;
@@ -1116,7 +1136,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		1672E33D2CF7A58500FA616E /* SwiftLint script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -1128,7 +1148,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "if command -v ${PODS_ROOT}/SwiftLint/swiftlint >/dev/null 2>&1\nthen\n    ${PODS_ROOT}/SwiftLint/swiftlint --fix && ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
@@ -1179,6 +1199,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				168069BA2C5C2176002D47A6 /* LessonDTO.swift in Sources */,
+				16C667492D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift in Sources */,
 				168069BB2C5C2176002D47A6 /* SessionEventDTO.swift in Sources */,
 				16B645EC2C634794000574F9 /* AppSettings.swift in Sources */,
 				168069C22C5C217D002D47A6 /* DepartmentSource.swift in Sources */,
@@ -1190,6 +1211,8 @@
 				167EE42D2C5F7CFF00701C8A /* GroupScheduleCoreDataManager.swift in Sources */,
 				16B3B0CE2C5FE4AE00043B16 /* ScheduleFetchResultForWidget.swift in Sources */,
 				1602CA882C5D79B900E8F89F /* DateExtension.swift in Sources */,
+				16C6674C2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift in Sources */,
+				16C667442D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */,
 				16F315DC2CE0FC39001FFB21 /* TeacherSearchResultsUDManager.swift in Sources */,
 				168069C52C5C217D002D47A6 /* AcademicProgram.swift in Sources */,
 				163676272C8F2F4A00438B86 /* CoreData_AcademicGroupExtension.swift in Sources */,
@@ -1209,6 +1232,7 @@
 				167EE42C2C5F79E300701C8A /* CoreDataModel.xcdatamodeld in Sources */,
 				1602CAB02C5D7CF000E8F89F /* ScheduleWidgetViewModel.swift in Sources */,
 				168069BD2C5C2176002D47A6 /* GroupSessionEventsDTO.swift in Sources */,
+				16C6674F2D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift in Sources */,
 				16F315D62CE0FA2A001FFB21 /* TeacherSearchResultsPersistenceManager.swift in Sources */,
 				168069BE2C5C2176002D47A6 /* AcademicGroupDTO.swift in Sources */,
 				165BCF332C871EB50004C291 /* AccessoryInlineView.swift in Sources */,
@@ -1221,6 +1245,7 @@
 				167EE42B2C5F79C700701C8A /* CoreData_GroupScheduleExtension.swift in Sources */,
 				168069AB2C5ADAFF002D47A6 /* SGU_ScheduleWidget.swift in Sources */,
 				168069AD2C5ADAFF002D47A6 /* AppIntent.swift in Sources */,
+				16C667462D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift in Sources */,
 				168069B82C5C2136002D47A6 /* GroupScheduleDTO.swift in Sources */,
 				1672487E2C8CFA16008673DE /* GroupPersistenceManager.swift in Sources */,
 				168069A72C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift in Sources */,
@@ -1292,7 +1317,9 @@
 				165508282C13826400A37900 /* URLSourceSGU.swift in Sources */,
 				BAAEB3122AD9A4BE00E90223 /* GroupsNetworkManager.swift in Sources */,
 				BA2FEEDC2B668956001F91F5 /* SessionEventsNetworkManager.swift in Sources */,
+				16C6674D2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift in Sources */,
 				16DB5F0C2C04F0C400870B21 /* TeacherNetworkManagerWithParsing.swift in Sources */,
+				16C6674A2D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift in Sources */,
 				BA9D791C2ABE2E4700C36932 /* GroupsSource.swift in Sources */,
 				165508362C15F1F200A37900 /* ErrorView.swift in Sources */,
 				16F7AD9E2C52F2050057B062 /* AppTheme.swift in Sources */,
@@ -1300,6 +1327,7 @@
 				165508322C14369F00A37900 /* DepartmentsViewModel.swift in Sources */,
 				BAAD1F172B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift in Sources */,
 				BAFA580C2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld in Sources */,
+				16C667432D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */,
 				16DB5F082C04D55600870B21 /* TeacherHTMLParser.swift in Sources */,
 				16A585422CB063E900D6837A /* ViewExtension.swift in Sources */,
 				BAAD1F1C2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift in Sources */,
@@ -1331,6 +1359,7 @@
 				162FEA542CBFC94300AA682A /* OverlayView.swift in Sources */,
 				162FEA5F2CC1316200AA682A /* LessonSubgroup.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
+				16C667502D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift in Sources */,
 				BAAD1F1E2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
 				16F7AD9A2C51933B0057B062 /* SettingsView.swift in Sources */,
@@ -1379,6 +1408,7 @@
 				BA2F67832B75611E00B06667 /* DepartmentSource.swift in Sources */,
 				16150C2F2C09D23E006BA964 /* TeacherInfoView.swift in Sources */,
 				BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */,
+				16C667472D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1421,7 +1451,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1459,7 +1489,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1482,7 +1512,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1505,7 +1535,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1664,7 +1694,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1706,7 +1736,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.4.0;
+				MARKETING_VERSION = 2.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

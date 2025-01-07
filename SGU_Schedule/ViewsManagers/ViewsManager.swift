@@ -26,7 +26,8 @@ public final class ViewsManager: ObservableObject {
     private var viewModelFactory_old: ViewModelFactory
 
     private let appSettings: AppSettings
-    private let schedulePersistenceManager: GroupSchedulePersistenceManager
+    private let groupSchedulePersistenceManager: GroupSchedulePersistenceManager
+    private let groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager
     private let groupPersistenceManager: GroupPersistenceManager
     private var groupsViewModel: GroupsViewModel?
 
@@ -83,12 +84,14 @@ public final class ViewsManager: ObservableObject {
         appSettings: AppSettings,
         viewModelFactory: ViewModelFactory,
         viewModelFactory_old: ViewModelFactory,
-        schedulePersistenceManager: GroupSchedulePersistenceManager,
+        groupSchedulePersistenceManager: GroupSchedulePersistenceManager,
+        groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager,
         groupPersistenceManager: GroupPersistenceManager,
         isOpenedFromWidget: Bool
     ) {
         self.appSettings = appSettings
-        self.schedulePersistenceManager = schedulePersistenceManager
+        self.groupSchedulePersistenceManager = groupSchedulePersistenceManager
+        self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
         self.groupPersistenceManager = groupPersistenceManager
 
         self._isNewParserUsed = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isNewParserUsed.rawValue)
@@ -166,7 +169,8 @@ public final class ViewsManager: ObservableObject {
 
     func deleteGroupFromPersistence(group: AcademicGroupDTO) {
         do {
-            try schedulePersistenceManager.deleteScheduleByGroupId(group.groupId)
+            try groupSchedulePersistenceManager.deleteScheduleByGroupId(group.groupId)
+            try groupSessionEventsPersistenceManager.deleteSessionEventsByGroupId(group.groupId)
             try groupPersistenceManager.deleteItemById(group.groupId)
         } catch let error {
             showCoreDataError(error: error)

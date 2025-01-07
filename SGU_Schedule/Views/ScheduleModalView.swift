@@ -84,12 +84,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
                     }
                 }
-                .onChange(of: viewModel.isLoadingLessons) { newValue in
-                    if !newValue {
-                        let impact = UIImpactFeedbackGenerator(style: .light)
-                        impact.impactOccurred()
-                    }
-                }
 
 //                Text("\(Date.startOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка") - \(Date.endOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка")")
 //                    .font(.system(size: 19, design: .rounded))
@@ -130,12 +124,20 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 Spacer()
             }
         }
+        .onChange(of: viewModel.isLoadingLessons) { newValue in
+            if !newValue {
+                let impact = UIImpactFeedbackGenerator(style: .light)
+                impact.impactOccurred()
+            }
+        }
+
         .onRotate(perform: { newOrientation in
             maxPadding = UIScreen.getModalViewMaxPadding(initialOrientation: initialOrientation, currentOrientation: newOrientation)
             if curPadding != minPadding {
                 curPadding = maxPadding
             }
         })
+
         .background(
             GeometryReader { geometry in
                 ZStack {
@@ -202,5 +204,5 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
 }

@@ -22,7 +22,8 @@ struct SGU_ScheduleApp: App {
                         appSettings: appSettings,
                         viewModelFactory: ViewModelWithParsingSGUFactory(),
                         viewModelFactory_old: ViewModelWithParsingSGUFactory_old(),
-                        schedulePersistenceManager: GroupScheduleCoreDataManager(),
+                        groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
+                        groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(),
                         groupPersistenceManager: GroupCoreDataManager(),
                         isOpenedFromWidget: isOpenedFromWidget
                     )
