@@ -7,41 +7,40 @@
 
 import Foundation
 
-// TODO: Объединить с ScheduleViewModel через какой-то общий интерфейс
-public final class ScheduleWidgetViewModel: ObservableObject {
-    
+public final class ScheduleEventsWidgetViewModel: ObservableObject {
+
     private let schedulePersistenceManager: GroupSchedulePersistenceManager
     private let lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager
-    
-    @Published var fetchResult = ScheduleFetchResultForWidget(resultVariant: .UnknownErrorWhileFetching)
-    
-    init(schedulePersistenceManager: GroupSchedulePersistenceManager,
-         lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager) {
+
+    @Published var fetchResult = ScheduleEventsFetchResult.unknownErrorWhileFetching()
+
+    init(
+        schedulePersistenceManager: GroupSchedulePersistenceManager,
+        lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager
+    ) {
         self.schedulePersistenceManager = schedulePersistenceManager
         self.lessonSubgroupsPersistenceManager = lessonSubgroupsPersistenceManager
     }
-    
+
     public func fetchSavedSchedule() {
         do {
-            let schedule = try self.schedulePersistenceManager.getFavouriteGroupScheduleDTO()
+            let schedule = try schedulePersistenceManager.getFavouriteGroupScheduleDTO()
             if schedule == nil {
-                fetchResult = ScheduleFetchResultForWidget(resultVariant: .NoFavoriteGroup)
+                fetchResult = .noFavoriteGroup
             } else {
                 let subgroupsByLessons = schedule!.getSubgroupsByLessons(savedSubgroups: lessonSubgroupsPersistenceManager.getSavedSubgroups())
-                
+
                 let firstLesson = schedule!.getTodayFirstLesson(subgroupsByLessons: subgroupsByLessons)
                 let (currentEvent, nextLesson, _) = schedule!.getCurrentAndNextLessons(subgroupsByLessons: subgroupsByLessons)
-                
-                fetchResult = ScheduleFetchResultForWidget(
-                    resultVariant: .Success,
-                    firstLesson: firstLesson,
+
+                fetchResult = .success(
                     currentEvent: currentEvent,
+                    firstLesson: firstLesson,
                     nextLesson: nextLesson
                 )
             }
-        }
-        catch {
-            fetchResult = ScheduleFetchResultForWidget(resultVariant: .UnknownErrorWhileFetching)
+        } catch let error {
+            fetchResult = .unknownErrorWhileFetching(error: error)
         }
     }
 }

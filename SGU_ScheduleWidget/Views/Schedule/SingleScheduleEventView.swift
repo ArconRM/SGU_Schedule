@@ -1,5 +1,5 @@
 //
-//  SingleEventView.swift
+//  SingleScheduleEventView.swift
 //  SGU_ScheduleWidgetExtension
 //
 //  Created by Artemiy MIROTVORTSEV on 03.08.2024.
@@ -7,68 +7,67 @@
 
 import SwiftUI
 
-struct SingleEventView: View {
+struct SingleScheduleEventView: View {
     @EnvironmentObject var appSettings: AppSettings
-    
-    var fetchResultVariant: ScheduleFetchResultVariants
-    var currentEvent: (any ScheduleEvent)?
+
+    var fetchResult: ScheduleEventsFetchResult
     var closeLesson: LessonDTO?
-    
+
     var body: some View {
-        switch fetchResultVariant {
-        case .UnknownErrorWhileFetching:
+        switch fetchResult {
+        case .unknownErrorWhileFetching:
             Text("Произошла ошибка")
                 .bold()
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
-        case .NoFavoriteGroup:
+        case .noFavoriteGroup:
             Text("Не выбрана сохраненная группа")
                 .bold()
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
-        case .Success:
+        case .success(let currentEvent, _, _):
             if closeLesson != nil {
                 VStack {
                     Text("Скоро")
                         .font(.system(size: 12, weight: .bold, design: .rounded))
-                    
+
                     Text("(\(closeLesson!.timeStart.getHoursAndMinutesString()))")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .padding(.bottom, 0.5)
-                    
+
                     Text(closeLesson!.title)
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                         .padding(.vertical, 2)
                         .multilineTextAlignment(.center)
-                    
+
                     Text(closeLesson!.cabinet)
                         .font(.system(size: 13, weight: .light, design: .rounded))
                         .italic()
-                    
+
                     Spacer()
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
-                
+
             } else if currentEvent != nil {
                 VStack {
                     Text("\(currentEvent!.timeStart.getHoursAndMinutesString()) - \(currentEvent!.timeEnd.getHoursAndMinutesString())")
                         .font(.system(size: 16, weight: .bold, design: .rounded))
                         .bold()
                         .padding(.bottom, 0.5)
-                    
+
                     Text(currentEvent!.title)
                         .font(.system(size: 15, weight: .medium, design: .rounded))
                         .padding(.vertical, 2)
                         .multilineTextAlignment(.center)
-                    
+
                     if let currentLesson = currentEvent as? LessonDTO {
                         Text(currentLesson.cabinet)
                             .font(.system(size: 13, weight: .light, design: .rounded))
                             .italic()
                     }
-                    
+
                     Spacer()
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
-                
+
             } else {
                 Text("Пока нет пар")
                     .bold()

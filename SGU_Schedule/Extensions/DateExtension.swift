@@ -41,11 +41,19 @@ extension Date {
         return (weekOfYear + (isSunday ? 1 : 0)) % 2 == 0 ? .denumerator : .numerator
     }
 
-    static var currentWeekDay: Weekdays {
+    static var currentWeekday: Weekdays {
         let date = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "EEEE"
         let day = dateFormatter.string(from: date)
+
+        return Weekdays(rawValue: day) ?? .monday
+    }
+
+    var weekday: Weekdays {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "EEEE"
+        let day = dateFormatter.string(from: self)
 
         return Weekdays(rawValue: day) ?? .monday
     }
@@ -159,7 +167,7 @@ extension Date {
     func getDayAndMonthString(divider: String = ".") -> String {
         let dateFormatter = DateFormatter()
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "dd\(divider)MM"
+        dateFormatter.dateFormat = "d\(divider)MM"
         return dateFormatter.string(from: self)
     }
 
@@ -167,7 +175,7 @@ extension Date {
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "ru_RU")
 //        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "dd\(divider)MMMM"
+        dateFormatter.dateFormat = "dd\(divider)MMM"
         return dateFormatter.string(from: self)
     }
 

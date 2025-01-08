@@ -32,7 +32,7 @@ struct SGU_ScheduleApp: App {
                 .environmentObject(NetworkMonitor())
                 .environmentObject(appSettings)
                 .onOpenURL { url in
-                    if url.absoluteString == AppUrls.openedFromWidget.rawValue {
+                    if url.absoluteString == AppUrls.openedFromScheduleWidget.rawValue {
                         isOpenedFromWidget = true && favouriteGroupNumber != nil
                     }
                 }

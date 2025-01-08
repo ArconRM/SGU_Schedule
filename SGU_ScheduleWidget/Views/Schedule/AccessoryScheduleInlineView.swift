@@ -1,5 +1,5 @@
 //
-//  AccessoryInlineView.swift
+//  AccessoryScheduleInlineView.swift
 //  SGU_ScheduleWidgetExtension
 //
 //  Created by Artemiy MIROTVORTSEV on 03.09.2024.
@@ -8,27 +8,27 @@
 import SwiftUI
 import WidgetKit
 
-struct AccessoryInlineView: View {
-    var fetchResultVariant: ScheduleFetchResultVariants
-    var currentEvent: (any ScheduleEvent)?
+struct AccessoryScheduleInlineView: View {
+
+    var fetchResult: ScheduleEventsFetchResult
     var closeLesson: LessonDTO?
-    
+
     var body: some View {
         ZStack {
-            switch fetchResultVariant {
-            case .UnknownErrorWhileFetching:
+            switch fetchResult {
+            case .unknownErrorWhileFetching:
                 Text("Произошла ошибка")
                     .bold()
-            case .NoFavoriteGroup:
+            case .noFavoriteGroup:
                 Text("Не выбрана сохраненная группа")
                     .bold()
-            case .Success:
+            case .success(let currentEvent, _, _):
                 if closeLesson != nil {
                     Text("Скоро (\(closeLesson!.timeStart.getHoursAndMinutesString())) \(closeLesson!.title)")
-                    
+
                 } else if currentEvent != nil {
                     Text("до \(currentEvent!.timeEnd.getHoursAndMinutesString()): \(currentEvent!.title)")
-                    
+
                 } else {
                     Text("Пока нет пар")
                 }

@@ -10,6 +10,7 @@ disabled_rules:
 
 included:
   - SGU_Schedule
+  - SGU_ScheduleWidget
   
 excluded:
   - Pods

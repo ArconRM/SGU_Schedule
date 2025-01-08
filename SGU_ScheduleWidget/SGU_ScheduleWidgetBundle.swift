@@ -11,7 +11,8 @@ import SwiftUI
 @main
 struct SGU_ScheduleWidgetBundle: WidgetBundle {
     var body: some Widget {
-        SGU_ScheduleWidget()
-        SGU_ScheduleWidgetLiveActivity()
+        ScheduleEventsWidget()
+        SessionEventsWidget()
+//        SGU_ScheduleWidgetLiveActivity()
     }
 }

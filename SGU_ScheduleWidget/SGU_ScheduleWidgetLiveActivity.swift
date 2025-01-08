@@ -66,7 +66,7 @@ extension SGU_ScheduleWidgetAttributes.ContentState {
     fileprivate static var smiley: SGU_ScheduleWidgetAttributes.ContentState {
         SGU_ScheduleWidgetAttributes.ContentState(emoji: "😀")
      }
-     
+
      fileprivate static var starEyes: SGU_ScheduleWidgetAttributes.ContentState {
          SGU_ScheduleWidgetAttributes.ContentState(emoji: "🤩")
      }

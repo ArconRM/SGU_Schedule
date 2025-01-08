@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GroupSessionEventsDTO {
+struct GroupSessionEventsDTO {
 
     var group: AcademicGroupDTO
     var sessionEvents: [SessionEventDTO]
@@ -15,5 +15,17 @@ public struct GroupSessionEventsDTO {
     init(groupNumber: String, departmentCode: String, sessionEvents: [SessionEventDTO]) {
         self.group = AcademicGroupDTO(fullNumber: groupNumber, departmentCode: departmentCode)
         self.sessionEvents = sessionEvents
+    }
+
+    func getNextConsultationAndExam() -> (consultation: SessionEventDTO?, exam: SessionEventDTO?) {
+        let now = Date.now
+        guard let closestExamSubject = sessionEvents.filter( { $0.date >= now }).min(by: { $0.date < $1.date })?.title else {
+            return (consultation: nil, exam: nil)
+        }
+
+        let closestExam = sessionEvents.filter( { $0.title == closestExamSubject && $0.sessionEventType != .consultation }).first
+        let closestConsultation = sessionEvents.filter( { $0.title == closestExamSubject && $0.sessionEventType == .consultation }).first
+
+        return (consultation: closestConsultation, exam: closestExam)
     }
 }

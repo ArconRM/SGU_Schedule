@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol SessionEventsNetworkManager {
+protocol SessionEventsNetworkManager {
     func getGroupSessionEvents(
         group: AcademicGroupDTO,
         resultQueue: DispatchQueue,

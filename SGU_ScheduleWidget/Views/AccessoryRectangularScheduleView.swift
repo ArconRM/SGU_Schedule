@@ -8,7 +8,7 @@
 import SwiftUI
 import WidgetKit
 
-struct AccessoryRectangularView: View {
+struct AccessoryRectangularScheduleView: View {
     var fetchResultVariant: ScheduleFetchResultVariants
     var currentEvent: (any ScheduleEvent)?
     var closeLesson: LessonDTO?

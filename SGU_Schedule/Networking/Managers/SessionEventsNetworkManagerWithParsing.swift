@@ -8,7 +8,7 @@
 import Foundation
 
 /// С новым сайтом нужен DynamicScraper
-public class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
+class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
     private var urlSource: URLSource
     private var sessionEventsParser: SessionEventsHTMLParser
     private let scraper: Scraper

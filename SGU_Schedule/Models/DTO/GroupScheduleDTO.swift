@@ -18,7 +18,7 @@ public struct GroupScheduleDTO {
     }
 
     public func getTodayFirstLesson(subgroupsByLessons: [String: [LessonSubgroup]]) -> LessonDTO? {
-        let currentWeekDayNumber = Date.currentWeekDay.number
+        let currentWeekDayNumber = Date.currentWeekday.number
 
         let todayLessons = self.lessons.filter { $0.weekDay.number == currentWeekDayNumber && $0.isActive(subgroupsByLessons: subgroupsByLessons) }
         if todayLessons.isEmpty {
@@ -36,9 +36,9 @@ public struct GroupScheduleDTO {
         return nil
     }
 
-    public func getCurrentAndNextLessons(subgroupsByLessons: [String: [LessonSubgroup]]) -> ((any ScheduleEvent)?, LessonDTO?, LessonDTO?) {
+    public func getCurrentAndNextLessons(subgroupsByLessons: [String: [LessonSubgroup]]) -> (currentEvent: (any ScheduleEvent)?, nextLesson1: LessonDTO?, nextLesson2: LessonDTO?) {
         // Проверяем есть ли вообще занятия
-        let currentWeekDayNumber = Date.currentWeekDay.number
+        let currentWeekDayNumber = Date.currentWeekday.number
         let currentTime = Date.currentHoursAndMinutes
 
 //        if currentDayNumber == 7 {
