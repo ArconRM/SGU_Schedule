@@ -37,7 +37,7 @@ struct SingleSessionEventView: View {
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
                                 .padding(.bottom, 0.5)
                                 .multilineTextAlignment(.center)
-                                .underline(consultation!.date.isAroundNow())
+                                .underline(consultation!.date.isToday())
 
                             Text("\(consultation!.date.weekday.rawValue) \(consultation!.date.getDayAndMonthWordString())")
                                 .font(.system(size: 15, weight: .bold, design: .rounded))
@@ -61,7 +61,7 @@ struct SingleSessionEventView: View {
                                 .font(.system(size: 14, weight: .medium, design: .rounded))
                                 .padding(.bottom, 0.5)
                                 .multilineTextAlignment(.center)
-                                .underline(exam!.date.isAroundNow())
+                                .underline(exam!.date.isToday())
 
                             Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString())")
                                 .font(.system(size: 15, weight: .bold, design: .rounded))

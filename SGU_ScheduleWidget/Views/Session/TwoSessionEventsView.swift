@@ -41,7 +41,7 @@ struct TwoSessionEventsView: View {
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                                     .padding(.bottom, 0.5)
                                     .multilineTextAlignment(.center)
-                                    .underline(consultation!.date.isAroundNow())
+                                    .underline(consultation!.date.isToday())
 
                                 Text("\(consultation!.date.weekday.rawValue) \(consultation!.date.getDayAndMonthWordString()), \(consultation!.date.getHoursAndMinutesString())")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
@@ -65,7 +65,7 @@ struct TwoSessionEventsView: View {
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                                     .padding(.bottom, 0.5)
                                     .multilineTextAlignment(.center)
-                                    .underline(exam!.date.isAroundNow())
+                                    .underline(exam!.date.isToday())
 
                                 Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString()), \(exam!.date.getHoursAndMinutesString())")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
@@ -88,7 +88,7 @@ struct TwoSessionEventsView: View {
                             .font(.system(size: 14, weight: .bold, design: .rounded))
                             .multilineTextAlignment(.center)
                             .padding(.bottom, 1)
-                            .underline(exam!.date.isAroundNow())
+                            .underline(exam!.date.isToday())
 
                         Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString()), \(exam!.date.getHoursAndMinutesString())")
                             .font(.system(size: 14, weight: .bold, design: .rounded))

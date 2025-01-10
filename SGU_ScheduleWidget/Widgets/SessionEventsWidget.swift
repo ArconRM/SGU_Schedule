@@ -20,8 +20,8 @@ struct SessionEventsProvider: TimelineProvider {
         viewModel.fetchSavedSessionEvents()
 
         let date = Date()
-        let morningUpdateDate = Calendar.current.date(bySettingHour: 18, minute: 0, second: 0, of: date) ?? date
-        let nearestEveningUpdateDate = Calendar.current.date(byAdding: .day, value: date.getHours() >= 18 ? 1 : 0, to: morningUpdateDate) ?? date
+        let morningUpdateDate = Calendar.current.date(bySettingHour: 6, minute: 0, second: 0, of: date) ?? date
+        let nearestMorningUpdateDate = Calendar.current.date(byAdding: .day, value: date.getHours() >= 6 ? 1 : 0, to: morningUpdateDate) ?? date
 
         let entry = SessionEventsEntry(
             date: date,
@@ -30,7 +30,7 @@ struct SessionEventsProvider: TimelineProvider {
 
         let timeline = Timeline(
             entries: [entry],
-            policy: .after(nearestEveningUpdateDate)
+            policy: .after(nearestMorningUpdateDate)
         )
 
         completion(timeline)

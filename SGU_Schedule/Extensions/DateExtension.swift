@@ -195,6 +195,10 @@ extension Date {
         return self.getDayAndMonthString() == Date().getDayAndMonthString() && Date().getHours() - self.getHours() < 2
     }
 
+    func isToday() -> Bool {
+        return self.getDayAndMonthString() == Date().getDayAndMonthString()
+    }
+
     func passed() -> Bool {
         return Date() > Calendar.current.date(byAdding: .hour, value: 2, to: self)!
     }
