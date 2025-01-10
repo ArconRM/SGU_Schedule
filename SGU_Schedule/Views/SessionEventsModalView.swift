@@ -55,9 +55,22 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                 } else if viewModel.groupSessionEvents != nil {
                     ScrollView {
                         ForEach(
-                            viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.isAroundNow() }) +
-                            viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.inFuture() }) +
-                            viewModel.groupSessionEvents!.sessionEvents.filter({ $0.date.passed() }), id: \.self
+                            // Которые сегодня, но не закончились еще
+                            viewModel.groupSessionEvents!.sessionEvents.filter({
+                                $0.date.isToday() && !$0.date.passed(duration: Date.getDurationHours(sessionEventType: $0.sessionEventType))
+                            }) +
+                            
+                            // Которые будут, но не сегодня
+                            viewModel.groupSessionEvents!.sessionEvents.filter({
+                                $0.date.inFuture() && !$0.date.isToday()
+                            }) +
+
+                            // Которые уже прошли
+                            viewModel.groupSessionEvents!.sessionEvents.filter({
+                                $0.date.passed(duration: Date.getDurationHours(sessionEventType: $0.sessionEventType))
+                            }),
+
+                            id: \.self
                         ) { sessionEvent in
                             SessionEventSubview(sessionEvent: sessionEvent)
                         }

@@ -80,9 +80,13 @@ struct SessionEventsView: View {
                 .environmentObject(appSettings)
                 .containerBackground(for: .widget) {
                     if appSettings.currentAppStyle == AppStyle.fill {
-                        buildFilledRectangle(event: fetchResult.consultation?.date.passed() ?? true ? fetchResult.exam : fetchResult.consultation)
+                        buildFilledRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
+                                             ? fetchResult.exam
+                                             : fetchResult.consultation)
                     } else {
-                        buildBorderedRectangle(event: fetchResult.consultation?.date.passed() ?? true ? fetchResult.exam : fetchResult.consultation)
+                        buildBorderedRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
+                                               ? fetchResult.exam
+                                               : fetchResult.consultation)
                     }
                 }
                 .widgetURL(URL(string: AppUrls.isOpenedFromSessionWidget.rawValue)!)
@@ -92,9 +96,13 @@ struct SessionEventsView: View {
                 .environmentObject(appSettings)
                 .containerBackground(for: .widget) {
                     if appSettings.currentAppStyle == AppStyle.fill {
-                        buildFilledRectangle(event: fetchResult.consultation?.date.passed() ?? true ? fetchResult.exam : fetchResult.consultation)
+                        buildFilledRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
+                                             ? fetchResult.exam
+                                             : fetchResult.consultation)
                     } else {
-                        buildBorderedRectangle(event: fetchResult.consultation?.date.passed() ?? true ? fetchResult.exam : fetchResult.consultation)
+                        buildBorderedRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
+                                               ? fetchResult.exam
+                                               : fetchResult.consultation)
                     }
                 }
                 .widgetURL(URL(string: AppUrls.isOpenedFromSessionWidget.rawValue)!)

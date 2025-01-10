@@ -1,5 +1,5 @@
 //
-//  ViewExtension.swift
+//  View+OnRotate.swift
 //  SGU_Schedule
 //
 //  Created by Artemiy MIROTVORTSEV on 04.10.2024.

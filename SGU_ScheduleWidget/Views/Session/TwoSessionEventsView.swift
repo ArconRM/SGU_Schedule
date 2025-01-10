@@ -55,7 +55,7 @@ struct TwoSessionEventsView: View {
                                     .multilineTextAlignment(.center)
 
                             }
-                            .strikethrough(consultation!.date.passed())
+                            .strikethrough(consultation!.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)))
 
                             Divider()
                                 .padding(.horizontal, 10)

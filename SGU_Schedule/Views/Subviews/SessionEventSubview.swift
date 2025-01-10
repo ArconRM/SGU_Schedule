@@ -49,7 +49,7 @@ struct SessionEventSubview: View {
             }
             .foregroundColor(colorScheme == .light ? .black : .white)
             .padding(15)
-            .opacity(sessionEvent.date.passed() ? 0.5 : 1)
+            .opacity(sessionEvent.date.passed(duration: Date.getDurationHours(sessionEventType: sessionEvent.sessionEventType)) ? 0.5 : 1)
             .background(getBackground())
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
@@ -67,7 +67,7 @@ struct SessionEventSubview: View {
         switch appSettings.currentAppStyle {
         case .fill:
             AnyView(
-                getEventColor().opacity(sessionEvent.date.isAroundNow() ? 0.5 : 0.3)
+                getEventColor().opacity(sessionEvent.date.isToday() ? 0.5 : 0.3)
             )
         case .bordered:
             AnyView(
@@ -78,13 +78,13 @@ struct SessionEventSubview: View {
     }
 
     private func getEventColor() -> Color {
-        if sessionEvent.date.passed() {
+        if sessionEvent.date.passed(duration: Date.getDurationHours(sessionEventType: sessionEvent.sessionEventType)) {
             .gray
         } else {
             if sessionEvent.sessionEventType == .consultation {
                 .green
             } else {
-                sessionEvent.date.isAroundNow() ? .yellow : .blue
+                sessionEvent.date.isToday() ? .yellow : .blue
             }
         }
     }

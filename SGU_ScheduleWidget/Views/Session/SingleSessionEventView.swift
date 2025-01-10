@@ -31,7 +31,7 @@ struct SingleSessionEventView: View {
                         .padding(.bottom, 0.1)
                         .multilineTextAlignment(.center)
 
-                    if consultation != nil && !consultation!.date.passed() {
+                    if consultation != nil && !consultation!.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) {
                         VStack {
                             Text("\(consultation!.sessionEventType.rawValue):")
                                 .font(.system(size: 14, weight: .medium, design: .rounded))

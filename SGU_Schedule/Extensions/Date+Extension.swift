@@ -188,18 +188,15 @@ extension Date {
     }
 
     func inFuture() -> Bool {
-        return Date() < Calendar.current.date(byAdding: .hour, value: 2, to: self)! && !self.isAroundNow()
-    }
-
-    func isAroundNow() -> Bool {
-        return self.getDayAndMonthString() == Date().getDayAndMonthString() && Date().getHours() - self.getHours() < 2
+        return Date() < self
     }
 
     func isToday() -> Bool {
         return self.getDayAndMonthString() == Date().getDayAndMonthString()
     }
 
-    func passed() -> Bool {
-        return Date() > Calendar.current.date(byAdding: .hour, value: 2, to: self)!
+    /// Returns true if date is passed now + some duration
+    func passed(duration: Int) -> Bool {
+        return Date() > Calendar.current.date(byAdding: .hour, value: duration, to: self)!
     }
 }

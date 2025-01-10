@@ -18,7 +18,7 @@ enum AppViews: Equatable {
     case teachersSearchView
 }
 
-// TODO: слишком много обязанностей, мб вынести создание вью в фабрику
+// TODO: слишком много обязанностей, по-хорошему бы переписать через координатор
 /// Manages creating views and passing data
 public final class ViewsManager: ObservableObject {
     private var currentViewModelFactory: ViewModelFactory
