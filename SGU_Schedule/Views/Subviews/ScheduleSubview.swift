@@ -304,7 +304,7 @@ struct ScheduleSubview: View, Equatable {
 //                                        timeStart: "08:20",
 //                                        timeEnd: "09:50")]
 //                )
-//                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+//                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
 //                .environmentObject(NetworkMonitor())
 //                .environmentObject(AppSettings())
 //            }

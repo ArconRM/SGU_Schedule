@@ -10,7 +10,7 @@ import SwiftUI
 @main
 struct SGU_ScheduleApp: App {
 
-    @State var isOpenedFromWidget: Bool = false
+    @State var widgetUrl: String?
     let favouriteGroupNumber = UserDefaults.standard.string(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
     let appSettings = AppSettings()
 
@@ -25,16 +25,14 @@ struct SGU_ScheduleApp: App {
                         groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
                         groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(),
                         groupPersistenceManager: GroupCoreDataManager(),
-                        isOpenedFromWidget: isOpenedFromWidget
+                        widgetUrl: widgetUrl
                     )
 
                 )
                 .environmentObject(NetworkMonitor())
                 .environmentObject(appSettings)
                 .onOpenURL { url in
-                    if url.absoluteString == AppUrls.openedFromScheduleWidget.rawValue {
-                        isOpenedFromWidget = true && favouriteGroupNumber != nil
-                    }
+                    widgetUrl = url.absoluteString
                 }
         }
     }

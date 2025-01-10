@@ -13,12 +13,12 @@ enum AppViews: Equatable {
     case departmentsView
     case groupsView
     case scheduleView
+    case sessionEventsView
     case teacherView
     case teachersSearchView
 }
 
-// TODO: через DI с протоколом сделать
-// TODO: слишком много обязанностей
+// TODO: слишком много обязанностей, мб вынести создание вью в фабрику
 /// Manages creating views and passing data
 public final class ViewsManager: ObservableObject {
     private var currentViewModelFactory: ViewModelFactory
@@ -65,7 +65,7 @@ public final class ViewsManager: ObservableObject {
     }
 
     @Published private(set) var currentView: AppViews
-    // Отдельно чтобы вьюшка с группами не переебашивалась из-за изменения currentView
+    // Отдельно от AppViews, чтобы вьюшка с группами не переебашивалась из-за изменения currentView
     @Published private(set) var isShowingSettingsView: Bool = false
 
     var needToReloadGroupView: Bool = false
@@ -87,7 +87,7 @@ public final class ViewsManager: ObservableObject {
         groupSchedulePersistenceManager: GroupSchedulePersistenceManager,
         groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager,
         groupPersistenceManager: GroupPersistenceManager,
-        isOpenedFromWidget: Bool
+        widgetUrl: String? = nil
     ) {
         self.appSettings = appSettings
         self.groupSchedulePersistenceManager = groupSchedulePersistenceManager
@@ -112,9 +112,14 @@ public final class ViewsManager: ObservableObject {
 
             // Если открыто с виджета, перебрасывает на вьюшку с избранной группой (если она выбрана)
             do {
-                if isOpenedFromWidget, let favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO() {
+                if let widgetUrl = widgetUrl, let favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO() {
                     selectGroup(group: favouriteGroup, isFavourite: true, isPinned: false)
-                    showScheduleView()
+
+                    if widgetUrl == AppUrls.isOpenedFromScheduleWidget.rawValue {
+                        showScheduleView()
+                    } else if widgetUrl == AppUrls.isOpenedFromSessionWidget.rawValue {
+                        showSessionEventsView()
+                    }
                 }
             } catch let error {
                 showCoreDataError(error: error)
@@ -206,6 +211,17 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
+    func showSessionEventsView() {
+        selectedTeacherUrlEndpoint = nil
+        selectedTeacherLessonsUrlEndpoint = nil
+
+        if selectedGroup == nil {
+            showBaseError(error: BaseError.noSavedDataError)
+        } else {
+            currentView = .sessionEventsView
+        }
+    }
+
     /// Если передана ссылка на самого преподавателя, показывает всю инфу.
     /// Если передана ссылка на его расписание, то только расписание.
     func showTeacherView(teacherUrlEndpoint: String) {
@@ -242,10 +258,16 @@ public final class ViewsManager: ObservableObject {
                             selectedParser: isNewParserUsed ? .new : .old)
     }
 
-    func buildScheduleView() -> some View {
+    func buildScheduleView(showSessionEventsView: Bool = false) -> some View {
         let scheduleViewModel = currentViewModelFactory.buildScheduleViewModel()
 
-        return ScheduleView(viewModel: scheduleViewModel, group: selectedGroup!, isFavourite: isSelectedGroupFavourite!, isPinned: isSelectedGroupPinned!)
+        return ScheduleView(
+            viewModel: scheduleViewModel,
+            group: selectedGroup!,
+            isFavourite: isSelectedGroupFavourite!,
+            isPinned: isSelectedGroupPinned!,
+            showSessionEventsView: showSessionEventsView
+        )
     }
 
     func buildTeacherView() -> some View {

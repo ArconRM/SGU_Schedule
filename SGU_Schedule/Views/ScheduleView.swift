@@ -27,6 +27,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     @State var isFavourite: Bool
     @State var isPinned: Bool
 
+    @State var showSessionEventsView: Bool = false
     @State var showSubgroups: Bool = false
 
     var body: some View {
@@ -48,7 +49,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             ZStack {
                 ScheduleBackView(viewModel: viewModel, selectedGroup: group!)
 
-                CarouselView(pages: ["Занятия", "Экзамены"], currentIndex: 0, viewsAlignment: .bottom) {
+                CarouselView(pages: ["Занятия", "Экзамены"], currentIndex: showSessionEventsView ? 1 : 0, viewsAlignment: .bottom) {
                     ScheduleModalView(viewModel: viewModel)
                         .environmentObject(networkMonitor)
                         .environmentObject(viewsManager)
@@ -203,6 +204,6 @@ struct ScheduleView_Previews: PreviewProvider {
         )
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager(), isOpenedFromWidget: false))
+        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
     }
 }

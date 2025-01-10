@@ -119,7 +119,7 @@ struct ScheduleEventsView: View {
                     buildBorderedRectangle(event: fetchResult.currentEvent)
                 }
             }
-            .widgetURL(URL(string: AppUrls.openedFromScheduleWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.isOpenedFromScheduleWidget.rawValue)!)
 
         case .systemMedium:
             TwoScheduleEventsView(
@@ -134,7 +134,7 @@ struct ScheduleEventsView: View {
                     buildBorderedRectangle(event: fetchResult.currentEvent)
                 }
             }
-            .widgetURL(URL(string: AppUrls.openedFromScheduleWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.isOpenedFromScheduleWidget.rawValue)!)
 
         case .accessoryRectangular:
             AccessoryRectangularScheduleView(
@@ -142,7 +142,7 @@ struct ScheduleEventsView: View {
                 closeLesson: closeLesson
             )
             .containerBackground(.clear, for: .widget)
-            .widgetURL(URL(string: AppUrls.openedFromScheduleWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.isOpenedFromScheduleWidget.rawValue)!)
 
         case .accessoryInline:
             AccessoryScheduleInlineView(
@@ -150,7 +150,7 @@ struct ScheduleEventsView: View {
                 closeLesson: closeLesson
             )
             .containerBackground(.clear, for: .widget)
-            .widgetURL(URL(string: AppUrls.openedFromScheduleWidget.rawValue)!)
+            .widgetURL(URL(string: AppUrls.isOpenedFromScheduleWidget.rawValue)!)
 
         default:
             NotAvailableView()

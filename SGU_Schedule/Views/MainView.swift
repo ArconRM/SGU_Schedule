@@ -38,6 +38,12 @@ struct MainView: View {
                         .environmentObject(viewsManager)
                         .environmentObject(appSettings)
 
+                case .sessionEventsView:
+                    viewsManager.buildScheduleView(showSessionEventsView: true)
+                        .environmentObject(networkMonitor)
+                        .environmentObject(viewsManager)
+                        .environmentObject(appSettings)
+
                 case .teacherView:
                     viewsManager.buildTeacherView()
                         .environmentObject(networkMonitor)

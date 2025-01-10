@@ -8,6 +8,6 @@
 import Foundation
 
 public enum AppUrls: String {
-    case openedFromScheduleWidget = "openedFromScheduleWidget"
-    case openedFromSessionWidget = "openedFromSessionWidget"
+    case isOpenedFromScheduleWidget
+    case isOpenedFromSessionWidget
 }

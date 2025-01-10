@@ -85,7 +85,7 @@ struct SessionEventsView: View {
                         buildBorderedRectangle(event: fetchResult.consultation?.date.passed() ?? true ? fetchResult.exam : fetchResult.consultation)
                     }
                 }
-                .widgetURL(URL(string: AppUrls.openedFromSessionWidget.rawValue)!)
+                .widgetURL(URL(string: AppUrls.isOpenedFromSessionWidget.rawValue)!)
 
         case .systemMedium:
             TwoSessionEventsView(fetchResult: fetchResult)
@@ -97,7 +97,7 @@ struct SessionEventsView: View {
                         buildBorderedRectangle(event: fetchResult.consultation?.date.passed() ?? true ? fetchResult.exam : fetchResult.consultation)
                     }
                 }
-                .widgetURL(URL(string: AppUrls.openedFromSessionWidget.rawValue)!)
+                .widgetURL(URL(string: AppUrls.isOpenedFromSessionWidget.rawValue)!)
 
         default:
             NotAvailableView()
