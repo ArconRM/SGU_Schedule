@@ -54,17 +54,18 @@ struct SingleScheduleEventView: View {
                         .padding(.bottom, 0.5)
 
                     Text(currentEvent!.title)
-                        .font(.system(size: 15, weight: .medium, design: .rounded))
+                        .font(.system(size: 15, weight: .heavy, design: .rounded))
                         .padding(.vertical, 2)
                         .multilineTextAlignment(.center)
+                        .foregroundColor(getTextColor(event: currentEvent))
+
+                    Spacer()
 
                     if let currentLesson = currentEvent as? LessonDTO {
                         Text(currentLesson.cabinet)
-                            .font(.system(size: 13, weight: .light, design: .rounded))
+                            .font(.system(size: 13, weight: .medium, design: .rounded))
                             .italic()
                     }
-
-                    Spacer()
                 }
                 .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
 
@@ -74,5 +75,12 @@ struct SingleScheduleEventView: View {
                     .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             }
         }
+    }
+
+    private func getTextColor(event: (any ScheduleEvent)?) -> Color {
+        if let lesson = event as? LessonDTO {
+            return lesson.lessonType == .lecture ? .green : .blue
+        }
+        return .gray
     }
 }

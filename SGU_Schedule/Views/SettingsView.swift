@@ -64,6 +64,7 @@ struct SettingsView: View {
                 .onChange(of: selectedTheme) { newValue in
                     withAnimation(.bouncy(duration: 0.5)) {
                         appSettings.currentAppThemeValue = newValue.rawValue
+                        WidgetCenter.shared.reloadAllTimelines()
                     }
 
                     let impact = UIImpactFeedbackGenerator(style: .medium)

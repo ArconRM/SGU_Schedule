@@ -59,7 +59,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                             viewModel.groupSessionEvents!.sessionEvents.filter({
                                 $0.date.isToday() && !$0.date.passed(duration: Date.getDurationHours(sessionEventType: $0.sessionEventType))
                             }) +
-                            
+
                             // Которые будут, но не сегодня
                             viewModel.groupSessionEvents!.sessionEvents.filter({
                                 $0.date.inFuture() && !$0.date.isToday()

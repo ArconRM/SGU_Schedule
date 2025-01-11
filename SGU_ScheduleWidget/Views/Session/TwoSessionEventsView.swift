@@ -28,11 +28,7 @@ struct TwoSessionEventsView: View {
                 VStack {
                     Text(exam!.title)
                         .font(.system(size: 16, weight: .bold, design: .rounded))
-                        .padding(.vertical, 0.5)
                         .multilineTextAlignment(.center)
-
-                    Text(exam!.teacherFullName)
-                        .font(.system(size: 14, weight: .medium, design: .rounded))
 
                     if consultation != nil {
                         HStack {
@@ -45,20 +41,21 @@ struct TwoSessionEventsView: View {
 
                                 Text("\(consultation!.date.weekday.rawValue) \(consultation!.date.getDayAndMonthWordString()), \(consultation!.date.getHoursAndMinutesString())")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
-                                    .padding(.bottom, 0.5)
                                     .multilineTextAlignment(.center)
+
+                                Spacer()
 
                                 Text(consultation!.cabinet)
                                     .font(.system(size: 12, weight: .medium, design: .rounded))
                                     .italic()
-                                    .padding(.bottom, 0.5)
                                     .multilineTextAlignment(.center)
 
                             }
                             .strikethrough(consultation!.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)))
-
-                            Divider()
-                                .padding(.horizontal, 10)
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 10)
+                            .background(.gray.opacity(0.2))
+                            .cornerRadius(10)
 
                             VStack {
                                 Text("\(exam!.sessionEventType.rawValue):")
@@ -69,17 +66,20 @@ struct TwoSessionEventsView: View {
 
                                 Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString()), \(exam!.date.getHoursAndMinutesString())")
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
-                                    .padding(.bottom, 0.5)
                                     .multilineTextAlignment(.center)
+
+                                Spacer()
 
                                 Text(exam!.cabinet)
                                     .font(.system(size: 12, weight: .medium, design: .rounded))
                                     .italic()
-                                    .padding(.bottom, 0.5)
                                     .multilineTextAlignment(.center)
                             }
+                            .padding(.vertical, 5)
+                            .padding(.horizontal, 10)
+                            .background(.gray.opacity(0.2))
+                            .cornerRadius(10)
                         }
-                        .padding(.vertical, 1)
 
                     } else {
                         Divider()
@@ -95,10 +95,11 @@ struct TwoSessionEventsView: View {
                             .padding(.bottom, 5)
                             .multilineTextAlignment(.center)
 
+                        Spacer()
+
                         Text(exam!.cabinet)
                             .font(.system(size: 12, weight: .medium, design: .rounded))
                             .italic()
-                            .padding(.bottom, 0.5)
                             .multilineTextAlignment(.center)
                     }
                 }

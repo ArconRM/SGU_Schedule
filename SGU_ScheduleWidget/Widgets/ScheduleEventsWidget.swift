@@ -114,9 +114,9 @@ struct ScheduleEventsView: View {
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
                 if appSettings.currentAppStyle == AppStyle.fill {
-                    buildFilledRectangle(event: fetchResult.currentEvent)
+                    buildFilledRectangle()
                 } else {
-                    buildBorderedRectangle(event: fetchResult.currentEvent)
+                    buildBorderedRectangle()
                 }
             }
             .widgetURL(URL(string: AppUrls.isOpenedFromScheduleWidget.rawValue)!)
@@ -129,9 +129,9 @@ struct ScheduleEventsView: View {
             .environmentObject(appSettings)
             .containerBackground(for: .widget) {
                 if appSettings.currentAppStyle == AppStyle.fill {
-                    buildFilledRectangle(event: fetchResult.currentEvent)
+                    buildFilledRectangle()
                 } else {
-                    buildBorderedRectangle(event: fetchResult.currentEvent)
+                    buildBorderedRectangle()
                 }
             }
             .widgetURL(URL(string: AppUrls.isOpenedFromScheduleWidget.rawValue)!)
@@ -157,42 +157,28 @@ struct ScheduleEventsView: View {
                 .environmentObject(appSettings)
                 .containerBackground(for: .widget) {
                     if appSettings.currentAppStyle == AppStyle.fill {
-                        buildFilledRectangle(event: fetchResult.currentEvent)
+                        buildFilledRectangle()
                     } else {
-                        buildBorderedRectangle(event: fetchResult.currentEvent)
+                        buildBorderedRectangle()
                     }
                 }
         }
     }
 
-    private func buildFilledRectangle(event: (any ScheduleEvent)?) -> some View {
+    private func buildFilledRectangle() -> some View {
         ZStack {
             Color.black.opacity(colorScheme == .light ? 0.8 : 1)
-            getBackgroundColor(event: event).opacity(0.3)
+            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme).opacity(0.8)
                 .cornerRadius(18)
                 .padding(4)
                 .blur(radius: 20)
-            RoundedRectangle(cornerRadius: 18)
-                .fill(getBackgroundColor(event: event).opacity(0.5))
         }
     }
 
-    private func buildBorderedRectangle(event: (any ScheduleEvent)?) -> some View {
+    private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .stroke(getBackgroundColor(event: event), lineWidth: 4)
+            .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
             .padding(2)
-    }
-
-    private func getBackgroundColor(event: (any ScheduleEvent)?) -> Color {
-        if event == nil {
-            return .gray.opacity(0.7)
-        } else if let lesson = event as? LessonDTO {
-            return lesson.lessonType == .lecture ?
-            AppTheme.green.foregroundColor(colorScheme: colorScheme) :
-            AppTheme.blue.foregroundColor(colorScheme: colorScheme)
-        }
-
-        return .gray
     }
 }
 

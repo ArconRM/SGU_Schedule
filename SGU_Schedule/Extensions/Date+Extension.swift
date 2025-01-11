@@ -191,8 +191,20 @@ extension Date {
         return Date() < self
     }
 
+    func inFuture(days: Int) -> Bool {
+        let calendar = Calendar.current
+        let components1 = calendar.dateComponents([.year, .month, .day], from: self)
+        let components2 = calendar.dateComponents([.year, .month, .day], from: Calendar.current.date(byAdding: .day, value: days, to: Date())!)
+
+        return components1 == components2
+    }
+
     func isToday() -> Bool {
-        return self.getDayAndMonthString() == Date().getDayAndMonthString()
+        let calendar = Calendar.current
+        let components1 = calendar.dateComponents([.year, .month, .day], from: self)
+        let components2 = calendar.dateComponents([.year, .month, .day], from: Date())
+
+        return components1 == components2
     }
 
     /// Returns true if date is passed now + some duration

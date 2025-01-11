@@ -80,13 +80,9 @@ struct SessionEventsView: View {
                 .environmentObject(appSettings)
                 .containerBackground(for: .widget) {
                     if appSettings.currentAppStyle == AppStyle.fill {
-                        buildFilledRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
-                                             ? fetchResult.exam
-                                             : fetchResult.consultation)
+                        buildFilledRectangle()
                     } else {
-                        buildBorderedRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
-                                               ? fetchResult.exam
-                                               : fetchResult.consultation)
+                        buildBorderedRectangle()
                     }
                 }
                 .widgetURL(URL(string: AppUrls.isOpenedFromSessionWidget.rawValue)!)
@@ -96,13 +92,9 @@ struct SessionEventsView: View {
                 .environmentObject(appSettings)
                 .containerBackground(for: .widget) {
                     if appSettings.currentAppStyle == AppStyle.fill {
-                        buildFilledRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
-                                             ? fetchResult.exam
-                                             : fetchResult.consultation)
+                        buildFilledRectangle()
                     } else {
-                        buildBorderedRectangle(event: fetchResult.consultation?.date.passed(duration: Date.getDurationHours(sessionEventType: .consultation)) ?? true
-                                               ? fetchResult.exam
-                                               : fetchResult.consultation)
+                        buildBorderedRectangle()
                     }
                 }
                 .widgetURL(URL(string: AppUrls.isOpenedFromSessionWidget.rawValue)!)
@@ -112,39 +104,28 @@ struct SessionEventsView: View {
                 .environmentObject(appSettings)
                 .containerBackground(for: .widget) {
                     if appSettings.currentAppStyle == AppStyle.fill {
-                        buildFilledRectangle(event: nil)
+                        buildFilledRectangle()
                     } else {
-                        buildBorderedRectangle(event: nil)
+                        buildBorderedRectangle()
                     }
                 }
         }
     }
 
-    private func buildFilledRectangle(event: SessionEventDTO?) -> some View {
+    private func buildFilledRectangle() -> some View {
         ZStack {
             Color.black.opacity(colorScheme == .light ? 0.8 : 1)
-            getBackgroundColor(event: event).opacity(0.3)
+            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme).opacity(0.8)
                 .cornerRadius(18)
                 .padding(4)
                 .blur(radius: 20)
-            RoundedRectangle(cornerRadius: 18)
-                .fill(getBackgroundColor(event: event).opacity(0.5))
         }
     }
 
-    private func buildBorderedRectangle(event: SessionEventDTO?) -> some View {
+    private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 18)
-            .stroke(getBackgroundColor(event: event), lineWidth: 4)
+            .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
             .padding(2)
-    }
-
-    private func getBackgroundColor(event: SessionEventDTO?) -> Color {
-        if let event = event {
-                return event.sessionEventType == .consultation ?
-            AppTheme.green.foregroundColor(colorScheme: colorScheme) :
-            AppTheme.blue.foregroundColor(colorScheme: colorScheme)
-        }
-        return .gray.opacity(0.7)
     }
 }
 
@@ -170,14 +151,14 @@ struct SessionEventsWidget_Previews: PreviewProvider {
 
     static var previews: some View {
         let consultation = SessionEventDTO(
-            title: "Теория вероятности и мат статистика",
+            title: "Теория вероятности и математическая статистика",
             date: Date.now.addingTimeInterval(-100000),
             sessionEventType: .consultation,
             teacherFullName: "Сергеева Надежда Викторовна",
             cabinet: "дистанционно"
         )
         let exam = SessionEventDTO(
-            title: "Теория вероятности и мат статистика",
+            title: "Теория вероятности и математическая статистика",
             date: Date.now.addingTimeInterval(100000),
             sessionEventType: .exam,
             teacherFullName: "Сергеева Надежда Викторовна",
