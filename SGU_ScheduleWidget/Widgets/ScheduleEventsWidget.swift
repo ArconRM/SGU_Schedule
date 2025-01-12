@@ -167,16 +167,16 @@ struct ScheduleEventsView: View {
 
     private func buildFilledRectangle() -> some View {
         ZStack {
-            Color.black.opacity(colorScheme == .light ? 0.8 : 1)
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme).opacity(0.8)
-                .cornerRadius(18)
+            Color.black.opacity(colorScheme == .light ? 0.8 : 0.6)
+            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                .cornerRadius(20)
                 .padding(4)
-                .blur(radius: 20)
+                .blur(radius: 2)
         }
     }
 
     private func buildBorderedRectangle() -> some View {
-        RoundedRectangle(cornerRadius: 18)
+        RoundedRectangle(cornerRadius: 20)
             .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
             .padding(2)
     }
