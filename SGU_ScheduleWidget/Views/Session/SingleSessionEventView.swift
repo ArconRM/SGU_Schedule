@@ -39,7 +39,7 @@ struct SingleSessionEventView: View {
                                 .multilineTextAlignment(.center)
                                 .underline(consultation!.date.isToday())
 
-                            Text("\(consultation!.date.weekday.rawValue) \(consultation!.date.getDayAndMonthWordString())")
+                            Text(getEventDateString(event: consultation!))
                                 .font(.system(size: 15, weight: .bold, design: .rounded))
                                 .multilineTextAlignment(.center)
 
@@ -63,7 +63,7 @@ struct SingleSessionEventView: View {
                                 .multilineTextAlignment(.center)
                                 .underline(exam!.date.isToday())
 
-                            Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString())")
+                            Text(getEventDateString(event: exam!))
                                 .font(.system(size: 15, weight: .bold, design: .rounded))
                                 .multilineTextAlignment(.center)
 
@@ -86,5 +86,11 @@ struct SingleSessionEventView: View {
                     .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             }
         }
+    }
+
+    private func getEventDateString(event: SessionEventDTO) -> String {
+        return event.date.isToday() ? "Сегодня" :
+        event.date.isInFuture(days: 1) ? "Завтра" :
+        "\(event.date.weekday.rawValue) \(event.date.getDayAndMonthWordString())"
     }
 }

@@ -39,7 +39,7 @@ struct TwoSessionEventsView: View {
                                     .multilineTextAlignment(.center)
                                     .underline(consultation!.date.isToday())
 
-                                Text("\(consultation!.date.weekday.rawValue) \(consultation!.date.getDayAndMonthWordString()), \(consultation!.date.getHoursAndMinutesString())")
+                                Text(getEventDateString(event: consultation!))
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                                     .multilineTextAlignment(.center)
 
@@ -64,7 +64,7 @@ struct TwoSessionEventsView: View {
                                     .multilineTextAlignment(.center)
                                     .underline(exam!.date.isToday())
 
-                                Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString()), \(exam!.date.getHoursAndMinutesString())")
+                                Text(getEventDateString(event: exam!))
                                     .font(.system(size: 14, weight: .bold, design: .rounded))
                                     .multilineTextAlignment(.center)
 
@@ -90,7 +90,7 @@ struct TwoSessionEventsView: View {
                             .padding(.bottom, 1)
                             .underline(exam!.date.isToday())
 
-                        Text("\(exam!.date.weekday.rawValue) \(exam!.date.getDayAndMonthWordString()), \(exam!.date.getHoursAndMinutesString())")
+                        Text(getEventDateString(event: exam!))
                             .font(.system(size: 14, weight: .bold, design: .rounded))
                             .padding(.bottom, 5)
                             .multilineTextAlignment(.center)
@@ -110,5 +110,10 @@ struct TwoSessionEventsView: View {
                     .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             }
         }
+    }
+    private func getEventDateString(event: SessionEventDTO) -> String {
+        return event.date.isToday() ? "Сегодня, \(event.date.getHoursAndMinutesString())" :
+        event.date.isInFuture(days: 1) ? "Завтра, \(event.date.getHoursAndMinutesString())" :
+        "\(event.date.weekday.rawValue) \(event.date.getDayAndMonthWordString()), \(event.date.getHoursAndMinutesString())"
     }
 }

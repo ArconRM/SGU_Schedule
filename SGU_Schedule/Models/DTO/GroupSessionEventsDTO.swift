@@ -20,7 +20,7 @@ struct GroupSessionEventsDTO {
     func getNextConsultationAndExam() -> (consultation: SessionEventDTO?, exam: SessionEventDTO?) {
         let now = Date.now
 //        guard let closestExamSubject = sessionEvents.filter( { $0.date >= now }).min(by: { $0.date < $1.date })?.title else {
-        guard let closestExamSubject = sessionEvents.filter( { $0.date.isToday() || $0.date.inFuture() }).min(by: { $0.date < $1.date })?.title else {
+        guard let closestExamSubject = sessionEvents.filter( { $0.date.isToday() || $0.date.isInFuture() }).min(by: { $0.date < $1.date })?.title else {
             return (consultation: nil, exam: nil)
         }
 

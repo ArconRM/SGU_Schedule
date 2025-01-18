@@ -187,11 +187,11 @@ extension Date {
         return dateFormatter.string(from: self)
     }
 
-    func inFuture() -> Bool {
+    func isInFuture() -> Bool {
         return Date() < self
     }
 
-    func inFuture(days: Int) -> Bool {
+    func isInFuture(days: Int) -> Bool {
         let calendar = Calendar.current
         let components1 = calendar.dateComponents([.year, .month, .day], from: self)
         let components2 = calendar.dateComponents([.year, .month, .day], from: Calendar.current.date(byAdding: .day, value: days, to: Date())!)
