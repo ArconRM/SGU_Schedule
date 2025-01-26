@@ -61,7 +61,7 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
                 self.viewModel.fetchAll(teacherUrlEndpoint: teacherEndpoint!)
             } else {
                 if teacherLessonsEndpoint == nil {
-                    viewModel.showBaseError(error: BaseError.noSavedDataError)
+                    viewModel.showBaseError(BaseError.noSavedDataError)
                 } else {
                     self.viewModel.fetchTeacherLessons(teacherLessonsUrlEndpoint: teacherLessonsEndpoint!)
                     self.viewModel.fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: teacherLessonsEndpoint!)

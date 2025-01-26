@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class TeacherViewModel: ObservableObject {
+public class TeacherViewModel: BaseViewModel {
     private let teacherNetworkManager: TeacherNetworkManager
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
@@ -19,9 +19,6 @@ public class TeacherViewModel: ObservableObject {
     @Published var isLoadingTeacherInfo = true
     @Published var isLoadingTeacherLessons = true
     @Published var isLoadingTeacherSessionEvents = true
-
-    @Published var isShowingError = false
-    @Published var activeError: LocalizedError?
 
     init(
         teacherNetworkManager: TeacherNetworkManager,
@@ -45,7 +42,7 @@ public class TeacherViewModel: ObservableObject {
                 self.fetchTeacherLessons(teacherLessonsUrlEndpoint: teacher.lessonsUrlEndpoint)
                 self.fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: teacher.sessionEventsUrlEndpoint)
             case .failure(let error):
-                self.showNetworkError(error: error)
+                self.showNetworkError(error)
             }
         }
     }
@@ -58,7 +55,7 @@ public class TeacherViewModel: ObservableObject {
             case .success(let teacher):
                 self.teacher = teacher
             case .failure(let error):
-                self.showNetworkError(error: error)
+                self.showNetworkError(error)
             }
             self.isLoadingTeacherInfo = false
         }
@@ -77,7 +74,7 @@ public class TeacherViewModel: ObservableObject {
             case .success(let lessons):
                 self.teacherLessons = lessons
             case .failure(let error):
-                self.showNetworkError(error: error)
+                self.showNetworkError(error)
             }
             self.isLoadingTeacherLessons = false
         }
@@ -96,29 +93,9 @@ public class TeacherViewModel: ObservableObject {
             case .success(let sessionEvents):
                 self.teacherSessionEvents = sessionEvents
             case .failure(let error):
-                self.showNetworkError(error: error)
+                self.showNetworkError(error)
             }
             self.isLoadingTeacherSessionEvents = false
-        }
-    }
-
-    public func showBaseError(error: Error) {
-        self.isShowingError = true
-
-        if let baseError = error as? BaseError {
-            self.activeError = baseError
-        } else {
-            self.activeError = BaseError.unknownError
-        }
-    }
-
-    private func showNetworkError(error: Error) {
-        self.isShowingError = true
-
-        if let networkError = error as? NetworkError {
-            self.activeError = networkError
-        } else {
-            self.activeError = NetworkError.unexpectedError
         }
     }
 }

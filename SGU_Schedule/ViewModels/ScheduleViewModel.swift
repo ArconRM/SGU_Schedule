@@ -8,7 +8,7 @@
 import Foundation
 import WidgetKit
 
-public class ScheduleViewModel: ObservableObject {
+public class ScheduleViewModel: BaseViewModel {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
 
@@ -30,9 +30,6 @@ public class ScheduleViewModel: ObservableObject {
     @Published var loadedLessonsWithChanges = false
     @Published var isLoadingSessionEvents = true
     @Published var loadedSessionEventsWithChanges = false
-
-    @Published var isShowingError = false
-    @Published var activeError: LocalizedError?
 
     init(
         lessonsNetworkManager: LessonNetworkManager,
@@ -235,6 +232,8 @@ public class ScheduleViewModel: ObservableObject {
                     self.isLoadingSessionEvents = false
                 }
             }
+
+            WidgetCenter.shared.reloadAllTimelines()
         } catch let error {
             self.showCoreDataError(error)
         }
@@ -243,35 +242,5 @@ public class ScheduleViewModel: ObservableObject {
     private func saveGroupSessionEventsWithDeletingPreviousVersion(groupSessionEvents: GroupSessionEventsDTO) throws {
         try self.groupSessionEventsPersistenceManager.deleteSessionEventsByGroupId(groupSessionEvents.group.groupId)
         try self.groupSessionEventsPersistenceManager.saveItem(groupSessionEvents)
-    }
-
-    private func showNetworkError(_ error: Error) {
-        self.isShowingError = true
-
-        if let networkError = error as? NetworkError {
-            self.activeError = networkError
-        } else {
-            self.activeError = NetworkError.unexpectedError
-        }
-    }
-
-    private func showCoreDataError(_ error: Error) {
-        self.isShowingError = true
-
-        if let coreDataError = error as? CoreDataError {
-            self.activeError = coreDataError
-        } else {
-            self.activeError = CoreDataError.unexpectedError
-        }
-    }
-
-    private func showUDError(_ error: Error) {
-        self.isShowingError = true
-
-        if let udError = error as? UserDefaultsError {
-            self.activeError = udError
-        } else {
-            self.activeError = UserDefaultsError.unexpectedError
-        }
     }
 }

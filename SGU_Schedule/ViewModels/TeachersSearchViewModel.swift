@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class TeachersSearchViewModel: ObservableObject {
+public class TeachersSearchViewModel: BaseViewModel {
     private let teacherNetworkManager: TeacherNetworkManager
     private let teacherSearchResultsUDManager: TeacherSearchResultsPersistenceManager
 
@@ -16,8 +16,6 @@ public class TeachersSearchViewModel: ObservableObject {
     @Published var isLoading = true
 
     @Published var needToLoad = false
-    @Published var isShowingError = false
-    @Published var activeError: LocalizedError?
 
     init(
         teacherNetworkManager: TeacherNetworkManager,
@@ -50,18 +48,8 @@ public class TeachersSearchViewModel: ObservableObject {
                 self.allTeachers = teachers
                 self.isLoading = false
             case .failure(let error):
-                self.showNetworkError(error: error)
+                self.showNetworkError(error)
             }
-        }
-    }
-
-    private func showNetworkError(error: Error) {
-        self.isShowingError = true
-
-        if let networkError = error as? NetworkError {
-            self.activeError = networkError
-        } else {
-            self.activeError = NetworkError.unexpectedError
         }
     }
 }

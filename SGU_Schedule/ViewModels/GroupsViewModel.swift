@@ -7,7 +7,7 @@
 
 import Foundation
 
-public class GroupsViewModel: ObservableObject {
+public class GroupsViewModel: BaseViewModel {
     private let groupsNetworkManager: GroupsNetworkManager
     private let groupPersistenceManager: GroupPersistenceManager
 
@@ -29,9 +29,6 @@ public class GroupsViewModel: ObservableObject {
 
     @Published var isLoadingGroups: Bool = true
     @Published var isLoadingFavoriteGroup: Bool = true
-
-    @Published var isShowingError = false
-    @Published var activeError: LocalizedError?
 
     var wasLaunched: Bool {
         let wasLaunched = UserDefaults.standard.bool(forKey: UserDefaultsKeys.wasLaunched.rawValue)
@@ -135,27 +132,7 @@ public class GroupsViewModel: ObservableObject {
                 self.isLoadingGroups = false
             }
         } catch let error {
-            showCoreDataError(error)
-        }
-    }
-
-    private func showCoreDataError(_ error: Error) {
-        self.isShowingError = true
-
-        if let coreDataError = error as? CoreDataError {
-            self.activeError = coreDataError
-        } else {
-            self.activeError = CoreDataError.unexpectedError
-        }
-    }
-
-    private func showNetworkError(_ error: Error) {
-        isShowingError = true
-
-        if let networkError = error as? NetworkError {
-            activeError = networkError
-        } else {
-            activeError = NetworkError.unexpectedError
+            self.showCoreDataError(error)
         }
     }
 }
