@@ -46,7 +46,18 @@ public struct Teacher: Hashable {
         self.birthdate = birthdate
     }
 
-    public static var mock: Self {
-        .init(fullName: "Пример ФИО", lessonsUrlEndpoint: "", sessionEventsUrlEndpoint: "")
+    public static var mock: Teacher {
+        .init(
+            fullName: "John Doe",
+            lessonsUrlEndpoint: "/lessons",
+            sessionEventsUrlEndpoint: "/session_events",
+            departmentFullName: "Computer Science Department",
+            profileImageUrl: URL(string: "https://example.com/profile-image.jpg"),
+            email: "johndoe@example.com",
+            officeAddress: "Building A, Room 101",
+            workPhoneNumber: "(555) 123-4567",
+            personalPhoneNumber: "(555) 987-6543",
+            birthdate: DateComponents(calendar: .current, year: 1985, month: 4, day: 1).date!
+        )
     }
 }

@@ -19,35 +19,39 @@ final class GroupsHTMLParserSGU: GroupsHTMLParser {
         departmentCode: String,
         program: AcademicProgram
     ) throws -> [AcademicGroupDTO] {
-        let fixedHtml = html.replacingOccurrences(of: " id=\" alias_", with: "\" id=\"")
-        let doc = try HTML(html: fixedHtml, encoding: .utf8)
 
-        // //div[@class='accordion__list'][13]/div[@class='accordion-container']/div[@class='accordion__content']/div[@id='\(departmentCode)']/div[@class='schedule__form-education    schedule__form-education_do _active-form-schedule']/li[@class='schedule-type__item'][1]/ul[@class='schedule-number__list']/li[@class='schedule-number__item'][1]/a[1]
+        let groupTypeRange = {
+            switch program {
+            case .bachelorAndSpeciality:
+                [1, 2]
+            case .masters:
+                [3]
+            case .postgraduate:
+                [4]
+            }
+        }()
 
-        let baseXpath = "//div[@class='accordion-container']/div[@class='accordion__content']/div[@id='\(departmentCode)']/div[@class='schedule__form-education    schedule__form-education_do _active-form-schedule']/li[@class='schedule-type__item']"
         var result = [AcademicGroupDTO]()
+        do {
+            let doc = try HTML(html: html, encoding: .utf8)
+            for groupTypeNumber in groupTypeRange {
+                let xpathResult = doc.xpath("//li[@class='schedule-type__item'][\(groupTypeNumber)]/ul[@class='schedule-number__list']/li[@class='schedule-number__item'][\(year)]/a")
+                guard xpathResult.count > 0 else {
+                    continue
+                }
 
-        //        po doc.at_css("ul.schedule__wrap_fio")?.content.split("\n")
-        // ul[@class='schedule__wrap_fio']/\(i)/a[@class='schedule__fio_item-link']
-        // //li[@class='schedule__fio_item fio-show'][1]/a[@class='schedule__fio_item-link']/@href
-
-        // Подбор нужной программы обучения и добавление в список
-        for i in 1...4 {
-            if let curAcademicProgram = AcademicProgram(rawValue: doc.xpath(baseXpath + "[\(i)]/span").first?.text ?? "error") {
-                if curAcademicProgram == program {
-                    let programXpath = baseXpath + "[\(i)]/ul[@class='schedule-number__list']"
-                    if let programYears = doc.xpath(programXpath).first {
-                        for child in programYears.xpath("./*") {
-                            if child.text != nil && child.text!.contains("\(year) курс") {
-                                for groupNumber in child.text!.replacingOccurrences(of: " ", with: "").split(separator: "\n").dropFirst() {
-                                    result.append(AcademicGroupDTO(fullNumber: String(groupNumber), departmentCode: departmentCode))
-                                }
-                            }
-                        }
+                for i in 0...xpathResult.count-1 {
+                    guard let fullNumber = Int(xpathResult[i].text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? "") else {
+                        continue
                     }
+                    result.append(AcademicGroupDTO(fullNumber: String(fullNumber), departmentCode: departmentCode))
                 }
             }
+        } catch {
+            throw NetworkError.htmlParserError
         }
-        return result
+
+        var seen = Set<AcademicGroupDTO>()
+        return result.filter({ seen.insert($0).inserted })
     }
 }

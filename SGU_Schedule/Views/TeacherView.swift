@@ -97,9 +97,9 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
 
 struct TeacherView_Previews: PreviewProvider {
     static var previews: some View {
-        TeacherView(viewModel: ViewModelWithParsingSGUFactory().buildTeacherViewModel())
+        TeacherView(viewModel: ViewModelWithMockDataFactory().buildTeacherViewModel())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+        .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
         .environmentObject(AppSettings())
     }
 }

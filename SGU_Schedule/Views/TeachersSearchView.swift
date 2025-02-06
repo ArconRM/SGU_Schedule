@@ -132,7 +132,8 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
 }
 
 #Preview {
-    TeachersSearchView(viewModel: ViewModelWithParsingSGUFactory().buildTeachersSearchViewModel())
+    TeachersSearchView(viewModel: ViewModelWithMockDataFactory().buildTeachersSearchViewModel())
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
+        .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
 }

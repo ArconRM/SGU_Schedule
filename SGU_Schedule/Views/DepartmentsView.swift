@@ -50,5 +50,6 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
 }
 
 #Preview {
-    DepartmentsView(viewModel: ViewModelWithParsingSGUFactory().buildDepartmentsViewModel())
+    DepartmentsView(viewModel: ViewModelWithMockDataFactory().buildDepartmentsViewModel())
+        .environmentObject(AppSettings())
 }

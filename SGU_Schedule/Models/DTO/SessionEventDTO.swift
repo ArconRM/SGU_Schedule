@@ -39,13 +39,29 @@ public struct SessionEventDTO: Hashable {
         self.date = dateFormatter.date(from: date) ?? dateFormatter.date(from: "01 января 2000 00:00")!
     }
 
-    public static var mock: SessionEventDTO {
+    public static var mock: Self {
         .init(
             title: "Mock title",
-            date: .now,
+            date: .distantFuture,
             sessionEventType: .exam,
             teacherFullName: "Mock teacher",
             cabinet: "Mock cabinet"
         )
+    }
+
+    public static var mocks: [Self] {
+        var result = [Self]()
+        for i in 0..<10 {
+            result.append(
+                .init(
+                    title: "Mock title \(i)",
+                    date: .distantFuture,
+                    sessionEventType: i % 2 == 0 ? .exam : .consultation,
+                    teacherFullName: "Mock teacher",
+                    cabinet: "Mock cabinet"
+                )
+            )
+        }
+        return result
     }
 }

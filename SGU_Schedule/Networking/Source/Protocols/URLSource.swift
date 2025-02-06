@@ -9,6 +9,7 @@ import Foundation
 
 public protocol URLSource {
     func getBaseTeacherURL(teacherEndPoint: String) -> URL
+    func getAllTeachersURL() -> URL
     func getBaseScheduleURL(departmentCode: String) -> URL
     func getGroupScheduleURL(departmentCode: String, groupNumber: String) -> URL
 }

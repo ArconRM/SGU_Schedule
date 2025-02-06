@@ -7,59 +7,60 @@
 
 import Foundation
 
-// Только для нового сайта
 public class TeacherNetworkManagerWithParsing: TeacherNetworkManager {
+
+    private var urlSource: URLSource
+    private var urlSourceOld: URLSource
+    private var parser: TeacherHTMLParser
+    private var parserOld: TeacherHTMLParser
     private var scraper: Scraper
 
-    private let urlSource = URLSourceSGU()
-    private let urlSourceOld = URLSourceSGU_old()
-    private let parser = TeacherHTMLParserSGU()
-    private let parserOld = TeacherHTMLParserSGU_old()
-
-    init(scraper: Scraper) {
+    init(
+        urlSource: URLSource,
+        urlSourceOld: URLSource,
+        parser: TeacherHTMLParser,
+        parserOld: TeacherHTMLParser,
+        scraper: Scraper
+    ) {
+        self.urlSource = urlSource
+        self.urlSourceOld = urlSourceOld
+        self.parser = parser
+        self.parserOld = parserOld
         self.scraper = scraper
     }
 
+    /// Только для старого сайта
     public func getTeacher(
         teacherEndpoint: String,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<Teacher, any Error>) -> Void
     ) {
         let teacherUrl = urlSourceOld.getBaseTeacherURL(teacherEndPoint: teacherEndpoint)
+        self.scraper.scrapeUrl(teacherUrl) { html in
+            do {
+                let teacher = try self.parserOld.getTeacherFromSource(source: html ?? "")
 
-        do {
-            try self.scraper.scrapeUrl(teacherUrl, needToWaitLonger: false) { html in
-                do {
-                    let teacher = try self.parserOld.getTeacherFromSource(source: html ?? "")
-
-                    resultQueue.async { completionHandler(.success(teacher)) }
-                } catch {
-                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-                }
+                resultQueue.async { completionHandler(.success(teacher)) }
+            } catch {
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        } catch {
-            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
         }
     }
 
+    /// Только для нового сайта
     public func getAllTeachers(
-        resultQueue: DispatchQueue,
+        resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<Set<TeacherSearchResult>, any Error>) -> Void
     ) {
-        let url = URLSourceSGU().getBaseScheduleURL(departmentCode: "")
+        let allTeachersUrl = urlSource.getAllTeachersURL()
+        self.scraper.scrapeUrl(allTeachersUrl) { html in
+            do {
+                let teachers = try self.parser.getAllTeacherSearchResultsFromSource(source: html ?? "")
 
-        do {
-            try self.scraper.scrapeUrl(url, needToWaitLonger: false) { html in
-                do {
-                    let teachers = try self.parser.getAllTeachersDTOFromSource(source: html ?? "")
-
-                    resultQueue.async { completionHandler(.success(teachers)) }
-                } catch {
-                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-                }
+                resultQueue.async { completionHandler(.success(teachers)) }
+            } catch {
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        } catch {
-            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
         }
     }
 }

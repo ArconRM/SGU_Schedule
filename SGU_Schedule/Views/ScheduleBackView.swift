@@ -104,6 +104,6 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 }
 
 #Preview {
-    ScheduleBackView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
+    ScheduleBackView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel(),
                      selectedGroup: AcademicGroupDTO.mock)
 }

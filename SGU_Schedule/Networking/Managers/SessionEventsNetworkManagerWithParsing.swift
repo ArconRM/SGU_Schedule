@@ -19,55 +19,43 @@ class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
         self.scraper = scraper
     }
 
-    public func getGroupSessionEvents (
+    public func getGroupSessionEvents(
         group: AcademicGroupDTO,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<GroupSessionEventsDTO, Error>) -> Void
     ) {
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: group.departmentCode, groupNumber: group.fullNumber)
+        self.scraper.scrapeUrl(groupScheduleUrl) { html in
+            do {
+                let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(
+                    source: html ?? "",
+                    groupNumber: group.fullNumber,
+                    departmentCode: group.departmentCode
+                )
 
-        do {
-            try self.scraper.scrapeUrl(groupScheduleUrl, needToWaitLonger: false) { html in
-                do {
-                    let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(
-                        source: html ?? "",
-                        groupNumber: group.fullNumber,
-                        departmentCode: group.departmentCode
-                    )
-
-                    resultQueue.async { completionHandler(.success(lessons)) }
-                } catch {
-                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-                }
+                resultQueue.async { completionHandler(.success(lessons)) }
+            } catch {
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        } catch {
-            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
         }
     }
 
-    public func getTeacherSessionEvents (
+    public func getTeacherSessionEvents(
         teacherEndpoint: String?,
-        resultQueue: DispatchQueue,
+        resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<[SessionEventDTO], any Error>) -> Void
     ) {
         guard teacherEndpoint != nil else { return }
+
         let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacherEndpoint!)
+        self.scraper.scrapeUrl(teacherLessonsUrl) { html in
+            do {
+                let lessons = try self.sessionEventsParser.getSessionEventsFromSource(source: html ?? "")
 
-        do {
-            try self.scraper.scrapeUrl(teacherLessonsUrl, needToWaitLonger: false) { html in
-                do {
-                    let html = try String(contentsOf: teacherLessonsUrl, encoding: .utf8)
-                    let lessons = try self.sessionEventsParser.getSessionEventsFromSource(source: html)
-
-                    resultQueue.async {
-                        completionHandler(.success(lessons))
-                    }
-                } catch {
-                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-                }
+                resultQueue.async { completionHandler(.success(lessons)) }
+            } catch {
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        } catch {
-            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
         }
     }
 }

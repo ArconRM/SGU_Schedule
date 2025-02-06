@@ -14,7 +14,7 @@ public struct TeacherHTMLParserSGU: TeacherHTMLParser {
         throw NetworkError.htmlParserError
     }
 
-    public func getAllTeachersDTOFromSource(source html: String) throws -> Set<TeacherSearchResult> {
+    public func getAllTeacherSearchResultsFromSource(source html: String) throws -> Set<TeacherSearchResult> {
         let fixedHtml = html.replacingOccurrences(of: " id=\" alias_", with: "\" id=\"")
         let doc = try HTML(html: fixedHtml, encoding: .utf8)
         let teacherNameXpath = "//a[@class='schedule__fio_item-link']"

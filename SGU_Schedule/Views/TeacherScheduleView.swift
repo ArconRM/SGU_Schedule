@@ -93,5 +93,5 @@ struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherV
 }
 
 #Preview {
-    TeacherScheduleView(viewModel: ViewModelWithParsingSGUFactory().buildTeacherViewModel())
+    TeacherScheduleView(viewModel: ViewModelWithMockDataFactory().buildTeacherViewModel())
 }

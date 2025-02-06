@@ -117,9 +117,30 @@ public struct LessonDTO: Equatable, ScheduleEvent {
             weekType: .all,
             cabinet: "Mock",
             subgroup: "Mock sub",
-            lessonNumber: 0,
-            timeStart: .now,
-            timeEnd: .now
+            lessonNumber: 1,
+            timeStart: "12:00",
+            timeEnd: "13:00"
         )
+    }
+
+    public static var mocks: [Self] {
+        var result = [Self]()
+        for i in 1...7 {
+            result.append(
+                .init(
+                    subject: "Mock subject",
+                    teacherFullName: "Mock teacher",
+                    lessonType: i % 2 == 0 ? .lecture : .practice,
+                    weekDay: .monday,
+                    weekType: .all,
+                    cabinet: "Mock",
+                    subgroup: "Mock sub",
+                    lessonNumber: i,
+                    timeStart: "1\(i):00",
+                    timeEnd: "1\(i+1):00"
+                )
+            )
+        }
+        return result
     }
 }

@@ -16,13 +16,21 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
     @ObservedObject var viewModel: ViewModel
 
-    @State private var selectedAcademicProgram = AcademicProgram.bachelorAndSpeciality
-    @State private var selectedYear = 1
-    @State var selectedDepartment: Department
+    @State private var selectedAcademicProgram: AcademicProgram
+    @State private var selectedYear: Int
+    @State private var selectedDepartment: Department
 
     @State private var showAlert: Bool = false
     @State private var programTappedCount: Int = 0
     @State private var yearTappedCount: Int = 0
+
+    init(viewModel: ViewModel, selectedDepartment: Department) {
+        self.viewModel = viewModel
+        self.selectedDepartment = selectedDepartment
+
+        selectedYear = viewModel.getSelectedYear()
+        selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
+    }
 
     var body: some View {
         ZStack {
@@ -333,8 +341,6 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     }
 
     private func fetchAllData() {
-        selectedYear = viewModel.getSelectedYear()
-        selectedAcademicProgram = viewModel.getSelectedAcademicProgram()
         viewModel.fetchGroups(
             year: selectedYear,
             academicProgram: selectedAcademicProgram,
@@ -346,9 +352,9 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: ViewModelWithParsingSGUFactory().buildGroupsViewModel(department: Department.mock), selectedDepartment: Department.mock)
+        GroupsView(viewModel: ViewModelWithMockDataFactory().buildGroupsViewModel(department: Department.mock), selectedDepartment: Department.mock)
             .environmentObject(NetworkMonitor())
-            .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+            .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
             .environmentObject(AppSettings())
     }
 }

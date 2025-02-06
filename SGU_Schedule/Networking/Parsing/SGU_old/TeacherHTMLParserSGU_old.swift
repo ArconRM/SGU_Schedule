@@ -58,7 +58,7 @@ struct TeacherHTMLParserSGU_old: TeacherHTMLParser {
     }
 
     /// Not implemented
-    func getAllTeachersDTOFromSource(source html: String) throws -> Set<TeacherSearchResult> {
+    func getAllTeacherSearchResultsFromSource(source html: String) throws -> Set<TeacherSearchResult> {
         throw NetworkError.htmlParserError
     }
 }

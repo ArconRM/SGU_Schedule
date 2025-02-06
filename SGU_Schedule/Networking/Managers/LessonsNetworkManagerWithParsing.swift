@@ -25,50 +25,37 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
         completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void
     ) {
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: group.departmentCode, groupNumber: group.fullNumber)
+        self.scraper.scrapeUrl(groupScheduleUrl) { html in
+            do {
+                let groupSchedule = try self.lessonParser.getGroupScheduleFromSource(
+                    source: html ?? "",
+                    groupNumber: group.fullNumber,
+                    departmentCode: group.departmentCode
+                )
 
-        do {
-            try self.scraper.scrapeUrl(groupScheduleUrl, needToWaitLonger: false) { html in
-                do {
-                    let lessons = try self.lessonParser.getGroupScheduleFromSource(
-                        source: html ?? "",
-                        groupNumber: group.fullNumber,
-                        departmentCode: group.departmentCode
-                    )
-
-                    resultQueue.async { completionHandler(.success(lessons)) }
-                } catch {
-                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-                }
+                resultQueue.async { completionHandler(.success(groupSchedule)) }
+            } catch {
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        } catch {
-            resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
         }
     }
 
     public func getTeacherScheduleForCurrentWeek(
         teacherEndpoint: String?,
-        resultQueue: DispatchQueue,
+        resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void
     ) {
         guard teacherEndpoint != nil else { return }
+
         let teacherLessonsUrl = urlSource.getBaseTeacherURL(teacherEndPoint: teacherEndpoint!)
-
-        URLSession.shared.dataTask(with: teacherLessonsUrl as URL) { _, _, error in
-            guard error == nil else {
-                resultQueue.async { completionHandler(.failure(error!)) }
-                return
-            }
-
+        self.scraper.scrapeUrl(teacherLessonsUrl) { html in
             do {
-                let html = try String(contentsOf: teacherLessonsUrl, encoding: .utf8)
-                let lessons = try self.lessonParser.getScheduleFromSource(source: html)
+                let lessons = try self.lessonParser.getScheduleFromSource(source: html ?? "")
 
-                resultQueue.async {
-                    completionHandler(.success(lessons))
-                }
+                resultQueue.async { completionHandler(.success(lessons)) }
             } catch {
                 resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        }.resume()
+        }
     }
 }

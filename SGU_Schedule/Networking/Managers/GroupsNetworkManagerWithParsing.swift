@@ -7,7 +7,6 @@
 
 import Foundation
 
-/// С новым сайтом нужен DynamicScraper
 public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
     private var urlSource: URLSource
     private var groupsParser: GroupsHTMLParser
@@ -27,25 +26,19 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
         completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void
     ) {
         let url = urlSource.getBaseScheduleURL(departmentCode: department.code)
+        self.scraper.scrapeUrl(url) { html in
+            do {
+                let groups = try self.groupsParser.getGroupsByYearAndAcademicProgramFromSource(
+                    source: html ?? "",
+                    year: year,
+                    departmentCode: department.code,
+                    program: program
+                )
 
-        do {
-            try self.scraper.scrapeUrl(url, needToWaitLonger: department.number > 15) { html in
-                do {
-                    let groups = try self.groupsParser.getGroupsByYearAndAcademicProgramFromSource(
-                        source: html ?? "",
-                        year: year,
-                        departmentCode: department.code,
-                        program: program
-                    )
-
-                    resultQueue.async { completionHandler(.success(groups)) }
-                } catch {
-                    resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
-                }
+                resultQueue.async { completionHandler(.success(groups)) }
+            } catch {
+                resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
-        } catch {
-            resultQueue.async { completionHandler(.failure(NetworkError.scraperError)) }
         }
     }
-
 }

@@ -122,7 +122,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
             .shadow(radius: 5)
 
         TeacherInfoView(
-            viewModel: ViewModelWithParsingSGUFactory().buildTeacherViewModel()
+            viewModel: ViewModelWithMockDataFactory().buildTeacherViewModel()
         )
         .environmentObject(AppSettings())
     }

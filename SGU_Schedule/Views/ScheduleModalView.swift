@@ -201,8 +201,8 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 }
 
 #Preview {
-    ScheduleModalView(viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel())
+    ScheduleModalView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel())
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+        .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
 }

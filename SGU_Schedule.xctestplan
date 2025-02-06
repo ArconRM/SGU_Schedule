@@ -1,0 +1,35 @@
+{
+  "configurations" : [
+    {
+      "id" : "28242F90-1FDC-4E47-B479-4351092A51A6",
+      "name" : "Test Scheme Action",
+      "options" : {
+
+      }
+    }
+  ],
+  "defaultOptions" : {
+    "environmentVariableEntries" : [
+      {
+        "key" : "TZ",
+        "value" : "SL"
+      }
+    ],
+    "targetForVariableExpansion" : {
+      "containerPath" : "container:SGU_Schedule.xcodeproj",
+      "identifier" : "BADAE10D2AB9C0D60079E3D7",
+      "name" : "SGU_Schedule"
+    }
+  },
+  "testTargets" : [
+    {
+      "parallelizable" : false,
+      "target" : {
+        "containerPath" : "container:SGU_Schedule.xcodeproj",
+        "identifier" : "BA996A572AC4A00200888BE2",
+        "name" : "SGU_ScheduleTests"
+      }
+    }
+  ],
+  "version" : 1
+}

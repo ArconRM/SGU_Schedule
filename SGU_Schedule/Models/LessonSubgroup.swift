@@ -33,7 +33,8 @@ public struct LessonSubgroup: Hashable, Codable {
         self.number = number
         self.isSaved = isSaved
     }
+
     public static var mock: Self {
-        .init(teacher: "Mock Teacher", number: "под. 1", isSaved: false)
+        .init(teacher: "Пример ФИО", number: "под. 1", isSaved: false)
     }
 }

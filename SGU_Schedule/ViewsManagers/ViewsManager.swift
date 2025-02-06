@@ -129,7 +129,12 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
-    // MARK: - Data
+    // MARK: - Data Methods
+    func changeParser() {
+        isNewParserUsed.toggle()
+        currentViewModelFactory = isNewParserUsed ? viewModelFactory : viewModelFactory_old
+    }
+
     func selectDepartment(department: Department) {
         selectedDepartment = department
         // TODO: мб чтобы все таки менялся groupsViewModel
@@ -138,11 +143,6 @@ public final class ViewsManager: ObservableObject {
 
     func clearDepartment() {
         selectedDepartment = nil
-    }
-
-    func changeParser() {
-        isNewParserUsed.toggle()
-        currentViewModelFactory = isNewParserUsed ? viewModelFactory : viewModelFactory_old
     }
 
     func selectGroup(group: AcademicGroupDTO, isFavourite: Bool, isPinned: Bool) {
@@ -182,7 +182,7 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
-    // MARK: - Transitions
+    // MARK: - Views Transitions
     func showDepartmentsView() {
         currentView = .departmentsView
         isShowingSettingsView = false
@@ -286,7 +286,7 @@ public final class ViewsManager: ObservableObject {
         return TeachersSearchView(viewModel: teachersSearchViewModel)
     }
 
-    // MARK: - Error handling
+    // MARK: - Error Handling
     private func showCoreDataError(error: Error) {
         self.isShowingError = true
 

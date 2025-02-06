@@ -9,7 +9,7 @@ import Foundation
 import Kanna
 
 final class GroupsHTMLParserSGU_old: GroupsHTMLParser {
-    func getGroupsByYearAndAcademicProgramFromSource (
+    func getGroupsByYearAndAcademicProgramFromSource(
         source html: String,
         year: Int,
         departmentCode: String,
@@ -17,15 +17,16 @@ final class GroupsHTMLParserSGU_old: GroupsHTMLParser {
     ) throws -> [AcademicGroupDTO] {
 
         var result = [AcademicGroupDTO]()
-        var groupTypeRange = [Int]()
-        switch program {
-        case .bachelorAndSpeciality:
-            groupTypeRange = [1, 2]
-        case .masters:
-            groupTypeRange = [3]
-        case .postgraduate:
-            groupTypeRange = [4]
-        }
+        let groupTypeRange = {
+            switch program {
+            case .bachelorAndSpeciality:
+                [1, 2]
+            case .masters:
+                [3]
+            case .postgraduate:
+                [4]
+            }
+        }()
 
         do {
             let doc = try HTML(html: html, encoding: .utf8)
@@ -47,6 +48,7 @@ final class GroupsHTMLParserSGU_old: GroupsHTMLParser {
         } catch {
             throw NetworkError.htmlParserError
         }
+
         return result
     }
 }

@@ -197,13 +197,13 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
 struct ScheduleView_Previews: PreviewProvider {
     static var previews: some View {
         ScheduleView(
-            viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
+            viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel(),
             group: AcademicGroupDTO.mock,
             isFavourite: false,
             isPinned: false
         )
         .environmentObject(AppSettings())
         .environmentObject(NetworkMonitor())
-        .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), groupSchedulePersistenceManager: GroupScheduleCoreDataManager(), groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+        .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
     }
 }

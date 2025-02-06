@@ -14,6 +14,22 @@ public struct TeacherSearchResult: Hashable, Codable {
     var sessionEventsUrlEndpoint: String
 
     public static var mock: Self {
-        .init(fullName: "Пример ФИО", lessonsUrlEndpoint: "", sessionEventsUrlEndpoint: "")
+        .init(fullName: "Пример ФИО",
+              lessonsUrlEndpoint: "/lessons",
+              sessionEventsUrlEndpoint: "/session_events")
+    }
+
+    public static var mocks: [Self] {
+        var result = [Self]()
+        for i in 0..<10 {
+            result.append(
+                .init(
+                    fullName: "Пример ФИО \(i)",
+                    lessonsUrlEndpoint: "/lessons",
+                    sessionEventsUrlEndpoint: "/session_events"
+                )
+            )
+        }
+        return result
     }
 }

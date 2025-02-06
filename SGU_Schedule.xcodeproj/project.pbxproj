@@ -23,6 +23,15 @@
 		163676272C8F2F4A00438B86 /* CoreData_AcademicGroupExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */; };
 		1636762B2C91EA1400438B86 /* AppUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636762A2C91EA1400438B86 /* AppUrls.swift */; };
 		1636762C2C91EA1400438B86 /* AppUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636762A2C91EA1400438B86 /* AppUrls.swift */; };
+		164FA1492D54E83E00DC4EBB /* NetworkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FA1482D54E83E00DC4EBB /* NetworkTests.swift */; };
+		164FA14D2D54EAC000DC4EBB /* NetworkManagerFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FA14C2D54EAC000DC4EBB /* NetworkManagerFactory.swift */; };
+		164FA14F2D54EB1000DC4EBB /* NetworkManagerWithParsingSGUFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FA14E2D54EB1000DC4EBB /* NetworkManagerWithParsingSGUFactory.swift */; };
+		164FA1512D54EC7200DC4EBB /* NetworkManagerWithParsingSGUFactory_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FA1502D54EC7200DC4EBB /* NetworkManagerWithParsingSGUFactory_old.swift */; };
+		164FA1532D54EE1B00DC4EBB /* NetworkManagerWithMockDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FA1522D54EE1B00DC4EBB /* NetworkManagerWithMockDataFactory.swift */; };
+		164FA1552D54F34400DC4EBB /* TeacherParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 164FA1542D54F34400DC4EBB /* TeacherParserMock.swift */; };
+		1650ED172D5214F100FE2F2C /* ParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650ED152D5214F100FE2F2C /* ParsingTests.swift */; };
+		1650ED192D52152F00FE2F2C /* ParsingTests_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650ED182D52152F00FE2F2C /* ParsingTests_old.swift */; };
+		1650ED1B2D5215A200FE2F2C /* ScrapingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650ED1A2D5215A200FE2F2C /* ScrapingTests.swift */; };
 		1650F5182C54492600622205 /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650F5172C54492600622205 /* AppStyle.swift */; };
 		165508282C13826400A37900 /* URLSourceSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 165508272C13826400A37900 /* URLSourceSGU.swift */; };
 		1655082E2C14345A00A37900 /* PlainTextSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1655082D2C14345A00A37900 /* PlainTextSubview.swift */; };
@@ -44,6 +53,15 @@
 		1672487E2C8CFA16008673DE /* GroupPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248782C8CB651008673DE /* GroupPersistenceManager.swift */; };
 		167248802C8DA190008673DE /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672487F2C8DA190008673DE /* UserDefaultsError.swift */; };
 		167248822C8F138A008673DE /* CoreData_AcademicGroupExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */; };
+		167BDF3E2D53A46D00D82F4F /* NetworkManagersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BDF3D2D53A46D00D82F4F /* NetworkManagersTests.swift */; };
+		167BDF422D53ADEF00D82F4F /* ScraperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BDF412D53ADEF00D82F4F /* ScraperMock.swift */; };
+		167BDF452D53AEC600D82F4F /* GroupSchedulePersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CC2B7225320019D2E6 /* GroupSchedulePersistenceManagerMock.swift */; };
+		167BDF462D53AEC600D82F4F /* GroupSessionEventsPersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A40D2D511729003F4CAE /* GroupSessionEventsPersistenceManagerMock.swift */; };
+		167BDF472D53AEC600D82F4F /* SessionEventPersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A40B2D5116D9003F4CAE /* SessionEventPersistenceManagerMock.swift */; };
+		167BDF482D53AEC600D82F4F /* LessonSubgroupsPersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A40F2D511777003F4CAE /* LessonSubgroupsPersistenceManagerMock.swift */; };
+		167BDF492D53AEC600D82F4F /* TeacherSearchResultsPersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A4112D5117E2003F4CAE /* TeacherSearchResultsPersistenceManagerMock.swift */; };
+		167BDF4A2D53AEC600D82F4F /* GroupPersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A4072D511480003F4CAE /* GroupPersistenceManagerMock.swift */; };
+		167BDF4B2D53AEC600D82F4F /* LessonPersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A4092D511699003F4CAE /* LessonPersistenceManagerMock.swift */; };
 		167EE42A2C5F79BD00701C8A /* GroupSchedulePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */; };
 		167EE42B2C5F79C700701C8A /* CoreData_GroupScheduleExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA53835C2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift */; };
 		167EE42C2C5F79E300701C8A /* CoreDataModel.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = BAFA580A2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld */; };
@@ -79,7 +97,6 @@
 		168069CA2C5C217D002D47A6 /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1312ABA21430079E3D7 /* Weekdays.swift */; };
 		168069CB2C5C217D002D47A6 /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
 		168294B72CD4012C002AE0B0 /* TeacherScheduleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168294B62CD4012C002AE0B0 /* TeacherScheduleView.swift */; };
-		168294B92CD4029F002AE0B0 /* ViewModelForTestFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168294B82CD4029F002AE0B0 /* ViewModelForTestFactory.swift */; };
 		1689714A2D2E9D8500D1CC26 /* SingleSessionEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168971492D2E9D8500D1CC26 /* SingleSessionEventView.swift */; };
 		168FCC7B2C7C7BDE00D4B3CE /* Scraper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168FCC7A2C7C7BDE00D4B3CE /* Scraper.swift */; };
 		16A585402CB063B400D6837A /* DeviceRotationViewModifier.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A5853F2CB063B400D6837A /* DeviceRotationViewModifier.swift */; };
@@ -116,6 +133,16 @@
 		16CEC0F02D46753900EF668E /* ErrorPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEC0EF2D46753900EF668E /* ErrorPresentable.swift */; };
 		16CEC0F22D4678C100EF668E /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEC0F12D4678C100EF668E /* BaseViewModel.swift */; };
 		16D2F6622CD5329700217C45 /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D2F6612CD5329700217C45 /* BaseError.swift */; };
+		16D5A3FC2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A3FB2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift */; };
+		16D5A41A2D511B72003F4CAE /* LessonNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerMock.swift */; };
+		16D5A41D2D511B72003F4CAE /* SessionEventsNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerMock.swift */; };
+		16D5A41E2D511B72003F4CAE /* GroupsParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F0C2B6FF8D000B58E32 /* GroupsParserMock.swift */; };
+		16D5A41F2D511B72003F4CAE /* LessonParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F082B6FF8B200B58E32 /* LessonParserMock.swift */; };
+		16D5A4202D511B72003F4CAE /* TeacherNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A4132D51185F003F4CAE /* TeacherNetworkManagerMock.swift */; };
+		16D5A4212D511B72003F4CAE /* SessionEventsParserMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F0E2B6FF8E000B58E32 /* SessionEventsParserMock.swift */; };
+		16D5A4242D511B72003F4CAE /* GroupsNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F162B6FF9AC00B58E32 /* GroupsNetworkManagerMock.swift */; };
+		16D5A42A2D511F1F003F4CAE /* ViewsManagerWithParsingSGUFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A4292D511F1F003F4CAE /* ViewsManagerWithParsingSGUFactory.swift */; };
+		16D5A42C2D511F7D003F4CAE /* ViewsManagerWithMockDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A42B2D511F7D003F4CAE /* ViewsManagerWithMockDataFactory.swift */; };
 		16DB5F042C04CF9900870B21 /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F032C04CF9900870B21 /* Teacher.swift */; };
 		16DB5F062C04D53900870B21 /* TeacherHTMLParserSGU_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */; };
 		16DB5F082C04D55600870B21 /* TeacherHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F072C04D55600870B21 /* TeacherHTMLParser.swift */; };
@@ -143,8 +170,6 @@
 		2A461451322DD4A81AEBD1A5 /* Pods_SGU_Schedule.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD18EAF10CCE65B188BB8657 /* Pods_SGU_Schedule.framework */; };
 		BA07C9B92AE47A5B008CDDCC /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
 		BA07C9BB2AE47A7B008CDDCC /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */; };
-		BA1193FE2B7179A80087C6CE /* ViewModelsUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1193FD2B7179A80087C6CE /* ViewModelsUnitTests.swift */; };
-		BA1256CD2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CC2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift */; };
 		BA1256CF2B72A6E60019D2E6 /* UIDevice+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CE2B72A6E60019D2E6 /* UIDevice+Extension.swift */; };
 		BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FD82B6C09F10068B2A4 /* MainView.swift */; };
 		BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */; };
@@ -179,24 +204,9 @@
 		BA9D792C2AC21DDA00C36932 /* URLSourceSGU_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D792B2AC21DDA00C36932 /* URLSourceSGU_old.swift */; };
 		BA9D792F2AC33D2E00C36932 /* NetworkError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D792E2AC33D2E00C36932 /* NetworkError.swift */; };
 		BAA53E522AE9203A0098F30E /* UIScreen+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAA53E512AE920390098F30E /* UIScreen+Extension.swift */; };
-		BAAD1F092B6FF8B200B58E32 /* LessonParserForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F082B6FF8B200B58E32 /* LessonParserForTest.swift */; };
-		BAAD1F0B2B6FF8C000B58E32 /* DateParserForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F0A2B6FF8C000B58E32 /* DateParserForTest.swift */; };
-		BAAD1F0D2B6FF8D000B58E32 /* GroupsParserForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F0C2B6FF8D000B58E32 /* GroupsParserForTest.swift */; };
-		BAAD1F0F2B6FF8E000B58E32 /* SessionEventsParserForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F0E2B6FF8E000B58E32 /* SessionEventsParserForTest.swift */; };
-		BAAD1F132B6FF97A00B58E32 /* LessonNetworkManagerForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerForTest.swift */; };
-		BAAD1F152B6FF99B00B58E32 /* DateNetworkManagerForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F142B6FF99B00B58E32 /* DateNetworkManagerForTest.swift */; };
-		BAAD1F172B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F162B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift */; };
-		BAAD1F192B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift */; };
-		BAAD1F1C2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F1B2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift */; };
-		BAAD1F1E2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F1D2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift */; };
-		BAAD1F252B702E1400B58E32 /* DecodingUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F242B702E1300B58E32 /* DecodingUnitTests.swift */; };
-		BAAD1F272B702E8C00B58E32 /* NetworkManagersUnitTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F262B702E8C00B58E32 /* NetworkManagersUnitTests.swift */; };
 		BAAEB3032AD98EFB00E90223 /* LessonHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3022AD98EFB00E90223 /* LessonHTMLParser.swift */; };
-		BAAEB3062AD992B000E90223 /* DateHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3052AD992B000E90223 /* DateHTMLParser.swift */; };
-		BAAEB3082AD992EF00E90223 /* DateHTMLParserSGU_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3072AD992EF00E90223 /* DateHTMLParserSGU_old.swift */; };
 		BAAEB30A2AD9953900E90223 /* GroupsHTMLParser.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3092AD9953900E90223 /* GroupsHTMLParser.swift */; };
 		BAAEB30C2AD998BE00E90223 /* GroupsHTMLParserSGU_old.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB30B2AD998BE00E90223 /* GroupsHTMLParserSGU_old.swift */; };
-		BAAEB30E2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB30D2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift */; };
 		BAAEB3102AD9A3BD00E90223 /* DateNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB30F2AD9A3BD00E90223 /* DateNetworkManager.swift */; };
 		BAAEB3122AD9A4BE00E90223 /* GroupsNetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3112AD9A4BE00E90223 /* GroupsNetworkManager.swift */; };
 		BAAEB3142AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3132AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift */; };
@@ -277,6 +287,15 @@
 		162FEA552CBFCAC800AA682A /* SubgroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubgroupsView.swift; sourceTree = "<group>"; };
 		162FEA5D2CC1316200AA682A /* LessonSubgroup.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSubgroup.swift; sourceTree = "<group>"; };
 		1636762A2C91EA1400438B86 /* AppUrls.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppUrls.swift; sourceTree = "<group>"; };
+		164FA1482D54E83E00DC4EBB /* NetworkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkTests.swift; sourceTree = "<group>"; };
+		164FA14C2D54EAC000DC4EBB /* NetworkManagerFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerFactory.swift; sourceTree = "<group>"; };
+		164FA14E2D54EB1000DC4EBB /* NetworkManagerWithParsingSGUFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerWithParsingSGUFactory.swift; sourceTree = "<group>"; };
+		164FA1502D54EC7200DC4EBB /* NetworkManagerWithParsingSGUFactory_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerWithParsingSGUFactory_old.swift; sourceTree = "<group>"; };
+		164FA1522D54EE1B00DC4EBB /* NetworkManagerWithMockDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagerWithMockDataFactory.swift; sourceTree = "<group>"; };
+		164FA1542D54F34400DC4EBB /* TeacherParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherParserMock.swift; sourceTree = "<group>"; };
+		1650ED152D5214F100FE2F2C /* ParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingTests.swift; sourceTree = "<group>"; };
+		1650ED182D52152F00FE2F2C /* ParsingTests_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParsingTests_old.swift; sourceTree = "<group>"; };
+		1650ED1A2D5215A200FE2F2C /* ScrapingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScrapingTests.swift; sourceTree = "<group>"; };
 		1650F5172C54492600622205 /* AppStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppStyle.swift; sourceTree = "<group>"; };
 		165508272C13826400A37900 /* URLSourceSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSourceSGU.swift; sourceTree = "<group>"; };
 		1655082D2C14345A00A37900 /* PlainTextSubview.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlainTextSubview.swift; sourceTree = "<group>"; };
@@ -297,6 +316,8 @@
 		1672487B2C8CF99C008673DE /* GroupCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoreDataManager.swift; sourceTree = "<group>"; };
 		1672487F2C8DA190008673DE /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_AcademicGroupExtension.swift; sourceTree = "<group>"; };
+		167BDF3D2D53A46D00D82F4F /* NetworkManagersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagersTests.swift; sourceTree = "<group>"; };
+		167BDF412D53ADEF00D82F4F /* ScraperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScraperMock.swift; sourceTree = "<group>"; };
 		1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
 		1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
 		168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SGU_ScheduleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -307,7 +328,6 @@
 		168069AE2C5ADAFF002D47A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		168069B02C5ADAFF002D47A6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		168294B62CD4012C002AE0B0 /* TeacherScheduleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherScheduleView.swift; sourceTree = "<group>"; };
-		168294B82CD4029F002AE0B0 /* ViewModelForTestFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelForTestFactory.swift; sourceTree = "<group>"; };
 		168971492D2E9D8500D1CC26 /* SingleSessionEventView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SingleSessionEventView.swift; sourceTree = "<group>"; };
 		168FCC7A2C7C7BDE00D4B3CE /* Scraper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scraper.swift; sourceTree = "<group>"; };
 		16A5853F2CB063B400D6837A /* DeviceRotationViewModifier.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceRotationViewModifier.swift; sourceTree = "<group>"; };
@@ -331,6 +351,16 @@
 		16CEC0EF2D46753900EF668E /* ErrorPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentable.swift; sourceTree = "<group>"; };
 		16CEC0F12D4678C100EF668E /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		16D2F6612CD5329700217C45 /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
+		16D5A3FB2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithMockDataFactory.swift; sourceTree = "<group>"; };
+		16D5A4072D511480003F4CAE /* GroupPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPersistenceManagerMock.swift; sourceTree = "<group>"; };
+		16D5A4092D511699003F4CAE /* LessonPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPersistenceManagerMock.swift; sourceTree = "<group>"; };
+		16D5A40B2D5116D9003F4CAE /* SessionEventPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventPersistenceManagerMock.swift; sourceTree = "<group>"; };
+		16D5A40D2D511729003F4CAE /* GroupSessionEventsPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSessionEventsPersistenceManagerMock.swift; sourceTree = "<group>"; };
+		16D5A40F2D511777003F4CAE /* LessonSubgroupsPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSubgroupsPersistenceManagerMock.swift; sourceTree = "<group>"; };
+		16D5A4112D5117E2003F4CAE /* TeacherSearchResultsPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherSearchResultsPersistenceManagerMock.swift; sourceTree = "<group>"; };
+		16D5A4132D51185F003F4CAE /* TeacherNetworkManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherNetworkManagerMock.swift; sourceTree = "<group>"; };
+		16D5A4292D511F1F003F4CAE /* ViewsManagerWithParsingSGUFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsManagerWithParsingSGUFactory.swift; sourceTree = "<group>"; };
+		16D5A42B2D511F7D003F4CAE /* ViewsManagerWithMockDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsManagerWithMockDataFactory.swift; sourceTree = "<group>"; };
 		16DB5F032C04CF9900870B21 /* Teacher.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Teacher.swift; sourceTree = "<group>"; };
 		16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHTMLParserSGU_old.swift; sourceTree = "<group>"; };
 		16DB5F072C04D55600870B21 /* TeacherHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHTMLParser.swift; sourceTree = "<group>"; };
@@ -356,8 +386,7 @@
 		702765E015D3321D9F649123 /* Pods-SGU_Schedule.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SGU_Schedule.debug.xcconfig"; path = "Target Support Files/Pods-SGU_Schedule/Pods-SGU_Schedule.debug.xcconfig"; sourceTree = "<group>"; };
 		BA07C9B82AE47A5B008CDDCC /* WeekType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeekType.swift; sourceTree = "<group>"; };
 		BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonType.swift; sourceTree = "<group>"; };
-		BA1193FD2B7179A80087C6CE /* ViewModelsUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelsUnitTests.swift; sourceTree = "<group>"; };
-		BA1256CC2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleCoreDataManagerForTest.swift; sourceTree = "<group>"; };
+		BA1256CC2B7225320019D2E6 /* GroupSchedulePersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSchedulePersistenceManagerMock.swift; sourceTree = "<group>"; };
 		BA1256CE2B72A6E60019D2E6 /* UIDevice+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIDevice+Extension.swift"; sourceTree = "<group>"; };
 		BA1A4FD82B6C09F10068B2A4 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewsManager.swift; sourceTree = "<group>"; };
@@ -393,24 +422,15 @@
 		BA9D792B2AC21DDA00C36932 /* URLSourceSGU_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = URLSourceSGU_old.swift; sourceTree = "<group>"; };
 		BA9D792E2AC33D2E00C36932 /* NetworkError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkError.swift; sourceTree = "<group>"; };
 		BAA53E512AE920390098F30E /* UIScreen+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+Extension.swift"; sourceTree = "<group>"; };
-		BAAD1F082B6FF8B200B58E32 /* LessonParserForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonParserForTest.swift; sourceTree = "<group>"; };
-		BAAD1F0A2B6FF8C000B58E32 /* DateParserForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateParserForTest.swift; sourceTree = "<group>"; };
-		BAAD1F0C2B6FF8D000B58E32 /* GroupsParserForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsParserForTest.swift; sourceTree = "<group>"; };
-		BAAD1F0E2B6FF8E000B58E32 /* SessionEventsParserForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsParserForTest.swift; sourceTree = "<group>"; };
-		BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNetworkManagerForTest.swift; sourceTree = "<group>"; };
-		BAAD1F142B6FF99B00B58E32 /* DateNetworkManagerForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateNetworkManagerForTest.swift; sourceTree = "<group>"; };
-		BAAD1F162B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupNetworkManagerForTest.swift; sourceTree = "<group>"; };
-		BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsNetworkManagerForTest.swift; sourceTree = "<group>"; };
-		BAAD1F1B2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModelForTest.swift; sourceTree = "<group>"; };
-		BAAD1F1D2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsViewModelForTest.swift; sourceTree = "<group>"; };
-		BAAD1F242B702E1300B58E32 /* DecodingUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DecodingUnitTests.swift; sourceTree = "<group>"; };
-		BAAD1F262B702E8C00B58E32 /* NetworkManagersUnitTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagersUnitTests.swift; sourceTree = "<group>"; };
+		BAAD1F082B6FF8B200B58E32 /* LessonParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonParserMock.swift; sourceTree = "<group>"; };
+		BAAD1F0C2B6FF8D000B58E32 /* GroupsParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsParserMock.swift; sourceTree = "<group>"; };
+		BAAD1F0E2B6FF8E000B58E32 /* SessionEventsParserMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsParserMock.swift; sourceTree = "<group>"; };
+		BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonNetworkManagerMock.swift; sourceTree = "<group>"; };
+		BAAD1F162B6FF9AC00B58E32 /* GroupsNetworkManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsNetworkManagerMock.swift; sourceTree = "<group>"; };
+		BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsNetworkManagerMock.swift; sourceTree = "<group>"; };
 		BAAEB3022AD98EFB00E90223 /* LessonHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonHTMLParser.swift; sourceTree = "<group>"; };
-		BAAEB3052AD992B000E90223 /* DateHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHTMLParser.swift; sourceTree = "<group>"; };
-		BAAEB3072AD992EF00E90223 /* DateHTMLParserSGU_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateHTMLParserSGU_old.swift; sourceTree = "<group>"; };
 		BAAEB3092AD9953900E90223 /* GroupsHTMLParser.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsHTMLParser.swift; sourceTree = "<group>"; };
 		BAAEB30B2AD998BE00E90223 /* GroupsHTMLParserSGU_old.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsHTMLParserSGU_old.swift; sourceTree = "<group>"; };
-		BAAEB30D2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateNetworkManagerWithParsing.swift; sourceTree = "<group>"; };
 		BAAEB30F2AD9A3BD00E90223 /* DateNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateNetworkManager.swift; sourceTree = "<group>"; };
 		BAAEB3112AD9A4BE00E90223 /* GroupsNetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsNetworkManager.swift; sourceTree = "<group>"; };
 		BAAEB3132AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsNetworkManagerWithParsing.swift; sourceTree = "<group>"; };
@@ -510,11 +530,21 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		164FA14A2D54EA4E00DC4EBB /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				164FA14C2D54EAC000DC4EBB /* NetworkManagerFactory.swift */,
+				164FA14E2D54EB1000DC4EBB /* NetworkManagerWithParsingSGUFactory.swift */,
+				164FA1502D54EC7200DC4EBB /* NetworkManagerWithParsingSGUFactory_old.swift */,
+				164FA1522D54EE1B00DC4EBB /* NetworkManagerWithMockDataFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
 		165508292C13A34400A37900 /* SGU_old */ = {
 			isa = PBXGroup;
 			children = (
 				BA9D79242AC2173B00C36932 /* LessonHTMLParserSGU_old.swift */,
-				BAAEB3072AD992EF00E90223 /* DateHTMLParserSGU_old.swift */,
 				BAAEB30B2AD998BE00E90223 /* GroupsHTMLParserSGU_old.swift */,
 				BA2FEEE32B669582001F91F5 /* SessionEventsHTMLParserSGU_old.swift */,
 				16DB5F052C04D53900870B21 /* TeacherHTMLParserSGU_old.swift */,
@@ -558,6 +588,22 @@
 				16F315D52CE0FA2A001FFB21 /* TeacherSearchResultsPersistenceManager.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		167BDF402D53ADC900D82F4F /* Scraping */ = {
+			isa = PBXGroup;
+			children = (
+				167BDF412D53ADEF00D82F4F /* ScraperMock.swift */,
+			);
+			path = Scraping;
+			sourceTree = "<group>";
+		};
+		167BDF4C2D53C29000D82F4F /* IntegrationTests */ = {
+			isa = PBXGroup;
+			children = (
+				164FA1482D54E83E00DC4EBB /* NetworkTests.swift */,
+			);
+			path = IntegrationTests;
 			sourceTree = "<group>";
 		};
 		168069A52C5ADAFF002D47A6 /* SGU_ScheduleWidget */ = {
@@ -649,6 +695,15 @@
 			path = Common;
 			sourceTree = "<group>";
 		};
+		16D5A4262D511ED3003F4CAE /* Factory */ = {
+			isa = PBXGroup;
+			children = (
+				16D5A4292D511F1F003F4CAE /* ViewsManagerWithParsingSGUFactory.swift */,
+				16D5A42B2D511F7D003F4CAE /* ViewsManagerWithMockDataFactory.swift */,
+			);
+			path = Factory;
+			sourceTree = "<group>";
+		};
 		16DDFFE22C7C7720004A6DA6 /* Scraping */ = {
 			isa = PBXGroup;
 			children = (
@@ -662,7 +717,13 @@
 		BA1256CB2B7225160019D2E6 /* Persistence */ = {
 			isa = PBXGroup;
 			children = (
-				BA1256CC2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift */,
+				16D5A4072D511480003F4CAE /* GroupPersistenceManagerMock.swift */,
+				16D5A4092D511699003F4CAE /* LessonPersistenceManagerMock.swift */,
+				BA1256CC2B7225320019D2E6 /* GroupSchedulePersistenceManagerMock.swift */,
+				16D5A40B2D5116D9003F4CAE /* SessionEventPersistenceManagerMock.swift */,
+				16D5A40D2D511729003F4CAE /* GroupSessionEventsPersistenceManagerMock.swift */,
+				16D5A40F2D511777003F4CAE /* LessonSubgroupsPersistenceManagerMock.swift */,
+				16D5A4112D5117E2003F4CAE /* TeacherSearchResultsPersistenceManagerMock.swift */,
 			);
 			path = Persistence;
 			sourceTree = "<group>";
@@ -670,6 +731,7 @@
 		BA1A4FDA2B6C1B2F0068B2A4 /* ViewsManagers */ = {
 			isa = PBXGroup;
 			children = (
+				16D5A4262D511ED3003F4CAE /* Factory */,
 				BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */,
 			);
 			path = ViewsManagers;
@@ -679,7 +741,7 @@
 			isa = PBXGroup;
 			children = (
 				BAAD1F212B702D3900B58E32 /* UnitTests */,
-				BAAD1F062B6FF79700B58E32 /* TestEntities */,
+				167BDF4C2D53C29000D82F4F /* IntegrationTests */,
 			);
 			path = SGU_ScheduleTests;
 			sourceTree = "<group>";
@@ -729,9 +791,9 @@
 		BA9D79272AC2179400C36932 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
+				164FA14A2D54EA4E00DC4EBB /* Factory */,
 				BAFB8C2D2AC766E40080834C /* Protocols */,
 				BA9D79202ABE439F00C36932 /* LessonsNetworkManagerWithParsing.swift */,
-				BAAEB30D2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift */,
 				BAAEB3132AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift */,
 				BA2FEEDF2B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift */,
 				16DB5F0B2C04F0C400870B21 /* TeacherNetworkManagerWithParsing.swift */,
@@ -760,33 +822,24 @@
 			path = Errors;
 			sourceTree = "<group>";
 		};
-		BAAD1EFC2B6FE32400B58E32 /* Factories */ = {
-			isa = PBXGroup;
-			children = (
-				BAAD1EFF2B6FE3AC00B58E32 /* Protocols */,
-				16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */,
-				167248742C8B5711008673DE /* ViewModelWithParsingSGUFactory_old.swift */,
-				168294B82CD4029F002AE0B0 /* ViewModelForTestFactory.swift */,
-			);
-			path = Factories;
-			sourceTree = "<group>";
-		};
-		BAAD1EFF2B6FE3AC00B58E32 /* Protocols */ = {
+		BAAD1EFC2B6FE32400B58E32 /* Factory */ = {
 			isa = PBXGroup;
 			children = (
 				16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */,
+				16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */,
+				167248742C8B5711008673DE /* ViewModelWithParsingSGUFactory_old.swift */,
+				16D5A3FB2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift */,
 			);
-			path = Protocols;
+			path = Factory;
 			sourceTree = "<group>";
 		};
-		BAAD1F062B6FF79700B58E32 /* TestEntities */ = {
+		BAAD1F062B6FF79700B58E32 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
 				BA1256CB2B7225160019D2E6 /* Persistence */,
-				BAAD1F1A2B6FFA5500B58E32 /* ViewModels */,
 				BAAD1F072B6FF7C100B58E32 /* Networking */,
 			);
-			path = TestEntities;
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		BAAD1F072B6FF7C100B58E32 /* Networking */ = {
@@ -794,6 +847,7 @@
 			children = (
 				BAAD1F112B6FF90E00B58E32 /* Managers */,
 				BAAD1F102B6FF90200B58E32 /* Decoding */,
+				167BDF402D53ADC900D82F4F /* Scraping */,
 			);
 			path = Networking;
 			sourceTree = "<group>";
@@ -801,10 +855,10 @@
 		BAAD1F102B6FF90200B58E32 /* Decoding */ = {
 			isa = PBXGroup;
 			children = (
-				BAAD1F082B6FF8B200B58E32 /* LessonParserForTest.swift */,
-				BAAD1F0A2B6FF8C000B58E32 /* DateParserForTest.swift */,
-				BAAD1F0C2B6FF8D000B58E32 /* GroupsParserForTest.swift */,
-				BAAD1F0E2B6FF8E000B58E32 /* SessionEventsParserForTest.swift */,
+				BAAD1F082B6FF8B200B58E32 /* LessonParserMock.swift */,
+				BAAD1F0C2B6FF8D000B58E32 /* GroupsParserMock.swift */,
+				BAAD1F0E2B6FF8E000B58E32 /* SessionEventsParserMock.swift */,
+				164FA1542D54F34400DC4EBB /* TeacherParserMock.swift */,
 			);
 			path = Decoding;
 			sourceTree = "<group>";
@@ -812,29 +866,21 @@
 		BAAD1F112B6FF90E00B58E32 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerForTest.swift */,
-				BAAD1F142B6FF99B00B58E32 /* DateNetworkManagerForTest.swift */,
-				BAAD1F162B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift */,
-				BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift */,
+				BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerMock.swift */,
+				BAAD1F162B6FF9AC00B58E32 /* GroupsNetworkManagerMock.swift */,
+				BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerMock.swift */,
+				16D5A4132D51185F003F4CAE /* TeacherNetworkManagerMock.swift */,
 			);
 			path = Managers;
-			sourceTree = "<group>";
-		};
-		BAAD1F1A2B6FFA5500B58E32 /* ViewModels */ = {
-			isa = PBXGroup;
-			children = (
-				BAAD1F1B2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift */,
-				BAAD1F1D2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift */,
-			);
-			path = ViewModels;
 			sourceTree = "<group>";
 		};
 		BAAD1F212B702D3900B58E32 /* UnitTests */ = {
 			isa = PBXGroup;
 			children = (
-				BAAD1F242B702E1300B58E32 /* DecodingUnitTests.swift */,
-				BAAD1F262B702E8C00B58E32 /* NetworkManagersUnitTests.swift */,
-				BA1193FD2B7179A80087C6CE /* ViewModelsUnitTests.swift */,
+				1650ED1A2D5215A200FE2F2C /* ScrapingTests.swift */,
+				1650ED152D5214F100FE2F2C /* ParsingTests.swift */,
+				1650ED182D52152F00FE2F2C /* ParsingTests_old.swift */,
+				167BDF3D2D53A46D00D82F4F /* NetworkManagersTests.swift */,
 			);
 			path = UnitTests;
 			sourceTree = "<group>";
@@ -843,7 +889,6 @@
 			isa = PBXGroup;
 			children = (
 				BAAEB3022AD98EFB00E90223 /* LessonHTMLParser.swift */,
-				BAAEB3052AD992B000E90223 /* DateHTMLParser.swift */,
 				BAAEB3092AD9953900E90223 /* GroupsHTMLParser.swift */,
 				BA2FEEE12B66952B001F91F5 /* SessionEventsHTMLParser.swift */,
 				16DB5F072C04D55600870B21 /* TeacherHTMLParser.swift */,
@@ -896,6 +941,7 @@
 				BADAE1252ABA003D0079E3D7 /* ViewModels */,
 				BADAE1232ABA002C0079E3D7 /* Views */,
 				BADAE1172AB9C0DA0079E3D7 /* Preview Content */,
+				BAAD1F062B6FF79700B58E32 /* Mocks */,
 				BADAE1112AB9C0D60079E3D7 /* SGU_ScheduleApp.swift */,
 				BADAE1152AB9C0DA0079E3D7 /* Assets.xcassets */,
 			);
@@ -957,7 +1003,7 @@
 			isa = PBXGroup;
 			children = (
 				16CEC0EE2D4674F000EF668E /* Common */,
-				BAAD1EFC2B6FE32400B58E32 /* Factories */,
+				BAAD1EFC2B6FE32400B58E32 /* Factory */,
 				165508312C14369F00A37900 /* DepartmentsViewModel.swift */,
 				BAAEB31B2ADAA57B00E90223 /* GroupsViewModel.swift */,
 				BA9B4DAF2AD0A63C008A6092 /* ScheduleViewModel.swift */,
@@ -1190,7 +1236,7 @@
 /* Begin PBXShellScriptBuildPhase section */
 		1672E33D2CF7A58500FA616E /* SwiftLint script */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -1202,7 +1248,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "if command -v ${PODS_ROOT}/SwiftLint/swiftlint >/dev/null 2>&1\nthen\n    ${PODS_ROOT}/SwiftLint/swiftlint --fix && ${PODS_ROOT}/SwiftLint/swiftlint\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
@@ -1324,9 +1370,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				BAAD1F272B702E8C00B58E32 /* NetworkManagersUnitTests.swift in Sources */,
-				BAAD1F252B702E1400B58E32 /* DecodingUnitTests.swift in Sources */,
-				BA1193FE2B7179A80087C6CE /* ViewModelsUnitTests.swift in Sources */,
+				167BDF3E2D53A46D00D82F4F /* NetworkManagersTests.swift in Sources */,
+				1650ED172D5214F100FE2F2C /* ParsingTests.swift in Sources */,
+				164FA1492D54E83E00DC4EBB /* NetworkTests.swift in Sources */,
+				1650ED1B2D5215A200FE2F2C /* ScrapingTests.swift in Sources */,
+				1650ED192D52152F00FE2F2C /* ParsingTests_old.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1337,20 +1385,20 @@
 				BA53835F2AF56FE40004F012 /* GroupScheduleCoreDataManager.swift in Sources */,
 				BAAEB30C2AD998BE00E90223 /* GroupsHTMLParserSGU_old.swift in Sources */,
 				165508302C14362200A37900 /* DepartmentsView.swift in Sources */,
+				164FA14D2D54EAC000DC4EBB /* NetworkManagerFactory.swift in Sources */,
 				BA5383612AF571B90004F012 /* GroupScheduleDTO.swift in Sources */,
 				BAAEB3102AD9A3BD00E90223 /* DateNetworkManager.swift in Sources */,
+				16D5A3FC2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift in Sources */,
 				BA9D792F2AC33D2E00C36932 /* NetworkError.swift in Sources */,
 				16FE827C2CABEA4100DB5682 /* HeheAlert.swift in Sources */,
 				BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */,
-				BAAEB3062AD992B000E90223 /* DateHTMLParser.swift in Sources */,
 				BA9D79252AC2173B00C36932 /* LessonHTMLParserSGU_old.swift in Sources */,
 				1655082E2C14345A00A37900 /* PlainTextSubview.swift in Sources */,
 				16C667402D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */,
 				BAAEB30A2AD9953900E90223 /* GroupsHTMLParser.swift in Sources */,
 				16F315DD2CE0FC39001FFB21 /* TeacherSearchResultsUDManager.swift in Sources */,
-				BAAEB30E2AD9A35000E90223 /* DateNetworkManagerWithParsing.swift in Sources */,
+				164FA1532D54EE1B00DC4EBB /* NetworkManagerWithMockDataFactory.swift in Sources */,
 				16F315D92CE0FAF7001FFB21 /* TeacherSearchResult.swift in Sources */,
-				BAAD1F0D2B6FF8D000B58E32 /* GroupsParserForTest.swift in Sources */,
 				BA53835D2AF56F660004F012 /* CoreData_GroupScheduleExtension.swift in Sources */,
 				16644B582C78F3D9005DA480 /* SessionEventsHTMLParserSGU.swift in Sources */,
 				BA2FEEEC2B681F2A001F91F5 /* CarouselView.swift in Sources */,
@@ -1367,8 +1415,6 @@
 				BA2FEEF02B682547001F91F5 /* ScheduleModalView.swift in Sources */,
 				167248712C8844F4008673DE /* TutorialView.swift in Sources */,
 				BAFA58092AEC5D8D0060BD81 /* CoreData_LessonExtension.swift in Sources */,
-				168294B92CD4029F002AE0B0 /* ViewModelForTestFactory.swift in Sources */,
-				BAAD1F132B6FF97A00B58E32 /* LessonNetworkManagerForTest.swift in Sources */,
 				BA2FEED82B65630C001F91F5 /* SessionEventDTO.swift in Sources */,
 				168294B72CD4012C002AE0B0 /* TeacherScheduleView.swift in Sources */,
 				16150C2D2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift in Sources */,
@@ -1385,42 +1431,45 @@
 				16CEC0F02D46753900EF668E /* ErrorPresentable.swift in Sources */,
 				BA2FEEE82B66B4FF001F91F5 /* SessionEventSubview.swift in Sources */,
 				165508322C14369F00A37900 /* DepartmentsViewModel.swift in Sources */,
-				BAAD1F172B6FF9AC00B58E32 /* GroupNetworkManagerForTest.swift in Sources */,
 				BAFA580C2AEC60C30060BD81 /* CoreDataModel.xcdatamodeld in Sources */,
 				16C667432D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */,
+				164FA14F2D54EB1000DC4EBB /* NetworkManagerWithParsingSGUFactory.swift in Sources */,
 				16DB5F082C04D55600870B21 /* TeacherHTMLParser.swift in Sources */,
 				16A585422CB063E900D6837A /* View+OnRotate.swift in Sources */,
-				BAAD1F1C2B6FFA7100B58E32 /* ScheduleViewModelForTest.swift in Sources */,
 				16DDFFE62C7C7820004A6DA6 /* StaticScraper.swift in Sources */,
 				BA2FEEE22B66952B001F91F5 /* SessionEventsHTMLParser.swift in Sources */,
 				161EFD7C2C074C2B008E281E /* TeacherViewModel.swift in Sources */,
+				164FA1552D54F34400DC4EBB /* TeacherParserMock.swift in Sources */,
 				16DDFFE42C7C7743004A6DA6 /* DynamicScraper.swift in Sources */,
 				167248822C8F138A008673DE /* CoreData_AcademicGroupExtension.swift in Sources */,
+				16D5A41A2D511B72003F4CAE /* LessonNetworkManagerMock.swift in Sources */,
+				16D5A41D2D511B72003F4CAE /* SessionEventsNetworkManagerMock.swift in Sources */,
+				16D5A41E2D511B72003F4CAE /* GroupsParserMock.swift in Sources */,
+				16D5A41F2D511B72003F4CAE /* LessonParserMock.swift in Sources */,
+				167BDF422D53ADEF00D82F4F /* ScraperMock.swift in Sources */,
+				16D5A4202D511B72003F4CAE /* TeacherNetworkManagerMock.swift in Sources */,
+				16D5A4212D511B72003F4CAE /* SessionEventsParserMock.swift in Sources */,
+				16D5A4242D511B72003F4CAE /* GroupsNetworkManagerMock.swift in Sources */,
 				BAFA58132AED0EE10060BD81 /* CoreDataError.swift in Sources */,
 				BAFA58072AEC5AFD0060BD81 /* PersistenceController.swift in Sources */,
 				BAFB8C2C2AC766850080834C /* LessonNetworkManager.swift in Sources */,
 				16DB5F042C04CF9900870B21 /* Teacher.swift in Sources */,
-				BA1256CD2B7225320019D2E6 /* GroupScheduleCoreDataManagerForTest.swift in Sources */,
 				BA2FEEEE2B682511001F91F5 /* ScheduleBackView.swift in Sources */,
-				BAAD1F0F2B6FF8E000B58E32 /* SessionEventsParserForTest.swift in Sources */,
 				BA9D79192ABB408100C36932 /* GroupSubview.swift in Sources */,
 				16A776272CC253D800875A8E /* LessonSubgroupsUDManager.swift in Sources */,
 				BA9D79212ABE439F00C36932 /* LessonsNetworkManagerWithParsing.swift in Sources */,
-				BAAD1F152B6FF99B00B58E32 /* DateNetworkManagerForTest.swift in Sources */,
 				BADAE12F2ABA0B240079E3D7 /* Date+Extension.swift in Sources */,
 				16637A9D2C976BC20082A1AD /* MainButton.swift in Sources */,
 				16C6673E2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */,
 				167248802C8DA190008673DE /* UserDefaultsError.swift in Sources */,
 				BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */,
 				1650F5182C54492600622205 /* AppStyle.swift in Sources */,
-				BAAD1F192B6FF9BC00B58E32 /* SessionEventsNetworkManagerForTest.swift in Sources */,
 				BA1256CF2B72A6E60019D2E6 /* UIDevice+Extension.swift in Sources */,
 				16A585402CB063B400D6837A /* DeviceRotationViewModifier.swift in Sources */,
 				162FEA542CBFC94300AA682A /* OverlayView.swift in Sources */,
 				162FEA5F2CC1316200AA682A /* LessonSubgroup.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
 				16C667502D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift in Sources */,
-				BAAD1F1E2B6FFA7F00B58E32 /* GroupsViewModelForTest.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
 				16F7AD9A2C51933B0057B062 /* SettingsView.swift in Sources */,
 				16A678FF2D31955700B2D896 /* Date+ConstantsExtension.swift in Sources */,
@@ -1430,8 +1479,8 @@
 				16F315D72CE0FA2A001FFB21 /* TeacherSearchResultsPersistenceManager.swift in Sources */,
 				BA2FEEDE2B668AAF001F91F5 /* GroupSessionEventsDTO.swift in Sources */,
 				16150C2B2C09BFB6006BA964 /* ViewModelFactory.swift in Sources */,
+				16D5A42C2D511F7D003F4CAE /* ViewsManagerWithMockDataFactory.swift in Sources */,
 				BA9B4DB02AD0A63C008A6092 /* ScheduleViewModel.swift in Sources */,
-				BAAD1F0B2B6FF8C000B58E32 /* DateParserForTest.swift in Sources */,
 				BA07C9B92AE47A5B008CDDCC /* WeekType.swift in Sources */,
 				16F371762CCF59A3006188D4 /* TeacherHTMLParserSGU.swift in Sources */,
 				BA2FEEDA2B667E42001F91F5 /* SessionEventType.swift in Sources */,
@@ -1439,6 +1488,7 @@
 				16AFA78F2CD0CBF300758699 /* CloseButton.swift in Sources */,
 				167248772C8B5D0A008673DE /* ParserOptions.swift in Sources */,
 				16F371782CCF6256006188D4 /* TeachersSearchView.swift in Sources */,
+				164FA1512D54EC7200DC4EBB /* NetworkManagerWithParsingSGUFactory_old.swift in Sources */,
 				167248792C8CB651008673DE /* GroupPersistenceManager.swift in Sources */,
 				BA2FEEEA2B6817C6001F91F5 /* SessionEventsModalView.swift in Sources */,
 				BA9D792C2AC21DDA00C36932 /* URLSourceSGU_old.swift in Sources */,
@@ -1452,13 +1502,18 @@
 				BAAEB3182ADA865500E90223 /* AcademicProgram.swift in Sources */,
 				BA977C022AE6BE3B00F28F22 /* ScheduleEvent.swift in Sources */,
 				16DB5F0A2C04EFD000870B21 /* TeacherNetworkManager.swift in Sources */,
-				BAAEB3082AD992EF00E90223 /* DateHTMLParserSGU_old.swift in Sources */,
+				167BDF452D53AEC600D82F4F /* GroupSchedulePersistenceManagerMock.swift in Sources */,
+				167BDF462D53AEC600D82F4F /* GroupSessionEventsPersistenceManagerMock.swift in Sources */,
+				167BDF472D53AEC600D82F4F /* SessionEventPersistenceManagerMock.swift in Sources */,
+				167BDF482D53AEC600D82F4F /* LessonSubgroupsPersistenceManagerMock.swift in Sources */,
+				167BDF492D53AEC600D82F4F /* TeacherSearchResultsPersistenceManagerMock.swift in Sources */,
+				167BDF4A2D53AEC600D82F4F /* GroupPersistenceManagerMock.swift in Sources */,
+				167BDF4B2D53AEC600D82F4F /* LessonPersistenceManagerMock.swift in Sources */,
 				16F3717A2CCF6A3C006188D4 /* TeachersSearchViewModel.swift in Sources */,
 				BAAEB3142AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift in Sources */,
 				16CEC0F22D4678C100EF668E /* BaseViewModel.swift in Sources */,
 				BA977C042AE6D65000F28F22 /* TimeBreak.swift in Sources */,
 				BADAE12C2ABA08650079E3D7 /* ScheduleSubview.swift in Sources */,
-				BAAD1F092B6FF8B200B58E32 /* LessonParserForTest.swift in Sources */,
 				16D2F6622CD5329700217C45 /* BaseError.swift in Sources */,
 				BAAEB3032AD98EFB00E90223 /* LessonHTMLParser.swift in Sources */,
 				BAFA58152AED25DD0060BD81 /* UserDefaultsKeys.swift in Sources */,
@@ -1468,6 +1523,7 @@
 				BA9D792A2AC21C3B00C36932 /* URLSource.swift in Sources */,
 				16F7AD9C2C52F18D0057B062 /* AppSettings.swift in Sources */,
 				BA2F67832B75611E00B06667 /* DepartmentSource.swift in Sources */,
+				16D5A42A2D511F1F003F4CAE /* ViewsManagerWithParsingSGUFactory.swift in Sources */,
 				16150C2F2C09D23E006BA964 /* TeacherInfoView.swift in Sources */,
 				BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */,
 				16C667472D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift in Sources */,
@@ -1513,7 +1569,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1551,7 +1607,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1574,7 +1630,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1597,7 +1653,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1756,7 +1812,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1798,7 +1854,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.1.0;
+				MARKETING_VERSION = 2.2.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

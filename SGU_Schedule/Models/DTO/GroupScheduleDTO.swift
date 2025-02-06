@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct GroupScheduleDTO {
+public struct GroupScheduleDTO: Equatable {
 
     var group: AcademicGroupDTO
     var lessons: [LessonDTO]
@@ -15,6 +15,14 @@ public struct GroupScheduleDTO {
     init(groupNumber: String, departmentCode: String, lessonsByDays: [LessonDTO]) {
         self.group = AcademicGroupDTO(fullNumber: groupNumber, departmentCode: departmentCode)
         self.lessons = lessonsByDays
+    }
+
+    public static var mock: Self {
+        .init(
+            groupNumber: AcademicGroupDTO.mock.fullNumber,
+            departmentCode: AcademicGroupDTO.mock.departmentCode,
+            lessonsByDays: LessonDTO.mocks
+        )
     }
 
     public func getTodayFirstLesson(subgroupsByLessons: [String: [LessonSubgroup]]) -> LessonDTO? {
