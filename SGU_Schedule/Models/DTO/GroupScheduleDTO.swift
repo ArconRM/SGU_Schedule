@@ -133,7 +133,7 @@ public struct GroupScheduleDTO: Equatable {
     public func getSubgroupsByLessons(savedSubgroups: [String: LessonSubgroup]) -> [String: [LessonSubgroup]] {
         var subgroupsByLessons: [String: [LessonSubgroup]] = [:]
         for lesson in self.lessons {
-            if lesson.subgroup != nil && !lesson.subgroup!.isEmpty {
+            if lesson.subgroup != nil && !lesson.subgroup!.isEmpty && lesson.subgroup!.contains(where: { $0.isNumber }) {
                 let isSaved = savedSubgroups[lesson.title] != nil && savedSubgroups[lesson.title]?.number == lesson.subgroup
                 if subgroupsByLessons[lesson.title] != nil && !subgroupsByLessons[lesson.title]!.contains(where: { $0.number == lesson.subgroup }) {
                     subgroupsByLessons[lesson.title]!.append(LessonSubgroup(teacher: lesson.teacherFullName, number: lesson.subgroup!, isSaved: isSaved))
