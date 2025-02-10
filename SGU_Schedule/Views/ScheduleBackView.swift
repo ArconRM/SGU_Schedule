@@ -8,6 +8,9 @@
 import SwiftUI
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
+    @Environment(\.colorScheme) var colorScheme
+    @EnvironmentObject var appSettings: AppSettings
+    
     @ObservedObject var viewModel: ViewModel
 
     var selectedGroup: AcademicGroupDTO
@@ -39,6 +42,22 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.horizontal, 5)
+                
+                if viewModel.currentActivity == nil {
+                    Button("Отслеживать в Live Activity") {
+                        viewModel.startActivity(lesson: lesson)
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                    .padding(10)
+                } else {
+                    Button("Остановить Live Activity") {
+                        viewModel.endActivity()
+                    }
+                    .buttonStyle(.bordered)
+                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                    .padding(10)
+                }
 
             } else if let timeBreak = viewModel.currentEvent as? TimeBreak {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
@@ -106,4 +125,5 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 #Preview {
     ScheduleBackView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel(),
                      selectedGroup: AcademicGroupDTO.mock)
+    .environmentObject(AppSettings())
 }

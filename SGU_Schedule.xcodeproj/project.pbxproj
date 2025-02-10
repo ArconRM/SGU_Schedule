@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		1602CA852C5D77E500E8F89F /* NotAvailableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA842C5D77E500E8F89F /* NotAvailableView.swift */; };
 		1602CA872C5D786000E8F89F /* SingleScheduleEventView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CA862C5D786000E8F89F /* SingleScheduleEventView.swift */; };
-		1602CA882C5D79B900E8F89F /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* Date+Extension.swift */; };
 		1602CAB02C5D7CF000E8F89F /* ScheduleEventsWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1602CAAF2C5D7CF000E8F89F /* ScheduleEventsWidgetViewModel.swift */; };
 		16071AE02CD40DE800343899 /* Bundle+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16071ADF2CD40DE800343899 /* Bundle+Extension.swift */; };
 		16150C2B2C09BFB6006BA964 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */; };
@@ -72,7 +71,6 @@
 		168069A32C5ADAFF002D47A6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */; };
 		168069A42C5ADAFF002D47A6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */; };
 		168069A72C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069A62C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift */; };
-		168069A92C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069A82C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift */; };
 		168069AB2C5ADAFF002D47A6 /* ScheduleEventsWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069AA2C5ADAFF002D47A6 /* ScheduleEventsWidget.swift */; };
 		168069AD2C5ADAFF002D47A6 /* AppIntent.swift in Sources */ = {isa = PBXBuildFile; fileRef = 168069AC2C5ADAFF002D47A6 /* AppIntent.swift */; };
 		168069AF2C5ADAFF002D47A6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 168069AE2C5ADAFF002D47A6 /* Assets.xcassets */; };
@@ -107,15 +105,42 @@
 		16A776242CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A776222CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift */; };
 		16A776262CC253D800875A8E /* LessonSubgroupsUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A776252CC253D800875A8E /* LessonSubgroupsUDManager.swift */; };
 		16A776272CC253D800875A8E /* LessonSubgroupsUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A776252CC253D800875A8E /* LessonSubgroupsUDManager.swift */; };
+		16ABCD312D5A596900BF2E5A /* Date+ConstantsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A678FE2D31955700B2D896 /* Date+ConstantsExtension.swift */; };
+		16ABCD322D5A596E00BF2E5A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* Date+Extension.swift */; };
+		16ABCD332D5A596E00BF2E5A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* Date+Extension.swift */; };
+		16ABCD342D5A597600BF2E5A /* LessonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1282ABA011C0079E3D7 /* LessonDTO.swift */; };
+		16ABCD352D5A599900BF2E5A /* AcademicGroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1262ABA004C0079E3D7 /* AcademicGroupDTO.swift */; };
+		16ABCD362D5A599900BF2E5A /* TimeBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreak.swift */; };
+		16ABCD372D5A599900BF2E5A /* Department.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67802B7560C900B06667 /* Department.swift */; };
+		16ABCD382D5A599900BF2E5A /* GroupScheduleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */; };
+		16ABCD392D5A599900BF2E5A /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
+		16ABCD3A2D5A599900BF2E5A /* ScheduleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEvent.swift */; };
+		16ABCD3B2D5A599900BF2E5A /* TeacherSearchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F315D82CE0FAF7001FFB21 /* TeacherSearchResult.swift */; };
+		16ABCD3C2D5A599900BF2E5A /* LessonSubgroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162FEA5D2CC1316200AA682A /* LessonSubgroup.swift */; };
+		16ABCD3D2D5A599900BF2E5A /* GroupSessionEventsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */; };
+		16ABCD3E2D5A599900BF2E5A /* Teacher.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F032C04CF9900870B21 /* Teacher.swift */; };
+		16ABCD3F2D5A599900BF2E5A /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9B2C52F18D0057B062 /* AppSettings.swift */; };
+		16ABCD402D5A59AB00BF2E5A /* ParserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248762C8B5D0A008673DE /* ParserOptions.swift */; };
+		16ABCD412D5A59AE00BF2E5A /* UserDefaultsKeys.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58142AED25DD0060BD81 /* UserDefaultsKeys.swift */; };
+		16ABCD422D5A59AE00BF2E5A /* AppUrls.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1636762A2C91EA1400438B86 /* AppUrls.swift */; };
+		16ABCD432D5A59AE00BF2E5A /* AppGroup.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB20A2C62AE72001D0688 /* AppGroup.swift */; };
+		16ABCD442D5A59AE00BF2E5A /* AcademicProgram.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAEB3172ADA865500E90223 /* AcademicProgram.swift */; };
+		16ABCD452D5A59AE00BF2E5A /* AppStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1650F5172C54492600622205 /* AppStyle.swift */; };
+		16ABCD462D5A59AE00BF2E5A /* SessionEventType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED92B667E42001F91F5 /* SessionEventType.swift */; };
+		16ABCD472D5A59AE00BF2E5A /* Weekdays.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1312ABA21430079E3D7 /* Weekdays.swift */; };
+		16ABCD482D5A59AE00BF2E5A /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9D2C52F2050057B062 /* AppTheme.swift */; };
+		16ABCD492D5A59AE00BF2E5A /* LessonType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9BA2AE47A7B008CDDCC /* LessonType.swift */; };
+		16ABCD4A2D5A59AE00BF2E5A /* WeekType.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA07C9B82AE47A5B008CDDCC /* WeekType.swift */; };
+		16ABCD4B2D5A59AE00BF2E5A /* GroupsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D791B2ABE2E4700C36932 /* GroupsSource.swift */; };
+		16ABCD4C2D5A59AE00BF2E5A /* DepartmentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67822B75611E00B06667 /* DepartmentSource.swift */; };
+		16ABCD4D2D5A59AE00BF2E5A /* ParserOptions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248762C8B5D0A008673DE /* ParserOptions.swift */; };
 		16AFA78F2CD0CBF300758699 /* CloseButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AFA78E2CD0CBF300758699 /* CloseButton.swift */; };
 		16B3B0CE2C5FE4AE00043B16 /* ScheduleEventsFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16B3B0CD2C5FE4AE00043B16 /* ScheduleEventsFetchResult.swift */; };
 		16B3B0D02C61134900043B16 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
 		16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58122AED0EE10060BD81 /* CoreDataError.swift */; };
 		16B645EC2C634794000574F9 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9B2C52F18D0057B062 /* AppSettings.swift */; };
-		16C6673D2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */; };
 		16C6673E2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */; };
 		16C667402D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */; };
-		16C667412D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */; };
 		16C667432D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */; };
 		16C667442D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */; };
 		16C667462D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667452D2D2BA200EB2F98 /* SessionEventPersistenceManager.swift */; };
@@ -162,6 +187,15 @@
 		16F371762CCF59A3006188D4 /* TeacherHTMLParserSGU.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F371752CCF59A3006188D4 /* TeacherHTMLParserSGU.swift */; };
 		16F371782CCF6256006188D4 /* TeachersSearchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F371772CCF6256006188D4 /* TeachersSearchView.swift */; };
 		16F3717A2CCF6A3C006188D4 /* TeachersSearchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F371792CCF6A3C006188D4 /* TeachersSearchViewModel.swift */; };
+		16F3AE932D5A501400AD8348 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */; };
+		16F3AE942D5A501400AD8348 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */; };
+		16F3AEA12D5A501500AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 16F3AE922D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		16F3AEAD2D5A501C00AD8348 /* SGU_ScheduleLiveActivitiesBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3AEA92D5A501C00AD8348 /* SGU_ScheduleLiveActivitiesBundle.swift */; };
+		16F3AEAE2D5A501C00AD8348 /* ScheduleLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3AEAA2D5A501C00AD8348 /* ScheduleLiveActivity.swift */; };
+		16F3AEAF2D5A501C00AD8348 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 16F3AEA62D5A501C00AD8348 /* Assets.xcassets */; };
+		16F3AEB22D5A550F00AD8348 /* ScheduleEventAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3AEB12D5A550F00AD8348 /* ScheduleEventAttributes.swift */; };
+		16F3AEB32D5A553600AD8348 /* ScheduleLiveActivity.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3AEAA2D5A501C00AD8348 /* ScheduleLiveActivity.swift */; };
+		16F3AEB42D5A553600AD8348 /* ScheduleEventAttributes.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F3AEB12D5A550F00AD8348 /* ScheduleEventAttributes.swift */; };
 		16F7AD9A2C51933B0057B062 /* SettingsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD992C51933B0057B062 /* SettingsView.swift */; };
 		16F7AD9C2C52F18D0057B062 /* AppSettings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9B2C52F18D0057B062 /* AppSettings.swift */; };
 		16F7AD9E2C52F2050057B062 /* AppTheme.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9D2C52F2050057B062 /* AppTheme.swift */; };
@@ -241,6 +275,13 @@
 			remoteGlobalIDString = 168069A12C5ADAFF002D47A6;
 			remoteInfo = SGU_ScheduleWidgetExtension;
 		};
+		16F3AE9F2D5A501500AD8348 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = BADAE1062AB9C0D60079E3D7 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 16F3AE912D5A501400AD8348;
+			remoteInfo = SGU_ScheduleLiveActivitiesExtension;
+		};
 		BA996A5C2AC4A00200888BE2 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = BADAE1062AB9C0D60079E3D7 /* Project object */;
@@ -257,6 +298,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
+				16F3AEA12D5A501500AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex in Embed Foundation Extensions */,
 				168069B32C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -322,7 +364,6 @@
 		1680698C2C5AD5E2002D47A6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = /System/Library/Frameworks/SwiftUI.framework; sourceTree = "<absolute>"; };
 		168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SGU_ScheduleWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
 		168069A62C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGU_ScheduleWidgetBundle.swift; sourceTree = "<group>"; };
-		168069A82C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGU_ScheduleWidgetLiveActivity.swift; sourceTree = "<group>"; };
 		168069AA2C5ADAFF002D47A6 /* ScheduleEventsWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventsWidget.swift; sourceTree = "<group>"; };
 		168069AC2C5ADAFF002D47A6 /* AppIntent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppIntent.swift; sourceTree = "<group>"; };
 		168069AE2C5ADAFF002D47A6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -377,6 +418,12 @@
 		16F371752CCF59A3006188D4 /* TeacherHTMLParserSGU.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherHTMLParserSGU.swift; sourceTree = "<group>"; };
 		16F371772CCF6256006188D4 /* TeachersSearchView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersSearchView.swift; sourceTree = "<group>"; };
 		16F371792CCF6A3C006188D4 /* TeachersSearchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeachersSearchViewModel.swift; sourceTree = "<group>"; };
+		16F3AE922D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SGU_ScheduleLiveActivitiesExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		16F3AEA62D5A501C00AD8348 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		16F3AEA72D5A501C00AD8348 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		16F3AEA92D5A501C00AD8348 /* SGU_ScheduleLiveActivitiesBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SGU_ScheduleLiveActivitiesBundle.swift; sourceTree = "<group>"; };
+		16F3AEAA2D5A501C00AD8348 /* ScheduleLiveActivity.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleLiveActivity.swift; sourceTree = "<group>"; };
+		16F3AEB12D5A550F00AD8348 /* ScheduleEventAttributes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventAttributes.swift; sourceTree = "<group>"; };
 		16F7AD992C51933B0057B062 /* SettingsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SettingsView.swift; sourceTree = "<group>"; };
 		16F7AD9B2C52F18D0057B062 /* AppSettings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSettings.swift; sourceTree = "<group>"; };
 		16F7AD9D2C52F2050057B062 /* AppTheme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTheme.swift; sourceTree = "<group>"; };
@@ -467,6 +514,15 @@
 			files = (
 				168069A42C5ADAFF002D47A6 /* SwiftUI.framework in Frameworks */,
 				168069A32C5ADAFF002D47A6 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16F3AE8F2D5A501400AD8348 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16F3AE942D5A501400AD8348 /* SwiftUI.framework in Frameworks */,
+				16F3AE932D5A501400AD8348 /* WidgetKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -614,7 +670,6 @@
 				1602CA832C5D77C400E8F89F /* Views */,
 				16C667512D2DBF6700EB2F98 /* Widgets */,
 				168069A62C5ADAFF002D47A6 /* SGU_ScheduleWidgetBundle.swift */,
-				168069A82C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift */,
 				168069AC2C5ADAFF002D47A6 /* AppIntent.swift */,
 				168069AE2C5ADAFF002D47A6 /* Assets.xcassets */,
 				168069B02C5ADAFF002D47A6 /* Info.plist */,
@@ -712,6 +767,18 @@
 				16DDFFE52C7C7820004A6DA6 /* StaticScraper.swift */,
 			);
 			path = Scraping;
+			sourceTree = "<group>";
+		};
+		16F3AEAB2D5A501C00AD8348 /* SGU_ScheduleLiveActivities */ = {
+			isa = PBXGroup;
+			children = (
+				16F3AEA62D5A501C00AD8348 /* Assets.xcassets */,
+				16F3AEA72D5A501C00AD8348 /* Info.plist */,
+				16F3AEA92D5A501C00AD8348 /* SGU_ScheduleLiveActivitiesBundle.swift */,
+				16F3AEAA2D5A501C00AD8348 /* ScheduleLiveActivity.swift */,
+				16F3AEB12D5A550F00AD8348 /* ScheduleEventAttributes.swift */,
+			);
+			path = SGU_ScheduleLiveActivities;
 			sourceTree = "<group>";
 		};
 		BA1256CB2B7225160019D2E6 /* Persistence */ = {
@@ -911,6 +978,7 @@
 				BADAE1212AB9CC250079E3D7 /* Podfile */,
 				BADAE1102AB9C0D60079E3D7 /* SGU_Schedule */,
 				168069A52C5ADAFF002D47A6 /* SGU_ScheduleWidget */,
+				16F3AEAB2D5A501C00AD8348 /* SGU_ScheduleLiveActivities */,
 				BA996A592AC4A00200888BE2 /* SGU_ScheduleTests */,
 				BADAE10F2AB9C0D60079E3D7 /* Products */,
 				C8419E67D9E26C9ADC2DEA46 /* Pods */,
@@ -924,6 +992,7 @@
 				BADAE10E2AB9C0D60079E3D7 /* SGU_Schedule.app */,
 				BA996A582AC4A00200888BE2 /* SGU_ScheduleTests.xctest */,
 				168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */,
+				16F3AE922D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1121,6 +1190,25 @@
 			productReference = 168069A22C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
+		16F3AE912D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 16F3AEA32D5A501500AD8348 /* Build configuration list for PBXNativeTarget "SGU_ScheduleLiveActivitiesExtension" */;
+			buildPhases = (
+				16F3AE8E2D5A501400AD8348 /* Sources */,
+				16F3AE8F2D5A501400AD8348 /* Frameworks */,
+				16F3AE902D5A501400AD8348 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SGU_ScheduleLiveActivitiesExtension;
+			packageProductDependencies = (
+			);
+			productName = SGU_ScheduleLiveActivitiesExtension;
+			productReference = 16F3AE922D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		BA996A572AC4A00200888BE2 /* SGU_ScheduleTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = BA996A602AC4A00200888BE2 /* Build configuration list for PBXNativeTarget "SGU_ScheduleTests" */;
@@ -1156,6 +1244,7 @@
 			);
 			dependencies = (
 				168069B22C5ADAFF002D47A6 /* PBXTargetDependency */,
+				16F3AEA02D5A501500AD8348 /* PBXTargetDependency */,
 			);
 			name = SGU_Schedule;
 			productName = SGU_Schedule;
@@ -1169,11 +1258,14 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1530;
+				LastSwiftUpdateCheck = 1620;
 				LastUpgradeCheck = 1430;
 				TargetAttributes = {
 					168069A12C5ADAFF002D47A6 = {
 						CreatedOnToolsVersion = 15.3;
+					};
+					16F3AE912D5A501400AD8348 = {
+						CreatedOnToolsVersion = 16.2;
 					};
 					BA996A572AC4A00200888BE2 = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -1200,6 +1292,7 @@
 				BADAE10D2AB9C0D60079E3D7 /* SGU_Schedule */,
 				BA996A572AC4A00200888BE2 /* SGU_ScheduleTests */,
 				168069A12C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension */,
+				16F3AE912D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension */,
 			);
 		};
 /* End PBXProject section */
@@ -1210,6 +1303,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				168069AF2C5ADAFF002D47A6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16F3AE902D5A501400AD8348 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16F3AEAF2D5A501C00AD8348 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1303,23 +1404,23 @@
 				168069BB2C5C2176002D47A6 /* SessionEventDTO.swift in Sources */,
 				16B645EC2C634794000574F9 /* AppSettings.swift in Sources */,
 				168069C22C5C217D002D47A6 /* DepartmentSource.swift in Sources */,
-				16C6673D2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */,
 				16A776232CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift in Sources */,
 				168069C32C5C217D002D47A6 /* UserDefaultsKeys.swift in Sources */,
 				16B3B0D02C61134900043B16 /* LessonPersistenceManager.swift in Sources */,
 				168069C42C5C217D002D47A6 /* AppStyle.swift in Sources */,
 				167EE42D2C5F7CFF00701C8A /* GroupScheduleCoreDataManager.swift in Sources */,
 				16B3B0CE2C5FE4AE00043B16 /* ScheduleEventsFetchResult.swift in Sources */,
-				1602CA882C5D79B900E8F89F /* Date+Extension.swift in Sources */,
 				16C6674C2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift in Sources */,
 				16C667442D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */,
 				16F315DC2CE0FC39001FFB21 /* TeacherSearchResultsUDManager.swift in Sources */,
 				168069C52C5C217D002D47A6 /* AcademicProgram.swift in Sources */,
 				163676272C8F2F4A00438B86 /* CoreData_AcademicGroupExtension.swift in Sources */,
 				168069C62C5C217D002D47A6 /* GroupsSource.swift in Sources */,
+				16ABCD402D5A59AB00BF2E5A /* ParserOptions.swift in Sources */,
 				168069C72C5C217D002D47A6 /* LessonType.swift in Sources */,
 				166DB20E2C62B188001D0688 /* TwoScheduleEventsView.swift in Sources */,
 				168069C82C5C217D002D47A6 /* SessionEventType.swift in Sources */,
+				16ABCD322D5A596E00BF2E5A /* Date+Extension.swift in Sources */,
 				16CD679B2D2E80F000583A99 /* TwoSessionEventsView.swift in Sources */,
 				16FC5A6A2C873E6500E2563F /* AccessoryRectangularScheduleView.swift in Sources */,
 				168069C92C5C217D002D47A6 /* AppTheme.swift in Sources */,
@@ -1344,7 +1445,6 @@
 				1672487D2C8CF99C008673DE /* GroupCoreDataManager.swift in Sources */,
 				16C667562D2DC92600EB2F98 /* SessionEventsWidgetViewModel.swift in Sources */,
 				168069C02C5C2176002D47A6 /* Department.swift in Sources */,
-				16C667412D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */,
 				168069C12C5C2176002D47A6 /* ScheduleEvent.swift in Sources */,
 				167EE42B2C5F79C700701C8A /* CoreData_GroupScheduleExtension.swift in Sources */,
 				168069AB2C5ADAFF002D47A6 /* ScheduleEventsWidget.swift in Sources */,
@@ -1359,10 +1459,46 @@
 				1602CA852C5D77E500E8F89F /* NotAvailableView.swift in Sources */,
 				16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */,
 				16C667582D2DCD5300EB2F98 /* SessionEventsFetchResult.swift in Sources */,
-				168069A92C5ADAFF002D47A6 /* SGU_ScheduleWidgetLiveActivity.swift in Sources */,
 				167EE42A2C5F79BD00701C8A /* GroupSchedulePersistenceManager.swift in Sources */,
 				1602CA872C5D786000E8F89F /* SingleScheduleEventView.swift in Sources */,
 				167EE42E2C5F7D0800701C8A /* PersistenceController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		16F3AE8E2D5A501400AD8348 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				16ABCD332D5A596E00BF2E5A /* Date+Extension.swift in Sources */,
+				16F3AEAD2D5A501C00AD8348 /* SGU_ScheduleLiveActivitiesBundle.swift in Sources */,
+				16F3AEB22D5A550F00AD8348 /* ScheduleEventAttributes.swift in Sources */,
+				16ABCD412D5A59AE00BF2E5A /* UserDefaultsKeys.swift in Sources */,
+				16ABCD422D5A59AE00BF2E5A /* AppUrls.swift in Sources */,
+				16ABCD432D5A59AE00BF2E5A /* AppGroup.swift in Sources */,
+				16ABCD442D5A59AE00BF2E5A /* AcademicProgram.swift in Sources */,
+				16ABCD452D5A59AE00BF2E5A /* AppStyle.swift in Sources */,
+				16ABCD462D5A59AE00BF2E5A /* SessionEventType.swift in Sources */,
+				16ABCD472D5A59AE00BF2E5A /* Weekdays.swift in Sources */,
+				16ABCD482D5A59AE00BF2E5A /* AppTheme.swift in Sources */,
+				16ABCD492D5A59AE00BF2E5A /* LessonType.swift in Sources */,
+				16ABCD4A2D5A59AE00BF2E5A /* WeekType.swift in Sources */,
+				16ABCD4B2D5A59AE00BF2E5A /* GroupsSource.swift in Sources */,
+				16ABCD4C2D5A59AE00BF2E5A /* DepartmentSource.swift in Sources */,
+				16ABCD4D2D5A59AE00BF2E5A /* ParserOptions.swift in Sources */,
+				16ABCD342D5A597600BF2E5A /* LessonDTO.swift in Sources */,
+				16F3AEAE2D5A501C00AD8348 /* ScheduleLiveActivity.swift in Sources */,
+				16ABCD352D5A599900BF2E5A /* AcademicGroupDTO.swift in Sources */,
+				16ABCD362D5A599900BF2E5A /* TimeBreak.swift in Sources */,
+				16ABCD372D5A599900BF2E5A /* Department.swift in Sources */,
+				16ABCD382D5A599900BF2E5A /* GroupScheduleDTO.swift in Sources */,
+				16ABCD392D5A599900BF2E5A /* SessionEventDTO.swift in Sources */,
+				16ABCD3A2D5A599900BF2E5A /* ScheduleEvent.swift in Sources */,
+				16ABCD3B2D5A599900BF2E5A /* TeacherSearchResult.swift in Sources */,
+				16ABCD3C2D5A599900BF2E5A /* LessonSubgroup.swift in Sources */,
+				16ABCD3D2D5A599900BF2E5A /* GroupSessionEventsDTO.swift in Sources */,
+				16ABCD3E2D5A599900BF2E5A /* Teacher.swift in Sources */,
+				16ABCD3F2D5A599900BF2E5A /* AppSettings.swift in Sources */,
+				16ABCD312D5A596900BF2E5A /* Date+ConstantsExtension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1469,6 +1605,8 @@
 				162FEA542CBFC94300AA682A /* OverlayView.swift in Sources */,
 				162FEA5F2CC1316200AA682A /* LessonSubgroup.swift in Sources */,
 				BADAE1122AB9C0D60079E3D7 /* SGU_ScheduleApp.swift in Sources */,
+				16F3AEB32D5A553600AD8348 /* ScheduleLiveActivity.swift in Sources */,
+				16F3AEB42D5A553600AD8348 /* ScheduleEventAttributes.swift in Sources */,
 				16C667502D2D2F9B00EB2F98 /* GroupSessionEventsCoreDataManager.swift in Sources */,
 				BAFA580E2AEC621D0060BD81 /* LessonCoreDataManager.swift in Sources */,
 				16F7AD9A2C51933B0057B062 /* SettingsView.swift in Sources */,
@@ -1538,6 +1676,11 @@
 			target = 168069A12C5ADAFF002D47A6 /* SGU_ScheduleWidgetExtension */;
 			targetProxy = 168069B12C5ADAFF002D47A6 /* PBXContainerItemProxy */;
 		};
+		16F3AEA02D5A501500AD8348 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 16F3AE912D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension */;
+			targetProxy = 16F3AE9F2D5A501500AD8348 /* PBXContainerItemProxy */;
+		};
 		BA996A5D2AC4A00200888BE2 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = BADAE10D2AB9C0D60079E3D7 /* SGU_Schedule */;
@@ -1569,7 +1712,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1607,7 +1750,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1615,6 +1758,71 @@
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
+		16F3AEA42D5A501500AD8348 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SGU_ScheduleLiveActivities/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SGU_ScheduleLiveActivities;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		16F3AEA52D5A501500AD8348 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SGU_ScheduleLiveActivities/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SGU_ScheduleLiveActivities;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 18.2;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -1630,7 +1838,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1653,7 +1861,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1787,7 +1995,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 702765E015D3321D9F649123 /* Pods-SGU_Schedule.debug.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
@@ -1812,7 +2019,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1829,7 +2036,6 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 504AC542FDEC94144C1005F1 /* Pods-SGU_Schedule.release.xcconfig */;
 			buildSettings = {
-				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
@@ -1854,7 +2060,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.2.0;
+				MARKETING_VERSION = 2.3.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1875,6 +2081,15 @@
 			buildConfigurations = (
 				168069B52C5ADAFF002D47A6 /* Debug */,
 				168069B62C5ADAFF002D47A6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		16F3AEA32D5A501500AD8348 /* Build configuration list for PBXNativeTarget "SGU_ScheduleLiveActivitiesExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				16F3AEA42D5A501500AD8348 /* Debug */,
+				16F3AEA52D5A501500AD8348 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

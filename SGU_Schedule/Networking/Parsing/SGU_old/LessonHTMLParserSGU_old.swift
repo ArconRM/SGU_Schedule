@@ -76,7 +76,6 @@ struct LessonHTMLParserSGU_old: LessonHTMLParser {
 //        dispatchGroup.notify(queue: .main) {
 //            print(lessons.count)
 //        }
-        print(lessons.count)
         return lessons.getAllElements()
     }
 

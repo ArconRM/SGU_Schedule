@@ -144,17 +144,15 @@ extension Date {
     }
 
     func getHours() -> Int {
-        let dateFormatter = DateFormatter()
-//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "HH"
-        return Int(dateFormatter.string(from: self)) ?? 0
+        return Calendar.current.component(.hour, from: self)
     }
 
     func getMinutes() -> Int {
-        let dateFormatter = DateFormatter()
-//        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-        dateFormatter.dateFormat = "mm"
-        return Int(dateFormatter.string(from: self)) ?? 0
+        return Calendar.current.component(.minute, from: self)
+    }
+    
+    func getSeconds() -> Int {
+        return Calendar.current.component(.second, from: self)
     }
 
     func getHoursAndMinutesString(divider: String = ":") -> String {
@@ -210,5 +208,14 @@ extension Date {
     /// Returns true if date is passed now + some duration
     func passed(duration: Int) -> Bool {
         return Date() > Calendar.current.date(byAdding: .hour, value: duration, to: self)!
+    }
+    
+    /// Returns todays date with original date's time
+    func toTodayDate() -> Date {
+        var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())
+        components.hour = self.getHours()
+        components.minute = self.getMinutes()
+        components.second = self.getSeconds()
+        return Calendar.current.date(from: components)!
     }
 }

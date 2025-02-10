@@ -117,7 +117,6 @@ struct GroupCoreDataManager: GroupPersistenceManager {
     func makeGroupFavourite(_ groupId: String) throws {
         do {
             let allGroups = try fetchAllItems()
-            print(allGroups)
 
             guard let managedGroupToBeFavourite = allGroups.first(where: { $0.groupId == groupId }) else {
                 throw CoreDataError.failedToUpdate

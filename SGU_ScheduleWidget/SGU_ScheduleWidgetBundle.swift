@@ -13,6 +13,5 @@ struct SGU_ScheduleWidgetBundle: WidgetBundle {
     var body: some Widget {
         ScheduleEventsWidget()
         SessionEventsWidget()
-//        SGU_ScheduleWidgetLiveActivity()
     }
 }

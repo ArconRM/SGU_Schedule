@@ -7,6 +7,7 @@
 
 import Foundation
 import WidgetKit
+import ActivityKit
 
 public class ScheduleViewModel: BaseViewModel {
     private let lessonsNetworkManager: LessonNetworkManager
@@ -30,6 +31,8 @@ public class ScheduleViewModel: BaseViewModel {
     @Published var loadedLessonsWithChanges = false
     @Published var isLoadingSessionEvents = true
     @Published var loadedSessionEventsWithChanges = false
+    
+    @Published var currentActivity: Activity<ScheduleEventAttributes>?
 
     init(
         lessonsNetworkManager: LessonNetworkManager,
@@ -43,6 +46,8 @@ public class ScheduleViewModel: BaseViewModel {
         self.groupSchedulePersistenceManager = groupSchedulePersistenceManager
         self.lessonSubgroupsPersistenceManager = lessonSubgroupsPersistenceManager
         self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
+        
+        currentActivity = Activity<ScheduleEventAttributes>.activities.first
     }
 
     /// Если группа сохранена и в онлайне - получает расписание с networkManager.
@@ -242,5 +247,38 @@ public class ScheduleViewModel: BaseViewModel {
     private func saveGroupSessionEventsWithDeletingPreviousVersion(groupSessionEvents: GroupSessionEventsDTO) throws {
         try self.groupSessionEventsPersistenceManager.deleteSessionEventsByGroupId(groupSessionEvents.group.groupId)
         try self.groupSessionEventsPersistenceManager.saveItem(groupSessionEvents)
+    }
+}
+
+extension ScheduleViewModel {
+    
+    public func startActivity(lesson: LessonDTO) {
+        guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
+        
+        let attributes = ScheduleEventAttributes()
+        let state = ScheduleEventAttributes.ContentState(
+            lessonTitle: lesson.title,
+            teacherFullName: lesson.teacherFullName,
+            lessonType: lesson.lessonType,
+            cabinet: lesson.cabinet,
+            timeStart: lesson.timeStart,
+            timeEnd: lesson.timeEnd
+        )
+        
+        currentActivity = try? Activity<ScheduleEventAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: nil))
+        
+        let dismissalPolicy = ActivityUIDismissalPolicy.after(lesson.timeEnd.toTodayDate())
+        Task {
+            await currentActivity?.end(nil, dismissalPolicy: dismissalPolicy)
+        }
+    }
+    
+    public func endActivity() {
+        Task {
+            await currentActivity?.end(nil, dismissalPolicy: .immediate)
+            await MainActor.run {
+                self.currentActivity = nil
+            }
+        }
     }
 }

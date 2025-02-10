@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum LessonType: String, Decodable {
+enum LessonType: String, Codable {
     case lecture = "Лекция"
     case practice = "Практика"
 
