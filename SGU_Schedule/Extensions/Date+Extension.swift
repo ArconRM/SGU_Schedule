@@ -205,7 +205,7 @@ extension Date {
         return components1 == components2
     }
 
-    /// Returns true if date is passed now + some duration
+    /// Returns true if date is passed now + some duration in hours
     func passed(duration: Int) -> Bool {
         return Date() > Calendar.current.date(byAdding: .hour, value: duration, to: self)!
     }
