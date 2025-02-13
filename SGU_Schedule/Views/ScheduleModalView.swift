@@ -21,9 +21,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     private let minPadding: CGFloat = 20
     private let initialOrientation = UIDevice.current.orientation
 
-    @State private var lessonsBySelectedDay = [LessonDTO]()
-    @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
-
     var body: some View {
         ZStack {
             VStack {
@@ -38,7 +35,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .gesture(dragGesture)
                 .onChange(of: viewModel.groupSchedule?.lessons) { _ in
                     if viewModel.groupSchedule != nil {
-                        lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
+                        viewModel.updateScheduleEventsBySelectedDay()
                     }
                     if viewModel.currentEvent != nil {
                         withAnimation(.easeInOut(duration: 0.5)) {
@@ -72,24 +69,18 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .font(.system(size: 19, weight: .bold, design: .rounded))
                 }
 
-                Picker("", selection: $selectedDay) {
+                Picker("", selection: $viewModel.selectedDay) {
                     ForEach(Weekdays.allCases.dropLast(), id: \.self) { day in
                         Text(day.rawValue)
                     }
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                .onChange(of: selectedDay) { _ in
-                    if viewModel.groupSchedule != nil {
-                        lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
-                    }
+                .onChange(of: viewModel.selectedDay) { _ in
+                    viewModel.updateScheduleEventsBySelectedDay()
                 }
 
-//                Text("\(Date.startOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка") - \(Date.endOfCurrentWeek?.getDayAndMonthWordString() ?? "Ошибка")")
-//                    .font(.system(size: 19, design: .rounded))
-//                    .padding(.vertical, 5)
-
-                Text(Date.getDayOfCurrentWeek(dayNumber: selectedDay.number)?.getDayAndMonthWordString() ?? "Хз")
+                Text(Date.getDayOfCurrentWeek(dayNumber: viewModel.selectedDay.number)?.getDayAndMonthWordString() ?? "Хз")
                     .font(.system(size: 19, weight: .bold, design: .rounded))
                     .padding(.vertical, 5)
 
@@ -100,20 +91,26 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 } else if viewModel.groupSchedule != nil {
                     ScrollView {
                         ForEach(1...8, id: \.self) { lessonNumber in
-                            let lessonsByNumber = lessonsBySelectedDay.filter { $0.lessonNumber == lessonNumber }
-                            if !lessonsByNumber.isEmpty {
-                                // id нужен чтобы переебашивало все вью, иначе оно сохраняет его флаг
-                                ScheduleSubview(lessons: lessonsByNumber, subgroupsByLessons: viewModel.subgroupsByLessons)
-                                    .environmentObject(networkMonitor)
-                                    .environmentObject(viewsManager)
-                                    .id(UUID())
+                            let scheduleEventsByNumber = viewModel.getScheduleEventsBySelectedDayAndNumber(lessonNumber: lessonNumber)
+                            if !scheduleEventsByNumber.isEmpty {
+                                if scheduleEventsByNumber.count == 1, let window = scheduleEventsByNumber.first as? TimeBreak {
+                                    ScheduleSubview(window: window, subgroupsByLessons: viewModel.subgroupsByLessons)
+                                        .environmentObject(networkMonitor)
+                                        .environmentObject(viewsManager)
+                                        .id(UUID())
+                                } else {
+                                    ScheduleSubview(lessons: scheduleEventsByNumber as? [LessonDTO], subgroupsByLessons: viewModel.subgroupsByLessons)
+                                        .environmentObject(networkMonitor)
+                                        .environmentObject(viewsManager)
+                                        .id(UUID())
+                                }
                             }
                         }
                         .padding(.top, 5)
                         .padding(.bottom, 50)
                     }
                     .onAppear {
-                        lessonsBySelectedDay = viewModel.groupSchedule!.lessons.filter { $0.weekDay == selectedDay }
+                        viewModel.updateScheduleEventsBySelectedDay()
                     }
                 } else {
                     Text("Нет соединения с интернетом")

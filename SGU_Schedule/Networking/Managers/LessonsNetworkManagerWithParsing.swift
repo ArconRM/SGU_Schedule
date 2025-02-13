@@ -8,7 +8,7 @@
 import Foundation
 // https://developer.apple.com/forums/thread/729462
 
-public class LessonNetworkManagerWithParsing: LessonNetworkManager {
+class LessonNetworkManagerWithParsing: LessonNetworkManager {
     private let urlSource: URLSource
     private let lessonParser: LessonHTMLParser
     private let scraper: Scraper
@@ -19,7 +19,7 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
         self.scraper = scraper
     }
 
-    public func getGroupScheduleForCurrentWeek(
+    func getGroupScheduleForCurrentWeek(
         group: AcademicGroupDTO,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<GroupScheduleDTO, Error>) -> Void
@@ -40,7 +40,7 @@ public class LessonNetworkManagerWithParsing: LessonNetworkManager {
         }
     }
 
-    public func getTeacherScheduleForCurrentWeek(
+    func getTeacherScheduleForCurrentWeek(
         teacherEndpoint: String?,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<[LessonDTO], any Error>) -> Void

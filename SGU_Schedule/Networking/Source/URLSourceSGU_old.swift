@@ -13,7 +13,7 @@ public struct URLSourceSGU_old: URLSource {
     }
 
     public func getBaseTeacherURL(teacherEndPoint: String) -> URL {
-        return self.baseUrl.appendingPathComponent(teacherEndPoint)
+        return self.baseUrl.appendingPathComponent(teacherEndPoint.addingPercentEncoding(withAllowedCharacters: .urlFragmentAllowed) ?? "")
     }
 
     public func getAllTeachersURL() -> URL {

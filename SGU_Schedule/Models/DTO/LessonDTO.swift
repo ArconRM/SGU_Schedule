@@ -7,10 +7,10 @@
 
 import Foundation
 
-public struct LessonDTO: Equatable, ScheduleEvent {
+struct LessonDTO: ScheduleEvent {
 
-    /// subject
-    public var title: String
+    /// Subject
+    var title: String
     var teacherFullName: String
     var teacherEndpoint: String?
     var lessonType: LessonType
@@ -19,8 +19,8 @@ public struct LessonDTO: Equatable, ScheduleEvent {
     var cabinet: String
     var subgroup: String?
     var lessonNumber: Int
-    public var timeStart: Date
-    public var timeEnd: Date
+    var timeStart: Date
+    var timeEnd: Date
 
     /// TimeStart and TimeEnd must be in "HH:mm" format
     init(

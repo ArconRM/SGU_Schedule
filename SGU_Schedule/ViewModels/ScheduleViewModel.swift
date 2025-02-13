@@ -9,7 +9,8 @@ import Foundation
 import WidgetKit
 import ActivityKit
 
-public class ScheduleViewModel: BaseViewModel {
+// Че то он ебать огромным выходит + многовато говна
+class ScheduleViewModel: BaseViewModel {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
 
@@ -22,6 +23,9 @@ public class ScheduleViewModel: BaseViewModel {
     @Published var subgroupsByLessons: [String: [LessonSubgroup]] = [:]
 
     @Published var savedSubgroupsCount = 0
+    
+    @Published var scheduleEventsBySelectedDay = [any ScheduleEvent]()
+    @Published var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
 
     @Published var currentEvent: (any ScheduleEvent)?
     @Published var nextLesson1: LessonDTO?
@@ -49,11 +53,23 @@ public class ScheduleViewModel: BaseViewModel {
         
         currentActivity = Activity<ScheduleEventAttributes>.activities.first
     }
+    
+    func updateScheduleEventsBySelectedDay() {
+        if groupSchedule != nil {
+            scheduleEventsBySelectedDay = groupSchedule!.lessonsAndWindows.filter { $0.weekDay == selectedDay }
+        }
+    }
+    
+    /// Возвращает пары по номеру в выбранный день недели + окна между ними если таковые имеются
+    func getScheduleEventsBySelectedDayAndNumber(lessonNumber: Int) -> [any ScheduleEvent] {
+        let lessonsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
+        return lessonsByNumber
+    }
 
     /// Если группа сохранена и в онлайне - получает расписание с networkManager.
     /// Если группа сохранена и расписание с бд различается с оным с networkManager - перезаписывает его.
     /// В иных случаях просто ставит расписание с networkManager.
-    public func fetchSchedule(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool, isFavourite: Bool) {
+    func fetchSchedule(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool, isFavourite: Bool) {
         currentEvent = nil
         nextLesson1 = nil
         nextLesson2 = nil
@@ -160,7 +176,7 @@ public class ScheduleViewModel: BaseViewModel {
         }
     }
 
-    public func saveSubgroup(lesson: String, subgroup: LessonSubgroup) {
+    func saveSubgroup(lesson: String, subgroup: LessonSubgroup) {
         if self.subgroupsByLessons[lesson] != nil {
             for subgroupIndex in subgroupsByLessons[lesson]!.indices {
                 subgroupsByLessons[lesson]?[subgroupIndex].isSaved = subgroupsByLessons[lesson]?[subgroupIndex] == subgroup
@@ -176,7 +192,7 @@ public class ScheduleViewModel: BaseViewModel {
         }
     }
 
-    public func clearSubgroups() {
+    func clearSubgroups() {
         lessonSubgroupsPersistenceManager.clearSaved()
         fetchSubgroups()
     }
@@ -184,7 +200,7 @@ public class ScheduleViewModel: BaseViewModel {
     /// Если группа сохранена и в онлайне - получает раписание сессии с networkManager.
     /// Если группа сохранена и расписание сессии с бд различается с оным с networkManager - перезаписывает его.
     /// В иных случаях просто ставит расписание с networkManager.
-    public func fetchSessionEvents(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool) {
+    func fetchSessionEvents(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool) {
         isLoadingSessionEvents = true
 
         do {
@@ -252,7 +268,7 @@ public class ScheduleViewModel: BaseViewModel {
 
 extension ScheduleViewModel {
     
-    public func startActivity(lesson: LessonDTO) {
+    func startActivity(lesson: LessonDTO) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
         
         let attributes = ScheduleEventAttributes()
@@ -273,7 +289,7 @@ extension ScheduleViewModel {
         }
     }
     
-    public func endActivity() {
+    func endActivity() {
         Task {
             await currentActivity?.end(nil, dismissalPolicy: .immediate)
             await MainActor.run {

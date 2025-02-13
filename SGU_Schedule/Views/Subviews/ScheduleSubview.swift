@@ -17,51 +17,76 @@ struct ScheduleSubview: View, Equatable {
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
 
-    var lessons: [LessonDTO]
+    var lessons: [LessonDTO]?
+    var window: TimeBreak?
     var subgroupsByLessons: [String: [LessonSubgroup]]
 
     @State var areMultipleLessonsCollapsed: Bool = true
-
+    
     var body: some View {
         VStack {
-            if lessons.count == 1 {
-                makeSingleLessonView(lesson: lessons.first!)
-            } else if lessons.count >= 1 {
-                if areMultipleLessonsCollapsed {
-                    makeCollapsedMultipleLessonsView(firstLesson: sortLessonsByActive(lessons).first!)
-                        .onTapGesture {
-                            withAnimation(.spring(duration: 0.5)) {
-                                areMultipleLessonsCollapsed.toggle()
+            if let window = window {
+                makeWindowView(window: window)
+            } else  if let lessons = lessons {
+                if lessons.count == 1 {
+                    makeSingleLessonView(lesson: lessons.first!)
+                } else if lessons.count >= 1 {
+                    if areMultipleLessonsCollapsed {
+                        makeCollapsedMultipleLessonsView(firstLesson: sortLessonsByActive(lessons).first!)
+                            .onTapGesture {
+                                withAnimation(.spring(duration: 0.5)) {
+                                    areMultipleLessonsCollapsed.toggle()
+                                }
                             }
-                        }
-                } else {
-                    makeFullMultipleLessonsView(lessons: sortLessonsByActive(lessons))
-                        .onTapGesture {
-                            withAnimation(.spring(duration: 0.5)) {
-                                areMultipleLessonsCollapsed.toggle()
+                    } else {
+                        makeFullMultipleLessonsView(lessons: sortLessonsByActive(lessons))
+                            .onTapGesture {
+                                withAnimation(.spring(duration: 0.5)) {
+                                    areMultipleLessonsCollapsed.toggle()
+                                }
                             }
-                        }
+                    }
                 }
             }
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
         .cornerRadius(10)
         .padding(.horizontal, 13)
-        .shadow(color: colorScheme == .light ?
-                    .gray.opacity(0.3) :
-                    .white.opacity(0.2),
-                 radius: 3,
-                 x: 0,
-                 y: 0)
+        .shadow(
+            color: colorScheme == .light ? .gray.opacity(0.3) : .white.opacity(0.2),
+            radius: 3,
+            x: 0,
+            y: 0
+        )
     }
 
+    private func makeWindowView(window: TimeBreak) -> some View {
+        VStack {
+            HStack {
+                Text("\(window.timeStart.getHoursAndMinutesString()) - \(window.timeEnd.getHoursAndMinutesString())")
+                    .font(.system(size: 17))
+                    .bold()
+                
+                Spacer()
+            }
+            
+            Text(window.title)
+                .multilineTextAlignment(.center)
+                .font(.system(size: 17, weight: .bold))
+                .padding(.top, 7)
+                .padding(.bottom, 30)
+        }
+        .foregroundColor(colorScheme == .light ? .black : .white)
+        .padding(15)
+    }
+    
     private func makeSingleLessonView(lesson: LessonDTO) -> some View {
         VStack {
             HStack {
                 Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
                     .font(.system(size: 17))
                     .bold()
-
+                
                 if lesson.weekType != .all {
                     Text("(\(lesson.weekType.rawValue))")
                         .font(.system(size: 17))

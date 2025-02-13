@@ -7,22 +7,27 @@
 
 import Foundation
 
-public struct TimeBreak: ScheduleEvent {
+struct TimeBreak: ScheduleEvent {
 
-    public var title: String
-    public var timeStart: Date
-    public var timeEnd: Date
+    var title: String
+    var weekDay: Weekdays
+    var lessonNumber: Int
+    var timeStart: Date
+    var timeEnd: Date
 
-    init(timeStart: Date, timeEnd: Date, isWindow: Bool) {
+    init(weekDay: Weekdays, lessonNumber: Int, timeStart: Date, timeEnd: Date, isWindow: Bool) {
         self.title = isWindow ? "Окно" : "Перемена"
-
+        self.weekDay = weekDay
+        self.lessonNumber = lessonNumber
         self.timeStart = timeStart
         self.timeEnd = timeEnd
     }
 
     /// TimeStart and TimeEnd must be in "HH:mm" format
-    init(timeStart: String, timeEnd: String, isWindow: Bool) {
+    init(weekDay: Weekdays, lessonNumber: Int, timeStart: String, timeEnd: String, isWindow: Bool) {
         self.title = isWindow ? "Окно" : "Перемена"
+        self.weekDay = weekDay
+        self.lessonNumber = lessonNumber
 
         let dateFormatter = DateFormatter()
         dateFormatter.locale = Locale(identifier: "en_GB")

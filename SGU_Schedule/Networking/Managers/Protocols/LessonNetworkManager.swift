@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol LessonNetworkManager {
+protocol LessonNetworkManager {
     func getGroupScheduleForCurrentWeek(
         group: AcademicGroupDTO,
         resultQueue: DispatchQueue,

@@ -46,6 +46,9 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 if viewModel.currentActivity == nil {
                     Button("Отслеживать в Live Activity") {
                         viewModel.startActivity(lesson: lesson)
+                        
+                        let impact = UIImpactFeedbackGenerator(style: .medium)
+                        impact.impactOccurred()
                     }
                     .buttonStyle(.bordered)
                     .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
@@ -53,6 +56,9 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 } else {
                     Button("Остановить Live Activity") {
                         viewModel.endActivity()
+                        
+                        let impact = UIImpactFeedbackGenerator(style: .medium)
+                        impact.impactOccurred()
                     }
                     .buttonStyle(.bordered)
                     .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
