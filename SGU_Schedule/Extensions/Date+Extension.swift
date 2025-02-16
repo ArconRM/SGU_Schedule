@@ -150,7 +150,7 @@ extension Date {
     func getMinutes() -> Int {
         return Calendar.current.component(.minute, from: self)
     }
-    
+
     func getSeconds() -> Int {
         return Calendar.current.component(.second, from: self)
     }
@@ -209,7 +209,7 @@ extension Date {
     func passed(duration: Int) -> Bool {
         return Date() > Calendar.current.date(byAdding: .hour, value: duration, to: self)!
     }
-    
+
     /// Returns todays date with original date's time
     func toTodayDate() -> Date {
         var components = Calendar.current.dateComponents([.year, .month, .day], from: Date())

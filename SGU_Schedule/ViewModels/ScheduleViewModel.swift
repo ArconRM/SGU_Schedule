@@ -23,7 +23,7 @@ class ScheduleViewModel: BaseViewModel {
     @Published var subgroupsByLessons: [String: [LessonSubgroup]] = [:]
 
     @Published var savedSubgroupsCount = 0
-    
+
     @Published var scheduleEventsBySelectedDay = [any ScheduleEvent]()
     @Published var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
 
@@ -35,7 +35,7 @@ class ScheduleViewModel: BaseViewModel {
     @Published var loadedLessonsWithChanges = false
     @Published var isLoadingSessionEvents = true
     @Published var loadedSessionEventsWithChanges = false
-    
+
     @Published var currentActivity: Activity<ScheduleEventAttributes>?
 
     init(
@@ -50,16 +50,16 @@ class ScheduleViewModel: BaseViewModel {
         self.groupSchedulePersistenceManager = groupSchedulePersistenceManager
         self.lessonSubgroupsPersistenceManager = lessonSubgroupsPersistenceManager
         self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
-        
+
         currentActivity = Activity<ScheduleEventAttributes>.activities.first
     }
-    
+
     func updateScheduleEventsBySelectedDay() {
         if groupSchedule != nil {
             scheduleEventsBySelectedDay = groupSchedule!.lessonsAndWindows.filter { $0.weekDay == selectedDay }
         }
     }
-    
+
     /// Возвращает пары по номеру в выбранный день недели + окна между ними если таковые имеются
     func getScheduleEventsBySelectedDayAndNumber(lessonNumber: Int) -> [any ScheduleEvent] {
         let lessonsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
@@ -267,10 +267,10 @@ class ScheduleViewModel: BaseViewModel {
 }
 
 extension ScheduleViewModel {
-    
+
     func startActivity(lesson: LessonDTO) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
-        
+
         let attributes = ScheduleEventAttributes()
         let state = ScheduleEventAttributes.ContentState(
             lessonTitle: lesson.title,
@@ -280,15 +280,15 @@ extension ScheduleViewModel {
             timeStart: lesson.timeStart,
             timeEnd: lesson.timeEnd
         )
-        
+
         currentActivity = try? Activity<ScheduleEventAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: nil))
-        
+
         let dismissalPolicy = ActivityUIDismissalPolicy.after(lesson.timeEnd.toTodayDate())
         Task {
             await currentActivity?.end(nil, dismissalPolicy: dismissalPolicy)
         }
     }
-    
+
     func endActivity() {
         Task {
             await currentActivity?.end(nil, dismissalPolicy: .immediate)

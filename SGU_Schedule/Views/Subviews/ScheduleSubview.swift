@@ -22,7 +22,7 @@ struct ScheduleSubview: View, Equatable {
     var subgroupsByLessons: [String: [LessonSubgroup]]
 
     @State var areMultipleLessonsCollapsed: Bool = true
-    
+
     var body: some View {
         VStack {
             if let window = window {
@@ -66,10 +66,10 @@ struct ScheduleSubview: View, Equatable {
                 Text("\(window.timeStart.getHoursAndMinutesString()) - \(window.timeEnd.getHoursAndMinutesString())")
                     .font(.system(size: 17))
                     .bold()
-                
+
                 Spacer()
             }
-            
+
             Text(window.title)
                 .multilineTextAlignment(.center)
                 .font(.system(size: 17, weight: .bold))
@@ -79,14 +79,14 @@ struct ScheduleSubview: View, Equatable {
         .foregroundColor(colorScheme == .light ? .black : .white)
         .padding(15)
     }
-    
+
     private func makeSingleLessonView(lesson: LessonDTO) -> some View {
         VStack {
             HStack {
                 Text("\(lesson.timeStart.getHoursAndMinutesString()) - \(lesson.timeEnd.getHoursAndMinutesString())")
                     .font(.system(size: 17))
                     .bold()
-                
+
                 if lesson.weekType != .all {
                     Text("(\(lesson.weekType.rawValue))")
                         .font(.system(size: 17))
@@ -251,17 +251,17 @@ struct ScheduleSubview: View, Equatable {
                 .padding(.vertical, 7)
 
             HStack {
-                if lesson.subgroup == nil || lesson.subgroup == "" {
-                    Text(lesson.teacherFullName)
-                        .font(.system(size: 17))
-                        .italic()
+//                if lesson.subgroup == nil || lesson.subgroup == "" {
+                Text(lesson.teacherFullName)
+                    .font(.system(size: 17))
+                    .italic()
 
-                    Spacer()
+                Spacer()
 
-                    Text("\(lesson.cabinet)")
-                        .font(.system(size: 17))
-                        .bold()
-                }
+                Text("\(lesson.cabinet)")
+                    .font(.system(size: 17))
+                    .bold()
+//                }
             }
 
             Image(systemName: "chevron.down")
