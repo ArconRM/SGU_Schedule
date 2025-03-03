@@ -27,7 +27,7 @@ struct ScheduleSubview: View, Equatable {
         VStack {
             if let window = window {
                 makeWindowView(window: window)
-            } else  if let lessons = lessons {
+            } else if let lessons = lessons {
                 if lessons.count == 1 {
                     makeSingleLessonView(lesson: lessons.first!)
                 } else if lessons.count >= 1 {
@@ -51,13 +51,23 @@ struct ScheduleSubview: View, Equatable {
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
         .cornerRadius(10)
-        .padding(.horizontal, 13)
         .shadow(
             color: colorScheme == .light ? .gray.opacity(0.3) : .white.opacity(0.2),
             radius: 3,
             x: 0,
             y: 0
         )
+        .contextMenu {
+            if let lesson = lessons?.first {
+                ShareLink(
+                    item: lesson.getTextDesciption(),
+                    preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
+                ) {
+                    Label("Поделиться парой", systemImage: "square.and.arrow.up")
+                }
+            }
+        }
+        .padding(.horizontal, 13)
     }
 
     private func makeWindowView(window: TimeBreak) -> some View {

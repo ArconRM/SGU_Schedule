@@ -9,11 +9,21 @@ import Foundation
 
 public struct SessionEventDTO: Hashable {
 
+    /// Subject
     var title: String
     var date: Date
     var sessionEventType: SessionEventType
     var teacherFullName: String
     var cabinet: String
+
+    func getTextDesciption() -> String {
+        return """
+            \(title) (\(sessionEventType.rawValue))
+            \(date.getDayMonthAndYearString()) \(date.getHoursAndMinutesString())
+            \(cabinet)
+            Преподаватель: \(teacherFullName)
+            """
+    }
 
     init(title: String, date: Date, sessionEventType: SessionEventType, teacherFullName: String, cabinet: String) {
         self.title = title

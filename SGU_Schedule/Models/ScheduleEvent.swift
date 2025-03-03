@@ -14,5 +14,4 @@ protocol ScheduleEvent: Hashable {
     var lessonNumber: Int { get set }
     var timeStart: Date { get set }
     var timeEnd: Date { get set }
-
 }

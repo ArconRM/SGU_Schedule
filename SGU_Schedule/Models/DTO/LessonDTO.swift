@@ -22,6 +22,15 @@ struct LessonDTO: ScheduleEvent {
     var timeStart: Date
     var timeEnd: Date
 
+    func getTextDesciption() -> String {
+        return """
+            \(title) (\(lessonType.rawValue))
+            \(timeStart.getHoursAndMinutesString()) - \(timeEnd.getHoursAndMinutesString())
+            \(cabinet)
+            Преподаватель: \(teacherFullName)
+            """
+    }
+
     /// TimeStart and TimeEnd must be in "HH:mm" format
     init(
         subject: String,

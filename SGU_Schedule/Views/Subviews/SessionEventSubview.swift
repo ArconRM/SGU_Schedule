@@ -54,13 +54,23 @@ struct SessionEventSubview: View {
         }
         .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
         .cornerRadius(10)
-        .padding(.horizontal, 13)
-        .shadow(color: colorScheme == .light ?
+        .shadow(
+            color: colorScheme == .light ?
             .gray.opacity(0.3) :
                 .white.opacity(0.2),
                 radius: 3,
                 x: 0,
-                y: 0)
+                y: 0
+        )
+        .contextMenu {
+            ShareLink(
+                item: sessionEvent.getTextDesciption(),
+                preview: SharePreview(sessionEvent.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
+            ) {
+                Label("Поделиться экзаменом", systemImage: "square.and.arrow.up")
+            }
+        }
+        .padding(.horizontal, 13)
     }
 
     private func getBackground() -> AnyView {
