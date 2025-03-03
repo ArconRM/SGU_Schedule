@@ -65,7 +65,7 @@ class ScheduleViewModel: BaseViewModel {
         let scheduleEventsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
         return scheduleEventsByNumber
     }
-    
+
     func getScheduleEventsBySelectedDayAndNumberFilteredBySubgroups(lessonNumber: Int) -> [any ScheduleEvent] {
         let scheduleEventsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
         return scheduleEventsByNumber.filter({
@@ -297,17 +297,17 @@ extension ScheduleViewModel {
             timeStart: lesson.timeStart,
             timeEnd: lesson.timeEnd
         )
-        
+
         if let activity = try? Activity<ScheduleEventAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: nil)) {
             currentActivities.append(activity)
-            
+
             let dismissalPolicy = ActivityUIDismissalPolicy.after(lesson.timeEnd.toTodayDate())
             Task {
                 await activity.end(nil, dismissalPolicy: dismissalPolicy)
             }
         }
     }
-    
+
     func endAllActivities() {
         for activity in currentActivities {
             Task {

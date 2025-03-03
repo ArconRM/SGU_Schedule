@@ -59,14 +59,14 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                 Text("с изменениями")
                                     .font(.system(size: 13, design: .rounded))
                             }
-                            
+
                             if viewModel.currentEvent != nil {
                                 if viewModel.currentActivities.isEmpty {
                                     Button("Добавить все следующие Live Activity") {
                                         for lessonNumber in 1...8 {
                                             viewModel.startAllTodaysActivitiesByLessonNumber(lessonNumber: lessonNumber)
                                         }
-                                        
+
                                         let impact = UIImpactFeedbackGenerator(style: .medium)
                                         impact.impactOccurred()
                                     }
@@ -77,7 +77,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                         for lessonNumber in 1...8 {
                                             viewModel.endAllActivities()
                                         }
-                                        
+
                                         let impact = UIImpactFeedbackGenerator(style: .medium)
                                         impact.impactOccurred()
                                     }
