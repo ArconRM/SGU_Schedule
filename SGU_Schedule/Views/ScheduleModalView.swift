@@ -49,19 +49,43 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         Text("Не обновлено")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
-                    } else if viewModel.loadedLessonsWithChanges {
+                    } else {
                         VStack {
                             Text("Обновлено")
                                 .padding(.top, -10)
                                 .font(.system(size: 19, weight: .bold, design: .rounded))
-                            Text("с изменениями")
-                                .font(.system(size: 13, design: .rounded))
+
+                            if viewModel.loadedLessonsWithChanges {
+                                Text("с изменениями")
+                                    .font(.system(size: 13, design: .rounded))
+                            }
+                            
+                            if viewModel.currentEvent != nil {
+                                if viewModel.currentActivities.isEmpty {
+                                    Button("Добавить все следующие Live Activity") {
+                                        for lessonNumber in 1...8 {
+                                            viewModel.startAllTodaysActivitiesByLessonNumber(lessonNumber: lessonNumber)
+                                        }
+                                        
+                                        let impact = UIImpactFeedbackGenerator(style: .medium)
+                                        impact.impactOccurred()
+                                    }
+                                    .buttonStyle(.bordered)
+                                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                                } else {
+                                    Button("Удалить все Live Activity") {
+                                        for lessonNumber in 1...8 {
+                                            viewModel.endAllActivities()
+                                        }
+                                        
+                                        let impact = UIImpactFeedbackGenerator(style: .medium)
+                                        impact.impactOccurred()
+                                    }
+                                    .buttonStyle(.bordered)
+                                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                                }
+                            }
                         }
-                        .foregroundColor(.green)
-                    } else {
-                        Text("Обновлено")
-                            .padding(.top, -10)
-                            .font(.system(size: 19, weight: .bold, design: .rounded))
                     }
                 } else {
                     Text("Нет соединения с интернетом")

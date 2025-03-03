@@ -36,7 +36,7 @@ class ScheduleViewModel: BaseViewModel {
     @Published var isLoadingSessionEvents = true
     @Published var loadedSessionEventsWithChanges = false
 
-    @Published var currentActivity: Activity<ScheduleEventAttributes>?
+    @Published var currentActivities: [Activity<ScheduleEventAttributes>]
 
     init(
         lessonsNetworkManager: LessonNetworkManager,
@@ -51,7 +51,7 @@ class ScheduleViewModel: BaseViewModel {
         self.lessonSubgroupsPersistenceManager = lessonSubgroupsPersistenceManager
         self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
 
-        currentActivity = Activity<ScheduleEventAttributes>.activities.first
+        currentActivities = Activity<ScheduleEventAttributes>.activities
     }
 
     func updateScheduleEventsBySelectedDay() {
@@ -62,12 +62,22 @@ class ScheduleViewModel: BaseViewModel {
 
     /// Возвращает пары по номеру в выбранный день недели + окна между ними если таковые имеются
     func getScheduleEventsBySelectedDayAndNumber(lessonNumber: Int) -> [any ScheduleEvent] {
-        let lessonsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
-        return lessonsByNumber
+        let scheduleEventsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
+        return scheduleEventsByNumber
+    }
+    
+    func getScheduleEventsBySelectedDayAndNumberFilteredBySubgroups(lessonNumber: Int) -> [any ScheduleEvent] {
+        let scheduleEventsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
+        return scheduleEventsByNumber.filter({
+            if let lesson = $0 as? LessonDTO {
+                return lesson.isActive(subgroupsByLessons: subgroupsByLessons)
+            }
+            return true
+        })
     }
 
     /// Если группа сохранена и в онлайне - получает расписание с networkManager.
-    /// Если группа сохранена и расписание с бд различается с оным с networkManager - перезаписывает его.
+    /// Если группа сохранена и сохраненное расписание различается с оным с networkManager - перезаписывает его.
     /// В иных случаях просто ставит расписание с networkManager.
     func fetchSchedule(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool, isFavourite: Bool) {
         currentEvent = nil
@@ -267,6 +277,13 @@ class ScheduleViewModel: BaseViewModel {
 }
 
 extension ScheduleViewModel {
+    func startAllTodaysActivitiesByLessonNumber(lessonNumber: Int) {
+        let scheduleEvents = getScheduleEventsBySelectedDayAndNumberFilteredBySubgroups(lessonNumber: lessonNumber)
+        let lessons = scheduleEvents.filter({ ($0 as? LessonDTO) != nil }) as! [LessonDTO]
+        for lesson in lessons {
+            startActivity(lesson: lesson)
+        }
+    }
 
     func startActivity(lesson: LessonDTO) {
         guard ActivityAuthorizationInfo().areActivitiesEnabled else { return }
@@ -280,21 +297,32 @@ extension ScheduleViewModel {
             timeStart: lesson.timeStart,
             timeEnd: lesson.timeEnd
         )
-
-        currentActivity = try? Activity<ScheduleEventAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: nil))
-
-        let dismissalPolicy = ActivityUIDismissalPolicy.after(lesson.timeEnd.toTodayDate())
-        Task {
-            await currentActivity?.end(nil, dismissalPolicy: dismissalPolicy)
-        }
-    }
-
-    func endActivity() {
-        Task {
-            await currentActivity?.end(nil, dismissalPolicy: .immediate)
-            await MainActor.run {
-                self.currentActivity = nil
+        
+        if let activity = try? Activity<ScheduleEventAttributes>.request(attributes: attributes, content: ActivityContent(state: state, staleDate: nil)) {
+            currentActivities.append(activity)
+            
+            let dismissalPolicy = ActivityUIDismissalPolicy.after(lesson.timeEnd.toTodayDate())
+            Task {
+                await activity.end(nil, dismissalPolicy: dismissalPolicy)
             }
         }
     }
+    
+    func endAllActivities() {
+        for activity in currentActivities {
+            Task {
+                await activity.end(nil, dismissalPolicy: .immediate)
+            }
+        }
+        self.currentActivities = []
+    }
+
+//    func endActivity() {
+//        Task {
+//            await currentActivity?.end(nil, dismissalPolicy: .immediate)
+//            await MainActor.run {
+//                self.currentActivity = nil
+//            }
+//        }
+//    }
 }
