@@ -57,17 +57,6 @@ struct ScheduleSubview: View, Equatable {
             x: 0,
             y: 0
         )
-        .contextMenu {
-            if let lesson = lessons?.first {
-                ShareLink(
-                    item: lesson.getTextDesciption(),
-                    preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
-                ) {
-                    Label("Поделиться парой", systemImage: "square.and.arrow.up")
-                }
-            }
-        }
-        .padding(.horizontal, 13)
     }
 
     private func makeWindowView(window: TimeBreak) -> some View {

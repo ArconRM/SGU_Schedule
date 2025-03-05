@@ -62,15 +62,6 @@ struct SessionEventSubview: View {
                 x: 0,
                 y: 0
         )
-        .contextMenu {
-            ShareLink(
-                item: sessionEvent.getTextDesciption(),
-                preview: SharePreview(sessionEvent.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
-            ) {
-                Label("Поделиться экзаменом", systemImage: "square.and.arrow.up")
-            }
-        }
-        .padding(.horizontal, 13)
     }
 
     private func getBackground() -> AnyView {

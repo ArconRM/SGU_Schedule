@@ -82,9 +82,20 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                             id: \.self
                         ) { sessionEvent in
                             SessionEventSubview(sessionEvent: sessionEvent)
+                                .contextMenu {
+                                    if !viewModel.isLoadingSessionEvents {
+                                        ShareLink(
+                                            item: sessionEvent.getTextDesciption(),
+                                            preview: SharePreview(sessionEvent.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
+                                        ) {
+                                            Label("Поделиться экзаменом", systemImage: "square.and.arrow.up")
+                                        }
+                                    }
+                                }
                         }
                         .padding(.top, 5)
                         .padding(.bottom, 50)
+                        .padding(.horizontal, 13)
                     }
                 }
 

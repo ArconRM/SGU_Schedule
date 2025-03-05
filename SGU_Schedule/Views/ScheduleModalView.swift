@@ -127,11 +127,24 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                         .environmentObject(networkMonitor)
                                         .environmentObject(viewsManager)
                                         .id(UUID())
+                                        .contextMenu {
+                                            if !viewModel.isLoadingLessons {
+                                                if let lesson = scheduleEventsByNumber.first as? LessonDTO {
+                                                    ShareLink(
+                                                        item: lesson.getTextDesciption(),
+                                                        preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
+                                                    ) {
+                                                        Label("Поделиться парой", systemImage: "square.and.arrow.up")
+                                                    }
+                                                }
+                                            }
+                                        }
                                 }
                             }
                         }
                         .padding(.top, 5)
                         .padding(.bottom, 50)
+                        .padding(.horizontal, 13)
                     }
                     .onAppear {
                         viewModel.updateScheduleEventsBySelectedDay()
