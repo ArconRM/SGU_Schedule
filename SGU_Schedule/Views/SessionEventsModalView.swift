@@ -37,19 +37,16 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         Text("Не обновлено")
                             .padding(.top, -10)
                             .font(.system(size: 19, weight: .bold, design: .rounded))
-                    } else if viewModel.loadedSessionEventsWithChanges {
+                    } else {
                         VStack {
                             Text("Обновлено")
                                 .padding(.top, -10)
                                 .font(.system(size: 19, weight: .bold, design: .rounded))
-                            Text("с изменениями")
-                                .font(.system(size: 13, design: .rounded))
+                            if viewModel.loadedSessionEventsWithChanges {
+                                Text("с изменениями")
+                                    .font(.system(size: 13, design: .rounded))
+                            }
                         }
-                        .foregroundColor(.green)
-                    } else {
-                        Text("Обновлено")
-                            .padding(.top, -10)
-                            .font(.system(size: 19, weight: .bold, design: .rounded))
                     }
                 } else {
                     Text("Нет соединения с интернетом")
