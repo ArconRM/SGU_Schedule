@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -51,7 +51,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 //                        impact.impactOccurred()
 //                    }
 //                    .buttonStyle(.bordered)
-//                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+//                    .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
 //                    .padding(10)
 //                } else {
 //                    Button("Остановить Live Activity") {
@@ -61,7 +61,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 //                        impact.impactOccurred()
 //                    }
 //                    .buttonStyle(.bordered)
-//                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+//                    .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
 //                    .padding(10)
 //                }
 
@@ -131,5 +131,5 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 #Preview {
     ScheduleBackView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel(),
                      selectedGroup: AcademicGroupDTO.mock)
-    .environmentObject(AppSettings())
+    .environmentObject(AppearanceSettingsStore())
 }

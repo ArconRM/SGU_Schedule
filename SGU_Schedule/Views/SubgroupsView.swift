@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -70,6 +70,6 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
         viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
         isShowing: .constant(true)
     )
-    .environmentObject(AppSettings())
+    .environmentObject(AppearanceSettingsStore())
     .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
 }

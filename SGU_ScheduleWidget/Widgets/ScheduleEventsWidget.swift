@@ -98,7 +98,7 @@ struct ScheduleEventsProvider: TimelineProvider {
 struct ScheduleEventsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.widgetFamily) var family: WidgetFamily
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var fetchResult: ScheduleEventsFetchResult
     var closeLesson: LessonDTO?
@@ -111,9 +111,9 @@ struct ScheduleEventsView: View {
                 fetchResult: fetchResult,
                 closeLesson: closeLesson
             )
-            .environmentObject(appSettings)
+            .environmentObject(appearanceSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.fill {
+                if appearanceSettings.currentAppStyle == AppStyle.fill {
                     buildFilledRectangle()
                 } else {
                     buildBorderedRectangle()
@@ -126,9 +126,9 @@ struct ScheduleEventsView: View {
                 fetchResult: fetchResult,
                 closeLesson: closeLesson
             )
-            .environmentObject(appSettings)
+            .environmentObject(appearanceSettings)
             .containerBackground(for: .widget) {
-                if appSettings.currentAppStyle == AppStyle.fill {
+                if appearanceSettings.currentAppStyle == AppStyle.fill {
                     buildFilledRectangle()
                 } else {
                     buildBorderedRectangle()
@@ -154,9 +154,9 @@ struct ScheduleEventsView: View {
 
         default:
             NotAvailableView()
-                .environmentObject(appSettings)
+                .environmentObject(appearanceSettings)
                 .containerBackground(for: .widget) {
-                    if appSettings.currentAppStyle == AppStyle.fill {
+                    if appearanceSettings.currentAppStyle == AppStyle.fill {
                         buildFilledRectangle()
                     } else {
                         buildBorderedRectangle()
@@ -168,7 +168,7 @@ struct ScheduleEventsView: View {
     private func buildFilledRectangle() -> some View {
         ZStack {
             Color.black.opacity(colorScheme == .light ? 0.8 : 0.6)
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+            appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .cornerRadius(20)
                 .padding(4)
                 .blur(radius: 2)
@@ -177,7 +177,7 @@ struct ScheduleEventsView: View {
 
     private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 20)
-            .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
+            .stroke(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
             .padding(2)
     }
 }
@@ -192,7 +192,7 @@ struct ScheduleEventsWidget: Widget {
                 fetchResult: entry.fetchResultVariant,
                 closeLesson: entry.closeLesson
             )
-            .environmentObject(AppSettings())
+            .environmentObject(AppearanceSettingsStore())
         }
         .configurationDisplayName("Расписание пар")
         .description("Показывает текущие пары")
@@ -234,21 +234,21 @@ struct ScheduleEventsWidget_Previews: PreviewProvider {
                 closeLesson: nextLesson
             )
             .previewContext(WidgetPreviewContext(family: .systemSmall))
-            .environmentObject(AppSettings())
+            .environmentObject(AppearanceSettingsStore())
 
             ScheduleEventsView(
                 fetchResult: .success(currentEvent: lesson, firstLesson: nil, nextLesson: nextLesson),
                 closeLesson: nextLesson
             )
             .previewContext(WidgetPreviewContext(family: .systemMedium))
-            .environmentObject(AppSettings())
+            .environmentObject(AppearanceSettingsStore())
 
             ScheduleEventsView(
                 fetchResult: .success(currentEvent: lesson, firstLesson: nil, nextLesson: nil),
                 closeLesson: nil
             )
             .previewContext(WidgetPreviewContext(family: .accessoryRectangular))
-            .environmentObject(AppSettings())
+            .environmentObject(AppearanceSettingsStore())
         }
     }
 }

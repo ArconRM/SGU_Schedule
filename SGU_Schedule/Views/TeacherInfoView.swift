@@ -14,7 +14,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
     }
 
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -77,7 +77,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         .background(
             getBackground()
                 .overlay {
-                    if appSettings.currentAppTheme == .pinkHelloKitty {
+                    if appearanceSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl3")
                             .resizable()
                             .ignoresSafeArea()
@@ -92,7 +92,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
     }
 
     private func getBackground() -> AnyView {
-        switch appSettings.currentAppStyle {
+        switch appearanceSettings.currentAppStyle {
         case .fill:
             AnyView(
                 RoundedRectangle(cornerRadius: 20)
@@ -108,7 +108,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                         .cornerRadius(20)
 
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
+                        .stroke(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
                 }
             )
         }
@@ -124,6 +124,6 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         TeacherInfoView(
             viewModel: ViewModelWithMockDataFactory().buildTeacherViewModel()
         )
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
     }
 }

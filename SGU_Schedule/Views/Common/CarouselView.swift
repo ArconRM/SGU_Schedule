@@ -10,7 +10,7 @@ import SwiftUI
 // Подсмотрено (полностью скопировано и чуть настроено) с https://onmyway133.com/posts/how-to-make-carousel-pager-view-in-swiftui/
 struct CarouselView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     let pages: [String]
     @State var currentIndex: Int
@@ -62,7 +62,7 @@ struct CarouselView<Content: View>: View {
                 ZStack {
                     colorScheme == .light ? Color.white : Color.black
 
-                    appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme).blur(radius: 2)
+                    appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme).blur(radius: 2)
                 }
             }
         }
@@ -84,5 +84,5 @@ struct CarouselView<Content: View>: View {
             .frame(width: 393, height: 400)
             .background(.blue)
     }
-    .environmentObject(AppSettings())
+    .environmentObject(AppearanceSettingsStore())
 }

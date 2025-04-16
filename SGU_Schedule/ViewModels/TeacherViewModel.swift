@@ -64,11 +64,6 @@ public class TeacherViewModel: BaseViewModel {
     public func fetchTeacherLessons(teacherLessonsUrlEndpoint: String) {
         self.isLoadingTeacherLessons = true
 
-//        guard let _ = self.teacher else {
-//            self.showNetworkError(error: NetworkError.unexpectedError)
-//            return
-//        }
-
         lessonsNetworkManager.getTeacherScheduleForCurrentWeek(teacherEndpoint: teacherLessonsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let lessons):
@@ -82,11 +77,6 @@ public class TeacherViewModel: BaseViewModel {
 
     public func fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: String) {
         self.isLoadingTeacherSessionEvents = true
-
-//        guard let _ = self.teacher else {
-//            self.showNetworkError(error: NetworkError.unexpectedError)
-//            return
-//        }
 
         sessionEventsNetworkManager.getTeacherSessionEvents(teacherEndpoint: teacherSessionEventsUrlEndpoint, resultQueue: .main) { result in
             switch result {

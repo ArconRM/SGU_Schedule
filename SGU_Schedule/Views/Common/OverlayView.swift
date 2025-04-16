@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OverlayView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @Binding var isShowing: Bool
     @ViewBuilder let content: Content
@@ -54,7 +54,7 @@ struct OverlayView<Content: View>: View {
                 }
                 .background(
                     ZStack {
-                        appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                        appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                             .cornerRadius(20)
                             .blur(radius: 2)
                             .ignoresSafeArea()
@@ -83,5 +83,5 @@ struct OverlayView<Content: View>: View {
     OverlayView(isShowing: .constant(true)) {
         Text("fuck")
     }
-    .environmentObject(AppSettings())
+    .environmentObject(AppearanceSettingsStore())
 }

@@ -9,7 +9,7 @@ import Foundation
 
 public struct TeacherSearchResultsUDManager: TeacherSearchResultsPersistenceManager {
     private let teacherResultsKey = UserDefaultsKeys.teacherSearchResultsKey.rawValue
-    private let defaults = UserDefaults(suiteName: "group.com.qwerty.SGUSchedule") ?? UserDefaults.standard
+    private let defaults = UserDefaults(suiteName: AppGroup.schedule.rawValue) ?? UserDefaults.standard
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 

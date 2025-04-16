@@ -19,7 +19,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -125,7 +125,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             MainButton {
                 Image(systemName: "person.3.fill")
                     .padding(8)
-                    .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                    .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
             }
             .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
@@ -154,7 +154,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             MainButton {
                 Image(systemName: isFavourite ? "star.fill" : "star")
                     .padding(8)
-                    .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                    .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
             }
             .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
@@ -186,7 +186,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             MainButton {
                 Image(systemName: isPinned ? "pin.fill" : "pin")
                     .padding(8)
-                    .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                    .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
             }
             .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
@@ -202,7 +202,7 @@ struct ScheduleView_Previews: PreviewProvider {
             isFavourite: false,
             isPinned: false
         )
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
     }

@@ -316,13 +316,4 @@ extension ScheduleViewModel {
         }
         self.currentActivities = []
     }
-
-//    func endActivity() {
-//        Task {
-//            await currentActivity?.end(nil, dismissalPolicy: .immediate)
-//            await MainActor.run {
-//                self.currentActivity = nil
-//            }
-//        }
-//    }
 }

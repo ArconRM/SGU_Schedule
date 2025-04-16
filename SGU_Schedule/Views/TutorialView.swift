@@ -155,6 +155,6 @@ private struct TutorialView: View {
             .ignoresSafeArea()
 
         TutorialView(isShowing: .constant(true))
-            .environmentObject(AppSettings())
+            .environmentObject(AppearanceSettingsStore())
     }
 }

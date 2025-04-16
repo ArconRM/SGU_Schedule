@@ -12,7 +12,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -71,7 +71,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                         impact.impactOccurred()
                                     }
                                     .buttonStyle(.bordered)
-                                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                                    .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
                                 } else {
                                     Button("Удалить все Live Activity") {
                                         for lessonNumber in 1...8 {
@@ -82,7 +82,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                         impact.impactOccurred()
                                     }
                                     .buttonStyle(.bordered)
-                                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                                    .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
                                 }
                             }
                         }
@@ -175,7 +175,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
         .background(
             GeometryReader { geometry in
                 ZStack {
-                    appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                    appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                         .cornerRadius(35)
                         .blur(radius: 2)
                         .ignoresSafeArea()
@@ -185,7 +185,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
                 .overlay {
-                    if appSettings.currentAppTheme == .pinkHelloKitty {
+                    if appearanceSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl2")
                             .resizable()
                             .ignoresSafeArea()
@@ -236,7 +236,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
 
 #Preview {
     ScheduleModalView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel())
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
 }
