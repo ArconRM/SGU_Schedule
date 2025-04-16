@@ -9,7 +9,7 @@ import XCTest
 @testable import SGU_Schedule
 
 final class NetworkTests: XCTestCase {
-    var testDepartment: Department!
+    var testDepartment: DepartmentDTO!
     var testGroups: [AcademicGroupDTO]!
     var testTeacherEndpoint: String!
     
@@ -23,7 +23,7 @@ final class NetworkTests: XCTestCase {
     override func setUp() {
         super.setUp()
         
-        testDepartment = Department(code: "knt")
+        testDepartment = DepartmentDTO(code: "knt")
         testGroups = [AcademicGroupDTO(fullNumber: "241", departmentCode: testDepartment.code)]
         testTeacherEndpoint = "schedule/teacher/3920"
         

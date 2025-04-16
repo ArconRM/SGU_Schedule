@@ -9,7 +9,7 @@ import Foundation
 import Kanna
 
 struct TeacherHTMLParserSGU_old: TeacherHTMLParser {
-    func getTeacherFromSource(source html: String) throws -> Teacher {
+    func getTeacherFromSource(source html: String) throws -> TeacherDTO {
         do {
             let doc = try HTML(html: html, encoding: .utf8)
 
@@ -40,7 +40,7 @@ struct TeacherHTMLParserSGU_old: TeacherHTMLParser {
 
             let teacherSessionEventsEndpoint = String(doc.xpath("//div[@class='social']/a[2]/@href").first?.text ?? "")
 
-            return Teacher(
+            return TeacherDTO(
                 fullName: fullName,
                 lessonsUrlEndpoint: teacherLessonsEndpoint,
                 sessionEventsUrlEndpoint: teacherSessionEventsEndpoint,

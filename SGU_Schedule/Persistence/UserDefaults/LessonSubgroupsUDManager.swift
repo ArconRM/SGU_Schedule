@@ -13,7 +13,7 @@ public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
     private let encoder = JSONEncoder()
     private let decoder = JSONDecoder()
 
-    public func saveItem(lesson: String, item: LessonSubgroup) throws {
+    public func saveItem(lesson: String, item: LessonSubgroupDTO) throws {
         var prevSaved = getSavedSubgroups()
         prevSaved[lesson] = item
         prevSaved[lesson]!.isSaved = true
@@ -23,15 +23,15 @@ public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
         }
     }
 
-    public func saveDict(_ dict: [String: LessonSubgroup]) {
+    public func saveDict(_ dict: [String: LessonSubgroupDTO]) {
         if let encoded = try? encoder.encode(dict) {
             defaults.set(encoded, forKey: subgroupsKey)
         }
     }
 
-    public func getSavedSubgroups(lessonsInSchedule: [String]) -> [String: LessonSubgroup] {
+    public func getSavedSubgroups(lessonsInSchedule: [String]) -> [String: LessonSubgroupDTO] {
         if let saved = defaults.object(forKey: subgroupsKey) as? Data {
-            if var decoded = try? decoder.decode([String: LessonSubgroup].self, from: saved) {
+            if var decoded = try? decoder.decode([String: LessonSubgroupDTO].self, from: saved) {
                 for savedLesson in decoded.keys where !lessonsInSchedule.contains(savedLesson) {
                     decoded.removeValue(forKey: savedLesson)
                 }
@@ -40,7 +40,7 @@ public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
             }
             return [:]
         } else {
-            var defaultDict: [String: LessonSubgroup] = [:]
+            var defaultDict: [String: LessonSubgroupDTO] = [:]
             for lesson in lessonsInSchedule {
                 defaultDict[lesson] = nil
             }
@@ -49,9 +49,9 @@ public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
         }
     }
 
-    public func getSavedSubgroups() -> [String: LessonSubgroup] {
+    public func getSavedSubgroups() -> [String: LessonSubgroupDTO] {
         if let saved = defaults.object(forKey: subgroupsKey) as? Data {
-            if let decoded = try? decoder.decode([String: LessonSubgroup].self, from: saved) {
+            if let decoded = try? decoder.decode([String: LessonSubgroupDTO].self, from: saved) {
                 return decoded
             }
             return [:]

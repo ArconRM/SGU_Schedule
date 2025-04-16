@@ -13,7 +13,7 @@ struct SettingsView: View {
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appSettings: AppSettings
 
-    public var selectedDepartment: Department
+    public var selectedDepartment: DepartmentDTO
 
     @State var selectedTheme: AppTheme
     @State var selectedStyle: AppStyle
@@ -138,7 +138,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(selectedDepartment: Department.mock, selectedTheme: .blue, selectedStyle: .fill, selectedParser: .new)
+    SettingsView(selectedDepartment: DepartmentDTO.mock, selectedTheme: .blue, selectedStyle: .fill, selectedParser: .new)
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
         .environmentObject(AppSettings())
 }

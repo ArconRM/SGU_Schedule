@@ -8,8 +8,8 @@
 import Foundation
 
 final class TeacherParserMock: TeacherHTMLParser {
-    func getTeacherFromSource(source html: String) throws -> Teacher {
-        return Teacher.mock
+    func getTeacherFromSource(source html: String) throws -> TeacherDTO {
+        return TeacherDTO.mock
     }
 
     func getAllTeacherSearchResultsFromSource(source html: String) throws -> Set<TeacherSearchResult> {

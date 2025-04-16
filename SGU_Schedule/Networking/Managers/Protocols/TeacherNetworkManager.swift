@@ -13,7 +13,7 @@ public protocol TeacherNetworkManager {
     func getTeacher(
         teacherEndpoint: String,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping (Result<Teacher, Error>) -> Void
+        completionHandler: @escaping (Result<TeacherDTO, Error>) -> Void
     )
 
     /// Только через новый сайт. Заполняет пока только основную инфу

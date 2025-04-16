@@ -104,7 +104,7 @@ struct TeacherView_Previews: PreviewProvider {
     }
 }
 
-// teacher: Teacher(
+// teacher:TeacherDTO
 //    fullName: "Осипцев Михаил Анатольевич",
 //    profileImageUrl: URL(string: "https://www.old1.sgu.ru/sites/default/files/styles/500x375_4x3/public/employee/facepics/7a630f4a70a5310d9152a3d5e5350a35/foto-1.jpg?itok=IILG1z3i")!,
 //    email: "Osipcevm@gmail.com",

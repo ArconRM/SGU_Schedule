@@ -1,5 +1,5 @@
 //
-//  LessonSubgroup.swift
+//  LessonSubgroupDTO.swift
 //  SGU_Schedule
 //
 //  Created by Artemiy MIROTVORTSEV on 17.10.2024.
@@ -8,7 +8,7 @@
 import Foundation
 
 // TODO: Должно храниться в Lesson
-public struct LessonSubgroup: Hashable, Codable {
+public struct LessonSubgroupDTO: Hashable, Codable {
 
     var teacher: String
     /// То что в Lesson хранится как subgroup

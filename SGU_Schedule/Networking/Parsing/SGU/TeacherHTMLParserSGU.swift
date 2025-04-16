@@ -10,7 +10,7 @@ import Kanna
 
 public struct TeacherHTMLParserSGU: TeacherHTMLParser {
     /// Not implemented
-    public func getTeacherFromSource(source html: String) throws -> Teacher {
+    public func getTeacherFromSource(source html: String) throws -> TeacherDTO {
         throw NetworkError.htmlParserError
     }
 

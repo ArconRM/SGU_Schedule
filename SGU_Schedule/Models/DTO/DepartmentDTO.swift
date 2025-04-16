@@ -1,5 +1,5 @@
 //
-//  Department.swift
+//  DepartmentDTO.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 08.02.2024.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-public struct Department: Hashable {
+public struct DepartmentDTO: Hashable {
     var fullName: String
     var shortName: String
     var code: String

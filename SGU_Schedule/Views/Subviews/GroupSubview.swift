@@ -15,7 +15,7 @@ struct GroupSubview: View {
     var isFavourite: Bool
     var isPinned: Bool
     /// Если группа с другого факультета
-    var differentDepartment: Department?
+    var differentDepartment: DepartmentDTO?
 
     var body: some View {
         ZStack {

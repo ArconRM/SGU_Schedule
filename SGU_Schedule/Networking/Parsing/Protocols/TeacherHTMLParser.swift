@@ -8,6 +8,6 @@
 import Foundation
 
 public protocol TeacherHTMLParser {
-    func getTeacherFromSource(source html: String) throws -> Teacher
+    func getTeacherFromSource(source html: String) throws -> TeacherDTO
     func getAllTeacherSearchResultsFromSource(source html: String) throws -> Set<TeacherSearchResult>
 }

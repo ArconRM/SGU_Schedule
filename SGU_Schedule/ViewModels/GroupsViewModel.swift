@@ -65,7 +65,7 @@ public class GroupsViewModel: BaseViewModel {
 
     public func setSelectedAcademicProgramAndFetchGroups(
         newValue: AcademicProgram,
-        selectedDepartment: Department,
+        selectedDepartment: DepartmentDTO,
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue.rawValue, forKey: selectedAcademicProgramKey)
@@ -79,7 +79,7 @@ public class GroupsViewModel: BaseViewModel {
 
     public func setSelectedYearAndFetchGroups(
         newValue: Int,
-        selectedDepartment: Department,
+        selectedDepartment: DepartmentDTO,
         isOnline: Bool
     ) {
         UserDefaults.standard.set(newValue, forKey: selectedYearKey)
@@ -94,7 +94,7 @@ public class GroupsViewModel: BaseViewModel {
     public func fetchGroups(
         year: Int,
         academicProgram: AcademicProgram,
-        selectedDepartment: Department,
+        selectedDepartment: DepartmentDTO,
         isOnline: Bool
     ) {
         do {

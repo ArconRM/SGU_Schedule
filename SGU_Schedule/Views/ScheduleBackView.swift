@@ -65,7 +65,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 //                    .padding(10)
 //                }
 
-            } else if let timeBreak = viewModel.currentEvent as? TimeBreak {
+            } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
                      timeBreak.timeEnd.getHoursAndMinutesString())
                     .font(.system(size: 20, weight: .bold))

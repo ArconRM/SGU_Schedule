@@ -117,7 +117,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         ForEach(1...8, id: \.self) { lessonNumber in
                             let scheduleEventsByNumber = viewModel.getScheduleEventsBySelectedDayAndNumber(lessonNumber: lessonNumber)
                             if !scheduleEventsByNumber.isEmpty {
-                                if scheduleEventsByNumber.count == 1, let window = scheduleEventsByNumber.first as? TimeBreak {
+                                if scheduleEventsByNumber.count == 1, let window = scheduleEventsByNumber.first as? TimeBreakDTO {
                                     ScheduleSubview(window: window, subgroupsByLessons: viewModel.subgroupsByLessons)
                                         .environmentObject(networkMonitor)
                                         .environmentObject(viewsManager)

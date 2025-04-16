@@ -33,8 +33,8 @@ public final class ViewsManager: ObservableObject {
 
     // https://stackoverflow.com/questions/34474545/self-used-before-all-stored-properties-are-initialized
     // TODO: мб получше решение есть
-    private var _selectedDepartment: Department?
-    private var selectedDepartment: Department? {
+    private var _selectedDepartment: DepartmentDTO?
+    private var selectedDepartment: DepartmentDTO? {
         get {
             return _selectedDepartment
         }
@@ -101,7 +101,7 @@ public final class ViewsManager: ObservableObject {
 
         self._selectedDepartment = {
             if let departmentCode = UserDefaults.standard.string(forKey: UserDefaultsKeys.selectedDepartmentKey.rawValue) {
-                return Department(code: departmentCode)
+                return DepartmentDTO(code: departmentCode)
             }
             return nil
         }()
@@ -135,7 +135,7 @@ public final class ViewsManager: ObservableObject {
         currentViewModelFactory = isNewParserUsed ? viewModelFactory : viewModelFactory_old
     }
 
-    func selectDepartment(department: Department) {
+    func selectDepartment(department: DepartmentDTO) {
         selectedDepartment = department
         // TODO: мб чтобы все таки менялся groupsViewModel
         groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: self._selectedDepartment!)
@@ -248,11 +248,11 @@ public final class ViewsManager: ObservableObject {
     }
 
     func buildGroupsView() -> some View {
-        return GroupsView(viewModel: groupsViewModel!, selectedDepartment: selectedDepartment ?? Department(code: "Error"))
+        return GroupsView(viewModel: groupsViewModel!, selectedDepartment: selectedDepartment ?? DepartmentDTO(code: "Error"))
     }
 
     func buildSettingsView() -> some View {
-        return SettingsView(selectedDepartment: selectedDepartment ?? Department(code: "Error"),
+        return SettingsView(selectedDepartment: selectedDepartment ?? DepartmentDTO(code: "Error"),
                             selectedTheme: appSettings.currentAppTheme,
                             selectedStyle: appSettings.currentAppStyle,
                             selectedParser: isNewParserUsed ? .new : .old)

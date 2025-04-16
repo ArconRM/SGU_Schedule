@@ -20,7 +20,7 @@ class ScheduleViewModel: BaseViewModel {
 
     @Published var groupSchedule: GroupScheduleDTO?
     @Published var groupSessionEvents: GroupSessionEventsDTO?
-    @Published var subgroupsByLessons: [String: [LessonSubgroup]] = [:]
+    @Published var subgroupsByLessons: [String: [LessonSubgroupDTO]] = [:]
 
     @Published var savedSubgroupsCount = 0
 
@@ -186,7 +186,7 @@ class ScheduleViewModel: BaseViewModel {
         }
     }
 
-    func saveSubgroup(lesson: String, subgroup: LessonSubgroup) {
+    func saveSubgroup(lesson: String, subgroup: LessonSubgroupDTO) {
         if self.subgroupsByLessons[lesson] != nil {
             for subgroupIndex in subgroupsByLessons[lesson]!.indices {
                 subgroupsByLessons[lesson]?[subgroupIndex].isSaved = subgroupsByLessons[lesson]?[subgroupIndex] == subgroup

@@ -1,5 +1,5 @@
 //
-//  TimeBreak.swift
+//  TimeBreakDTO.swift
 //  SGU_Schedule
 //
 //  Created by Артемий on 23.10.2023.
@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct TimeBreak: ScheduleEvent {
+struct TimeBreakDTO: ScheduleEvent {
 
     var title: String
     var weekDay: Weekdays

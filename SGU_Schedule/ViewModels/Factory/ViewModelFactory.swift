@@ -10,7 +10,7 @@ import Foundation
 protocol ViewModelFactory {
     func buildDepartmentsViewModel() -> DepartmentsViewModel
 
-    func buildGroupsViewModel(department: Department) -> GroupsViewModel
+    func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel
 
     func buildScheduleViewModel() -> ScheduleViewModel
 

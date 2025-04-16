@@ -105,7 +105,7 @@ struct LessonDTO: ScheduleEvent {
                 lhs.timeEnd == rhs.timeEnd)
     }
 
-    public func isActive(subgroupsByLessons: [String: [LessonSubgroup]]) -> Bool {
+    public func isActive(subgroupsByLessons: [String: [LessonSubgroupDTO]]) -> Bool {
         if subgroupsByLessons[self.title] != nil {
             if let requiredSubgroup = subgroupsByLessons[self.title]!.first(where: { $0.number == self.subgroup }) {
                 return Date.checkIfWeekTypeIsAllOrCurrentWithSundayBeingNextWeek(self.weekType) &&

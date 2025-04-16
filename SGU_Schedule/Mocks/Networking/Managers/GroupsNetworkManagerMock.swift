@@ -11,7 +11,7 @@ final class GroupsNetworkManagerMock: GroupsNetworkManager {
     func getGroupsByYearAndAcademicProgram(
         year: Int,
         program: AcademicProgram,
-        department: Department,
+        department: DepartmentDTO,
         resultQueue: DispatchQueue,
         completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void
     ) {

@@ -8,15 +8,15 @@
 import Foundation
 
 final class LessonSubgroupsPersistenceManagerMock: LessonSubgroupsPersistenceManager {
-    func saveItem(lesson: String, item: LessonSubgroup) throws { }
+    func saveItem(lesson: String, item: LessonSubgroupDTO) throws { }
 
-    func saveDict(_ dict: [String: LessonSubgroup]) { }
+    func saveDict(_ dict: [String: LessonSubgroupDTO]) { }
 
-    func getSavedSubgroups(lessonsInSchedule: [String]) -> [String: LessonSubgroup] {
+    func getSavedSubgroups(lessonsInSchedule: [String]) -> [String: LessonSubgroupDTO] {
         return [:]
     }
 
-    func getSavedSubgroups() -> [String: LessonSubgroup] {
+    func getSavedSubgroups() -> [String: LessonSubgroupDTO] {
         return [:]
     }
 

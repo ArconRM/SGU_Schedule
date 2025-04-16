@@ -18,8 +18,8 @@ struct ScheduleSubview: View, Equatable {
     @EnvironmentObject var appSettings: AppSettings
 
     var lessons: [LessonDTO]?
-    var window: TimeBreak?
-    var subgroupsByLessons: [String: [LessonSubgroup]]
+    var window: TimeBreakDTO?
+    var subgroupsByLessons: [String: [LessonSubgroupDTO]]
 
     @State var areMultipleLessonsCollapsed: Bool = true
 
@@ -59,7 +59,7 @@ struct ScheduleSubview: View, Equatable {
         )
     }
 
-    private func makeWindowView(window: TimeBreak) -> some View {
+    private func makeWindowView(window: TimeBreakDTO) -> some View {
         VStack {
             HStack {
                 Text("\(window.timeStart.getHoursAndMinutesString()) - \(window.timeEnd.getHoursAndMinutesString())")

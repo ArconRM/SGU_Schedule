@@ -65,7 +65,7 @@ final class NetworkManagersTests: XCTestCase {
     func testGroupsNetworkManagerGetsGroups() {
         let didReceiveResponse = expectation(description: #function)
         
-        groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 2020, program: AcademicProgram.masters, department: Department.mock) { result in
+        groupsNetworkManager.getGroupsByYearAndAcademicProgram(year: 2020, program: AcademicProgram.masters, department: DepartmentDTO.mock) { result in
             switch result {
             case .success(let groups):
                 XCTAssertEqual(groups, [AcademicGroupDTO.mock])

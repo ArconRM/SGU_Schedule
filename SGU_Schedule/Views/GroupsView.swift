@@ -18,13 +18,13 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
     @State private var selectedAcademicProgram: AcademicProgram
     @State private var selectedYear: Int
-    @State private var selectedDepartment: Department
+    @State private var selectedDepartment: DepartmentDTO
 
     @State private var showAlert: Bool = false
     @State private var programTappedCount: Int = 0
     @State private var yearTappedCount: Int = 0
 
-    init(viewModel: ViewModel, selectedDepartment: Department) {
+    init(viewModel: ViewModel, selectedDepartment: DepartmentDTO) {
         self.viewModel = viewModel
         self.selectedDepartment = selectedDepartment
 
@@ -132,7 +132,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                 isPinned: false,
                                 differentDepartment: {
                                     if viewModel.favouriteGroup!.departmentCode != selectedDepartment.code {
-                                        return Department(code: viewModel.favouriteGroup!.departmentCode)
+                                        return DepartmentDTO(code: viewModel.favouriteGroup!.departmentCode)
                                     }
                                     return nil
                                 }()
@@ -155,7 +155,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                     isPinned: true,
                                     differentDepartment: {
                                         if group.departmentCode != selectedDepartment.code {
-                                            return Department(code: group.departmentCode)
+                                            return DepartmentDTO(code: group.departmentCode)
                                         }
                                         return nil
                                     }()
@@ -352,7 +352,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
 struct GroupsView_Previews: PreviewProvider {
     static var previews: some View {
-        GroupsView(viewModel: ViewModelWithMockDataFactory().buildGroupsViewModel(department: Department.mock), selectedDepartment: Department.mock)
+        GroupsView(viewModel: ViewModelWithMockDataFactory().buildGroupsViewModel(department: DepartmentDTO.mock), selectedDepartment: DepartmentDTO.mock)
             .environmentObject(NetworkMonitor())
             .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
             .environmentObject(AppSettings())

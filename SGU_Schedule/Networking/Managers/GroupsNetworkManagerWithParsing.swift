@@ -21,7 +21,7 @@ public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
     public func getGroupsByYearAndAcademicProgram(
         year: Int,
         program: AcademicProgram,
-        department: Department,
+        department: DepartmentDTO,
         resultQueue: DispatchQueue = .main,
         completionHandler: @escaping (Result<[AcademicGroupDTO], Error>) -> Void
     ) {

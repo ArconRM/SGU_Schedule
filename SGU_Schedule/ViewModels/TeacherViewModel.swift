@@ -12,7 +12,7 @@ public class TeacherViewModel: BaseViewModel {
     private let lessonsNetworkManager: LessonNetworkManager
     private let sessionEventsNetworkManager: SessionEventsNetworkManager
 
-    @Published var teacher: Teacher?
+    @Published var teacher: TeacherDTO?
     @Published var teacherLessons: [LessonDTO] = []
     @Published var teacherSessionEvents: [SessionEventDTO] = []
 

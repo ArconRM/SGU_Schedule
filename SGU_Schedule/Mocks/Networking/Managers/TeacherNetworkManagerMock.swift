@@ -11,9 +11,9 @@ final class TeacherNetworkManagerMock: TeacherNetworkManager {
     func getTeacher(
         teacherEndpoint: String,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping (Result<SGU_Schedule.Teacher, any Error>) -> Void
+        completionHandler: @escaping (Result<SGU_Schedule.TeacherDTO, any Error>) -> Void
     ) {
-        completionHandler(.success(Teacher.mock))
+        completionHandler(.success(TeacherDTO.mock))
     }
 
     func getAllTeachers(

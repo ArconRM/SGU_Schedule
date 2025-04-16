@@ -41,7 +41,7 @@ struct GroupScheduleDTO: Equatable {
 
                 if !lessonsByDayAndNumber.isEmpty {
                     if lessonNumber - lastSeenLesson.lessonNumber > 1 {
-                        let window = TimeBreak(
+                        let window = TimeBreakDTO(
                             weekDay: lastSeenLesson.weekDay,
                             lessonNumber: lessonNumber - 1,
                             timeStart: lastSeenLesson.timeEnd,
@@ -59,7 +59,7 @@ struct GroupScheduleDTO: Equatable {
         return result
     }
 
-    func getFirstLessonByDay(subgroupsByLessons: [String: [LessonSubgroup]], weekDayNumber: Int) -> LessonDTO? {
+    func getFirstLessonByDay(subgroupsByLessons: [String: [LessonSubgroupDTO]], weekDayNumber: Int) -> LessonDTO? {
         let todayLessons = self.lessons.filter { $0.weekDay.number == weekDayNumber && $0.isActive(subgroupsByLessons: subgroupsByLessons) }
         guard !todayLessons.isEmpty else { return nil }
 
@@ -74,13 +74,13 @@ struct GroupScheduleDTO: Equatable {
         return nil
     }
 
-    func getTodayFirstLesson(subgroupsByLessons: [String: [LessonSubgroup]]) -> LessonDTO? {
+    func getTodayFirstLesson(subgroupsByLessons: [String: [LessonSubgroupDTO]]) -> LessonDTO? {
         let currentWeekDayNumber = Date.currentWeekday.number
 
         return getFirstLessonByDay(subgroupsByLessons: subgroupsByLessons, weekDayNumber: currentWeekDayNumber)
     }
 
-    func getCurrentAndNextLessons(subgroupsByLessons: [String: [LessonSubgroup]]) -> (currentEvent: (any ScheduleEvent)?, nextLesson1: LessonDTO?, nextLesson2: LessonDTO?) {
+    func getCurrentAndNextLessons(subgroupsByLessons: [String: [LessonSubgroupDTO]]) -> (currentEvent: (any ScheduleEvent)?, nextLesson1: LessonDTO?, nextLesson2: LessonDTO?) {
         // Проверяем есть ли вообще занятия
         let currentWeekDayNumber = Date.currentWeekday.number
         let currentTime = Date.currentHoursAndMinutes
@@ -130,7 +130,7 @@ struct GroupScheduleDTO: Equatable {
                         dateEnd: todayLessonsByNumberNext[0].timeStart,
                         strictInequality: true
                     ) {
-                        let currentTimeBreak = TimeBreak(
+                        let currentTimeBreak = TimeBreakDTO(
                             weekDay: Weekdays(dayNumber: currentWeekDayNumber)!,
                             lessonNumber: lessonNumber,
                             timeStart: todayLessonsByNumber[0].timeEnd,
@@ -178,15 +178,15 @@ struct GroupScheduleDTO: Equatable {
         return (nextLesson1, nextLesson2)
     }
 
-    func getSubgroupsByLessons(savedSubgroups: [String: LessonSubgroup]) -> [String: [LessonSubgroup]] {
-        var subgroupsByLessons: [String: [LessonSubgroup]] = [:]
+    func getSubgroupsByLessons(savedSubgroups: [String: LessonSubgroupDTO]) -> [String: [LessonSubgroupDTO]] {
+        var subgroupsByLessons: [String: [LessonSubgroupDTO]] = [:]
         for lesson in self.lessons {
             if lesson.subgroup != nil && !lesson.subgroup!.isEmpty && lesson.subgroup!.contains(where: { $0.isNumber }) {
                 let isSaved = savedSubgroups[lesson.title] != nil && savedSubgroups[lesson.title]?.number == lesson.subgroup
                 if subgroupsByLessons[lesson.title] != nil && !subgroupsByLessons[lesson.title]!.contains(where: { $0.number == lesson.subgroup }) {
-                    subgroupsByLessons[lesson.title]!.append(LessonSubgroup(teacher: lesson.teacherFullName, number: lesson.subgroup!, isSaved: isSaved))
+                    subgroupsByLessons[lesson.title]!.append(LessonSubgroupDTO(teacher: lesson.teacherFullName, number: lesson.subgroup!, isSaved: isSaved))
                 } else {
-                    subgroupsByLessons[lesson.title] = [LessonSubgroup(teacher: lesson.teacherFullName, number: lesson.subgroup!, isSaved: isSaved)]
+                    subgroupsByLessons[lesson.title] = [LessonSubgroupDTO(teacher: lesson.teacherFullName, number: lesson.subgroup!, isSaved: isSaved)]
                 }
             }
         }
