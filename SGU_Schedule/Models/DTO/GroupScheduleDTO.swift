@@ -80,14 +80,14 @@ struct GroupScheduleDTO: Equatable {
         return getFirstLessonByDay(subgroupsByLessons: subgroupsByLessons, weekDayNumber: currentWeekDayNumber)
     }
 
-    func getCurrentAndNextLessons(subgroupsByLessons: [String: [LessonSubgroupDTO]]) -> (currentEvent: (any ScheduleEvent)?, nextLesson1: LessonDTO?, nextLesson2: LessonDTO?) {
+    func getCurrentAndNextLessons(subgroupsByLessons: [String: [LessonSubgroupDTO]]) -> (
+        currentEvent: (any ScheduleEvent)?,
+        nextLesson1: LessonDTO?,
+        nextLesson2: LessonDTO?
+    ) {
         // Проверяем есть ли вообще занятия
         let currentWeekDayNumber = Date.currentWeekday.number
         let currentTime = Date.currentHoursAndMinutes
-
-//        if currentDayNumber == 7 {
-//            return (nil, nil, nil)
-//        }
 
         let todayLessons = self.lessons.filter { $0.weekDay.number == currentWeekDayNumber && $0.isActive(subgroupsByLessons: subgroupsByLessons) }
         if todayLessons.isEmpty {
@@ -153,7 +153,10 @@ struct GroupScheduleDTO: Equatable {
     }
 
     /// If possible, sets twoNextLessons to two nearest lessons from given array, which have greater lessonNumber than given one
-    private func getNextTwoLessons(lessons: [LessonDTO], from number: Int) -> (LessonDTO?, LessonDTO?) {
+    private func getNextTwoLessons(
+        lessons: [LessonDTO],
+        from number: Int
+    ) -> (LessonDTO?, LessonDTO?) {
         var nextLesson1: LessonDTO?
         var nextLesson2: LessonDTO?
 

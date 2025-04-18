@@ -124,7 +124,7 @@ public class GroupsViewModel: BaseViewModel {
                         }
                     case .failure(let error):
                         self.groupsWithoutSaved = []
-                        self.showNetworkError(error)
+                        self.showError(error)
                     }
                     self.isLoadingGroups = false
                 }
@@ -132,7 +132,7 @@ public class GroupsViewModel: BaseViewModel {
                 self.isLoadingGroups = false
             }
         } catch let error {
-            self.showCoreDataError(error)
+            self.showError(error)
         }
     }
 }

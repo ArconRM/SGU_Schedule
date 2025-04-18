@@ -153,18 +153,14 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                     curPadding = minPadding
                 } else {
                     if dragAmount > 0 { // вниз
-//                        if curPadding == minPadding {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                curPadding = maxPadding
-                            }
-//                        }
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            curPadding = maxPadding
+                        }
 
                     } else { // вверх
-//                        if curPadding == maxPadding {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                curPadding = minPadding
-                            }
-//                        }
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            curPadding = minPadding
+                        }
                     }
                 }
                 prevDragTrans = value.translation

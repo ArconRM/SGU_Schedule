@@ -43,28 +43,6 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                     .font(.system(size: 20, weight: .bold))
                     .padding(.horizontal, 5)
 
-//                if viewModel.currentActivity == nil {
-//                    Button("Отслеживать в Live Activity") {
-//                        viewModel.startActivity(lesson: lesson)
-//
-//                        let impact = UIImpactFeedbackGenerator(style: .medium)
-//                        impact.impactOccurred()
-//                    }
-//                    .buttonStyle(.bordered)
-//                    .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
-//                    .padding(10)
-//                } else {
-//                    Button("Остановить Live Activity") {
-//                        viewModel.endActivity()
-//
-//                        let impact = UIImpactFeedbackGenerator(style: .medium)
-//                        impact.impactOccurred()
-//                    }
-//                    .buttonStyle(.bordered)
-//                    .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
-//                    .padding(10)
-//                }
-
             } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
                      timeBreak.timeEnd.getHoursAndMinutesString())

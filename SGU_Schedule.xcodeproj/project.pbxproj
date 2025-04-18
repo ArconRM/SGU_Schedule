@@ -14,7 +14,11 @@
 		16150C2B2C09BFB6006BA964 /* ViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */; };
 		16150C2D2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */; };
 		16150C2F2C09D23E006BA964 /* TeacherInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16150C2E2C09D23E006BA964 /* TeacherInfoView.swift */; };
+		161EEB6D2DB0F288008712B6 /* ScheduleInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161EEB6C2DB0F288008712B6 /* ScheduleInteractor.swift */; };
+		161EEB6F2DB10059008712B6 /* ScheduleInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161EEB6E2DB10059008712B6 /* ScheduleInteractorImpl.swift */; };
 		161EFD7C2C074C2B008E281E /* TeacherViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 161EFD7B2C074C2B008E281E /* TeacherViewModel.swift */; };
+		162B7C2D2DB2C14800A30DA1 /* GroupScheduleFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162B7C2C2DB2C14800A30DA1 /* GroupScheduleFetchResult.swift */; };
+		162B7C2F2DB2C15300A30DA1 /* GroupSessionEventsFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162B7C2E2DB2C15300A30DA1 /* GroupSessionEventsFetchResult.swift */; };
 		162FEA542CBFC94300AA682A /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162FEA532CBFC94300AA682A /* OverlayView.swift */; };
 		162FEA562CBFCAC800AA682A /* SubgroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162FEA552CBFCAC800AA682A /* SubgroupsView.swift */; };
 		162FEA5E2CC1316200AA682A /* LessonSubgroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 162FEA5D2CC1316200AA682A /* LessonSubgroupDTO.swift */; };
@@ -81,7 +85,7 @@
 		168069BC2C5C2176002D47A6 /* TeacherDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16DB5F032C04CF9900870B21 /* TeacherDTO.swift */; };
 		168069BD2C5C2176002D47A6 /* GroupSessionEventsDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */; };
 		168069BE2C5C2176002D47A6 /* AcademicGroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1262ABA004C0079E3D7 /* AcademicGroupDTO.swift */; };
-		168069BF2C5C2176002D47A6 /* TimeBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreak.swift */; };
+		168069BF2C5C2176002D47A6 /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
 		168069C02C5C2176002D47A6 /* DepartmentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67802B7560C900B06667 /* DepartmentDTO.swift */; };
 		168069C12C5C2176002D47A6 /* ScheduleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEvent.swift */; };
 		168069C22C5C217D002D47A6 /* DepartmentSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67822B75611E00B06667 /* DepartmentSource.swift */; };
@@ -111,7 +115,7 @@
 		16ABCD332D5A596E00BF2E5A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* Date+Extension.swift */; };
 		16ABCD342D5A597600BF2E5A /* LessonDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1282ABA011C0079E3D7 /* LessonDTO.swift */; };
 		16ABCD352D5A599900BF2E5A /* AcademicGroupDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE1262ABA004C0079E3D7 /* AcademicGroupDTO.swift */; };
-		16ABCD362D5A599900BF2E5A /* TimeBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreak.swift */; };
+		16ABCD362D5A599900BF2E5A /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
 		16ABCD372D5A599900BF2E5A /* DepartmentDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2F67802B7560C900B06667 /* DepartmentDTO.swift */; };
 		16ABCD382D5A599900BF2E5A /* GroupScheduleDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383602AF571B90004F012 /* GroupScheduleDTO.swift */; };
 		16ABCD392D5A599900BF2E5A /* SessionEventDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */; };
@@ -233,7 +237,7 @@
 		BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */; };
 		BA5383652AF692840004F012 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
 		BA977C022AE6BE3B00F28F22 /* ScheduleEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C012AE6BE3B00F28F22 /* ScheduleEvent.swift */; };
-		BA977C042AE6D65000F28F22 /* TimeBreak.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreak.swift */; };
+		BA977C042AE6D65000F28F22 /* TimeBreakDTO.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */; };
 		BA9B4DB02AD0A63C008A6092 /* ScheduleViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9B4DAF2AD0A63C008A6092 /* ScheduleViewModel.swift */; };
 		BA9D79172ABB3AD900C36932 /* GroupsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D79162ABB3AD900C36932 /* GroupsView.swift */; };
 		BA9D79192ABB408100C36932 /* GroupSubview.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA9D79182ABB408100C36932 /* GroupSubview.swift */; };
@@ -329,7 +333,11 @@
 		16150C2A2C09BFB6006BA964 /* ViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelFactory.swift; sourceTree = "<group>"; };
 		16150C2C2C09C2F1006BA964 /* ViewModelWithParsingSGUFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithParsingSGUFactory.swift; sourceTree = "<group>"; };
 		16150C2E2C09D23E006BA964 /* TeacherInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherInfoView.swift; sourceTree = "<group>"; };
+		161EEB6C2DB0F288008712B6 /* ScheduleInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractor.swift; sourceTree = "<group>"; };
+		161EEB6E2DB10059008712B6 /* ScheduleInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleInteractorImpl.swift; sourceTree = "<group>"; };
 		161EFD7B2C074C2B008E281E /* TeacherViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TeacherViewModel.swift; sourceTree = "<group>"; };
+		162B7C2C2DB2C14800A30DA1 /* GroupScheduleFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupScheduleFetchResult.swift; sourceTree = "<group>"; };
+		162B7C2E2DB2C15300A30DA1 /* GroupSessionEventsFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSessionEventsFetchResult.swift; sourceTree = "<group>"; };
 		162FEA532CBFC94300AA682A /* OverlayView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		162FEA552CBFCAC800AA682A /* SubgroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SubgroupsView.swift; sourceTree = "<group>"; };
 		162FEA5D2CC1316200AA682A /* LessonSubgroupDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSubgroupDTO.swift; sourceTree = "<group>"; };
@@ -466,7 +474,7 @@
 		BA5383622AF68F560004F012 /* GroupSchedulePersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupSchedulePersistenceManager.swift; sourceTree = "<group>"; };
 		BA5383642AF692840004F012 /* LessonPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPersistenceManager.swift; sourceTree = "<group>"; };
 		BA977C012AE6BE3B00F28F22 /* ScheduleEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEvent.swift; sourceTree = "<group>"; };
-		BA977C032AE6D65000F28F22 /* TimeBreak.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBreak.swift; sourceTree = "<group>"; };
+		BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TimeBreakDTO.swift; sourceTree = "<group>"; };
 		BA996A582AC4A00200888BE2 /* SGU_ScheduleTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SGU_ScheduleTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		BA9B4DAF2AD0A63C008A6092 /* ScheduleViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleViewModel.swift; sourceTree = "<group>"; };
 		BA9D79162ABB3AD900C36932 /* GroupsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsView.swift; sourceTree = "<group>"; };
@@ -569,6 +577,23 @@
 				16C667552D2DC92600EB2F98 /* SessionEventsWidgetViewModel.swift */,
 			);
 			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		161EEB6A2DB0F0A4008712B6 /* Interactors */ = {
+			isa = PBXGroup;
+			children = (
+				161EEB6B2DB0F264008712B6 /* Protocols */,
+				161EEB6E2DB10059008712B6 /* ScheduleInteractorImpl.swift */,
+			);
+			path = Interactors;
+			sourceTree = "<group>";
+		};
+		161EEB6B2DB0F264008712B6 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				161EEB6C2DB0F288008712B6 /* ScheduleInteractor.swift */,
+			);
+			path = Protocols;
 			sourceTree = "<group>";
 		};
 		163676282C8F326500438B86 /* Managers */ = {
@@ -716,6 +741,8 @@
 			children = (
 				16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */,
 				16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */,
+				162B7C2C2DB2C14800A30DA1 /* GroupScheduleFetchResult.swift */,
+				162B7C2E2DB2C15300A30DA1 /* GroupSessionEventsFetchResult.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -867,8 +894,8 @@
 		BA9D79272AC2179400C36932 /* Managers */ = {
 			isa = PBXGroup;
 			children = (
-				164FA14A2D54EA4E00DC4EBB /* Factory */,
 				BAFB8C2D2AC766E40080834C /* Protocols */,
+				164FA14A2D54EA4E00DC4EBB /* Factory */,
 				BA9D79202ABE439F00C36932 /* LessonsNetworkManagerWithParsing.swift */,
 				BAAEB3132AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift */,
 				BA2FEEDF2B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift */,
@@ -1017,6 +1044,7 @@
 				BAFA580F2AECFCD30060BD81 /* Persistence */,
 				BA9D791D2ABE3D7600C36932 /* Networking */,
 				BA1A4FDA2B6C1B2F0068B2A4 /* Routing */,
+				161EEB6A2DB0F0A4008712B6 /* Interactors */,
 				BADAE1252ABA003D0079E3D7 /* ViewModels */,
 				BADAE1232ABA002C0079E3D7 /* Views */,
 				BADAE1172AB9C0DA0079E3D7 /* Preview Content */,
@@ -1122,7 +1150,7 @@
 				BA2FEED72B65630C001F91F5 /* SessionEventDTO.swift */,
 				BA2FEEDD2B668AAF001F91F5 /* GroupSessionEventsDTO.swift */,
 				BA2F67802B7560C900B06667 /* DepartmentDTO.swift */,
-				BA977C032AE6D65000F28F22 /* TimeBreak.swift */,
+				BA977C032AE6D65000F28F22 /* TimeBreakDTO.swift */,
 				16DB5F032C04CF9900870B21 /* TeacherDTO.swift */,
 				16F315D82CE0FAF7001FFB21 /* TeacherSearchResult.swift */,
 				162FEA5D2CC1316200AA682A /* LessonSubgroupDTO.swift */,
@@ -1456,7 +1484,7 @@
 				16F315D62CE0FA2A001FFB21 /* TeacherSearchResultsPersistenceManager.swift in Sources */,
 				168069BE2C5C2176002D47A6 /* AcademicGroupDTO.swift in Sources */,
 				165BCF332C871EB50004C291 /* AccessoryScheduleInlineView.swift in Sources */,
-				168069BF2C5C2176002D47A6 /* TimeBreak.swift in Sources */,
+				168069BF2C5C2176002D47A6 /* TimeBreakDTO.swift in Sources */,
 				16F315DA2CE0FAF7001FFB21 /* TeacherSearchResult.swift in Sources */,
 				1672487D2C8CF99C008673DE /* GroupCoreDataManager.swift in Sources */,
 				16C667562D2DC92600EB2F98 /* SessionEventsWidgetViewModel.swift in Sources */,
@@ -1505,7 +1533,7 @@
 				16ABCD342D5A597600BF2E5A /* LessonDTO.swift in Sources */,
 				16F3AEAE2D5A501C00AD8348 /* ScheduleLiveActivity.swift in Sources */,
 				16ABCD352D5A599900BF2E5A /* AcademicGroupDTO.swift in Sources */,
-				16ABCD362D5A599900BF2E5A /* TimeBreak.swift in Sources */,
+				16ABCD362D5A599900BF2E5A /* TimeBreakDTO.swift in Sources */,
 				16ABCD372D5A599900BF2E5A /* DepartmentDTO.swift in Sources */,
 				16ABCD382D5A599900BF2E5A /* GroupScheduleDTO.swift in Sources */,
 				16ABCD392D5A599900BF2E5A /* SessionEventDTO.swift in Sources */,
@@ -1566,6 +1594,7 @@
 				BA9D79172ABB3AD900C36932 /* GroupsView.swift in Sources */,
 				BAA53E522AE9203A0098F30E /* UIScreen+Extension.swift in Sources */,
 				BADAE1142AB9C0D60079E3D7 /* ScheduleView.swift in Sources */,
+				162B7C2F2DB2C15300A30DA1 /* GroupSessionEventsFetchResult.swift in Sources */,
 				BA2FEEF02B682547001F91F5 /* ScheduleModalView.swift in Sources */,
 				167248712C8844F4008673DE /* TutorialView.swift in Sources */,
 				BAFA58092AEC5D8D0060BD81 /* CoreData_LessonExtension.swift in Sources */,
@@ -1656,9 +1685,12 @@
 				1672487C2C8CF99C008673DE /* GroupCoreDataManager.swift in Sources */,
 				BADAE1272ABA004C0079E3D7 /* AcademicGroupDTO.swift in Sources */,
 				BADAE1322ABA21430079E3D7 /* Weekdays.swift in Sources */,
+				161EEB6F2DB10059008712B6 /* ScheduleInteractorImpl.swift in Sources */,
 				BA07C9BB2AE47A7B008CDDCC /* LessonType.swift in Sources */,
 				BAAEB3182ADA865500E90223 /* AcademicProgram.swift in Sources */,
 				BA977C022AE6BE3B00F28F22 /* ScheduleEvent.swift in Sources */,
+				162B7C2D2DB2C14800A30DA1 /* GroupScheduleFetchResult.swift in Sources */,
+				161EEB6D2DB0F288008712B6 /* ScheduleInteractor.swift in Sources */,
 				16DB5F0A2C04EFD000870B21 /* TeacherNetworkManager.swift in Sources */,
 				167BDF452D53AEC600D82F4F /* GroupSchedulePersistenceManagerMock.swift in Sources */,
 				167BDF462D53AEC600D82F4F /* GroupSessionEventsPersistenceManagerMock.swift in Sources */,
@@ -1670,7 +1702,7 @@
 				16F3717A2CCF6A3C006188D4 /* TeachersSearchViewModel.swift in Sources */,
 				BAAEB3142AD9A59C00E90223 /* GroupsNetworkManagerWithParsing.swift in Sources */,
 				16CEC0F22D4678C100EF668E /* BaseViewModel.swift in Sources */,
-				BA977C042AE6D65000F28F22 /* TimeBreak.swift in Sources */,
+				BA977C042AE6D65000F28F22 /* TimeBreakDTO.swift in Sources */,
 				BADAE12C2ABA08650079E3D7 /* ScheduleSubview.swift in Sources */,
 				16D2F6622CD5329700217C45 /* BaseError.swift in Sources */,
 				BAAEB3032AD98EFB00E90223 /* LessonHTMLParser.swift in Sources */,

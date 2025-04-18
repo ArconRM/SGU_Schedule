@@ -7,7 +7,6 @@
 
 import SwiftUI
 
-// TODO: мб все таки через интерфейсы как-то, пока для теста нужно создавать отдельную mainview
 struct MainView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
@@ -104,6 +103,7 @@ struct MainView: View {
                 }
             }
         }
+
         .onAppear {
             hasAppeared = true
         }

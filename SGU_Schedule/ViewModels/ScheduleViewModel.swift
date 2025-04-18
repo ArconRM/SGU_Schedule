@@ -9,23 +9,21 @@ import Foundation
 import WidgetKit
 import ActivityKit
 
-// Че то он ебать огромным выходит + многовато говна
 class ScheduleViewModel: BaseViewModel {
-    private let lessonsNetworkManager: LessonNetworkManager
-    private let sessionEventsNetworkManager: SessionEventsNetworkManager
-
-    private let groupSchedulePersistenceManager: GroupSchedulePersistenceManager
-    private let lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager
-    private let groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager
+    private let scheduleInteractor: ScheduleInteractor
 
     @Published var groupSchedule: GroupScheduleDTO?
     @Published var groupSessionEvents: GroupSessionEventsDTO?
+
     @Published var subgroupsByLessons: [String: [LessonSubgroupDTO]] = [:]
 
-    @Published var savedSubgroupsCount = 0
-
-    @Published var scheduleEventsBySelectedDay = [any ScheduleEvent]()
     @Published var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay
+    var scheduleEventsBySelectedDay: [any ScheduleEvent] {
+        groupSchedule?.lessonsAndWindows.filter { $0.weekDay == selectedDay } ?? []
+    }
+    var scheduleEventsByCurrentDay: [any ScheduleEvent] {
+        groupSchedule?.lessonsAndWindows.filter { $0.weekDay == Date.currentWeekday } ?? []
+    }
 
     @Published var currentEvent: (any ScheduleEvent)?
     @Published var nextLesson1: LessonDTO?
@@ -38,26 +36,9 @@ class ScheduleViewModel: BaseViewModel {
 
     @Published var currentActivities: [Activity<ScheduleEventAttributes>]
 
-    init(
-        lessonsNetworkManager: LessonNetworkManager,
-        sessionEventsNetworkManager: SessionEventsNetworkManager,
-        groupSchedulePersistenceManager: GroupSchedulePersistenceManager,
-        lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManager,
-        groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager
-    ) {
-        self.lessonsNetworkManager = lessonsNetworkManager
-        self.sessionEventsNetworkManager = sessionEventsNetworkManager
-        self.groupSchedulePersistenceManager = groupSchedulePersistenceManager
-        self.lessonSubgroupsPersistenceManager = lessonSubgroupsPersistenceManager
-        self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
-
+    init(scheduleInteractor: ScheduleInteractor) {
+        self.scheduleInteractor = scheduleInteractor
         currentActivities = Activity<ScheduleEventAttributes>.activities
-    }
-
-    func updateScheduleEventsBySelectedDay() {
-        if groupSchedule != nil {
-            scheduleEventsBySelectedDay = groupSchedule!.lessonsAndWindows.filter { $0.weekDay == selectedDay }
-        }
     }
 
     /// Возвращает пары по номеру в выбранный день недели + окна между ними если таковые имеются
@@ -66,8 +47,16 @@ class ScheduleViewModel: BaseViewModel {
         return scheduleEventsByNumber
     }
 
-    func getScheduleEventsBySelectedDayAndNumberFilteredBySubgroups(lessonNumber: Int) -> [any ScheduleEvent] {
-        let scheduleEventsByNumber = scheduleEventsBySelectedDay.filter({ $0.lessonNumber == lessonNumber })
+    /// Возвращает еще не закончившиеся пары в текущий день + окна между ними если таковые имеются
+    func getFutureScheduleEventsByCurrentDayFilteredBySubgroups() -> [any ScheduleEvent] {
+        let scheduleEventsByNumber = scheduleEventsByCurrentDay.filter(
+            {
+                Date.compareDatesByTime(
+                    date1: $0.timeEnd,
+                    date2: Date.currentHoursAndMinutes,
+                    strictInequality: false
+                )
+            })
         return scheduleEventsByNumber.filter({
             if let lesson = $0 as? LessonDTO {
                 return lesson.isActive(subgroupsByLessons: subgroupsByLessons)
@@ -86,84 +75,41 @@ class ScheduleViewModel: BaseViewModel {
 
         isLoadingLessons = true
 
-        do {
-            // Если сохраненная группа
-            if isSaved {
-                let persistenceSchedule = try self.groupSchedulePersistenceManager.getScheduleByGroupId(group.groupId)
-
-                // Если есть сохраненное в память раннее, сначала ставится оно
-                if persistenceSchedule != nil {
-                    self.groupSchedule = persistenceSchedule
-
-                    if isFavourite {
-                        fetchSubgroups()
-                    }
-                    self.setCurrentAndTwoNextLessons()
-                }
-
-                if isOnline {
-                    // Получение расписания через networkManager и сравнение его с сохраненным (если оно есть)
-                    self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
-                        group: group,
-                        resultQueue: DispatchQueue.main
-                    ) { result in
-                        switch result {
-                        case .success(let networkSchedule):
-                            do {
-                                if persistenceSchedule == nil || Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons) {
-                                    self.groupSchedule = networkSchedule
-                                    try self.saveNewScheduleWithDeletingPreviousVersion(schedule: networkSchedule)
-
-                                    if isFavourite {
-                                        self.fetchSubgroups()
-                                    }
-                                    self.setCurrentAndTwoNextLessons()
-
-                                    self.loadedLessonsWithChanges = persistenceSchedule != nil && Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons)
-
-                                } else {
-                                    self.groupSchedule = persistenceSchedule
-                                }
-
-                                self.isLoadingLessons = false
-                            } catch let error {
-                                self.showCoreDataError(error)
-                            }
-
-                        case .failure(let error):
-                            self.showNetworkError(error)
-                        }
-                    }
-                }
-
-            // Если не сохраненная группа
-            } else if isOnline {
-                self.lessonsNetworkManager.getGroupScheduleForCurrentWeek(
-                    group: group,
-                    resultQueue: DispatchQueue.main
-                ) { result in
-                    switch result {
-                    case .success(let schedule):
-                        self.groupSchedule = schedule
-                        self.setCurrentAndTwoNextLessons()
-
-                    case .failure(let error):
-                        self.showNetworkError(error)
-                    }
-
-                    self.isLoadingLessons = false
-                }
+        scheduleInteractor.fetchSavedSchedule(
+            group: group,
+            isSaved: isSaved
+        ) { result in
+            switch result {
+            case .success(let fetchResult):
+                self.groupSchedule = fetchResult.groupSchedule
+            case .failure(let error):
+                self.showError(error)
             }
-
-            WidgetCenter.shared.reloadAllTimelines()
-        } catch let error {
-            self.showCoreDataError(error)
         }
-    }
 
-    private func saveNewScheduleWithDeletingPreviousVersion(schedule: GroupScheduleDTO) throws {
-        try self.groupSchedulePersistenceManager.deleteScheduleByGroupId(schedule.group.groupId)
-        try self.groupSchedulePersistenceManager.saveItem(schedule)
+        scheduleInteractor.fetchSchedule(
+            group: group,
+            isOnline: isOnline,
+            isSaved: isSaved,
+            isFavourite: isFavourite
+        ) { result in
+            switch result {
+            case .success(let fetchResult):
+                self.groupSchedule = fetchResult.groupSchedule
+                self.loadedLessonsWithChanges = fetchResult.loadedWithChanges
+                self.isLoadingLessons = false
+
+                if let groupSchedule = self.groupSchedule {
+                    self.setCurrentAndTwoNextLessons()
+                    self.subgroupsByLessons = self.scheduleInteractor.fetchSubgroupsByLessons(schedule: groupSchedule)
+                }
+
+                WidgetCenter.shared.reloadAllTimelines()
+
+            case .failure(let error):
+                self.showError(error)
+            }
+        }
     }
 
     private func setCurrentAndTwoNextLessons() {
@@ -178,33 +124,26 @@ class ScheduleViewModel: BaseViewModel {
         (currentEvent, nextLesson1, nextLesson2) = groupSchedule?.getCurrentAndNextLessons(subgroupsByLessons: self.subgroupsByLessons) ?? (nil, nil, nil)
     }
 
-    private func fetchSubgroups() {
-        if groupSchedule != nil {
-            let savedSubgroups = lessonSubgroupsPersistenceManager.getSavedSubgroups(lessonsInSchedule: groupSchedule!.getUniqueLessonsTitles())
-            savedSubgroupsCount = savedSubgroups.count
-            self.subgroupsByLessons = groupSchedule!.getSubgroupsByLessons(savedSubgroups: savedSubgroups)
-        }
-    }
-
     func saveSubgroup(lesson: String, subgroup: LessonSubgroupDTO) {
-        if self.subgroupsByLessons[lesson] != nil {
-            for subgroupIndex in subgroupsByLessons[lesson]!.indices {
-                subgroupsByLessons[lesson]?[subgroupIndex].isSaved = subgroupsByLessons[lesson]?[subgroupIndex] == subgroup
-            }
-
+        if let groupSchedule = groupSchedule {
             do {
-                try lessonSubgroupsPersistenceManager.saveItem(lesson: lesson, item: subgroup)
-                let savedSubgroups = lessonSubgroupsPersistenceManager.getSavedSubgroups(lessonsInSchedule: groupSchedule!.getUniqueLessonsTitles())
-                savedSubgroupsCount = savedSubgroups.count
-            } catch {
-                showUDError(error)
+                subgroupsByLessons = try scheduleInteractor.saveSubgroup(
+                    groupSchedule: groupSchedule,
+                    subgroupsByLessons: subgroupsByLessons,
+                    lesson: lesson,
+                    subgroup: subgroup
+                )
+            } catch let error {
+                showError(error)
             }
         }
     }
 
     func clearSubgroups() {
-        lessonSubgroupsPersistenceManager.clearSaved()
-        fetchSubgroups()
+        scheduleInteractor.clearSubgroups()
+        if let groupSchedule = groupSchedule {
+            subgroupsByLessons = scheduleInteractor.fetchSubgroupsByLessons(schedule: groupSchedule)
+        }
     }
 
     /// Если группа сохранена и в онлайне - получает раписание сессии с networkManager.
@@ -213,73 +152,43 @@ class ScheduleViewModel: BaseViewModel {
     func fetchSessionEvents(group: AcademicGroupDTO, isOnline: Bool, isSaved: Bool) {
         isLoadingSessionEvents = true
 
-        do {
-            if isSaved {
-                let persistenceGroupSessionEvents = try self.groupSessionEventsPersistenceManager.getSessionEventsByGroupId(group.groupId)
-
-                if persistenceGroupSessionEvents != nil {
-                    self.groupSessionEvents = persistenceGroupSessionEvents
-                }
-
-                if isOnline {
-                    self.sessionEventsNetworkManager.getGroupSessionEvents(
-                        group: group,
-                        resultQueue: DispatchQueue.main
-                    ) { result in
-                        switch result {
-                        case .success(let networkGroupSessionEvents):
-                            do {
-                                if persistenceGroupSessionEvents == nil || Set(networkGroupSessionEvents.sessionEvents) != Set(persistenceGroupSessionEvents!.sessionEvents) {
-                                    self.groupSessionEvents = networkGroupSessionEvents
-                                    try self.saveGroupSessionEventsWithDeletingPreviousVersion(groupSessionEvents: networkGroupSessionEvents)
-
-                                    self.loadedSessionEventsWithChanges = persistenceGroupSessionEvents != nil && Set(networkGroupSessionEvents.sessionEvents) != Set(persistenceGroupSessionEvents!.sessionEvents)
-                                } else {
-                                    self.groupSessionEvents = persistenceGroupSessionEvents
-                                }
-
-                                self.isLoadingSessionEvents = false
-                            } catch {
-                                self.showCoreDataError(error)
-                            }
-
-                        case .failure(let error):
-                            self.showNetworkError(error)
-                        }
-                    }
-                }
-
-            } else if isOnline {
-                sessionEventsNetworkManager.getGroupSessionEvents(
-                    group: group,
-                    resultQueue: .main
-                ) { result in
-                    switch result {
-                    case .success(let date):
-                        self.groupSessionEvents = date
-                    case .failure(let error):
-                        self.showNetworkError(error)
-                    }
-                    self.isLoadingSessionEvents = false
-                }
+        scheduleInteractor.fetchSavedSessionEvents(
+            group: group,
+            isSaved: isOnline
+        ) { result in
+            switch result {
+            case .success(let fetchResult):
+                self.groupSessionEvents = fetchResult.sessionEvents
+            case .failure(let error):
+                self.showError(error)
             }
-
-            WidgetCenter.shared.reloadAllTimelines()
-        } catch let error {
-            self.showCoreDataError(error)
         }
-    }
 
-    private func saveGroupSessionEventsWithDeletingPreviousVersion(groupSessionEvents: GroupSessionEventsDTO) throws {
-        try self.groupSessionEventsPersistenceManager.deleteSessionEventsByGroupId(groupSessionEvents.group.groupId)
-        try self.groupSessionEventsPersistenceManager.saveItem(groupSessionEvents)
+        scheduleInteractor.fetchSessionEvents(
+            group: group,
+            isOnline: isOnline,
+            isSaved: isSaved
+        ) { result in
+            switch result {
+            case .success(let fetchResult):
+                self.groupSessionEvents = fetchResult.sessionEvents
+                self.loadedSessionEventsWithChanges = fetchResult.loadedWithChanges
+
+                self.isLoadingSessionEvents = false
+
+                WidgetCenter.shared.reloadAllTimelines()
+
+            case .failure(let error):
+                self.showError(error)
+            }
+        }
     }
 }
 
 extension ScheduleViewModel {
-    func startAllTodaysActivitiesByLessonNumber(lessonNumber: Int) {
-        let scheduleEvents = getScheduleEventsBySelectedDayAndNumberFilteredBySubgroups(lessonNumber: lessonNumber)
-        let lessons = scheduleEvents.filter({ ($0 as? LessonDTO) != nil }) as! [LessonDTO]
+    func startAllTodaysActivitiesByLessonNumber() {
+        let scheduleEvents = getFutureScheduleEventsByCurrentDayFilteredBySubgroups()
+        let lessons = scheduleEvents.filter({ ($0 as? LessonDTO) != nil }) as? [LessonDTO] ?? []
         for lesson in lessons {
             startActivity(lesson: lesson)
         }

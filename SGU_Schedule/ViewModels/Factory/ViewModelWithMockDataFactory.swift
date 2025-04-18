@@ -21,11 +21,13 @@ final class ViewModelWithMockDataFactory: ViewModelFactory {
 
     func buildScheduleViewModel() -> ScheduleViewModel {
         return ScheduleViewModel(
-            lessonsNetworkManager: LessonNetworkManagerMock(),
-            sessionEventsNetworkManager: SessionEventsNetworkManagerMock(),
-            groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
-            lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManagerMock(),
-            groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock()
+            scheduleInteractor: ScheduleInteractorImpl(
+                lessonsNetworkManager: LessonNetworkManagerMock(),
+                sessionEventsNetworkManager: SessionEventsNetworkManagerMock(),
+                groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
+                lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManagerMock(),
+                groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock()
+            )
         )
     }
 

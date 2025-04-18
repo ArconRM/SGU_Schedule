@@ -34,9 +34,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 .background(Color.white.opacity(0.00001))
                 .gesture(dragGesture)
                 .onChange(of: viewModel.groupSchedule?.lessons) { _ in
-                    if viewModel.groupSchedule != nil {
-                        viewModel.updateScheduleEventsBySelectedDay()
-                    }
                     if viewModel.currentEvent != nil {
                         withAnimation(.easeInOut(duration: 0.5)) {
                             curPadding = maxPadding
@@ -63,9 +60,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                             if viewModel.currentEvent != nil {
                                 if viewModel.currentActivities.isEmpty {
                                     Button("Добавить все следующие Live Activity") {
-                                        for lessonNumber in 1...8 {
-                                            viewModel.startAllTodaysActivitiesByLessonNumber(lessonNumber: lessonNumber)
-                                        }
+                                        viewModel.startAllTodaysActivitiesByLessonNumber()
 
                                         let impact = UIImpactFeedbackGenerator(style: .medium)
                                         impact.impactOccurred()
@@ -74,9 +69,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                     .tint(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
                                 } else {
                                     Button("Удалить все Live Activity") {
-                                        for lessonNumber in 1...8 {
-                                            viewModel.endAllActivities()
-                                        }
+                                        viewModel.endAllActivities()
 
                                         let impact = UIImpactFeedbackGenerator(style: .medium)
                                         impact.impactOccurred()
@@ -100,9 +93,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
                 .pickerStyle(SegmentedPickerStyle())
                 .padding(.horizontal)
-                .onChange(of: viewModel.selectedDay) { _ in
-                    viewModel.updateScheduleEventsBySelectedDay()
-                }
 
                 Text(Date.getDayOfCurrentWeek(dayNumber: viewModel.selectedDay.number)?.getDayAndMonthWordString() ?? "Хз")
                     .font(.system(size: 19, weight: .bold, design: .rounded))
@@ -128,14 +118,12 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                                         .environmentObject(viewsManager)
                                         .id(UUID())
                                         .contextMenu {
-                                            if !viewModel.isLoadingLessons {
-                                                if let lesson = scheduleEventsByNumber.first as? LessonDTO {
-                                                    ShareLink(
-                                                        item: lesson.getTextDesciption(),
-                                                        preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
-                                                    ) {
-                                                        Label("Поделиться парой", systemImage: "square.and.arrow.up")
-                                                    }
+                                            if !viewModel.isLoadingLessons, let lesson = scheduleEventsByNumber.first as? LessonDTO {
+                                                ShareLink(
+                                                    item: lesson.getTextDesciption(),
+                                                    preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
+                                                ) {
+                                                    Label("Поделиться парой", systemImage: "square.and.arrow.up")
                                                 }
                                             }
                                         }
@@ -145,9 +133,6 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .padding(.top, 5)
                         .padding(.bottom, 50)
                         .padding(.horizontal, 13)
-                    }
-                    .onAppear {
-                        viewModel.updateScheduleEventsBySelectedDay()
                     }
                 } else {
                     Text("Нет соединения с интернетом")
@@ -189,7 +174,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         Image("patternImageRofl2")
                             .resizable()
                             .ignoresSafeArea()
-                            .aspectRatio(contentMode: .fill) // Maintain aspect ratio
+                            .aspectRatio(contentMode: .fill)
                             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                             .clipped()
                             .opacity(colorScheme == .light ? 0.2 : 0.1)
@@ -212,18 +197,14 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     curPadding = minPadding
                 } else {
                     if dragAmount > 0 { // вниз
-//                        if curPadding == minPadding {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                curPadding = maxPadding
-                            }
-//                        }
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            curPadding = maxPadding
+                        }
 
                     } else { // вверх
-//                        if curPadding == maxPadding {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                curPadding = minPadding
-                            }
-//                        }
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            curPadding = minPadding
+                        }
                     }
                 }
                 prevDragTrans = value.translation

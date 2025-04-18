@@ -24,15 +24,13 @@ final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
 
     func buildScheduleViewModel() -> ScheduleViewModel {
         return ScheduleViewModel(
-            lessonsNetworkManager: networkManagerFactory.makeLessonsNetworkManager(),
-
-            sessionEventsNetworkManager: networkManagerFactory.makeSessionEventsNetworkManager(),
-
-            groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
-
-            lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager(),
-
-            groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager()
+            scheduleInteractor: ScheduleInteractorImpl(
+                lessonsNetworkManager: networkManagerFactory.makeLessonsNetworkManager(),
+                sessionEventsNetworkManager: networkManagerFactory.makeSessionEventsNetworkManager(),
+                groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
+                lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager(),
+                groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager()
+            )
         )
     }
 

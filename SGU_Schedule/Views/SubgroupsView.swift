@@ -54,13 +54,9 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 viewModel.clearSubgroups()
             }
             .font(.system(size: 19, weight: .bold, design: .rounded))
-            .padding(.bottom, 2)
-            .padding(.top, 10)
+            .padding(.bottom, 10)
+            .padding(.top, 5)
             .foregroundColor(colorScheme == .light ? .black : .white)
-
-            Text("Сохраненных: \(viewModel.savedSubgroupsCount)")
-                .opacity(0.4)
-                .padding(.bottom, 5)
         }
     }
 }

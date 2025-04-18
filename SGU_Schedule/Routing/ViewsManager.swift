@@ -41,7 +41,7 @@ public final class ViewsManager: ObservableObject {
         routingState.$isShowingSettingsView
     }
 
-    var needToReloadGroupView: Bool = false
+    @Published var needToReloadGroupView: Bool = false
 
     @Published var isShowingError = false
     @Published var activeError: LocalizedError?
@@ -228,7 +228,7 @@ public final class ViewsManager: ObservableObject {
 
         return ScheduleView(
             viewModel: scheduleViewModel,
-            group: routingState.selectedGroup!,
+            group: routingState.selectedGroup ?? AcademicGroupDTO(fullNumber: "Error", departmentCode: "Error"),
             isFavourite: routingState.isSelectedGroupFavourite!,
             isPinned: routingState.isSelectedGroupPinned!,
             showSessionEventsView: showSessionEventsView
