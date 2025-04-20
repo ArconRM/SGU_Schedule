@@ -101,7 +101,9 @@ class ScheduleViewModel: BaseViewModel {
 
                 if let groupSchedule = self.groupSchedule {
                     self.setCurrentAndTwoNextLessons()
-                    self.subgroupsByLessons = self.scheduleInteractor.fetchSubgroupsByLessons(schedule: groupSchedule)
+                    if isFavourite {
+                        self.subgroupsByLessons = self.scheduleInteractor.fetchSubgroupsByLessons(schedule: groupSchedule)
+                    }
                 }
 
                 WidgetCenter.shared.reloadAllTimelines()
