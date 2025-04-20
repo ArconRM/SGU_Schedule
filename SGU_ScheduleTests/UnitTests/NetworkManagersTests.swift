@@ -116,7 +116,7 @@ final class NetworkManagersTests: XCTestCase {
         teacherNetworkManager.getTeacher(teacherEndpoint: "") { result in
             switch result {
             case .success(let teacher):
-                XCTAssertEqual(teacher, Teacher.mock)
+                XCTAssertEqual(teacher, TeacherDTO.mock)
             case .failure(let error):
                 XCTFail(error.localizedDescription)
             }

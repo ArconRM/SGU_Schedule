@@ -16,13 +16,13 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
     var body: some View {
         ZStack {
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+            appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
 
@@ -51,5 +51,5 @@ struct DepartmentsView<ViewModel>: View, Equatable where ViewModel: DepartmentsV
 
 #Preview {
     DepartmentsView(viewModel: ViewModelWithMockDataFactory().buildDepartmentsViewModel())
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
 }

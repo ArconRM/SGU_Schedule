@@ -9,7 +9,7 @@ import SwiftUI
 
 struct SessionEventSubview: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     let sessionEvent: SessionEventDTO
 
@@ -52,7 +52,7 @@ struct SessionEventSubview: View {
             .opacity(sessionEvent.date.passed(duration: Date.getDurationHours(sessionEventType: sessionEvent.sessionEventType)) ? 0.5 : 1)
             .background(getBackground())
         }
-        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
+        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appearanceSettings.currentAppStyle == .fill ? 0.3 : 0.2))
         .cornerRadius(10)
         .shadow(
             color: colorScheme == .light ?
@@ -65,7 +65,7 @@ struct SessionEventSubview: View {
     }
 
     private func getBackground() -> AnyView {
-        switch appSettings.currentAppStyle {
+        switch appearanceSettings.currentAppStyle {
         case .fill:
             AnyView(
                 getEventColor().opacity(sessionEvent.date.isToday() ? 0.5 : 0.3)
@@ -98,27 +98,27 @@ struct SessionEventSubview: View {
                                                           sessionEventType: .exam,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
 
         SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
                                                           date: "29 января 2025 21:00",
                                                           sessionEventType: .exam,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
 
         SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
                                                           date: "29 января 2023 21:00",
                                                           sessionEventType: .test,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
 
         SessionEventSubview(sessionEvent: SessionEventDTO(title: "Иностранный язык (анг)",
                                                           date: "29 января 2023 21:00",
                                                           sessionEventType: .testWithMark,
                                                           teacherFullName: "Алексеева Дина Алексеевна",
                                                           cabinet: "12 корпус ауд.302"))
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
     }
 }

@@ -9,7 +9,7 @@ import SwiftUI
 
 struct GroupSubview: View {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var group: AcademicGroupDTO
     var isFavourite: Bool
@@ -28,7 +28,7 @@ struct GroupSubview: View {
             VStack {
                 HStack {
                     ZStack {
-                        if appSettings.currentAppStyle == AppStyle.fill {
+                        if appearanceSettings.currentAppStyle == AppStyle.fill {
                             buildFilledRectangle()
                         } else {
                             buildBorderedRectangle()
@@ -53,9 +53,9 @@ struct GroupSubview: View {
                         Image(systemName: "star.fill")
                             .font(.system(size: 25, weight: .semibold))
                             .padding(15)
-                            .foregroundColor(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
-                            .shadow(color: appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme),
-                                    radius: colorScheme == .light || appSettings.currentAppTheme == .gray ? 0 : 10)
+                            .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                            .shadow(color: appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme),
+                                    radius: colorScheme == .light || appearanceSettings.currentAppTheme == .gray ? 0 : 10)
                     }
                 }
             }
@@ -68,14 +68,6 @@ struct GroupSubview: View {
     private func getMainBackgroundLight() -> some View {
         RoundedRectangle(cornerRadius: 20)
             .fill(
-//                  LinearGradient(
-//                    stops: [
-//                        .init(color: Color.white.opacity(0.6), location: 0.0),
-//                        .init(color: Color.white, location: 0.3)
-//                    ],
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing
-//                  )
                 Color.white
             )
             .shadow(color: .gray.opacity(0.4), radius: 4, y: 0)
@@ -89,8 +81,8 @@ struct GroupSubview: View {
                     LinearGradient(
                         stops:
                             [
-                                .init(color: appSettings.currentAppTheme != .gray ? getBackgroundColor().opacity(0.25) : Color.gray.opacity(0.1), location: 0.0),
-                                .init(color: appSettings.currentAppTheme != .gray ? Color.gray.opacity(0.2) : Color.gray.opacity(0.1), location: 0.9)
+                                .init(color: appearanceSettings.currentAppTheme != .gray ? getBackgroundColor().opacity(0.25) : Color.gray.opacity(0.1), location: 0.0),
+                                .init(color: appearanceSettings.currentAppTheme != .gray ? Color.gray.opacity(0.2) : Color.gray.opacity(0.1), location: 0.9)
                             ],
                         startPoint: .leading,
                         endPoint: .trailing)
@@ -115,16 +107,14 @@ struct GroupSubview: View {
             .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.5), lineWidth: 4)
             .padding(2)
             .background {
-//                if isFavourite || isPinned {
-                    getBackgroundColor()
+                getBackgroundColor()
                     .opacity(isFavourite || isPinned ? 0.25 : 0.1)
-                        .cornerRadius(18)
-//                }
+                    .cornerRadius(18)
             }
     }
 
     private func getBackgroundColor() -> Color {
-        appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme)
+        appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme)
     }
 }
 
@@ -136,13 +126,13 @@ struct GroupSubview_Previews: PreviewProvider {
                 .ignoresSafeArea()
             ScrollView {
                 GroupSubview(group: AcademicGroupDTO(fullNumber: "141", departmentCode: "knt"), isFavourite: true, isPinned: false)
-                    .environmentObject(AppSettings())
+                    .environmentObject(AppearanceSettingsStore())
 
                 GroupSubview(group: AcademicGroupDTO(fullNumber: "121", departmentCode: "knt"), isFavourite: false, isPinned: true)
-                    .environmentObject(AppSettings())
+                    .environmentObject(AppearanceSettingsStore())
 
                 GroupSubview(group: AcademicGroupDTO(fullNumber: "131", departmentCode: "knt"), isFavourite: false, isPinned: false)
-                    .environmentObject(AppSettings())
+                    .environmentObject(AppearanceSettingsStore())
             }
         }
     }

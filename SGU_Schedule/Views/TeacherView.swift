@@ -17,7 +17,7 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -39,7 +39,7 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
 
     private func buildUI() -> some View {
         ZStack {
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+            appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
                 .shadow(radius: 5)
 
@@ -61,7 +61,7 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
                 self.viewModel.fetchAll(teacherUrlEndpoint: teacherEndpoint!)
             } else {
                 if teacherLessonsEndpoint == nil {
-                    viewModel.showBaseError(BaseError.noSavedDataError)
+                    viewModel.showError(BaseError.noSavedDataError)
                 } else {
                     self.viewModel.fetchTeacherLessons(teacherLessonsUrlEndpoint: teacherLessonsEndpoint!)
                     self.viewModel.fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: teacherLessonsEndpoint!)
@@ -100,7 +100,7 @@ struct TeacherView_Previews: PreviewProvider {
         TeacherView(viewModel: ViewModelWithMockDataFactory().buildTeacherViewModel())
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
     }
 }
 

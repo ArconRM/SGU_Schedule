@@ -36,10 +36,6 @@ public struct AcademicGroupDTO: Hashable {
         return "\(departmentCode)_\(fullNumber)"
     }
 
-//    static func extractDepartmentCodeFromId(groupId: String) -> String {
-//        return String(groupId.split(separator: "_").first!)
-//    }
-
     public static var mock: AcademicGroupDTO {
         return .init(fullNumber: "123", departmentCode: "test")
     }

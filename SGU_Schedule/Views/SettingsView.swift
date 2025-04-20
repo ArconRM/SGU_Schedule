@@ -11,7 +11,7 @@ import WidgetKit
 struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     public var selectedDepartment: DepartmentDTO
 
@@ -21,7 +21,7 @@ struct SettingsView: View {
 
     var body: some View {
         ZStack {
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+            appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .ignoresSafeArea()
 
             VStack {
@@ -63,7 +63,7 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onChange(of: selectedTheme) { newValue in
                     withAnimation(.bouncy(duration: 0.5)) {
-                        appSettings.currentAppThemeValue = newValue.rawValue
+                        appearanceSettings.currentAppThemeValue = newValue.rawValue
                         WidgetCenter.shared.reloadAllTimelines()
                     }
 
@@ -88,7 +88,7 @@ struct SettingsView: View {
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .onChange(of: selectedStyle) { newValue in
                     withAnimation(.bouncy(duration: 0.5)) {
-                        appSettings.currentAppStyleValue = newValue.rawValue
+                        appearanceSettings.currentAppStyleValue = newValue.rawValue
                         WidgetCenter.shared.reloadAllTimelines()
                     }
 
@@ -140,5 +140,5 @@ struct SettingsView: View {
 #Preview {
     SettingsView(selectedDepartment: DepartmentDTO.mock, selectedTheme: .blue, selectedStyle: .fill, selectedParser: .new)
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
 }

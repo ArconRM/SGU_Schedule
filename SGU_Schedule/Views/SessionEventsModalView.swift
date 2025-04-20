@@ -10,7 +10,7 @@ import SwiftUI
 struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -116,7 +116,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
         .background(
             GeometryReader { geometry in
                 ZStack {
-                    appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                    appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                         .cornerRadius(35)
                         .blur(radius: 2)
                         .ignoresSafeArea()
@@ -126,11 +126,11 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         .fill(colorScheme == .light ? .white : .black)
                         .shadow(color: .gray.opacity(0.15), radius: 2, x: 0, y: -5))
                 .overlay {
-                    if appSettings.currentAppTheme == .pinkHelloKitty {
+                    if appearanceSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl")
                             .resizable()
                             .ignoresSafeArea()
-                            .aspectRatio(contentMode: .fill) // Maintain aspect ratio
+                            .aspectRatio(contentMode: .fill)
                             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                             .clipped()
                             .opacity(colorScheme == .light ? 0.2 : 0.1)
@@ -153,18 +153,14 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                     curPadding = minPadding
                 } else {
                     if dragAmount > 0 { // вниз
-//                        if curPadding == minPadding {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                curPadding = maxPadding
-                            }
-//                        }
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            curPadding = maxPadding
+                        }
 
                     } else { // вверх
-//                        if curPadding == maxPadding {
-                            withAnimation(.easeInOut(duration: 0.4)) {
-                                curPadding = minPadding
-                            }
-//                        }
+                        withAnimation(.easeInOut(duration: 0.4)) {
+                            curPadding = minPadding
+                        }
                     }
                 }
                 prevDragTrans = value.translation
@@ -178,5 +174,5 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
 #Preview {
     SessionEventsModalView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel())
         .environmentObject(NetworkMonitor())
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
 }

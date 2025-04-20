@@ -16,23 +16,22 @@ final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
 
     func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
         return GroupsViewModel(
-            groupsNetworkManager: networkManagerFactory.makeGroupsNetworkManager(),
-
-            groupPersistenceManager: GroupCoreDataManager()
+            groupsInteractor: GroupsInteractorImpl(
+                groupsNetworkManager: networkManagerFactory.makeGroupsNetworkManager(),
+                groupPersistenceManager: GroupCoreDataManager()
+            )
         )
     }
 
     func buildScheduleViewModel() -> ScheduleViewModel {
         return ScheduleViewModel(
-            lessonsNetworkManager: networkManagerFactory.makeLessonsNetworkManager(),
-
-            sessionEventsNetworkManager: networkManagerFactory.makeSessionEventsNetworkManager(),
-
-            groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
-
-            lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager(),
-
-            groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager()
+            scheduleInteractor: ScheduleInteractorImpl(
+                lessonsNetworkManager: networkManagerFactory.makeLessonsNetworkManager(),
+                sessionEventsNetworkManager: networkManagerFactory.makeSessionEventsNetworkManager(),
+                groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
+                lessonSubgroupsPersistenceManager: LessonSubgroupsUDManager(),
+                groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager()
+            )
         )
     }
 

@@ -9,7 +9,7 @@ import Foundation
 import SwiftUI
 
 struct TwoSessionEventsView: View {
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var fetchResult: SessionEventsFetchResult
 
@@ -18,11 +18,11 @@ struct TwoSessionEventsView: View {
         case .unknownErrorWhileFetching:
             Text("Произошла ошибка")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
         case .noFavoriteGroup:
             Text("Не выбрана сохраненная группа")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
         case .success(let consultation, let exam):
             if exam != nil {
                 VStack {
@@ -103,11 +103,11 @@ struct TwoSessionEventsView: View {
                             .multilineTextAlignment(.center)
                     }
                 }
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             } else {
                 Text("Впереди экзаменов не наблюдается. Победа.")
                     .bold()
-                    .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                    .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             }
         }
     }

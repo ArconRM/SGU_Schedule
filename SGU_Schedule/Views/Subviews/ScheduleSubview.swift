@@ -15,7 +15,7 @@ struct ScheduleSubview: View, Equatable {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var lessons: [LessonDTO]?
     var window: TimeBreakDTO?
@@ -49,7 +49,7 @@ struct ScheduleSubview: View, Equatable {
                 }
             }
         }
-        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appSettings.currentAppStyle == .fill ? 0.3 : 0.2))
+        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appearanceSettings.currentAppStyle == .fill ? 0.3 : 0.2))
         .cornerRadius(10)
         .shadow(
             color: colorScheme == .light ? .gray.opacity(0.3) : .white.opacity(0.2),
@@ -212,12 +212,12 @@ struct ScheduleSubview: View, Equatable {
             .padding(15)
             .opacity(lesson.isActive(subgroupsByLessons: subgroupsByLessons) ? 1 : 0.5)
             .background {
-                if appSettings.currentAppStyle != .bordered {
+                if appearanceSettings.currentAppStyle != .bordered {
                     getBackground(lesson: lesson)
                 }
             }
 
-            if appSettings.currentAppStyle == .bordered {
+            if appearanceSettings.currentAppStyle == .bordered {
                 Divider()
             }
         }
@@ -250,7 +250,6 @@ struct ScheduleSubview: View, Equatable {
                 .padding(.vertical, 7)
 
             HStack {
-//                if lesson.subgroup == nil || lesson.subgroup == "" {
                 Text(lesson.teacherFullName)
                     .font(.system(size: 17))
                     .italic()
@@ -260,7 +259,6 @@ struct ScheduleSubview: View, Equatable {
                 Text("\(lesson.cabinet)")
                     .font(.system(size: 17))
                     .bold()
-//                }
             }
 
             Image(systemName: "chevron.down")
@@ -279,7 +277,7 @@ struct ScheduleSubview: View, Equatable {
     }
 
     private func getBackground(lesson: LessonDTO) -> AnyView {
-        switch appSettings.currentAppStyle {
+        switch appearanceSettings.currentAppStyle {
         case .fill:
             AnyView(
                 getLessonColor(lesson: lesson).opacity(0.3)
@@ -328,9 +326,9 @@ struct ScheduleSubview: View, Equatable {
 //                                        timeStart: "08:20",
 //                                        timeEnd: "09:50")]
 //                )
-//                .environmentObject(ViewsManager(appSettings: AppSettings(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
+//                .environmentObject(ViewsManager(appearanceSettings: AppearanceSettingsStore(), viewModelFactory: ViewModelWithParsingSGUFactory(), viewModelFactory_old: ViewModelWithParsingSGUFactory_old(), schedulePersistenceManager: GroupScheduleCoreDataManager(), groupPersistenceManager: GroupCoreDataManager()))
 //                .environmentObject(NetworkMonitor())
-//                .environmentObject(AppSettings())
+//                .environmentObject(AppearanceSettingsStore())
 //            }
 //        }
 //    }

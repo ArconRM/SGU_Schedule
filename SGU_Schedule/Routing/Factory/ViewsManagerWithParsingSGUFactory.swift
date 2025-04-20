@@ -8,9 +8,16 @@
 import Foundation
 
 final class ViewsManagerWithParsingSGUFactory {
-    func makeViewsManager(appSettings: AppSettings, widgetUrl: String?) -> ViewsManager {
+    func makeViewsManager(
+        appearanceSettings: AppearanceSettingsStore,
+        persistentUserSettings: PersistentUserSettingsStore,
+        routingState: RoutingState,
+        widgetUrl: String?
+    ) -> ViewsManager {
         return ViewsManager(
-            appSettings: appSettings,
+            appearanceSettings: appearanceSettings,
+            persistentUserSettings: persistentUserSettings,
+            routingState: routingState,
             viewModelFactory: ViewModelWithParsingSGUFactory(),
             viewModelFactory_old: ViewModelWithParsingSGUFactory_old(),
             groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct SingleScheduleEventView: View {
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var fetchResult: ScheduleEventsFetchResult
     var closeLesson: LessonDTO?
@@ -18,11 +18,11 @@ struct SingleScheduleEventView: View {
         case .unknownErrorWhileFetching:
             Text("Произошла ошибка")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
         case .noFavoriteGroup:
             Text("Не выбрана сохраненная группа")
                 .bold()
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
         case .success(let currentEvent, _, _):
             if closeLesson != nil {
                 VStack {
@@ -44,7 +44,7 @@ struct SingleScheduleEventView: View {
 
                     Spacer()
                 }
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
 
             } else if currentEvent != nil {
                 VStack {
@@ -67,12 +67,12 @@ struct SingleScheduleEventView: View {
                             .italic()
                     }
                 }
-                .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
 
             } else {
                 Text("Пока нет пар")
                     .bold()
-                    .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+                    .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
             }
         }
     }

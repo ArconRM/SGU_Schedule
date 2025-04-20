@@ -16,7 +16,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -35,7 +35,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
     var body: some View {
         NavigationView {
             ZStack {
-                appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .ignoresSafeArea()
                     .shadow(radius: 5)
                     .ignoresSafeArea()
@@ -71,7 +71,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                                     .padding(.vertical, 15)
                             }
                             .overlay {
-                                if appSettings.currentAppTheme == .pinkHelloKitty {
+                                if appearanceSettings.currentAppTheme == .pinkHelloKitty {
                                     Image("patternImageRofl1")
                                         .resizable()
                                         .ignoresSafeArea()
@@ -133,7 +133,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
 
 #Preview {
     TeachersSearchView(viewModel: ViewModelWithMockDataFactory().buildTeachersSearchViewModel())
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
         .environmentObject(NetworkMonitor())
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
 }

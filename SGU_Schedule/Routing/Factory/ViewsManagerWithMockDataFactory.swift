@@ -10,13 +10,14 @@ import Foundation
 final class ViewsManagerWithMockDataFactory {
     func makeViewsManager() -> ViewsManager {
         return ViewsManager(
-            appSettings: AppSettings(),
+            appearanceSettings: AppearanceSettingsStore(),
+            persistentUserSettings: PersistentUserSettingsStore(),
+            routingState: RoutingState(),
             viewModelFactory: ViewModelWithMockDataFactory(),
             viewModelFactory_old: ViewModelWithMockDataFactory(),
             groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
             groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock(),
-            groupPersistenceManager: GroupPersistenceManagerMock(),
-            widgetUrl: ""
+            groupPersistenceManager: GroupPersistenceManagerMock()
         )
     }
 }

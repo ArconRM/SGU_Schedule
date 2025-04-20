@@ -14,18 +14,22 @@ final class ViewModelWithMockDataFactory: ViewModelFactory {
 
     func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
         return GroupsViewModel(
-            groupsNetworkManager: GroupsNetworkManagerMock(),
-            groupPersistenceManager: GroupPersistenceManagerMock()
+            groupsInteractor: GroupsInteractorImpl(
+                groupsNetworkManager: GroupsNetworkManagerMock(),
+                groupPersistenceManager: GroupPersistenceManagerMock()
+            )
         )
     }
 
     func buildScheduleViewModel() -> ScheduleViewModel {
         return ScheduleViewModel(
-            lessonsNetworkManager: LessonNetworkManagerMock(),
-            sessionEventsNetworkManager: SessionEventsNetworkManagerMock(),
-            groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
-            lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManagerMock(),
-            groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock()
+            scheduleInteractor: ScheduleInteractorImpl(
+                lessonsNetworkManager: LessonNetworkManagerMock(),
+                sessionEventsNetworkManager: SessionEventsNetworkManagerMock(),
+                groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
+                lessonSubgroupsPersistenceManager: LessonSubgroupsPersistenceManagerMock(),
+                groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock()
+            )
         )
     }
 

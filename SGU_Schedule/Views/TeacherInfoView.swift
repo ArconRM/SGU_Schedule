@@ -14,19 +14,12 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
     }
 
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
-//    @State var isCollapsed: Bool = false
-
     var body: some View {
         VStack(alignment: .leading) {
-            //            Image("foto-1")
-            //                .resizable()
-            //                .aspectRatio(contentMode: ContentMode.fit)
-            //                .cornerRadius(20)
-            //                .padding(2)
             VStack {
                 AsyncImage(url: viewModel.teacher?.profileImageUrl) { image in
                     image
@@ -55,8 +48,6 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                 }
             }
 
-            //                if !self.isCollapsed {
-
             Text("Дата рождения: " + (viewModel.teacher?.birthdate?.getDayMonthAndYearString() ?? ""))
                 .padding(.top, 10)
 
@@ -68,7 +59,6 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
 
             Text("Личный телефон: " + (viewModel.teacher?.personalPhoneNumber ?? ""))
                 .padding(.top, 10)
-            //                }
         }
         .padding(.horizontal, 20)
         .padding(.top, 20)
@@ -77,7 +67,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         .background(
             getBackground()
                 .overlay {
-                    if appSettings.currentAppTheme == .pinkHelloKitty {
+                    if appearanceSettings.currentAppTheme == .pinkHelloKitty {
                         Image("patternImageRofl3")
                             .resizable()
                             .ignoresSafeArea()
@@ -92,7 +82,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
     }
 
     private func getBackground() -> AnyView {
-        switch appSettings.currentAppStyle {
+        switch appearanceSettings.currentAppStyle {
         case .fill:
             AnyView(
                 RoundedRectangle(cornerRadius: 20)
@@ -108,7 +98,7 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                         .cornerRadius(20)
 
                     RoundedRectangle(cornerRadius: 20)
-                        .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
+                        .stroke(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.6), lineWidth: 4)
                 }
             )
         }
@@ -124,6 +114,6 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
         TeacherInfoView(
             viewModel: ViewModelWithMockDataFactory().buildTeacherViewModel()
         )
-        .environmentObject(AppSettings())
+        .environmentObject(AppearanceSettingsStore())
     }
 }

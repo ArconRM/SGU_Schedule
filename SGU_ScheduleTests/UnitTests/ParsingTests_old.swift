@@ -121,7 +121,7 @@ final class ParsingTests_old: XCTestCase {
         let didReceiveResponse = expectation(description: #function)
         
         var html: String?
-        var result: Teacher?
+        var result: TeacherDTO?
         
         staticScraper.scrapeUrl(URL(string:"https://old.sgu.ru/person/ogneva-marina-valentinovna")!) { result in
             html = result

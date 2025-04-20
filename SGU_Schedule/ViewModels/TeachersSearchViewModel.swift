@@ -48,7 +48,7 @@ public class TeachersSearchViewModel: BaseViewModel {
                 self.allTeachers = teachers
                 self.isLoading = false
             case .failure(let error):
-                self.showNetworkError(error)
+                self.showError(error)
             }
         }
     }

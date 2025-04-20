@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
@@ -42,28 +42,6 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
                 Text(lesson.cabinet)
                     .font(.system(size: 20, weight: .bold))
                     .padding(.horizontal, 5)
-
-//                if viewModel.currentActivity == nil {
-//                    Button("Отслеживать в Live Activity") {
-//                        viewModel.startActivity(lesson: lesson)
-//
-//                        let impact = UIImpactFeedbackGenerator(style: .medium)
-//                        impact.impactOccurred()
-//                    }
-//                    .buttonStyle(.bordered)
-//                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
-//                    .padding(10)
-//                } else {
-//                    Button("Остановить Live Activity") {
-//                        viewModel.endActivity()
-//
-//                        let impact = UIImpactFeedbackGenerator(style: .medium)
-//                        impact.impactOccurred()
-//                    }
-//                    .buttonStyle(.bordered)
-//                    .tint(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
-//                    .padding(10)
-//                }
 
             } else if let timeBreak = viewModel.currentEvent as? TimeBreakDTO {
                 Text(timeBreak.timeStart.getHoursAndMinutesString() + " - " +
@@ -131,5 +109,5 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
 #Preview {
     ScheduleBackView(viewModel: ViewModelWithMockDataFactory().buildScheduleViewModel(),
                      selectedGroup: AcademicGroupDTO.mock)
-    .environmentObject(AppSettings())
+    .environmentObject(AppearanceSettingsStore())
 }

@@ -68,7 +68,7 @@ struct SessionEventsProvider: TimelineProvider {
 struct SessionEventsView: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.widgetFamily) var family: WidgetFamily
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var fetchResult: SessionEventsFetchResult
 
@@ -77,9 +77,9 @@ struct SessionEventsView: View {
         switch family {
         case .systemSmall:
             SingleSessionEventView(fetchResult: fetchResult)
-                .environmentObject(appSettings)
+                .environmentObject(appearanceSettings)
                 .containerBackground(for: .widget) {
-                    if appSettings.currentAppStyle == AppStyle.fill {
+                    if appearanceSettings.currentAppStyle == AppStyle.fill {
                         buildFilledRectangle()
                     } else {
                         buildBorderedRectangle()
@@ -89,9 +89,9 @@ struct SessionEventsView: View {
 
         case .systemMedium:
             TwoSessionEventsView(fetchResult: fetchResult)
-                .environmentObject(appSettings)
+                .environmentObject(appearanceSettings)
                 .containerBackground(for: .widget) {
-                    if appSettings.currentAppStyle == AppStyle.fill {
+                    if appearanceSettings.currentAppStyle == AppStyle.fill {
                         buildFilledRectangle()
                     } else {
                         buildBorderedRectangle()
@@ -101,9 +101,9 @@ struct SessionEventsView: View {
 
         default:
             NotAvailableView()
-                .environmentObject(appSettings)
+                .environmentObject(appearanceSettings)
                 .containerBackground(for: .widget) {
-                    if appSettings.currentAppStyle == AppStyle.fill {
+                    if appearanceSettings.currentAppStyle == AppStyle.fill {
                         buildFilledRectangle()
                     } else {
                         buildBorderedRectangle()
@@ -115,7 +115,7 @@ struct SessionEventsView: View {
     private func buildFilledRectangle() -> some View {
         ZStack {
             Color.black.opacity(colorScheme == .light ? 0.8 : 0.6)
-            appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+            appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                 .cornerRadius(20)
                 .padding(4)
                 .blur(radius: 2)
@@ -124,7 +124,7 @@ struct SessionEventsView: View {
 
     private func buildBorderedRectangle() -> some View {
         RoundedRectangle(cornerRadius: 20)
-            .stroke(appSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
+            .stroke(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme).opacity(0.4), lineWidth: 4)
             .padding(2)
     }
 }
@@ -136,7 +136,7 @@ struct SessionEventsWidget: Widget {
             provider: SessionEventsProvider()
         ) { entry in
             SessionEventsView(fetchResult: entry.fetchResult)
-                .environmentObject(AppSettings())
+                .environmentObject(AppearanceSettingsStore())
         }
         .configurationDisplayName("Расписание сессии")
         .description("Показывает ближайшие консультации и экзамены")
@@ -168,11 +168,11 @@ struct SessionEventsWidget_Previews: PreviewProvider {
         Group {
             SessionEventsView(fetchResult: .success(consultation: consultation, exam: exam))
                 .previewContext(WidgetPreviewContext(family: .systemMedium))
-                .environmentObject(AppSettings())
+                .environmentObject(AppearanceSettingsStore())
 
             SessionEventsView(fetchResult: .success(consultation: consultation, exam: exam))
                 .previewContext(WidgetPreviewContext(family: .systemSmall))
-                .environmentObject(AppSettings())
+                .environmentObject(AppearanceSettingsStore())
         }
     }
 }

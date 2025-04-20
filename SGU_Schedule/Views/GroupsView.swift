@@ -12,13 +12,14 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     @ObservedObject var viewModel: ViewModel
 
     @State private var selectedAcademicProgram: AcademicProgram
     @State private var selectedYear: Int
     @State private var selectedDepartment: DepartmentDTO
+    @State private var isShowingSettingsView: Bool = false
 
     @State private var showAlert: Bool = false
     @State private var programTappedCount: Int = 0
@@ -37,14 +38,14 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
             // Фон
             if UIDevice.isPhone {
                 LinearGradient(
-                    colors: [appSettings.currentAppTheme.mainGradientColor(colorScheme: colorScheme),
-                             appSettings.currentAppTheme.pairedGradientColor(colorScheme: colorScheme)],
+                    colors: [appearanceSettings.currentAppTheme.mainGradientColor(colorScheme: colorScheme),
+                             appearanceSettings.currentAppTheme.pairedGradientColor(colorScheme: colorScheme)],
                     startPoint: .topLeading,
                     endPoint: .bottomTrailing
                 )
                 .blur(radius: 2)
                 .overlay {
-                    if appSettings.currentAppTheme == .pinkHelloKitty && !viewsManager.isShowingSettingsView {
+                    if appearanceSettings.currentAppTheme == .pinkHelloKitty && !isShowingSettingsView {
                         Image("patternImageRofl")
                             .resizable()
                             .ignoresSafeArea()
@@ -54,11 +55,10 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                 }
                 .ignoresSafeArea()
-
             } else if UIDevice.isPad {
-                appSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .overlay {
-                        if appSettings.currentAppTheme == .pinkHelloKitty && !viewsManager.isShowingSettingsView {
+                        if appearanceSettings.currentAppTheme == .pinkHelloKitty && !isShowingSettingsView {
                             Image("patternImageRofl")
                                 .resizable()
                                 .ignoresSafeArea()
@@ -71,9 +71,9 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
 
             }
 
-            if viewsManager.isShowingSettingsView && UIDevice.isPhone {
+            if isShowingSettingsView && UIDevice.isPhone {
                 viewsManager.buildSettingsView()
-                    .environmentObject(appSettings)
+                    .environmentObject(appearanceSettings)
             }
 
             // Группы
@@ -137,7 +137,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                     return nil
                                 }()
                             )
-                            .environmentObject(appSettings)
+                            .environmentObject(appearanceSettings)
                         }
                     }
 
@@ -160,7 +160,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                         return nil
                                     }()
                                 )
-                                .environmentObject(appSettings)
+                                .environmentObject(appearanceSettings)
                             }
                         }
                     }
@@ -187,7 +187,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                                         isFavourite: false,
                                         isPinned: false
                                     )
-                                    .environmentObject(appSettings)
+                                    .environmentObject(appearanceSettings)
                                 }
                             }
                         }
@@ -196,15 +196,18 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 }
                 .contentShape(Rectangle())
             }
-            .cornerRadius(viewsManager.isShowingSettingsView && UIDevice.isPhone ? 20 : 0)
-            .offset(x: viewsManager.isShowingSettingsView && UIDevice.isPhone ? 235 : 0, y: viewsManager.isShowingSettingsView && UIDevice.isPhone ? 100 : 0)
-            .scaleEffect(viewsManager.isShowingSettingsView && UIDevice.isPhone ? 0.8 : 1)
-            .disabled(viewsManager.isShowingSettingsView && UIDevice.isPhone)
+            .cornerRadius(isShowingSettingsView && UIDevice.isPhone ? 20 : 0)
+            .offset(x: isShowingSettingsView && UIDevice.isPhone ? 235 : 0, y: isShowingSettingsView && UIDevice.isPhone ? 100 : 0)
+            .scaleEffect(isShowingSettingsView && UIDevice.isPhone ? 0.8 : 1)
+            .disabled(isShowingSettingsView && UIDevice.isPhone)
             .onTapGesture {
-                if viewsManager.isShowingSettingsView && UIDevice.isPhone {
-                    withAnimation(.bouncy(duration: 0.5)) {
-                        viewsManager.showGroupsView()
-                    }
+                if isShowingSettingsView && UIDevice.isPhone {
+                    viewsManager.showGroupsView()
+                }
+            }
+            .onReceive(viewsManager.isShowingSettingsViewPublisher) { isShown in
+                withAnimation(.bouncy(duration: 0.5)) {
+                    self.isShowingSettingsView = isShown
                 }
             }
 
@@ -355,6 +358,6 @@ struct GroupsView_Previews: PreviewProvider {
         GroupsView(viewModel: ViewModelWithMockDataFactory().buildGroupsViewModel(department: DepartmentDTO.mock), selectedDepartment: DepartmentDTO.mock)
             .environmentObject(NetworkMonitor())
             .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
-            .environmentObject(AppSettings())
+            .environmentObject(AppearanceSettingsStore())
     }
 }

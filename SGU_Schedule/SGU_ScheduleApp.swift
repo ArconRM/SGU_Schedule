@@ -11,16 +11,23 @@ import SwiftUI
 struct SGU_ScheduleApp: App {
 
     @State var widgetUrl: String?
-    let appSettings = AppSettings()
+    let appearanceSettings = AppearanceSettingsStore()
+    let persistentUserSettings = PersistentUserSettingsStore()
+    let routingState = RoutingState()
 
     var body: some Scene {
         WindowGroup {
             MainView()
                 .environmentObject(
-                    ViewsManagerWithParsingSGUFactory().makeViewsManager(appSettings: appSettings, widgetUrl: widgetUrl)
+                    ViewsManagerWithParsingSGUFactory().makeViewsManager(
+                        appearanceSettings: appearanceSettings,
+                        persistentUserSettings: persistentUserSettings,
+                        routingState: routingState,
+                        widgetUrl: widgetUrl
+                    )
                 )
                 .environmentObject(NetworkMonitor())
-                .environmentObject(appSettings)
+                .environmentObject(appearanceSettings)
                 .onOpenURL { url in
                     widgetUrl = url.absoluteString
                 }

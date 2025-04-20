@@ -8,12 +8,12 @@
 import SwiftUI
 
 struct NotAvailableView: View {
-    @EnvironmentObject var appSettings: AppSettings
+    @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
     var body: some View {
         Text("Недоступно")
             .font(.system(size: 18, weight: .bold, design: .rounded))
-            .foregroundColor(appSettings.currentAppStyle == AppStyle.fill ? .white : .none)
+            .foregroundColor(appearanceSettings.currentAppStyle == AppStyle.fill ? .white : .none)
     }
 }
 

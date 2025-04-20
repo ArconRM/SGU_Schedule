@@ -42,7 +42,7 @@ public class TeacherViewModel: BaseViewModel {
                 self.fetchTeacherLessons(teacherLessonsUrlEndpoint: teacher.lessonsUrlEndpoint)
                 self.fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: teacher.sessionEventsUrlEndpoint)
             case .failure(let error):
-                self.showNetworkError(error)
+                self.showError(error)
             }
         }
     }
@@ -55,7 +55,7 @@ public class TeacherViewModel: BaseViewModel {
             case .success(let teacher):
                 self.teacher = teacher
             case .failure(let error):
-                self.showNetworkError(error)
+                self.showError(error)
             }
             self.isLoadingTeacherInfo = false
         }
@@ -64,17 +64,12 @@ public class TeacherViewModel: BaseViewModel {
     public func fetchTeacherLessons(teacherLessonsUrlEndpoint: String) {
         self.isLoadingTeacherLessons = true
 
-//        guard let _ = self.teacher else {
-//            self.showNetworkError(error: NetworkError.unexpectedError)
-//            return
-//        }
-
         lessonsNetworkManager.getTeacherScheduleForCurrentWeek(teacherEndpoint: teacherLessonsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let lessons):
                 self.teacherLessons = lessons
             case .failure(let error):
-                self.showNetworkError(error)
+                self.showError(error)
             }
             self.isLoadingTeacherLessons = false
         }
@@ -83,17 +78,12 @@ public class TeacherViewModel: BaseViewModel {
     public func fetchTeacherSessionEvents(teacherSessionEventsUrlEndpoint: String) {
         self.isLoadingTeacherSessionEvents = true
 
-//        guard let _ = self.teacher else {
-//            self.showNetworkError(error: NetworkError.unexpectedError)
-//            return
-//        }
-
         sessionEventsNetworkManager.getTeacherSessionEvents(teacherEndpoint: teacherSessionEventsUrlEndpoint, resultQueue: .main) { result in
             switch result {
             case .success(let sessionEvents):
                 self.teacherSessionEvents = sessionEvents
             case .failure(let error):
-                self.showNetworkError(error)
+                self.showError(error)
             }
             self.isLoadingTeacherSessionEvents = false
         }

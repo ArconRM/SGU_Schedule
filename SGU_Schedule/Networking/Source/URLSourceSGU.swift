@@ -12,12 +12,12 @@ public struct URLSourceSGU: URLSource {
         return URL(string: "https://www.sgu.ru")!
     }
 
-    public func getAllTeachersURL() -> URL {
-        return self.baseUrl.appendingPathComponent("schedule")
-    }
-
     public func getBaseTeacherURL(teacherEndPoint: String) -> URL {
         return self.baseUrl.appendingPathComponent(teacherEndPoint)
+    }
+
+    public func getAllTeachersURL() -> URL {
+        return self.baseUrl.appendingPathComponent("schedule")
     }
 
     public func getBaseScheduleURL(departmentCode: String) -> URL {
