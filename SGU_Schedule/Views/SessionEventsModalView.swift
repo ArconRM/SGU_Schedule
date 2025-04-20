@@ -130,7 +130,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
                         Image("patternImageRofl")
                             .resizable()
                             .ignoresSafeArea()
-                            .aspectRatio(contentMode: .fill) // Maintain aspect ratio
+                            .aspectRatio(contentMode: .fill)
                             .position(x: geometry.size.width / 2, y: geometry.size.height / 2)
                             .clipped()
                             .opacity(colorScheme == .light ? 0.2 : 0.1)

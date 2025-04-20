@@ -144,6 +144,8 @@
 		16B3B0D02C61134900043B16 /* LessonPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA5383642AF692840004F012 /* LessonPersistenceManager.swift */; };
 		16B3B0D12C61135F00043B16 /* CoreDataError.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAFA58122AED0EE10060BD81 /* CoreDataError.swift */; };
 		16B645EC2C634794000574F9 /* AppearanceSettingsStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16F7AD9B2C52F18D0057B062 /* AppearanceSettingsStore.swift */; };
+		16BEC6E82DB4E5B9007653E9 /* GroupsInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BEC6E72DB4E5B9007653E9 /* GroupsInteractor.swift */; };
+		16BEC6EA2DB4E647007653E9 /* GroupsInteractorImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16BEC6E92DB4E647007653E9 /* GroupsInteractorImpl.swift */; };
 		16C6673E2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */; };
 		16C667402D2BE0E300EB2F98 /* ThreadSafeSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */; };
 		16C667432D2D297500EB2F98 /* CoreData_SessionEventExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */; };
@@ -392,6 +394,8 @@
 		16A776252CC253D800875A8E /* LessonSubgroupsUDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSubgroupsUDManager.swift; sourceTree = "<group>"; };
 		16AFA78E2CD0CBF300758699 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		16B3B0CD2C5FE4AE00043B16 /* ScheduleEventsFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventsFetchResult.swift; sourceTree = "<group>"; };
+		16BEC6E72DB4E5B9007653E9 /* GroupsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsInteractor.swift; sourceTree = "<group>"; };
+		16BEC6E92DB4E647007653E9 /* GroupsInteractorImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsInteractorImpl.swift; sourceTree = "<group>"; };
 		16C6673C2D2BD93C00EB2F98 /* ThreadSafeArray.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeArray.swift; sourceTree = "<group>"; };
 		16C6673F2D2BE0E300EB2F98 /* ThreadSafeSet.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ThreadSafeSet.swift; sourceTree = "<group>"; };
 		16C667422D2D297500EB2F98 /* CoreData_SessionEventExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_SessionEventExtension.swift; sourceTree = "<group>"; };
@@ -584,6 +588,7 @@
 			children = (
 				161EEB6B2DB0F264008712B6 /* Protocols */,
 				161EEB6E2DB10059008712B6 /* ScheduleInteractorImpl.swift */,
+				16BEC6E92DB4E647007653E9 /* GroupsInteractorImpl.swift */,
 			);
 			path = Interactors;
 			sourceTree = "<group>";
@@ -592,6 +597,7 @@
 			isa = PBXGroup;
 			children = (
 				161EEB6C2DB0F288008712B6 /* ScheduleInteractor.swift */,
+				16BEC6E72DB4E5B9007653E9 /* GroupsInteractor.swift */,
 			);
 			path = Protocols;
 			sourceTree = "<group>";
@@ -1620,6 +1626,7 @@
 				164FA14F2D54EB1000DC4EBB /* NetworkManagerWithParsingSGUFactory.swift in Sources */,
 				16DB5F082C04D55600870B21 /* TeacherHTMLParser.swift in Sources */,
 				16A585422CB063E900D6837A /* View+OnRotate.swift in Sources */,
+				16BEC6E82DB4E5B9007653E9 /* GroupsInteractor.swift in Sources */,
 				16DDFFE62C7C7820004A6DA6 /* StaticScraper.swift in Sources */,
 				BA2FEEE22B66952B001F91F5 /* SessionEventsHTMLParser.swift in Sources */,
 				161EFD7C2C074C2B008E281E /* TeacherViewModel.swift in Sources */,
@@ -1683,6 +1690,7 @@
 				16A776242CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift in Sources */,
 				162FEA562CBFCAC800AA682A /* SubgroupsView.swift in Sources */,
 				1672487C2C8CF99C008673DE /* GroupCoreDataManager.swift in Sources */,
+				16BEC6EA2DB4E647007653E9 /* GroupsInteractorImpl.swift in Sources */,
 				BADAE1272ABA004C0079E3D7 /* AcademicGroupDTO.swift in Sources */,
 				BADAE1322ABA21430079E3D7 /* Weekdays.swift in Sources */,
 				161EEB6F2DB10059008712B6 /* ScheduleInteractorImpl.swift in Sources */,

@@ -16,9 +16,10 @@ final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
 
     func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
         return GroupsViewModel(
-            groupsNetworkManager: networkManagerFactory.makeGroupsNetworkManager(),
-
-            groupPersistenceManager: GroupCoreDataManager()
+            groupsInteractor: GroupsInteractorImpl(
+                groupsNetworkManager: networkManagerFactory.makeGroupsNetworkManager(),
+                groupPersistenceManager: GroupCoreDataManager()
+            )
         )
     }
 

@@ -9,7 +9,6 @@ import SwiftUI
 import UIKit
 import WidgetKit
 
-// TODO: По башке бы понадавать за !
 struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
     // чтобы не вью не переебашивалось при смене темы (и также источника инета)
     static func == (lhs: ScheduleView<ViewModel>, rhs: ScheduleView<ViewModel>) -> Bool {

@@ -14,8 +14,10 @@ final class ViewModelWithMockDataFactory: ViewModelFactory {
 
     func buildGroupsViewModel(department: DepartmentDTO) -> GroupsViewModel {
         return GroupsViewModel(
-            groupsNetworkManager: GroupsNetworkManagerMock(),
-            groupPersistenceManager: GroupPersistenceManagerMock()
+            groupsInteractor: GroupsInteractorImpl(
+                groupsNetworkManager: GroupsNetworkManagerMock(),
+                groupPersistenceManager: GroupPersistenceManagerMock()
+            )
         )
     }
 

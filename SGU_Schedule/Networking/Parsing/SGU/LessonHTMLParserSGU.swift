@@ -128,10 +128,6 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
         return result
     }
 
-//    private func insertNumberInBaseXpath(baseXpath: String, number: Int) -> String {
-//        return baseXpath.split(separator: "/").dropLast().joined() + "/[\(number)]/" + (baseXpath.split(separator: "/").last ?? "")
-//    }
-
     private func getValueByXpathQuery(doc: HTMLDocument, baseXpath: String, propertyEndpoint: LessonPropertiesEndpoints) -> String? {
         return doc.xpath(baseXpath + "/" + propertyEndpoint.rawValue).first?.text
     }

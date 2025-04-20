@@ -68,14 +68,6 @@ struct GroupSubview: View {
     private func getMainBackgroundLight() -> some View {
         RoundedRectangle(cornerRadius: 20)
             .fill(
-//                  LinearGradient(
-//                    stops: [
-//                        .init(color: Color.white.opacity(0.6), location: 0.0),
-//                        .init(color: Color.white, location: 0.3)
-//                    ],
-//                    startPoint: .topLeading,
-//                    endPoint: .bottomTrailing
-//                  )
                 Color.white
             )
             .shadow(color: .gray.opacity(0.4), radius: 4, y: 0)
@@ -115,11 +107,9 @@ struct GroupSubview: View {
             .stroke(getBackgroundColor().opacity(isFavourite || isPinned ? 1 : 0.5), lineWidth: 4)
             .padding(2)
             .background {
-//                if isFavourite || isPinned {
-                    getBackgroundColor()
+                getBackgroundColor()
                     .opacity(isFavourite || isPinned ? 0.25 : 0.1)
-                        .cornerRadius(18)
-//                }
+                    .cornerRadius(18)
             }
     }
 

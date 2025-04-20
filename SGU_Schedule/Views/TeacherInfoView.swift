@@ -18,15 +18,8 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
 
     @ObservedObject var viewModel: ViewModel
 
-//    @State var isCollapsed: Bool = false
-
     var body: some View {
         VStack(alignment: .leading) {
-            //            Image("foto-1")
-            //                .resizable()
-            //                .aspectRatio(contentMode: ContentMode.fit)
-            //                .cornerRadius(20)
-            //                .padding(2)
             VStack {
                 AsyncImage(url: viewModel.teacher?.profileImageUrl) { image in
                     image
@@ -55,8 +48,6 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
                 }
             }
 
-            //                if !self.isCollapsed {
-
             Text("Дата рождения: " + (viewModel.teacher?.birthdate?.getDayMonthAndYearString() ?? ""))
                 .padding(.top, 10)
 
@@ -68,7 +59,6 @@ struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewM
 
             Text("Личный телефон: " + (viewModel.teacher?.personalPhoneNumber ?? ""))
                 .padding(.top, 10)
-            //                }
         }
         .padding(.horizontal, 20)
         .padding(.top, 20)

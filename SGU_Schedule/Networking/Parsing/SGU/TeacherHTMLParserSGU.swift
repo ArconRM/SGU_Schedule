@@ -19,7 +19,6 @@ public struct TeacherHTMLParserSGU: TeacherHTMLParser {
         let doc = try HTML(html: fixedHtml, encoding: .utf8)
         let teacherNameXpath = "//a[@class='schedule__fio_item-link']"
         let teacherEndpointXpath = "//a[@class='schedule__fio_item-link']/@href"
-//        let teacherDepartmentXpath = "//a[@class='schedule__faculty_item-link']"
 
         var result = ThreadSafeSet<TeacherSearchResult>()
 

@@ -250,7 +250,6 @@ struct ScheduleSubview: View, Equatable {
                 .padding(.vertical, 7)
 
             HStack {
-//                if lesson.subgroup == nil || lesson.subgroup == "" {
                 Text(lesson.teacherFullName)
                     .font(.system(size: 17))
                     .italic()
@@ -260,7 +259,6 @@ struct ScheduleSubview: View, Equatable {
                 Text("\(lesson.cabinet)")
                     .font(.system(size: 17))
                     .bold()
-//                }
             }
 
             Image(systemName: "chevron.down")

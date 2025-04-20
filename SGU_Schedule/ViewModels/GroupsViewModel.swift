@@ -8,8 +8,7 @@
 import Foundation
 
 public class GroupsViewModel: BaseViewModel {
-    private let groupsNetworkManager: GroupsNetworkManager
-    private let groupPersistenceManager: GroupPersistenceManager
+    private let groupsInteractor: GroupsInteractor
 
     private let selectedAcademicProgramKey = "selectedAcademicProgram"
     private let selectedYearKey = "selectedYear"
@@ -28,7 +27,6 @@ public class GroupsViewModel: BaseViewModel {
     @Published var groupsWithoutSaved = [AcademicGroupDTO]()
 
     @Published var isLoadingGroups: Bool = true
-    @Published var isLoadingFavoriteGroup: Bool = true
 
     var wasLaunched: Bool {
         let wasLaunched = UserDefaults.standard.bool(forKey: UserDefaultsKeys.wasLaunched.rawValue)
@@ -39,12 +37,8 @@ public class GroupsViewModel: BaseViewModel {
         return wasLaunched
     }
 
-    init(
-        groupsNetworkManager: GroupsNetworkManager,
-        groupPersistenceManager: GroupPersistenceManager
-    ) {
-        self.groupsNetworkManager = groupsNetworkManager
-        self.groupPersistenceManager = groupPersistenceManager
+    init(groupsInteractor: GroupsInteractor) {
+        self.groupsInteractor = groupsInteractor
     }
 
     public func getSelectedAcademicProgram() -> AcademicProgram {
@@ -97,42 +91,45 @@ public class GroupsViewModel: BaseViewModel {
         selectedDepartment: DepartmentDTO,
         isOnline: Bool
     ) {
-        do {
-            self.isLoadingGroups = true
+        self.isLoadingGroups = true
 
-            self.favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO()
-            if self.favouriteGroup != nil {
-                favouriteGroupNumber = self.favouriteGroup!.fullNumber
-            }
-
-            self.savedGroupsWithoutFavourite = try groupPersistenceManager.fetchAllItemsDTO().filter {
-                $0.groupId != favouriteGroup?.groupId
-            }
-
-            if isOnline {
-                groupsNetworkManager.getGroupsByYearAndAcademicProgram(
-                    year: year,
-                    program: academicProgram,
-                    department: selectedDepartment,
-                    resultQueue: .main
-                ) { result in
-                    switch result {
-                    case .success(let groups):
-                        self.groupsWithoutSaved = groups.filter {
-                            $0 != self.favouriteGroup &&
-                            !self.savedGroupsWithoutFavourite.contains($0)
-                        }
-                    case .failure(let error):
-                        self.groupsWithoutSaved = []
-                        self.showError(error)
-                    }
-                    self.isLoadingGroups = false
+        groupsInteractor.fetchFavouriteGroup { result in
+            switch result {
+            case .success(let group):
+                self.favouriteGroup = group
+                if self.favouriteGroup != nil {
+                    self.favouriteGroupNumber = self.favouriteGroup!.fullNumber
                 }
-            } else {
-                self.isLoadingGroups = false
+            case .failure(let error):
+                self.showError(error)
             }
-        } catch let error {
-            self.showError(error)
+        }
+
+        groupsInteractor.fetchSavedGroupsWithoutFavourite { result in
+            switch result {
+            case .success(let groups):
+                self.savedGroupsWithoutFavourite = groups.filter {
+                    $0.groupId != self.favouriteGroup?.groupId
+                }
+            case .failure(let error):
+                self.showError(error)
+            }
+        }
+
+        groupsInteractor.fetchNertworkGroups(
+            year: year,
+            academicProgram: academicProgram,
+            selectedDepartment: selectedDepartment,
+            isOnline: isOnline
+        ) { result in
+            switch result {
+            case .success(let groups):
+                self.groupsWithoutSaved = groups.filter { $0 != self.favouriteGroup && !self.savedGroupsWithoutFavourite.contains($0) }
+            case .failure(let error):
+                self.showError(error)
+            }
+
+            self.isLoadingGroups = false
         }
     }
 }
