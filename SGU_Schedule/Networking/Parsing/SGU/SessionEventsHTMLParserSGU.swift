@@ -17,7 +17,7 @@ private enum SessionEventPropertiesEndpoints: String {
 }
 
 struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
-    private let baseXpath = "//div[@class='container']/table/tbody"
+    private let baseXpath = "//div[@class='schedule__choose schedule__wrap-session _active-wrap']/div[@class='container']/table/tbody/tr[1]/td[1]"
 
     func getSessionEventsFromSource(source html: String) throws -> [SessionEventDTO] {
         do {
@@ -73,6 +73,9 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
 //        }
 
         // Всратый способ, но вроде для всех работает
+        guard doc.xpath(baseXpath).count > 0 else {
+            return []
+        }
         let elements = doc.xpath(baseXpath)[doc.xpath(baseXpath).count - 1].text?
             .split(separator: "\n")
             .filter { !$0.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty }

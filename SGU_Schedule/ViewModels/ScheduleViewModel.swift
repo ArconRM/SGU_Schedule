@@ -82,6 +82,13 @@ class ScheduleViewModel: BaseViewModel {
             switch result {
             case .success(let fetchResult):
                 self.groupSchedule = fetchResult.groupSchedule
+
+                if let groupSchedule = self.groupSchedule {
+                    self.setCurrentAndTwoNextLessons()
+                    if isFavourite {
+                        self.subgroupsByLessons = self.scheduleInteractor.fetchSubgroupsByLessons(schedule: groupSchedule)
+                    }
+                }
             case .failure(let error):
                 self.showError(error)
             }

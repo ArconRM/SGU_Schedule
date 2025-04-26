@@ -27,13 +27,13 @@ class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {
         let groupScheduleUrl = urlSource.getGroupScheduleURL(departmentCode: group.departmentCode, groupNumber: group.fullNumber)
         self.scraper.scrapeUrl(groupScheduleUrl) { html in
             do {
-                let lessons = try self.sessionEventsParser.getGroupSessionEventsFromSource(
+                let sessionEvents = try self.sessionEventsParser.getGroupSessionEventsFromSource(
                     source: html ?? "",
                     groupNumber: group.fullNumber,
                     departmentCode: group.departmentCode
                 )
 
-                resultQueue.async { completionHandler(.success(lessons)) }
+                resultQueue.async { completionHandler(.success(sessionEvents)) }
             } catch {
                 resultQueue.async { completionHandler(.failure(NetworkError.htmlParserError)) }
             }
