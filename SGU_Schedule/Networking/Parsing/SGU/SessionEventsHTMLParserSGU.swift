@@ -17,7 +17,7 @@ private enum SessionEventPropertiesEndpoints: String {
 }
 
 struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
-    private let baseXpath = "//div[@class='schedule__choose schedule__wrap-session _active-wrap']/div[@class='container']/table/tbody/tr[1]/td[1]"
+    private let baseXpath = "//div[@class='dialog-off-canvas-main-canvas']/main[@class='main']//div[@class='region region-content']/div[@class='block block-system block-system-main-block']/div[@class='schedule__choose schedule__wrap-session']/div[@class='container']/table/tbody"
 
     func getSessionEventsFromSource(source html: String) throws -> [SessionEventDTO] {
         do {
@@ -42,7 +42,7 @@ struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
         let doc = try HTML(html: html, encoding: .utf8)
 
         // Нормальный способ, но нахуевертили в верстке и это не для всех работает 😐
-//        for i in 1...doc.xpath(baseXpath).count {
+//        for i in 1...doc.xpath(baseXpath + "/tr[1]").count {
 //            let xpathForInnerNumber = baseXpath + "/tr[\(i)]"
 //
 //            let title = getValueByXpathQuery(doc: doc, baseXpath: xpathForInnerNumber, propertyEndpoint: .title)?

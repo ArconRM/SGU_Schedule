@@ -113,6 +113,7 @@ public final class ViewsManager: ObservableObject {
             handleError(UserDefaultsError.failedToFetch)
             return
         }
+        routingState.currentView = .groupsView
         routingState.selectedGroup = group
         routingState.isSelectedGroupFavourite = isFavourite
         routingState.isSelectedGroupPinned = isPinned
