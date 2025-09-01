@@ -839,8 +839,8 @@
 		BA1A4FDA2B6C1B2F0068B2A4 /* Routing */ = {
 			isa = PBXGroup;
 			children = (
-				16F1C07B2DB02953004C12FC /* RoutingState.swift */,
 				16D5A4262D511ED3003F4CAE /* Factory */,
+				16F1C07B2DB02953004C12FC /* RoutingState.swift */,
 				BA1A4FDB2B6C1B5B0068B2A4 /* ViewsManager.swift */,
 			);
 			path = Routing;

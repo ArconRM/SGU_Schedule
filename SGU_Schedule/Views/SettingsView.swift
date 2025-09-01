@@ -96,30 +96,6 @@ struct SettingsView: View {
                     impact.impactOccurred()
                 }
 
-                Text("Версия сайта\nдля парсинга:")
-                    .font(.system(size: 20, weight: .bold, design: .rounded))
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.horizontal)
-                    .padding(.top, 15)
-
-                Picker("", selection: $selectedParser) {
-                    ForEach(ParserOptions.allCases, id: \.self) { parserOption in
-                        Text(parserOption.rawValue)
-                    }
-                }
-                .pickerStyle(SegmentedPickerStyle())
-                .padding(.horizontal)
-                .frame(maxWidth: 200)
-                .frame(maxWidth: .infinity, alignment: .leading)
-                .onChange(of: selectedParser) { _ in
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        viewsManager.changeParser()
-                    }
-
-                    let impact = UIImpactFeedbackGenerator(style: .medium)
-                    impact.impactOccurred()
-                }
-
                 Spacer()
 
                 Text("Версия: \(Bundle.main.appVersion ?? "Хз") (\(Bundle.main.appBuild ?? "Тоже хз")) ")

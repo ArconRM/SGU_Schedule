@@ -65,7 +65,8 @@ public final class ViewsManager: ObservableObject {
         self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
         self.groupPersistenceManager = groupPersistenceManager
 
-        self.currentViewModelFactory = persistentUserSettings.isNewParserUsed ? viewModelFactory : viewModelFactory_old
+//        self.currentViewModelFactory = persistentUserSettings.isNewParserUsed ? viewModelFactory : viewModelFactory_old
+        self.currentViewModelFactory = viewModelFactory
         self.viewModelFactory = viewModelFactory
         self.viewModelFactory_old = viewModelFactory_old
 
@@ -93,11 +94,6 @@ public final class ViewsManager: ObservableObject {
     }
 
     // MARK: - Data Methods
-    func changeParser() {
-        persistentUserSettings.isNewParserUsed.toggle()
-        currentViewModelFactory = persistentUserSettings.isNewParserUsed ? viewModelFactory : viewModelFactory_old
-    }
-
     func selectDepartment(department: DepartmentDTO) {
         persistentUserSettings.selectedDepartment = department
         // TODO: мб чтобы все таки менялся groupsViewModel
