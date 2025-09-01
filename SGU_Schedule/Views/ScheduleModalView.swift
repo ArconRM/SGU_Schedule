@@ -55,6 +55,9 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                             if viewModel.loadedLessonsWithChanges {
                                 Text("с изменениями")
                                     .font(.system(size: 13, design: .rounded))
+                            } else if viewModel.groupSchedule != nil {
+                                Text("Последнее изменение: \(viewModel.groupSchedule!.lastUpdated)")
+                                    .font(.system(size: 13, design: .rounded))
                             }
 
                             if viewModel.currentEvent != nil {

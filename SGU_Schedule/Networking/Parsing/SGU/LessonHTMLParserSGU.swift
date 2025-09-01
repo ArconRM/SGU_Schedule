@@ -33,7 +33,8 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
     func getGroupScheduleFromSource(source html: String, groupNumber: String, departmentCode: String) throws -> GroupScheduleDTO {
         do {
             let lessonsByDays = try getLessonsByDaysFromSource(source: html)
-            return GroupScheduleDTO(groupNumber: groupNumber, departmentCode: departmentCode, lessonsByDays: lessonsByDays)
+            let lastUpdated = try getLastUpdatedStringFromSource(source: html)
+            return GroupScheduleDTO(groupNumber: groupNumber, departmentCode: departmentCode, lessonsByDays: lessonsByDays, lastUpdated: lastUpdated)
         } catch {
             throw NetworkError.htmlParserError
         }
@@ -56,7 +57,7 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
             var lessons: [LessonDTO]
 
             for lessonNumber in 1...8 {
-                lessons = decodeLessonsByNumber(doc: doc, lessonNumber: lessonNumber, dayNumber: dayNumber)
+                lessons = try parseLessonsByNumber(doc: doc, lessonNumber: lessonNumber, dayNumber: dayNumber)
                 result.append(contentsOf: lessons)
             }
         } catch {
@@ -65,7 +66,24 @@ struct LessonHTMLParserSGU: LessonHTMLParser {
         return result
     }
 
-    private func decodeLessonsByNumber(doc: HTMLDocument, lessonNumber: Int, dayNumber: Int) -> [LessonDTO] {
+    private func getLastUpdatedStringFromSource(source html: String) throws -> String {
+        do {
+            let doc = try HTML(html: html, encoding: .utf8)
+            return try parseLastUpdatedStringFromSource(doc: doc)
+        } catch {
+            throw NetworkError.htmlParserError
+        }
+    }
+
+    private func parseLastUpdatedStringFromSource(doc: HTMLDocument) throws -> String {
+        if let result = doc.xpath("//div[@class='schedule__choose schedule__wrap-lection _active-wrap']/section[@class='title__page']/div[@class='container']/div[@class='title__wrap']/div[@class='title__wrap_description']/strong").first?.text {
+            return result
+        }
+
+        return "-"
+    }
+
+    private func parseLessonsByNumber(doc: HTMLDocument, lessonNumber: Int, dayNumber: Int) throws -> [LessonDTO] {
 
         var baseXpath = "//tbody/tr[\(lessonNumber)]/td[@class='schedule-table__col _active-col'][\(dayNumber)]/div[@class='schedule-table__lesson']"
 

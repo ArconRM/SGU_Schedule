@@ -76,7 +76,10 @@ struct ScheduleInteractorImpl: ScheduleInteractor {
                         switch result {
                         case .success(let networkSchedule):
                             do {
-                                if persistenceSchedule == nil || Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons) {
+                                if persistenceSchedule == nil ||
+                                    Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons) ||
+                                    networkSchedule.lastUpdated != persistenceSchedule?.lastUpdated {
+
                                     DispatchQueue.main.async {
                                         let loadedLessonsWithChanges = persistenceSchedule != nil && Set(networkSchedule.lessons) != Set(persistenceSchedule!.lessons)
                                         completionHandler(

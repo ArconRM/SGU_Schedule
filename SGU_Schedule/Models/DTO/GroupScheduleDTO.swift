@@ -12,17 +12,20 @@ struct GroupScheduleDTO: Equatable {
 
     var group: AcademicGroupDTO
     var lessons: [LessonDTO]
+    var lastUpdated: String
 
-    init(groupNumber: String, departmentCode: String, lessonsByDays: [LessonDTO]) {
+    init(groupNumber: String, departmentCode: String, lessonsByDays: [LessonDTO], lastUpdated: String) {
         self.group = AcademicGroupDTO(fullNumber: groupNumber, departmentCode: departmentCode)
         self.lessons = lessonsByDays
+        self.lastUpdated = lastUpdated
     }
 
     static var mock: Self {
         .init(
             groupNumber: AcademicGroupDTO.mock.fullNumber,
             departmentCode: AcademicGroupDTO.mock.departmentCode,
-            lessonsByDays: LessonDTO.mocks
+            lessonsByDays: LessonDTO.mocks,
+            lastUpdated: "Never"
         )
     }
 

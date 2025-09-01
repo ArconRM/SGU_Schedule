@@ -26,6 +26,7 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
                 newLessons.append(try lessonsManager.saveItem(lesson))
             }
             schedule.lessons = NSOrderedSet(array: newLessons)
+            schedule.lastUpdated = itemDto.lastUpdated
 
             try viewContext.save()
             return schedule
@@ -78,7 +79,8 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
                     GroupScheduleDTO(
                         groupNumber: managedSchedule.group?.fullNumber ?? "Error",
                         departmentCode: managedSchedule.group?.departmentCode ?? "Error",
-                        lessonsByDays: resultLessons
+                        lessonsByDays: resultLessons,
+                        lastUpdated: managedSchedule.lastUpdated ?? "-"
                     )
                 )
             }
@@ -117,7 +119,8 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
             return GroupScheduleDTO(
                 groupNumber: managedSchedule.group?.fullNumber ?? "Error",
                 departmentCode: managedSchedule.group?.departmentCode ?? "Error",
-                lessonsByDays: resultLessons
+                lessonsByDays: resultLessons,
+                lastUpdated: managedSchedule.lastUpdated ?? "-"
             )
         } catch {
             throw CoreDataError.failedToFetch
@@ -153,7 +156,8 @@ struct GroupScheduleCoreDataManager: GroupSchedulePersistenceManager {
             return GroupScheduleDTO(
                 groupNumber: managedSchedule.group?.fullNumber ?? "Error",
                 departmentCode: managedSchedule.group?.departmentCode ?? "Error",
-                lessonsByDays: resultLessons
+                lessonsByDays: resultLessons,
+                lastUpdated: managedSchedule.lastUpdated ?? "-"
             )
         } catch {
             throw CoreDataError.failedToFetch

@@ -31,7 +31,7 @@ struct LessonHTMLParserSGU_old: LessonHTMLParser {
     func getGroupScheduleFromSource(source html: String, groupNumber: String, departmentCode: String) throws -> GroupScheduleDTO {
         do {
             let lessonsByDays = try getLessonsFromSource(source: html)
-            return GroupScheduleDTO(groupNumber: groupNumber, departmentCode: departmentCode, lessonsByDays: lessonsByDays)
+            return GroupScheduleDTO(groupNumber: groupNumber, departmentCode: departmentCode, lessonsByDays: lessonsByDays, lastUpdated: "-")
         } catch {
             throw NetworkError.htmlParserError
         }
