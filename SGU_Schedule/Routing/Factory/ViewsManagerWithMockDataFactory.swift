@@ -14,7 +14,6 @@ final class ViewsManagerWithMockDataFactory {
             persistentUserSettings: PersistentUserSettingsStore(),
             routingState: RoutingState(),
             viewModelFactory: ViewModelWithMockDataFactory(),
-            viewModelFactory_old: ViewModelWithMockDataFactory(),
             groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
             groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock(),
             groupPersistenceManager: GroupPersistenceManagerMock()

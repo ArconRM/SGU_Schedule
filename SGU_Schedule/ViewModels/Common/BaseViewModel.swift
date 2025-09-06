@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import OSLog
 
 public class BaseViewModel: ObservableObject, ErrorPresentable {
     @Published var isShowingError: Bool = false
@@ -13,16 +14,11 @@ public class BaseViewModel: ObservableObject, ErrorPresentable {
 
     func showError(_ error: Error) {
         isShowingError = true
+        activeError = (error as? CoreDataError) ?? (error as? UserDefaultsError) ?? (error as? BaseError) ?? (error as? NetworkError) ?? BaseError.unknownError
 
-        switch error {
-        case let error as CoreDataError:
-            activeError = error
-        case let error as UserDefaultsError:
-            activeError = error
-        case let error as BaseError:
-            activeError = error
-        default:
-            activeError = BaseError.unknownError
+       
+        if activeError is BaseError {
+            Logger.errorLogger.error("Unhandled error occurred in viewModel: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

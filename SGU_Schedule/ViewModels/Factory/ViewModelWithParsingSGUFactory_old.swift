@@ -7,7 +7,7 @@
 
 import Foundation
 
-final class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
+private class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
     private let networkManagerFactory = NetworkManagerWithParsingSGUFactory_old()
 
     func buildDepartmentsViewModel() -> DepartmentsViewModel {

@@ -8,13 +8,13 @@
 import Foundation
 import SwiftUI
 import WidgetKit
+import OSLog
 
 // TODO: слишком много обязанностей, по-хорошему бы часть вынести в координатор
 /// Manages creating and routing views
 public final class ViewsManager: ObservableObject {
     private var currentViewModelFactory: ViewModelFactory
     private var viewModelFactory: ViewModelFactory
-    private var viewModelFactory_old: ViewModelFactory
 
     private let groupSchedulePersistenceManager: GroupSchedulePersistenceManager
     private let groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager
@@ -51,7 +51,6 @@ public final class ViewsManager: ObservableObject {
         persistentUserSettings: PersistentUserSettingsStore,
         routingState: RoutingState,
         viewModelFactory: ViewModelFactory,
-        viewModelFactory_old: ViewModelFactory,
         groupSchedulePersistenceManager: GroupSchedulePersistenceManager,
         groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager,
         groupPersistenceManager: GroupPersistenceManager,
@@ -68,7 +67,6 @@ public final class ViewsManager: ObservableObject {
 //        self.currentViewModelFactory = persistentUserSettings.isNewParserUsed ? viewModelFactory : viewModelFactory_old
         self.currentViewModelFactory = viewModelFactory
         self.viewModelFactory = viewModelFactory
-        self.viewModelFactory_old = viewModelFactory_old
 
         if persistentUserSettings.selectedDepartment != nil {
             groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: persistentUserSettings.selectedDepartment!) // Не должен пересоздаваться без смены факультета
@@ -251,15 +249,10 @@ public final class ViewsManager: ObservableObject {
     // MARK: - Error Handling
     private func handleError(_ error: Error) {
         isShowingError = true
-        switch error {
-        case let error as CoreDataError:
-            activeError = error
-        case let error as UserDefaultsError:
-            activeError = error
-        case let error as BaseError:
-            activeError = error
-        default:
-            activeError = BaseError.unknownError
+        activeError = (error as? CoreDataError) ?? (error as? UserDefaultsError) ?? (error as? BaseError) ?? (error as? NetworkError) ?? BaseError.unknownError
+
+        if activeError is BaseError {
+            Logger.errorLogger.error("Unhandled error occurred in viewsManager: \(error.localizedDescription, privacy: .public)")
         }
     }
 }

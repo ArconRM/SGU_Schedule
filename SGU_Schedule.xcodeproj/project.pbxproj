@@ -162,6 +162,7 @@
 		16C667562D2DC92600EB2F98 /* SessionEventsWidgetViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667552D2DC92600EB2F98 /* SessionEventsWidgetViewModel.swift */; };
 		16C667582D2DCD5300EB2F98 /* SessionEventsFetchResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C667572D2DCD5300EB2F98 /* SessionEventsFetchResult.swift */; };
 		16CD679B2D2E80F000583A99 /* TwoSessionEventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CD679A2D2E80F000583A99 /* TwoSessionEventsView.swift */; };
+		16CE70892E6CDA1E004DDC86 /* Logger+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CE70882E6CDA1E004DDC86 /* Logger+Extension.swift */; };
 		16CEC0F02D46753900EF668E /* ErrorPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEC0EF2D46753900EF668E /* ErrorPresentable.swift */; };
 		16CEC0F22D4678C100EF668E /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEC0F12D4678C100EF668E /* BaseViewModel.swift */; };
 		16D2F6622CD5329700217C45 /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D2F6612CD5329700217C45 /* BaseError.swift */; };
@@ -408,6 +409,7 @@
 		16C667552D2DC92600EB2F98 /* SessionEventsWidgetViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsWidgetViewModel.swift; sourceTree = "<group>"; };
 		16C667572D2DCD5300EB2F98 /* SessionEventsFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionEventsFetchResult.swift; sourceTree = "<group>"; };
 		16CD679A2D2E80F000583A99 /* TwoSessionEventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoSessionEventsView.swift; sourceTree = "<group>"; };
+		16CE70882E6CDA1E004DDC86 /* Logger+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Logger+Extension.swift"; sourceTree = "<group>"; };
 		16CEC0EF2D46753900EF668E /* ErrorPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentable.swift; sourceTree = "<group>"; };
 		16CEC0F12D4678C100EF668E /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		16D2F6612CD5329700217C45 /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
@@ -1143,6 +1145,7 @@
 				BA1256CE2B72A6E60019D2E6 /* UIDevice+Extension.swift */,
 				16A585412CB063E900D6837A /* View+OnRotate.swift */,
 				16071ADF2CD40DE800343899 /* Bundle+Extension.swift */,
+				16CE70882E6CDA1E004DDC86 /* Logger+Extension.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1580,6 +1583,7 @@
 				16D5A3FC2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift in Sources */,
 				BA9D792F2AC33D2E00C36932 /* NetworkError.swift in Sources */,
 				16FE827C2CABEA4100DB5682 /* HeheAlert.swift in Sources */,
+				16CE70892E6CDA1E004DDC86 /* Logger+Extension.swift in Sources */,
 				BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */,
 				BA9D79252AC2173B00C36932 /* LessonHTMLParserSGU_old.swift in Sources */,
 				1655082E2C14345A00A37900 /* PlainTextSubview.swift in Sources */,
@@ -1773,7 +1777,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1811,7 +1815,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1847,7 +1851,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1884,7 +1888,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1907,7 +1911,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1930,7 +1934,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2088,7 +2092,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2129,7 +2133,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.0;
+				MARKETING_VERSION = 2.7.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

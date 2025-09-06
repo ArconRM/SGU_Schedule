@@ -19,7 +19,6 @@ final class ViewsManagerWithParsingSGUFactory {
             persistentUserSettings: persistentUserSettings,
             routingState: routingState,
             viewModelFactory: ViewModelWithParsingSGUFactory(),
-            viewModelFactory_old: ViewModelWithParsingSGUFactory_old(),
             groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
             groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(),
             groupPersistenceManager: GroupCoreDataManager(),
