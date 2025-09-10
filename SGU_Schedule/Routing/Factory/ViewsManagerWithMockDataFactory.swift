@@ -16,7 +16,8 @@ final class ViewsManagerWithMockDataFactory {
             viewModelFactory: ViewModelWithMockDataFactory(),
             groupSchedulePersistenceManager: GroupSchedulePersistenceManagerMock(),
             groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManagerMock(),
-            groupPersistenceManager: GroupPersistenceManagerMock()
+            groupPersistenceManager: GroupPersistenceManagerMock(),
+            notificationManager: NotificationManagerMock(groupPersistenceManager: GroupPersistenceManagerMock())
         )
     }
 }

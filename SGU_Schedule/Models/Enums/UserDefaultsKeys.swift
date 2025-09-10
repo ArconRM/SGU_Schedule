@@ -9,6 +9,7 @@ import Foundation
 
 public enum UserDefaultsKeys: String {
     case wasLaunched = "wasLaunched"
+    case apnsToken = "apnsToken"
 
     case favoriteGroupNumberKey = "favoriteGroupNumber"
     case favouriteGroupSubgroupsKey = "favouriteGroupSubgroups"

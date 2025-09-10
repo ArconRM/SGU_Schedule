@@ -19,6 +19,7 @@ public final class ViewsManager: ObservableObject {
     private let groupSchedulePersistenceManager: GroupSchedulePersistenceManager
     private let groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager
     private let groupPersistenceManager: GroupPersistenceManager
+    private let notificationManager: NotificationManager
     private var groupsViewModel: GroupsViewModel?
 
     @Published private var appearanceSettings: AppearanceSettingsStore
@@ -54,6 +55,7 @@ public final class ViewsManager: ObservableObject {
         groupSchedulePersistenceManager: GroupSchedulePersistenceManager,
         groupSessionEventsPersistenceManager: GroupSessionEventsPersistenceManager,
         groupPersistenceManager: GroupPersistenceManager,
+        notificationManager: NotificationManager,
         widgetUrl: String? = nil
     ) {
         self.appearanceSettings = appearanceSettings
@@ -63,8 +65,8 @@ public final class ViewsManager: ObservableObject {
         self.groupSchedulePersistenceManager = groupSchedulePersistenceManager
         self.groupSessionEventsPersistenceManager = groupSessionEventsPersistenceManager
         self.groupPersistenceManager = groupPersistenceManager
+        self.notificationManager = notificationManager
 
-//        self.currentViewModelFactory = persistentUserSettings.isNewParserUsed ? viewModelFactory : viewModelFactory_old
         self.currentViewModelFactory = viewModelFactory
         self.viewModelFactory = viewModelFactory
 
@@ -91,10 +93,13 @@ public final class ViewsManager: ObservableObject {
         }
     }
 
+    func requestNotifications() {
+        notificationManager.requestPermission()
+    }
+
     // MARK: - Data Methods
     func selectDepartment(department: DepartmentDTO) {
         persistentUserSettings.selectedDepartment = department
-        // TODO: мб чтобы все таки менялся groupsViewModel
         groupsViewModel = self.currentViewModelFactory.buildGroupsViewModel(department: persistentUserSettings.selectedDepartment!)
     }
 
@@ -125,6 +130,7 @@ public final class ViewsManager: ObservableObject {
         do {
             try groupPersistenceManager.makeGroupFavourite(group.groupId)
             persistentUserSettings.favouriteGroupNumber = group.fullNumber
+            notificationManager.updateFavouriteGroup()
         } catch let error {
             handleError(error)
         }

@@ -12,6 +12,7 @@ final class ViewsManagerWithParsingSGUFactory {
         appearanceSettings: AppearanceSettingsStore,
         persistentUserSettings: PersistentUserSettingsStore,
         routingState: RoutingState,
+        notificationManager: NotificationManager,
         widgetUrl: String?
     ) -> ViewsManager {
         return ViewsManager(
@@ -22,6 +23,7 @@ final class ViewsManagerWithParsingSGUFactory {
             groupSchedulePersistenceManager: GroupScheduleCoreDataManager(),
             groupSessionEventsPersistenceManager: GroupSessionEventsCoreDataManager(),
             groupPersistenceManager: GroupCoreDataManager(),
+            notificationManager: notificationManager,
             widgetUrl: widgetUrl
         )
     }
