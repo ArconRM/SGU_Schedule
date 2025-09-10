@@ -30,7 +30,7 @@ extension Date {
     static var currentWeekType: WeekType {
         let calendar = Calendar.current
         let weekOfYear = calendar.component(.weekOfYear, from: Date())
-        return (weekOfYear) % 2 == 0 ? .denumerator : .numerator
+        return (weekOfYear) % 2 == 1 ? .denumerator : .numerator
     }
 
     /// If current weekday is Sunday, it will return weekType of next week
@@ -38,7 +38,7 @@ extension Date {
         let calendar = Calendar.current
         let weekOfYear = calendar.component(.weekOfYear, from: Date())
         let isSunday = calendar.component(.weekday, from: Date()) == 1
-        return (weekOfYear + (isSunday ? 1 : 0)) % 2 == 0 ? .denumerator : .numerator
+        return (weekOfYear + (isSunday ? 1 : 0)) % 2 == 1 ? .denumerator : .numerator
     }
 
     static var currentWeekday: Weekdays {
