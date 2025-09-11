@@ -24,7 +24,6 @@ class NotificationManager: NSObject, ObservableObject {
     }
 
     func requestPermission() {
-        UserDefaults.standard.set(nil, forKey: UserDefaultsKeys.apnsToken.rawValue)
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .sound, .badge]) { granted, _ in
             DispatchQueue.main.async {
                 self.isPermissionGranted = granted
