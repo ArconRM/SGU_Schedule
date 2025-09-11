@@ -6,19 +6,20 @@
 //
 
 import Foundation
+import SguParser
 
 final class TeacherNetworkManagerMock: TeacherNetworkManager {
     func getTeacher(
         teacherEndpoint: String,
         resultQueue: DispatchQueue,
-        completionHandler: @escaping (Result<SGU_Schedule.TeacherDTO, any Error>) -> Void
+        completionHandler: @escaping (Result<SguParser.TeacherDTO, any Error>) -> Void
     ) {
         completionHandler(.success(TeacherDTO.mock))
     }
 
     func getAllTeachers(
         resultQueue: DispatchQueue,
-        completionHandler: @escaping (Result<Set<SGU_Schedule.TeacherSearchResult>, any Error>) -> Void
+        completionHandler: @escaping (Result<Set<SguParser.TeacherSearchResult>, any Error>) -> Void
     ) {
         completionHandler(.success(Set(TeacherSearchResult.mocks)))
     }

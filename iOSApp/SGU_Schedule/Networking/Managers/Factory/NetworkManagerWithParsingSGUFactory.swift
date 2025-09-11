@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class NetworkManagerWithParsingSGUFactory: NetworkManagerFactory {
     private let urlSource = URLSourceSGU()

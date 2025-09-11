@@ -8,6 +8,7 @@
 import SwiftUI
 import UIKit
 import WidgetKit
+import SguParser
 
 struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
     // чтобы не вью не переебашивалось при смене темы (и также источника инета)

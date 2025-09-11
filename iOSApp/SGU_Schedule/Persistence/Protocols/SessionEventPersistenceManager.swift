@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 protocol SessionEventPersistenceManager {
     func saveItem(_ itemDto: SessionEventDTO) throws -> SessionEvent

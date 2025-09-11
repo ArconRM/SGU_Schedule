@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 protocol LessonPersistenceManager {
     func saveItem(_ itemDto: LessonDTO) throws -> Lesson

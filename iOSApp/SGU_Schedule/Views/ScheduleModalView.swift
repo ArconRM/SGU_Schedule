@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 // TODO: Объединить с модалом для сессии
 struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {

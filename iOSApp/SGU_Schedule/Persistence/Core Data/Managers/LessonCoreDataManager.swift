@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct LessonCoreDataManager: LessonPersistenceManager {
     private let viewContext = PersistenceController.shared.container.viewContext

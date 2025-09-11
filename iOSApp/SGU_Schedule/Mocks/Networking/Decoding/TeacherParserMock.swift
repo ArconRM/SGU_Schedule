@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class TeacherParserMock: TeacherHTMLParser {
     func getTeacherFromSource(source html: String) throws -> TeacherDTO {

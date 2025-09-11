@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 public class GroupsNetworkManagerWithParsing: GroupsNetworkManager {
     private var urlSource: URLSource

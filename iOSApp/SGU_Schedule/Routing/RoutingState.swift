@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class RoutingState: ObservableObject {
     @Published var selectedGroup: AcademicGroupDTO?

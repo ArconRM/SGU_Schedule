@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class GroupPersistenceManagerMock: GroupPersistenceManager {
     func saveItem(_ itemDto: AcademicGroupDTO) throws -> AcademicGroup {

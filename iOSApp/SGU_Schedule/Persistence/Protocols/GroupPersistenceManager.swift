@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 protocol GroupPersistenceManager {
     func saveItem(_ itemDto: AcademicGroupDTO) throws -> AcademicGroup

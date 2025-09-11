@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class GroupsNetworkManagerMock: GroupsNetworkManager {
     func getGroupsByYearAndAcademicProgram(

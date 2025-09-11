@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 // TODO: .contentShape(Rectangle()) для ios 18, без него не работает tapGesture
 struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {

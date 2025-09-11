@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 struct GroupSubview: View {
     @Environment(\.colorScheme) var colorScheme

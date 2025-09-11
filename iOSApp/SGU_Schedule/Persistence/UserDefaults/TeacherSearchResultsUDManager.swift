@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 public struct TeacherSearchResultsUDManager: TeacherSearchResultsPersistenceManager {
     private let teacherResultsKey = UserDefaultsKeys.teacherSearchResultsKey.rawValue

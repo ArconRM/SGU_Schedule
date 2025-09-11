@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class PersistentUserSettingsStore: ObservableObject {
     @Published var isNewParserUsed: Bool {

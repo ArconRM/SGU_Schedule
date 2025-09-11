@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 protocol GroupsInteractor {
     func fetchFavouriteGroup(

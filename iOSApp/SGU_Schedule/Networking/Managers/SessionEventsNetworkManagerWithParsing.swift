@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 /// С новым сайтом нужен DynamicScraper
 class SessionEventsNetworkManagerWithParsing: SessionEventsNetworkManager {

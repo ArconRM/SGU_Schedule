@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct GroupCoreDataManager: GroupPersistenceManager {
     private let viewContext = PersistenceController.shared.container.viewContext

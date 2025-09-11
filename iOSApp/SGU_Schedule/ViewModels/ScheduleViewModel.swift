@@ -8,6 +8,7 @@
 import Foundation
 import WidgetKit
 import ActivityKit
+import SguParser
 
 class ScheduleViewModel: BaseViewModel {
     private let scheduleInteractor: ScheduleInteractor

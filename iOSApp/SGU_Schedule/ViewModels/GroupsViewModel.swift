@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 public class GroupsViewModel: BaseViewModel {
     private let groupsInteractor: GroupsInteractor

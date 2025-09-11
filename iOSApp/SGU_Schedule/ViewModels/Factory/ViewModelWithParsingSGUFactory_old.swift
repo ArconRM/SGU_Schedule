@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 private class ViewModelWithParsingSGUFactory_old: ViewModelFactory {
     private let networkManagerFactory = NetworkManagerWithParsingSGUFactory_old()

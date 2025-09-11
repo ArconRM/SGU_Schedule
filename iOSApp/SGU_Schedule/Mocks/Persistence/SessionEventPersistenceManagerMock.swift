@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class SessionEventPersistenceManagerMock: SessionEventPersistenceManager {
     func saveItem(_ itemDto: SessionEventDTO) throws -> SessionEvent {

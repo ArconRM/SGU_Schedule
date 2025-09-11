@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 struct ScheduleSubview: View, Equatable {
     static func == (lhs: ScheduleSubview, rhs: ScheduleSubview) -> Bool {

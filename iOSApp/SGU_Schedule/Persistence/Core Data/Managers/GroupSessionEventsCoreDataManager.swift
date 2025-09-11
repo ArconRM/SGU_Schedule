@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct GroupSessionEventsCoreDataManager: GroupSessionEventsPersistenceManager {
     private let viewContext = PersistenceController.shared.container.viewContext

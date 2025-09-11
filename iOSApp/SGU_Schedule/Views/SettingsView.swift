@@ -7,6 +7,7 @@
 
 import SwiftUI
 import WidgetKit
+import SguParser
 
 struct SettingsView: View {
     @Environment(\.colorScheme) var colorScheme

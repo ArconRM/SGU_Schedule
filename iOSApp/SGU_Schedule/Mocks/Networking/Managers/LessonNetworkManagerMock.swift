@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class LessonNetworkManagerMock: LessonNetworkManager {
     func getGroupScheduleForCurrentWeek(

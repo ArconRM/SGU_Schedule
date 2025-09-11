@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct GroupScheduleFetchResult {
     var groupSchedule: GroupScheduleDTO?

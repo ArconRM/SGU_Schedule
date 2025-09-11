@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class GroupSessionEventsPersistenceManagerMock: GroupSessionEventsPersistenceManager {
     func saveItem(_ itemDto: GroupSessionEventsDTO) throws -> GroupSessionEvents {

@@ -7,6 +7,7 @@
 
 import ActivityKit
 import Foundation
+import SguParser
 
 struct ScheduleEventAttributes: ActivityAttributes {
     public struct ContentState: Codable, Hashable {

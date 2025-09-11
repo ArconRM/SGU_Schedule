@@ -9,6 +9,7 @@ import Foundation
 import SwiftUI
 import WidgetKit
 import OSLog
+import SguParser
 
 // TODO: слишком много обязанностей, по-хорошему бы часть вынести в координатор
 /// Manages creating and routing views

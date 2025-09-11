@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 enum SessionEventsFetchResult {
     case unknownErrorWhileFetching(error: Error? = nil)

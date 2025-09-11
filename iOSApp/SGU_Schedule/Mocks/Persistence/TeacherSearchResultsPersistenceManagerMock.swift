@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import SguParser
 
 final class TeacherSearchResultsPersistenceManagerMock: TeacherSearchResultsPersistenceManager {
-    func save(_ results: Set<SGU_Schedule.TeacherSearchResult>) { }
+    func save(_ results: Set<SguParser.TeacherSearchResult>) { }
 
-    func getAll() -> Set<SGU_Schedule.TeacherSearchResult>? {
+    func getAll() -> Set<SguParser.TeacherSearchResult>? {
         return Set([])
     }
 }

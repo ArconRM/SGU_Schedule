@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct GroupSessionEventsFetchResult {
     var sessionEvents: GroupSessionEventsDTO?

@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 public struct LessonSubgroupsUDManager: LessonSubgroupsPersistenceManager {
     private let subgroupsKey = UserDefaultsKeys.favouriteGroupSubgroupsKey.rawValue

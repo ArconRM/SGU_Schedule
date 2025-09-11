@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 // https://developer.apple.com/forums/thread/729462
 
 class LessonNetworkManagerWithParsing: LessonNetworkManager {

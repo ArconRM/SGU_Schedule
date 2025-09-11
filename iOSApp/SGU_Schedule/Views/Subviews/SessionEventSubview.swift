@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 struct SessionEventSubview: View {
     @Environment(\.colorScheme) var colorScheme

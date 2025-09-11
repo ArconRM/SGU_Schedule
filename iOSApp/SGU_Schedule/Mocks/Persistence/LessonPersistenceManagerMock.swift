@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class LessonPersistenceManagerMock: LessonPersistenceManager {
     func saveItem(_ itemDto: LessonDTO) throws -> Lesson {

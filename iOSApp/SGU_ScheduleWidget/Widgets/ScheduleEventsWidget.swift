@@ -7,6 +7,7 @@
 
 import WidgetKit
 import SwiftUI
+import SguParser
 
 struct ScheduleEventsEntry: TimelineEntry {
     let date: Date

@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme

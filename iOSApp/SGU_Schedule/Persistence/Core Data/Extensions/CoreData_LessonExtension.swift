@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import SguParser
 
 extension Lesson {
-    var lessonType: LessonType {
+    public var lessonType: LessonType {
         get {
             return LessonType(rawValue: self.lessonTypeRawValue ?? "") ?? .lecture
         }
@@ -17,7 +18,7 @@ extension Lesson {
         }
     }
 
-    var weekType: WeekType {
+    public var weekType: WeekType {
         get {
             return WeekType(rawValue: self.weekTypeRawValue ?? "") ?? .all
         }
@@ -26,7 +27,7 @@ extension Lesson {
         }
     }
 
-    var weekDay: Weekdays {
+    public var weekDay: Weekdays {
         get {
             return Weekdays(dayNumber: Int(self.weekDayNumber)) ?? .monday
         }

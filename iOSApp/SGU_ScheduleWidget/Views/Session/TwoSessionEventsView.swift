@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import SguParser
 
 struct TwoSessionEventsView: View {
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore

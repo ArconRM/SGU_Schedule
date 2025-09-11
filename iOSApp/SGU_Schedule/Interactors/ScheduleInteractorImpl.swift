@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct ScheduleInteractorImpl: ScheduleInteractor {
     private let lessonsNetworkManager: LessonNetworkManager

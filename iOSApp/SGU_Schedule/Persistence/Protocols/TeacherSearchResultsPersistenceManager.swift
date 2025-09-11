@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 public protocol TeacherSearchResultsPersistenceManager {
     func save(_ results: Set<TeacherSearchResult> )

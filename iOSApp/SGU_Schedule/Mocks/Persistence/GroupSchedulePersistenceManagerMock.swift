@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class GroupSchedulePersistenceManagerMock: GroupSchedulePersistenceManager {
     func saveItem(_ itemDto: GroupScheduleDTO) throws -> GroupSchedule {

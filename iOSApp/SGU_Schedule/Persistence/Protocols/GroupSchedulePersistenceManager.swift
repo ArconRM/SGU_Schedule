@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 protocol GroupSchedulePersistenceManager {
     func saveItem(_ itemDto: GroupScheduleDTO) throws -> GroupSchedule

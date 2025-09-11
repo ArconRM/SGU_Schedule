@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 final class LessonSubgroupsPersistenceManagerMock: LessonSubgroupsPersistenceManager {
     func saveItem(lesson: String, item: LessonSubgroupDTO) throws { }

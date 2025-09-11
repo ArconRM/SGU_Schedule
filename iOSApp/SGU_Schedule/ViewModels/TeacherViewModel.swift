@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 public class TeacherViewModel: BaseViewModel {
     private let teacherNetworkManager: TeacherNetworkManager

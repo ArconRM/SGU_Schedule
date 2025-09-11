@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SguParser
 
 struct GroupsInteractorImpl: GroupsInteractor {
     private let groupsNetworkManager: GroupsNetworkManager

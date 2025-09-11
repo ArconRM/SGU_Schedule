@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import SguParser
 
 struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel {
     // чтобы не вью не переебашивалось при смене темы (и также источника инета)
