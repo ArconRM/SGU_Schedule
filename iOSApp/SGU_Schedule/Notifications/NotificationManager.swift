@@ -42,11 +42,10 @@ class NotificationManager: NSObject, ObservableObject {
 
     func setDeviceToken(_ token: Data) {
         let tokenString = token.map { String(format: "%02.2hhx", $0) }.joined()
-//        self.deviceToken = tokenString
+        let savedTokenString = UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue)
 
-        guard UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue) != nil else {
+        if savedTokenString == nil || tokenString != savedTokenString {
             sendTokenToServer(tokenString)
-            return
         }
     }
 

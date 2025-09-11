@@ -1275,8 +1275,6 @@
 			dependencies = (
 			);
 			name = SGU_ScheduleLiveActivitiesExtension;
-			packageProductDependencies = (
-			);
 			productName = SGU_ScheduleLiveActivitiesExtension;
 			productReference = 16F3AE922D5A501400AD8348 /* SGU_ScheduleLiveActivitiesExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
@@ -1455,13 +1453,9 @@
 			inputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SGU_Schedule/Pods-SGU_Schedule-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
 				"${PODS_ROOT}/Target Support Files/Pods-SGU_Schedule/Pods-SGU_Schedule-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
