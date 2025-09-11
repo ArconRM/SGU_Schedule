@@ -7,7 +7,7 @@
 
 import Foundation
 
-public enum WeekType: String, Decodable {
+public enum WeekType: String, Codable {
     case all = ""
     case numerator = "Числ."
     case denumerator = "Знам."

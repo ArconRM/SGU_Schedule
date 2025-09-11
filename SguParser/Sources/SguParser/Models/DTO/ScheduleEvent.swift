@@ -7,7 +7,7 @@
 
 import Foundation
 
-public protocol ScheduleEvent: Hashable {
+public protocol ScheduleEvent: Hashable, Codable, Sendable {
 
     var title: String { get set }
     var weekDay: Weekdays { get set }
