@@ -110,6 +110,11 @@
 		16A776242CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A776222CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift */; };
 		16A776262CC253D800875A8E /* LessonSubgroupsUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A776252CC253D800875A8E /* LessonSubgroupsUDManager.swift */; };
 		16A776272CC253D800875A8E /* LessonSubgroupsUDManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A776252CC253D800875A8E /* LessonSubgroupsUDManager.swift */; };
+		16AA5A412E71638D0001D5A1 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AA5A402E71638D0001D5A1 /* NotificationManager.swift */; };
+		16AA5A442E7163B20001D5A1 /* Config.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AA5A422E7163B20001D5A1 /* Config.swift */; };
+		16AA5A452E7163B20001D5A1 /* Config.example.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AA5A432E7163B20001D5A1 /* Config.example.swift */; };
+		16AA5A472E71641A0001D5A1 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AA5A462E71641A0001D5A1 /* AppDelegate.swift */; };
+		16AA5A492E71647C0001D5A1 /* NotificationManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16AA5A482E71647C0001D5A1 /* NotificationManagerMock.swift */; };
 		16ABCD312D5A596900BF2E5A /* Date+ConstantsExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16A678FE2D31955700B2D896 /* Date+ConstantsExtension.swift */; };
 		16ABCD322D5A596E00BF2E5A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* Date+Extension.swift */; };
 		16ABCD332D5A596E00BF2E5A /* Date+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = BADAE12E2ABA0B240079E3D7 /* Date+Extension.swift */; };
@@ -394,6 +399,11 @@
 		16A678FE2D31955700B2D896 /* Date+ConstantsExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Date+ConstantsExtension.swift"; sourceTree = "<group>"; };
 		16A776222CC2538100875A8E /* LessonSubgroupsPersistenceManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSubgroupsPersistenceManager.swift; sourceTree = "<group>"; };
 		16A776252CC253D800875A8E /* LessonSubgroupsUDManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonSubgroupsUDManager.swift; sourceTree = "<group>"; };
+		16AA5A402E71638D0001D5A1 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
+		16AA5A422E7163B20001D5A1 /* Config.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.swift; sourceTree = "<group>"; };
+		16AA5A432E7163B20001D5A1 /* Config.example.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Config.example.swift; sourceTree = "<group>"; };
+		16AA5A462E71641A0001D5A1 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		16AA5A482E71647C0001D5A1 /* NotificationManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManagerMock.swift; sourceTree = "<group>"; };
 		16AFA78E2CD0CBF300758699 /* CloseButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloseButton.swift; sourceTree = "<group>"; };
 		16B3B0CD2C5FE4AE00043B16 /* ScheduleEventsFetchResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScheduleEventsFetchResult.swift; sourceTree = "<group>"; };
 		16BEC6E72DB4E5B9007653E9 /* GroupsInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupsInteractor.swift; sourceTree = "<group>"; };
@@ -736,6 +746,14 @@
 			path = UserDefaults;
 			sourceTree = "<group>";
 		};
+		16AA5A3F2E7163820001D5A1 /* Notifications */ = {
+			isa = PBXGroup;
+			children = (
+				16AA5A402E71638D0001D5A1 /* NotificationManager.swift */,
+			);
+			path = Notifications;
+			sourceTree = "<group>";
+		};
 		16B3B0CC2C5FE49100043B16 /* Models */ = {
 			isa = PBXGroup;
 			children = (
@@ -949,6 +967,7 @@
 		BAAD1F062B6FF79700B58E32 /* Mocks */ = {
 			isa = PBXGroup;
 			children = (
+				16AA5A482E71647C0001D5A1 /* NotificationManagerMock.swift */,
 				BA1256CB2B7225160019D2E6 /* Persistence */,
 				BAAD1F072B6FF7C100B58E32 /* Networking */,
 			);
@@ -1047,6 +1066,10 @@
 		BADAE1102AB9C0D60079E3D7 /* SGU_Schedule */ = {
 			isa = PBXGroup;
 			children = (
+				16AA5A462E71641A0001D5A1 /* AppDelegate.swift */,
+				16AA5A422E7163B20001D5A1 /* Config.swift */,
+				16AA5A432E7163B20001D5A1 /* Config.example.swift */,
+				16AA5A3F2E7163820001D5A1 /* Notifications */,
 				166DB2082C62AC7F001D0688 /* SGU_Schedule.entitlements */,
 				BAC851202B0A2456004252FF /* SGU-Schedule-Info.plist */,
 				BADAE1242ABA00380079E3D7 /* Models */,
@@ -1582,6 +1605,7 @@
 				BA5383612AF571B90004F012 /* GroupScheduleDTO.swift in Sources */,
 				16D5A3FC2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift in Sources */,
 				BA9D792F2AC33D2E00C36932 /* NetworkError.swift in Sources */,
+				16AA5A472E71641A0001D5A1 /* AppDelegate.swift in Sources */,
 				16FE827C2CABEA4100DB5682 /* HeheAlert.swift in Sources */,
 				16CE70892E6CDA1E004DDC86 /* Logger+Extension.swift in Sources */,
 				BA1A4FDC2B6C1B5B0068B2A4 /* ViewsManager.swift in Sources */,
@@ -1619,6 +1643,7 @@
 				BA2FEEDC2B668956001F91F5 /* SessionEventsNetworkManager.swift in Sources */,
 				16C6674D2D2D2D0B00EB2F98 /* SessionEventCoreDataManager.swift in Sources */,
 				16DB5F0C2C04F0C400870B21 /* TeacherNetworkManagerWithParsing.swift in Sources */,
+				16AA5A412E71638D0001D5A1 /* NotificationManager.swift in Sources */,
 				16C6674A2D2D2BE500EB2F98 /* GroupSessionEventsPersistenceManager.swift in Sources */,
 				BA9D791C2ABE2E4700C36932 /* GroupsSource.swift in Sources */,
 				165508362C15F1F200A37900 /* ErrorView.swift in Sources */,
@@ -1659,7 +1684,10 @@
 				16C6673E2D2BD93C00EB2F98 /* ThreadSafeArray.swift in Sources */,
 				167248802C8DA190008673DE /* UserDefaultsError.swift in Sources */,
 				BA5383632AF68F560004F012 /* GroupSchedulePersistenceManager.swift in Sources */,
+				16AA5A442E7163B20001D5A1 /* Config.swift in Sources */,
+				16AA5A452E7163B20001D5A1 /* Config.example.swift in Sources */,
 				1650F5182C54492600622205 /* AppStyle.swift in Sources */,
+				16AA5A492E71647C0001D5A1 /* NotificationManagerMock.swift in Sources */,
 				BA1256CF2B72A6E60019D2E6 /* UIDevice+Extension.swift in Sources */,
 				16A585402CB063B400D6837A /* DeviceRotationViewModifier.swift in Sources */,
 				162FEA542CBFC94300AA682A /* OverlayView.swift in Sources */,
@@ -1777,7 +1805,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1815,7 +1843,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1851,7 +1879,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1888,7 +1916,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1911,7 +1939,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1934,7 +1962,7 @@
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
 				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2080,6 +2108,7 @@
 				INFOPLIST_FILE = "SGU-Schedule-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Расписание";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -2092,7 +2121,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -2121,6 +2150,7 @@
 				INFOPLIST_FILE = "SGU-Schedule-Info.plist";
 				INFOPLIST_KEY_CFBundleDisplayName = "Расписание";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.education";
+				INFOPLIST_KEY_NSSupportsLiveActivities = YES;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -2133,7 +2163,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2.7.1;
+				MARKETING_VERSION = 3.0.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
