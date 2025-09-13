@@ -47,8 +47,10 @@ struct SGU_ScheduleApp: App {
                     widgetUrl = url.absoluteString
                 }
                 .onAppear {
+                    #if !targetEnvironment(simulator)
                     delegate.notificationManager = notificationManager
                     notificationManager.requestPermission()
+                    #endif
                 }
         }
     }
