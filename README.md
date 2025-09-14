@@ -1,0 +1,3 @@
+- Swift Package с парсерами сайта СГУ (https://github.com/ArconRM/SGU_Schedule/tree/main/SguParser). Используется в обоих проектах.
+- Vapor сервис (https://github.com/ArconRM/SGU_Schedule/tree/main/SguParsingService).
+- iOS приложение (https://github.com/ArconRM/SGU_Schedule/tree/main/iOSApp)
