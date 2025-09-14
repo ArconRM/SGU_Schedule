@@ -11,6 +11,7 @@ public enum NetworkError: Error, LocalizedError {
     case scraperError
     case htmlParserError
     case networkManagerError
+    case notificationManagerError
     case unexpectedError
 
     public var errorDescription: String? {
@@ -21,6 +22,8 @@ public enum NetworkError: Error, LocalizedError {
             return "Ошибка парсера"
         case .networkManagerError:
             return "Ошибка получения данных"
+        case .notificationManagerError:
+            return "Ошибка с уведомлениями"
         case .unexpectedError:
             return "Неожиданная ошибка"
         }
@@ -34,6 +37,8 @@ public enum NetworkError: Error, LocalizedError {
             return "Не удалось распарсить данные с сайта"
         case .networkManagerError:
             return "Не удалось получить данные с сайта"
+        case .notificationManagerError:
+            return "Что-то не срослось с подпиской на уведомления или отпиской от них."
         case .unexpectedError:
             return "Неожиданная ошибка при получении данных с сайта"
         }

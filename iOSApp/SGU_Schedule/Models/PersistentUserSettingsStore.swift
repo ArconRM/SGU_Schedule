@@ -27,6 +27,12 @@ final class PersistentUserSettingsStore: ObservableObject {
         }
     }
 
+    @Published var isRegisteredForNotifications: Bool {
+        didSet {
+            UserDefaults.standard.set(isRegisteredForNotifications, forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue)
+        }
+    }
+
     init() {
         self.isNewParserUsed = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isNewParserUsed.rawValue)
         self.selectedDepartment = {
@@ -36,5 +42,6 @@ final class PersistentUserSettingsStore: ObservableObject {
             return nil
         }()
         self.favouriteGroupNumber = UserDefaults.standard.string(forKey: UserDefaultsKeys.favoriteGroupNumberKey.rawValue)
+        self.isRegisteredForNotifications = UserDefaults.standard.bool(forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue)
     }
 }

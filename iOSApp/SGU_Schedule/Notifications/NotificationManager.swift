@@ -8,12 +8,14 @@
 import Foundation
 import UserNotifications
 import SwiftUI
+import OSLog
 
 class NotificationManager: NSObject, ObservableObject {
+    private let logger = Logger()
+
     private var groupPersistenceManager: GroupPersistenceManager
 
     @Published var isPermissionGranted = false
-//    @Published var deviceToken: String = ""
 
     init(groupPersistenceManager: GroupPersistenceManager) {
         self.groupPersistenceManager = groupPersistenceManager
@@ -40,16 +42,25 @@ class NotificationManager: NSObject, ObservableObject {
         }
     }
 
-    func setDeviceToken(_ token: Data) {
+    func setDeviceToken(_ token: Data) throws {
         let tokenString = token.map { String(format: "%02.2hhx", $0) }.joined()
-        let savedTokenString = UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue)
+        let savedToken = UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue)
 
-        if savedTokenString == nil || tokenString != savedTokenString {
-            sendTokenToServer(tokenString)
+        if savedToken == nil || savedToken != tokenString {
+            UserDefaults.standard.set(tokenString, forKey: UserDefaultsKeys.apnsToken.rawValue)
+            try sendTokenToServer(tokenString)
         }
     }
 
-    private func sendTokenToServer(_ token: String) {
+    func registerDevice() throws {
+        guard let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue) else { return }
+
+        if !UserDefaults.standard.bool(forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue) {
+            try sendTokenToServer(token)
+        }
+    }
+
+    private func sendTokenToServer(_ token: String) throws {
         guard !token.isEmpty else { return }
 
         do {
@@ -63,22 +74,25 @@ class NotificationManager: NSObject, ObservableObject {
                     "favouriteGroupNumber": favouriteGroup.fullNumber
                 ]
 
-                sendToServer(payload: payload, endpoint: "/api/DeviceManager/RegisterDevice") { success in
-                    if success {
+                sendToServer(endpoint: "/api/DeviceManager/RegisterDevice", payload: payload) { result in
+                    if result {
                         UserDefaults.standard.set(token, forKey: UserDefaultsKeys.apnsToken.rawValue)
+                        UserDefaults.standard.set(true, forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue)
+                    } else {
+                        self.logger.error("Failed to register device with \(token)")
                     }
                 }
             }
         } catch let error {
-            print(error)
+            throw NetworkError.notificationManagerError
         }
     }
 
-    func updateFavouriteGroup() {
-        sendFavouriteGroupUpdate()
+    func updateFavouriteGroup() throws {
+        try sendFavouriteGroupUpdate()
     }
 
-    private func sendFavouriteGroupUpdate() {
+    private func sendFavouriteGroupUpdate() throws {
         guard let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue) else { return }
 
         do {
@@ -90,35 +104,72 @@ class NotificationManager: NSObject, ObservableObject {
                     "favouriteGroupNumber": favouriteGroup.fullNumber
                 ]
 
-                sendToServer(payload: payload, endpoint: "/api/DeviceManager/UpdateFavouriteGroup") { _ in }
+                sendToServer(endpoint: "/api/DeviceManager/UpdateFavouriteGroup", payload: payload) { result in
+                    if !result {
+                        self.logger.error("Failed to update favourite group with \(result)")
+                    }
+                }
             }
         } catch let error {
-            print(error)
+            throw NetworkError.notificationManagerError
         }
     }
 
-    private func sendToServer(payload: [String: Any], endpoint: String, completion: ((Bool) -> Void)? = nil) {
-        guard let url = URL(string: "\(Config.tokenServerURL)\(endpoint)") else { completion?(false); return }
+    func unregisterDeviceFromNotiticationServer() throws {
+        try sendUnregisterDevice()
+    }
+
+    private func sendUnregisterDevice() throws {
+        guard let token = UserDefaults.standard.string(forKey: UserDefaultsKeys.apnsToken.rawValue) else { return }
+
+        do {
+            sendToServer(endpoint: "/api/DeviceManager/UnregisterDevice", queryItems: [
+                URLQueryItem(name: "apnsToken", value: token)
+            ]) { result in
+                if result {
+                    UserDefaults.standard.set(false, forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue)
+                } else {
+                    self.logger.error("Failed to unregister device with \(result)")
+                }
+            }
+        } catch let error {
+            throw NetworkError.notificationManagerError
+        }
+    }
+
+    private func sendToServer(
+        endpoint: String,
+        queryItems: [URLQueryItem]? = nil,
+        payload: [String: Any]? = nil,
+        completion: ((Bool) -> Void)? = nil
+    ) {
+        var components = URLComponents(string: "\(Config.tokenServerURL)\(endpoint)")
+        components?.queryItems = queryItems
+
+        guard let url = components?.url else { completion?(false); return }
 
         var request = URLRequest(url: url)
         request.httpMethod = "POST"
         request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-        do {
-            request.httpBody = try JSONSerialization.data(withJSONObject: payload)
-
-            URLSession.shared.dataTask(with: request) { _, _, error in
-                if let error = error {
-                    print("Server request failed: \(error)")
-                    completion?(false)
-                } else {
-                    completion?(true)
-                }
-            }.resume()
-        } catch {
-            print("JSON encoding failed: \(error)")
-            completion?(false)
+        if let payload = payload {
+            do {
+                request.httpBody = try JSONSerialization.data(withJSONObject: payload)
+            } catch {
+                print("JSON encoding failed: \(error)")
+                completion?(false)
+                return
+            }
         }
+
+        URLSession.shared.dataTask(with: request) { _, _, error in
+            if let error = error {
+                print("Server request failed: \(error)")
+                completion?(false)
+            } else {
+                completion?(true)
+            }
+        }.resume()
     }
 }
 

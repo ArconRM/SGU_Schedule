@@ -131,7 +131,7 @@ public final class ViewsManager: ObservableObject {
         do {
             try groupPersistenceManager.makeGroupFavourite(group.groupId)
             persistentUserSettings.favouriteGroupNumber = group.fullNumber
-            notificationManager.updateFavouriteGroup()
+            try notificationManager.updateFavouriteGroup()
         } catch let error {
             handleError(error)
         }
@@ -142,6 +142,18 @@ public final class ViewsManager: ObservableObject {
             try groupSchedulePersistenceManager.deleteScheduleByGroupId(group.groupId)
             try groupSessionEventsPersistenceManager.deleteSessionEventsByGroupId(group.groupId)
             try groupPersistenceManager.deleteItemById(group.groupId)
+        } catch let error {
+            handleError(error)
+        }
+    }
+
+    func toggleNotifications(newValue: Bool) {
+        do {
+            if newValue {
+                try notificationManager.registerDevice()
+            } else {
+                try notificationManager.unregisterDeviceFromNotiticationServer()
+            }
         } catch let error {
             handleError(error)
         }
@@ -221,7 +233,8 @@ public final class ViewsManager: ObservableObject {
             selectedDepartment: persistentUserSettings.selectedDepartment ?? DepartmentDTO(code: "Error"),
             selectedTheme: appearanceSettings.currentAppTheme,
             selectedStyle: appearanceSettings.currentAppStyle,
-            selectedParser: persistentUserSettings.isNewParserUsed ? .new : .old
+            selectedParser: persistentUserSettings.isNewParserUsed ? .new : .old,
+            isNotificationOn: persistentUserSettings.isRegisteredForNotifications
         )
     }
 

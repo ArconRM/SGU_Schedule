@@ -13,7 +13,11 @@ class AppDelegate: NSObject, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
         // This is called by iOS when device successfully registers for push notifications
-        notificationManager?.setDeviceToken(deviceToken)
+        do {
+            try notificationManager?.setDeviceToken(deviceToken)
+        } catch let error {
+            print("Failed to set device token: \(error)")
+        }
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {

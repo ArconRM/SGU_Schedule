@@ -19,6 +19,7 @@ struct SettingsView: View {
     @State var selectedTheme: AppTheme
     @State var selectedStyle: AppStyle
     @State var selectedParser: ParserOptions
+    @State var isNotificationOn: Bool
 
     var body: some View {
         ZStack {
@@ -97,6 +98,20 @@ struct SettingsView: View {
                     impact.impactOccurred()
                 }
 
+                Text("Уведомления \nоб изменении: ")
+                    .font(.system(size: 20, weight: .bold, design: .rounded))
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .padding(.top, 15)
+
+                Toggle("", isOn: $isNotificationOn)
+                    .labelsHidden()
+                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .padding(.horizontal)
+                    .onChange(of: isNotificationOn) { newValue in
+                        viewsManager.toggleNotifications(newValue: newValue)
+                    }
+
                 Spacer()
 
                 Text("Версия: \(Bundle.main.appVersion ?? "Хз") (\(Bundle.main.appBuild ?? "Тоже хз")) ")
@@ -115,7 +130,7 @@ struct SettingsView: View {
 }
 
 #Preview {
-    SettingsView(selectedDepartment: DepartmentDTO.mock, selectedTheme: .blue, selectedStyle: .fill, selectedParser: .new)
+    SettingsView(selectedDepartment: DepartmentDTO.mock, selectedTheme: .blue, selectedStyle: .fill, selectedParser: .new, isNotificationOn: false)
         .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
         .environmentObject(AppearanceSettingsStore())
 }

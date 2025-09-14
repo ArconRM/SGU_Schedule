@@ -22,4 +22,6 @@ public enum UserDefaultsKeys: String {
 
     case selectedAppTheme = "selectedAppTheme"
     case selectedAppStyle = "selectedAppStyle"
+
+    case isRegisteredForNotifications = "isRegisteredForNotifications"
 }
