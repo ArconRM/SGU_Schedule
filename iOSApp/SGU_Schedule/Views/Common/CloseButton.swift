@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+/// Only for reuse in toolbar
 struct CloseButton: View {
 
     var action: () -> Void
@@ -15,10 +16,16 @@ struct CloseButton: View {
         Button(
             action: { action() }
         ) {
-            MainButton {
+            if #available(iOS 26, *) {
                 Image(systemName: "multiply")
                     .padding(8)
                     .font(.system(size: 21, weight: .semibold))
+            } else {
+                MainButton {
+                    Image(systemName: "multiply")
+                        .padding(8)
+                        .font(.system(size: 21, weight: .semibold))
+                }
             }
         }
     }

@@ -58,7 +58,7 @@ struct TeachersSearchView<ViewModel>: View, Equatable where ViewModel: TeachersS
                                     }
                             }
                         }
-                        .searchable(text: $queryString, prompt: "Введите фамилию преподавателя")
+                        .searchable(text: $queryString, placement: .navigationBarDrawer, prompt: "Введите фамилию преподавателя")
 
                         Button(
                             action: {

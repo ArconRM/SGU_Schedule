@@ -11,6 +11,8 @@ import SguParser
 // TODO: .contentShape(Rectangle()) для ios 18, без него не работает tapGesture
 struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
     @Environment(\.colorScheme) var colorScheme
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
+
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
@@ -56,6 +58,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                     }
                 }
                 .ignoresSafeArea()
+
             } else if UIDevice.isPad {
                 appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
                     .overlay {
@@ -69,12 +72,12 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         }
                     }
                     .ignoresSafeArea()
-
             }
 
             if isShowingSettingsView && UIDevice.isPhone {
                 viewsManager.buildSettingsView()
                     .environmentObject(appearanceSettings)
+                    .padding(safeAreaInsets)
             }
 
             // Группы
@@ -94,7 +97,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                         makeShowTeachersSearchButton()
 
                     }
-                    .padding(.top, 2)
+                    .padding(safeAreaInsets)
                 } else if UIDevice.isPad {
                     if networkMonitor.isConnected {
                         makeAcademicProgramMenu()
@@ -221,7 +224,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 HeheAlert(show: $showAlert)
             }
         }
-        .ignoresSafeArea(edges: [.bottom])
+        .ignoresSafeArea()
         .accentColor(colorScheme == .light ? .black : .white)
         .onAppear {
             fetchAllData()

@@ -9,6 +9,8 @@ import SwiftUI
 import SguParser
 
 struct GroupSubview: View {
+    @Namespace private var namespace
+
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
@@ -20,19 +22,41 @@ struct GroupSubview: View {
 
     var body: some View {
         ZStack {
-            if colorScheme == .light {
-                getMainBackgroundLight()
+            if #unavailable(iOS 26.0) {
+                if colorScheme == .light {
+                    getMainBackgroundLight()
+                } else {
+                    getMainBackgroundDark()
+                }
             } else {
-                getMainBackgroundDark()
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(.clear)
+                    .glassEffect(
+                        .regular.interactive()
+                    )
             }
 
             VStack {
                 HStack {
                     ZStack {
-                        if appearanceSettings.currentAppStyle == AppStyle.fill {
-                            buildFilledRectangle()
+                        if #available(iOS 26.0, *) {
+                            RoundedRectangle(cornerRadius: 45)
+                                .background {
+                                    getBackgroundColor()
+                                        .opacity(isFavourite || isPinned ? 0.6 : 0.3)
+                                }
+                                .clipShape(RoundedRectangle(cornerRadius: 45))
+                                .glassEffect(
+                                    .regular.interactive()
+                                )
+                                .glassEffectID("\(group.fullNumber)", in: namespace)
+                                .foregroundColor(getBackgroundColor().opacity(isFavourite || isPinned ? 0.6 : 0.3))
                         } else {
-                            buildBorderedRectangle()
+                            if appearanceSettings.currentAppStyle == AppStyle.fill {
+                                buildFilledRectangle()
+                            } else {
+                                buildBorderedRectangle()
+                            }
                         }
 
                         Text(group.fullNumber)
@@ -55,8 +79,8 @@ struct GroupSubview: View {
                             .font(.system(size: 25, weight: .semibold))
                             .padding(15)
                             .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
-                            .shadow(color: appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme),
-                                    radius: colorScheme == .light || appearanceSettings.currentAppTheme == .gray ? 0 : 10)
+//                            .shadow(color: appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme),
+//                                    radius: colorScheme == .light || appearanceSettings.currentAppTheme == .gray ? 0 : 10)
                     }
                 }
             }

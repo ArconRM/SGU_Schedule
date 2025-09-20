@@ -56,6 +56,7 @@
 		1672487E2C8CFA16008673DE /* GroupPersistenceManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248782C8CB651008673DE /* GroupPersistenceManager.swift */; };
 		167248802C8DA190008673DE /* UserDefaultsError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1672487F2C8DA190008673DE /* UserDefaultsError.swift */; };
 		167248822C8F138A008673DE /* CoreData_AcademicGroupExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */; };
+		167280242E7DE1D0005B2D5A /* Sgu2.icon in Resources */ = {isa = PBXBuildFile; fileRef = 167280232E7DE1D0005B2D5A /* Sgu2.icon */; };
 		167BDF3E2D53A46D00D82F4F /* NetworkManagersTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BDF3D2D53A46D00D82F4F /* NetworkManagersTests.swift */; };
 		167BDF422D53ADEF00D82F4F /* ScraperMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 167BDF412D53ADEF00D82F4F /* ScraperMock.swift */; };
 		167BDF452D53AEC600D82F4F /* GroupSchedulePersistenceManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BA1256CC2B7225320019D2E6 /* GroupSchedulePersistenceManagerMock.swift */; };
@@ -138,6 +139,7 @@
 		16CEC0F02D46753900EF668E /* ErrorPresentable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEC0EF2D46753900EF668E /* ErrorPresentable.swift */; };
 		16CEC0F22D4678C100EF668E /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16CEC0F12D4678C100EF668E /* BaseViewModel.swift */; };
 		16D2F6622CD5329700217C45 /* BaseError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D2F6612CD5329700217C45 /* BaseError.swift */; };
+		16D3BEC82E7EC56700625272 /* SafeAreaInsets.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D3BEC72E7EC56700625272 /* SafeAreaInsets.swift */; };
 		16D5A3FC2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16D5A3FB2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift */; };
 		16D5A41A2D511B72003F4CAE /* LessonNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F122B6FF97A00B58E32 /* LessonNetworkManagerMock.swift */; };
 		16D5A41D2D511B72003F4CAE /* SessionEventsNetworkManagerMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = BAAD1F182B6FF9BC00B58E32 /* SessionEventsNetworkManagerMock.swift */; };
@@ -318,6 +320,7 @@
 		1672487B2C8CF99C008673DE /* GroupCoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupCoreDataManager.swift; sourceTree = "<group>"; };
 		1672487F2C8DA190008673DE /* UserDefaultsError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaultsError.swift; sourceTree = "<group>"; };
 		167248812C8F138A008673DE /* CoreData_AcademicGroupExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreData_AcademicGroupExtension.swift; sourceTree = "<group>"; };
+		167280232E7DE1D0005B2D5A /* Sgu2.icon */ = {isa = PBXFileReference; lastKnownFileType = folder.iconcomposer.icon; path = Sgu2.icon; sourceTree = "<group>"; };
 		167BDF3D2D53A46D00D82F4F /* NetworkManagersTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManagersTests.swift; sourceTree = "<group>"; };
 		167BDF412D53ADEF00D82F4F /* ScraperMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScraperMock.swift; sourceTree = "<group>"; };
 		1680698A2C5AD5E2002D47A6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = /System/Library/Frameworks/WidgetKit.framework; sourceTree = "<absolute>"; };
@@ -360,6 +363,7 @@
 		16CEC0EF2D46753900EF668E /* ErrorPresentable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPresentable.swift; sourceTree = "<group>"; };
 		16CEC0F12D4678C100EF668E /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		16D2F6612CD5329700217C45 /* BaseError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseError.swift; sourceTree = "<group>"; };
+		16D3BEC72E7EC56700625272 /* SafeAreaInsets.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SafeAreaInsets.swift; sourceTree = "<group>"; };
 		16D5A3FB2D51138C003F4CAE /* ViewModelWithMockDataFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewModelWithMockDataFactory.swift; sourceTree = "<group>"; };
 		16D5A4072D511480003F4CAE /* GroupPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GroupPersistenceManagerMock.swift; sourceTree = "<group>"; };
 		16D5A4092D511699003F4CAE /* LessonPersistenceManagerMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LessonPersistenceManagerMock.swift; sourceTree = "<group>"; };
@@ -905,6 +909,7 @@
 		BADAE1052AB9C0D60079E3D7 = {
 			isa = PBXGroup;
 			children = (
+				167280232E7DE1D0005B2D5A /* Sgu2.icon */,
 				166DB2092C62ADDB001D0688 /* SGU_ScheduleWidgetExtension.entitlements */,
 				BADAE1212AB9CC250079E3D7 /* Podfile */,
 				BADAE1102AB9C0D60079E3D7 /* SGU_Schedule */,
@@ -1032,6 +1037,7 @@
 				16A585412CB063E900D6837A /* View+OnRotate.swift */,
 				16071ADF2CD40DE800343899 /* Bundle+Extension.swift */,
 				16CE70882E6CDA1E004DDC86 /* Logger+Extension.swift */,
+				16D3BEC72E7EC56700625272 /* SafeAreaInsets.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1200,7 +1206,7 @@
 			);
 			mainGroup = BADAE1052AB9C0D60079E3D7;
 			packageReferences = (
-				1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "SguParser" */,
+				1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "../SguParser" */,
 			);
 			productRefGroup = BADAE10F2AB9C0D60079E3D7 /* Products */;
 			projectDirPath = "";
@@ -1243,6 +1249,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				BADAE1222AB9CC250079E3D7 /* Podfile in Resources */,
+				167280242E7DE1D0005B2D5A /* Sgu2.icon in Resources */,
 				BADAE1192AB9C0DA0079E3D7 /* Preview Assets.xcassets in Resources */,
 				BABF260E2ABB0D92003D3385 /* Launch Screen.storyboard in Resources */,
 				BADAE1162AB9C0DA0079E3D7 /* Assets.xcassets in Resources */,
@@ -1512,6 +1519,7 @@
 				BAFA58152AED25DD0060BD81 /* UserDefaultsKeys.swift in Sources */,
 				BA2FEEE02B668B8B001F91F5 /* SessionEventsNetworkManagerWithParsing.swift in Sources */,
 				BA1A4FD92B6C09F10068B2A4 /* MainView.swift in Sources */,
+				16D3BEC82E7EC56700625272 /* SafeAreaInsets.swift in Sources */,
 				BA9D792A2AC21C3B00C36932 /* URLSource.swift in Sources */,
 				16F7AD9C2C52F18D0057B062 /* AppearanceSettingsStore.swift in Sources */,
 				BA2F67832B75611E00B06667 /* DepartmentSource.swift in Sources */,
@@ -1566,7 +1574,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1604,7 +1612,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleWidget";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1640,7 +1648,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1677,7 +1685,7 @@
 					"@executable_path/../../Frameworks",
 				);
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = "com.qwerty.SGUSchedule.SGU-ScheduleLiveActivities";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SKIP_INSTALL = YES;
@@ -1699,8 +1707,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 3.0.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1722,8 +1730,8 @@
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 2SJ5X5ARC2;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
-				MARKETING_VERSION = 3.0.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUScheduleTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1787,14 +1795,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Debug;
 		};
@@ -1842,14 +1849,13 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
-				WATCHOS_DEPLOYMENT_TARGET = 8.0;
 			};
 			name = Release;
 		};
@@ -1857,8 +1863,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 702765E015D3321D9F649123 /* Pods-SGU_Schedule.debug.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Sgu2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1877,12 +1884,12 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1899,8 +1906,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = 504AC542FDEC94144C1005F1 /* Pods-SGU_Schedule.release.xcconfig */;
 			buildSettings = {
-				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				ASSETCATALOG_COMPILER_APPICON_NAME = Sgu2;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_INCLUDE_ALL_APPICON_ASSETS = NO;
 				CODE_SIGN_ENTITLEMENTS = SGU_Schedule/SGU_Schedule.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
@@ -1919,12 +1927,12 @@
 				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 3.0.0;
+				MARKETING_VERSION = 3.1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = com.qwerty.SGUSchedule;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -1988,7 +1996,7 @@
 /* End XCConfigurationList section */
 
 /* Begin XCLocalSwiftPackageReference section */
-		1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "SguParser" */ = {
+		1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "../SguParser" */ = {
 			isa = XCLocalSwiftPackageReference;
 			relativePath = ../SguParser;
 		};
@@ -1997,12 +2005,12 @@
 /* Begin XCSwiftPackageProductDependency section */
 		163912AD2E73369C00D2BE4E /* SguParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "SguParser" */;
+			package = 1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "../SguParser" */;
 			productName = SguParser;
 		};
 		163912AF2E7336A200D2BE4E /* SguParser */ = {
 			isa = XCSwiftPackageProductDependency;
-			package = 1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "SguParser" */;
+			package = 1651FB3D2E73288700F57759 /* XCLocalSwiftPackageReference "../SguParser" */;
 			productName = SguParser;
 		};
 		1651FB3E2E73288700F57759 /* SguParser */ = {

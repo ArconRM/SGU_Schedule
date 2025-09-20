@@ -15,54 +15,69 @@ struct SessionEventSubview: View {
     let sessionEvent: SessionEventDTO
 
     var body: some View {
-        VStack {
-            VStack {
-                Text(sessionEvent.title)
+        Group {
+            if #available(iOS 26, *) {
+                sessionEventContent
+                    .padding(20)
+                    .background(getBackground())
+                    .clipShape(RoundedRectangle(cornerRadius: 20))
+                    .glassEffect(
+                        .regular.interactive(),
+                        in: RoundedRectangle(cornerRadius: 20)
+                    )
+            } else {
+                sessionEventContent
+                    .foregroundColor(colorScheme == .light ? .black : .white)
+                    .padding(15)
+                    .opacity(sessionEvent.date.passed(duration: Date.getDurationHours(sessionEventType: sessionEvent.sessionEventType)) ? 0.5 : 1)
+                    .background(getBackground())
+                    .cornerRadius(10)
+                    .shadow(
+                        color: colorScheme == .light ?
+                            .gray.opacity(0.3) :
+                            .white.opacity(0.2),
+                        radius: 3,
+                        x: 0,
+                        y: 0
+                    )
+            }
+        }
+    }
+
+    @ViewBuilder
+    private var sessionEventContent: some View {
+        VStack(spacing: 12) {
+            Text(sessionEvent.title)
+                .font(.system(size: 20))
+                .bold()
+                .multilineTextAlignment(.center)
+
+            Text(sessionEvent.sessionEventType.rawValue)
+                .font(.system(size: 17))
+                .italic()
+                .multilineTextAlignment(.center)
+
+            HStack {
+                Text(sessionEvent.date.getDayMonthAndYearString())
                     .font(.system(size: 20))
                     .bold()
-                    .multilineTextAlignment(.center)
 
-                Text(sessionEvent.sessionEventType.rawValue)
+                Text(sessionEvent.date.getHoursAndMinutesString())
+                    .font(.system(size: 20))
+            }
+            .padding(.vertical, 10)
+
+            HStack {
+                Text(sessionEvent.cabinet)
+                    .font(.system(size: 17))
+
+                Spacer()
+
+                Text(sessionEvent.teacherFullName)
                     .font(.system(size: 17))
                     .italic()
-                    .multilineTextAlignment(.center)
-
-                HStack {
-                    Text(sessionEvent.date.getDayMonthAndYearString())
-                        .font(.system(size: 20))
-                        .bold()
-
-                    Text(sessionEvent.date.getHoursAndMinutesString())
-                        .font(.system(size: 20))
-                }
-                .padding(.vertical, 10)
-
-                HStack {
-                    Text(sessionEvent.cabinet)
-                        .font(.system(size: 17))
-
-                    Spacer()
-
-                    Text(sessionEvent.teacherFullName)
-                        .font(.system(size: 17))
-                        .italic()
-                }
             }
-            .foregroundColor(colorScheme == .light ? .black : .white)
-            .padding(15)
-            .opacity(sessionEvent.date.passed(duration: Date.getDurationHours(sessionEventType: sessionEvent.sessionEventType)) ? 0.5 : 1)
-            .background(getBackground())
         }
-        .background(colorScheme == .light ? Color.white : Color.gray.opacity(appearanceSettings.currentAppStyle == .fill ? 0.3 : 0.2))
-        .cornerRadius(10)
-        .shadow(
-            color: colorScheme == .light ?
-            .gray.opacity(0.3) :
-                .white.opacity(0.2),
-                radius: 3,
-                x: 0,
-                y: 0
-        )
     }
 
     private func getBackground() -> AnyView {

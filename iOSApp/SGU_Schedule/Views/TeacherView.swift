@@ -84,7 +84,7 @@ struct TeacherView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel
                         }
                     }
                 }
-                .padding(.top, 5)
+//                .padding(.top, 5)
             }
         }
 
