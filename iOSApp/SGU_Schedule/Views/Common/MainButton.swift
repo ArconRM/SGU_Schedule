@@ -13,7 +13,7 @@ struct MainButton<Content: View>: View {
     @ViewBuilder let content: Content
 
     var body: some View {
-        if #available(iOS 26.0, *) {
+        if #available(iOS 26.0, *), UIDevice.isPhone {
             content
                 .foregroundColor(colorScheme == .light ? .black : .white)
                 .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))

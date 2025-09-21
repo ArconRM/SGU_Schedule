@@ -19,27 +19,25 @@ struct GroupSubview: View {
     var isPinned: Bool
     /// Если группа с другого факультета
     var differentDepartment: DepartmentDTO?
-
+    
     var body: some View {
         ZStack {
-            if #unavailable(iOS 26.0) {
+            if #available(iOS 26.0, *), UIDevice.isPhone {
+                RoundedRectangle(cornerRadius: 20)
+                    .foregroundStyle(.clear)
+                    .glassEffect(.regular.interactive())
+            } else {
                 if colorScheme == .light {
                     getMainBackgroundLight()
                 } else {
                     getMainBackgroundDark()
                 }
-            } else {
-                RoundedRectangle(cornerRadius: 20)
-                    .foregroundStyle(.clear)
-                    .glassEffect(
-                        .regular.interactive()
-                    )
             }
-
+            
             VStack {
                 HStack {
                     ZStack {
-                        if #available(iOS 26.0, *) {
+                        if #available(iOS 26.0, *), UIDevice.isPhone {
                             RoundedRectangle(cornerRadius: 45)
                                 .background {
                                     getBackgroundColor()

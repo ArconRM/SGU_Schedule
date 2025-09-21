@@ -10,11 +10,11 @@ import SwiftUI
 struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
-
+    
     @ObservedObject var viewModel: ViewModel
-
+    
     @Binding var isShowing: Bool
-
+    
     var body: some View {
         OverlayView(isShowing: $isShowing) {
             ScrollView {
@@ -23,7 +23,7 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         Text(lesson)
                             .font(.system(size: 18, weight: .semibold))
                             .padding(.horizontal)
-
+                        
                         Picker("", selection: Binding(
                             get: {
                                 viewModel.subgroupsByLessons[lesson]!.first { $0.isSaved }
@@ -47,9 +47,9 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     .padding(.vertical)
                 }
             }
-
+            
             Divider()
-
+            
             Button("Очистить выбор") {
                 viewModel.clearSubgroups()
             }
@@ -62,10 +62,16 @@ struct SubgroupsView<ViewModel>: View where ViewModel: ScheduleViewModel {
 }
 
 #Preview {
-    SubgroupsView(
-        viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
-        isShowing: .constant(true)
-    )
-    .environmentObject(AppearanceSettingsStore())
-    .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
+    NavigationSplitView() {
+        Text("fuck")
+    } detail: {
+        SubgroupsView(
+            viewModel: ViewModelWithParsingSGUFactory().buildScheduleViewModel(),
+            isShowing: .constant(true)
+        )
+        .environmentObject(AppearanceSettingsStore())
+        .environmentObject(ViewsManagerWithMockDataFactory().makeViewsManager())
+    }
+    .navigationSplitViewStyle(.balanced)
+    
 }

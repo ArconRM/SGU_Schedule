@@ -60,18 +60,20 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 .ignoresSafeArea()
 
             } else if UIDevice.isPad {
-                appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
-                    .overlay {
-                        if appearanceSettings.currentAppTheme == .pinkHelloKitty && !isShowingSettingsView {
-                            Image("patternImageRofl")
-                                .resizable()
-                                .ignoresSafeArea()
-                                .scaledToFill()
-                                .clipped()
-                                .opacity(colorScheme == .light ? 0.4 : 0.1)
+                if #unavailable(iOS 26) {
+                    appearanceSettings.currentAppTheme.backgroundColor(colorScheme: colorScheme)
+                        .overlay {
+                            if appearanceSettings.currentAppTheme == .pinkHelloKitty && !isShowingSettingsView {
+                                Image("patternImageRofl")
+                                    .resizable()
+                                    .ignoresSafeArea()
+                                    .scaledToFill()
+                                    .clipped()
+                                    .opacity(colorScheme == .light ? 0.4 : 0.1)
+                            }
                         }
-                    }
-                    .ignoresSafeArea()
+                        .ignoresSafeArea()
+                }
             }
 
             if isShowingSettingsView && UIDevice.isPhone {
@@ -101,6 +103,7 @@ struct GroupsView<ViewModel>: View where ViewModel: GroupsViewModel {
                 } else if UIDevice.isPad {
                     if networkMonitor.isConnected {
                         makeAcademicProgramMenu()
+                            .padding(safeAreaInsets)
                     }
                 }
 

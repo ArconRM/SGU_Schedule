@@ -224,7 +224,7 @@ struct ScheduleSubview: View, Equatable {
 //                                    .glassEffectID("\(lesson)", in: namespace)
                             }
                         }
-                        .background(Color.white)
+                        .background(colorScheme == .light ? .white.opacity(0.8) : .gray.opacity(0.5))
                     }
                 }
                 .clipShape(RoundedRectangle(cornerRadius: 20))
