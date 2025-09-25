@@ -16,7 +16,7 @@ struct MainView: View {
     @State private var currentView: AppViews = .departmentsView
     @State private var hasAppeared = false
 
-    @State private var columnVisibility = NavigationSplitViewVisibility.all
+    @State private var columnVisibility = NavigationSplitViewVisibility.doubleColumn
 
     var body: some View {
         VStack {
@@ -66,31 +66,32 @@ struct MainView: View {
                         .environmentObject(appearanceSettings)
                 } else {
                     NavigationSplitView(columnVisibility: $columnVisibility) {
-                        viewsManager.buildGroupsView()
-                            .environmentObject(networkMonitor)
-                            .environmentObject(viewsManager)
-                            .environmentObject(appearanceSettings)
-                    } detail: {
-                        if currentView == .scheduleView {
-                            viewsManager.buildScheduleView()
-                                .environmentObject(networkMonitor)
-                                .environmentObject(viewsManager)
-                                .environmentObject(appearanceSettings)
-                                .id(UUID())
+                                viewsManager.buildGroupsView()
+                            .toolbar(removing: .sidebarToggle)
+                                    .environmentObject(networkMonitor)
+                                    .environmentObject(viewsManager)
+                                    .environmentObject(appearanceSettings)
+                            } detail: {
+                                if currentView == .scheduleView {
+                                    viewsManager.buildScheduleView()
+                                        .environmentObject(networkMonitor)
+                                        .environmentObject(viewsManager)
+                                        .environmentObject(appearanceSettings)
+                                        .id(UUID())
 
-                        } else if currentView == .teacherView {
-                            viewsManager.buildTeacherView()
-                                .environmentObject(networkMonitor)
-                                .environmentObject(viewsManager)
-                                .environmentObject(appearanceSettings)
+                                } else if currentView == .teacherView {
+                                    viewsManager.buildTeacherView()
+                                        .environmentObject(networkMonitor)
+                                        .environmentObject(viewsManager)
+                                        .environmentObject(appearanceSettings)
 
-                        } else {
-                            viewsManager.buildSettingsView()
-                                .environmentObject(appearanceSettings)
-                        }
-                    }
-                    .navigationSplitViewStyle(.balanced)
-                    .accentColor(colorScheme == .light ? .black : .white)
+                                } else {
+                                    viewsManager.buildSettingsView()
+                                        .environmentObject(appearanceSettings)
+                                }
+                            }
+                            .navigationSplitViewStyle(.balanced)
+                            .accentColor(colorScheme == .light ? .black : .white)
                 }
             }
         }

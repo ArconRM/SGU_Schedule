@@ -16,7 +16,9 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
         return lhs.colorScheme == rhs.colorScheme
     }
 
+    @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.colorScheme) var colorScheme
+
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
@@ -59,15 +61,19 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 }
             }
             .blur(radius: showSubgroups ? 3 : 0)
+            
+            (colorScheme == .light ? Color.gray.opacity(0.1) : Color.black.opacity(0.3))
+                .ignoresSafeArea()
+                .opacity(showSubgroups ? 1 : 0)
 
             if showSubgroups {
                 SubgroupsView(viewModel: viewModel, isShowing: $showSubgroups)
-                    .onChange(of: viewModel.subgroupsByLessons) { _ in
+                    .onChange(of: viewModel.subgroupsByLessons) {
                         WidgetCenter.shared.reloadAllTimelines()
                     }
             }
         }
-        .edgesIgnoringSafeArea(.bottom)
+        .edgesIgnoringSafeArea([.bottom])
         .toolbar {
             ToolbarItem(placement: .topBarLeading) {
                 CloseButton {
@@ -76,7 +82,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     }
                 }
                 .opacity(showSubgroups ? 0 : 1)
-                .padding(.top, 5)
+//                .padding(.top, 5)
             }
 
             ToolbarItem(placement: .topBarTrailing) {
@@ -89,7 +95,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                     makeFavoriteToolbarButton()
                 }
                 .opacity(showSubgroups ? 0 : 1)
-                .padding(.top, 5)
+//                .padding(.top, 5)
             }
         }
         .onAppear {
@@ -122,13 +128,20 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
                 showSubgroups = true
             }
         }) {
-            MainButton {
+
+            if #available(iOS 26, *) {
                 Image(systemName: "person.3.fill")
                     .padding(8)
                     .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+            } else {
+                MainButton {
+                    Image(systemName: "person.3.fill")
+                        .padding(8)
+                        .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                }
             }
-            .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
+        .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         .disabled(viewModel.isLoadingLessons)
     }
 
@@ -151,13 +164,19 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             let impact = UIImpactFeedbackGenerator(style: .medium)
             impact.impactOccurred()
         }) {
-            MainButton {
+            if #available(iOS 26, *) {
                 Image(systemName: isFavourite ? "star.fill" : "star")
                     .padding(8)
                     .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+            } else {
+                MainButton {
+                    Image(systemName: isFavourite ? "star.fill" : "star")
+                        .padding(8)
+                        .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                }
             }
-            .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
+        .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         .disabled(viewModel.isLoadingLessons)
     }
 
@@ -183,13 +202,20 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
             impact.impactOccurred()
 
         }) {
-            MainButton {
+
+            if #available(iOS 26, *) {
                 Image(systemName: isPinned ? "pin.fill" : "pin")
                     .padding(8)
                     .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+            } else {
+                MainButton {
+                    Image(systemName: isPinned ? "pin.fill" : "pin")
+                        .padding(8)
+                        .foregroundColor(appearanceSettings.currentAppTheme.foregroundColor(colorScheme: colorScheme))
+                }
             }
-            .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         }
+        .opacity(viewModel.isLoadingLessons ? 0.5 : 1)
         .disabled(viewModel.isLoadingLessons)
     }
 }

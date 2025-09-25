@@ -13,17 +13,24 @@ struct MainButton<Content: View>: View {
     @ViewBuilder let content: Content
 
     var body: some View {
-        content
-            .foregroundColor(colorScheme == .light ? .black : .white)
-            .background(
-                ZStack {
-                    RoundedRectangle(cornerRadius: 10)
-                        .fill(colorScheme == .light ? .white.opacity(0.9) : .gray.opacity(0.2))
+        if #available(iOS 26.0, *), UIDevice.isPhone {
+            content
+                .foregroundColor(colorScheme == .light ? .black : .white)
+                .glassEffect(.regular.interactive(), in: .rect(cornerRadius: 20))
 
-                    RoundedRectangle(cornerRadius: 10)
-                        .stroke(colorScheme == .light ? .black.opacity(0.2) : .gray.opacity(0.4))
-                        .blur(radius: 0.5)
-                })
+        } else {
+            content
+                .foregroundColor(colorScheme == .light ? .black : .white)
+                .background(
+                    ZStack {
+                        RoundedRectangle(cornerRadius: 10)
+                            .fill(colorScheme == .light ? .white.opacity(0.9) : .gray.opacity(0.2))
+
+                        RoundedRectangle(cornerRadius: 10)
+                            .stroke(colorScheme == .light ? .black.opacity(0.2) : .gray.opacity(0.4))
+                            .blur(radius: 0.5)
+                    })
+        }
     }
 }
 
