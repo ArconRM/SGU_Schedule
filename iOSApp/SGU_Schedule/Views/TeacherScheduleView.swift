@@ -8,18 +8,13 @@
 import SwiftUI
 import SguParser
 
-struct TeacherScheduleView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel {
-    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
-    static func == (lhs: TeacherScheduleView<ViewModel>, rhs: TeacherScheduleView<ViewModel>) -> Bool {
-        return lhs.colorScheme == rhs.colorScheme
-    }
-
+struct TeacherScheduleView<ViewModel>: View where ViewModel: TeacherViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     @State private var selectedTeacherScheduleVariant: TeacherSchedulePickerVariants = .lessons
     @State private var selectedDay: Weekdays = Date.currentWeekDayWithoutSundayAndWithEveningBeingNextDay

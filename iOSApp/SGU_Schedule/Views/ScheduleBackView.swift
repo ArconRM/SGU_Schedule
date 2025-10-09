@@ -12,7 +12,7 @@ struct ScheduleBackView<ViewModel>: View  where ViewModel: ScheduleViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     var selectedGroup: AcademicGroupDTO
 

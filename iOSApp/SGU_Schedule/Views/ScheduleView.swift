@@ -10,12 +10,7 @@ import UIKit
 import WidgetKit
 import SguParser
 
-struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewModel {
-    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
-    static func == (lhs: ScheduleView<ViewModel>, rhs: ScheduleView<ViewModel>) -> Bool {
-        return lhs.colorScheme == rhs.colorScheme
-    }
-
+struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
     @Environment(\.safeAreaInsets) private var safeAreaInsets
     @Environment(\.colorScheme) var colorScheme
 
@@ -23,7 +18,7 @@ struct ScheduleView<ViewModel>: View, Equatable where ViewModel: ScheduleViewMod
     @EnvironmentObject var viewsManager: ViewsManager
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     @State var group: AcademicGroupDTO?
     @State var isFavourite: Bool

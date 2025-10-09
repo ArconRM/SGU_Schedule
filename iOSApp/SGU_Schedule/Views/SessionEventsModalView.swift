@@ -12,7 +12,7 @@ struct SessionEventsModalView<ViewModel>: View where ViewModel: ScheduleViewMode
     @EnvironmentObject var networkMonitor: NetworkMonitor
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     @State private var curPadding: CGFloat = 20
     @State private var maxPadding: CGFloat = UIScreen.getModalViewMaxPadding(initialOrientation: UIDevice.current.orientation, currentOrientation: UIDevice.current.orientation)

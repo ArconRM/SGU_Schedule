@@ -7,16 +7,11 @@
 
 import SwiftUI
 
-struct TeacherInfoView<ViewModel>: View, Equatable where ViewModel: TeacherViewModel {
-    // чтобы не вью не переебашивалось при смене темы (и также источника инета)
-    static func == (lhs: TeacherInfoView, rhs: TeacherInfoView) -> Bool {
-        return lhs.colorScheme == rhs.colorScheme
-    }
-
+struct TeacherInfoView<ViewModel>: View where ViewModel: TeacherViewModel {
     @Environment(\.colorScheme) var colorScheme
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
 
-    @ObservedObject var viewModel: ViewModel
+    @StateObject var viewModel: ViewModel
 
     var body: some View {
         VStack(alignment: .leading) {
