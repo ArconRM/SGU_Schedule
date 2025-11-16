@@ -80,7 +80,7 @@ public struct LessonHTMLParserSGU: LessonHTMLParser {
     }
 
     private func parseLastUpdatedStringFromSource(doc: HTMLDocument) throws -> String {
-        if let result = doc.xpath("//div[@class='schedule__choose schedule__wrap-lection _active-wrap']/section[@class='title__page']/div[@class='container']/div[@class='title__wrap']/div[@class='title__wrap_description schedule-title-page']/strong").first?.text {
+        if let result = doc.xpath("//section[@class='title__page title__page_schedule']/div[@class='container']/div[@class='title__wrap']/div[@class='title__wrap_description schedule-title-page']/strong").first?.text {
             return result
         }
 
