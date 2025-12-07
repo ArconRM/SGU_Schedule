@@ -56,7 +56,7 @@ struct ScheduleView<ViewModel>: View where ViewModel: ScheduleViewModel {
                 }
             }
             .blur(radius: showSubgroups ? 3 : 0)
-            
+
             (colorScheme == .light ? Color.gray.opacity(0.1) : Color.black.opacity(0.3))
                 .ignoresSafeArea()
                 .opacity(showSubgroups ? 1 : 0)

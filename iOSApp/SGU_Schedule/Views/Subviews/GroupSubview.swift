@@ -19,7 +19,7 @@ struct GroupSubview: View {
     var isPinned: Bool
     /// Если группа с другого факультета
     var differentDepartment: DepartmentDTO?
-    
+
     var body: some View {
         ZStack {
             if #available(iOS 26.0, *), UIDevice.isPhone {
@@ -33,7 +33,7 @@ struct GroupSubview: View {
                     getMainBackgroundDark()
                 }
             }
-            
+
             VStack {
                 HStack {
                     ZStack {

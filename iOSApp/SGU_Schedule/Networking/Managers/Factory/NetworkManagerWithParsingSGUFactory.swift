@@ -31,7 +31,7 @@ final class NetworkManagerWithParsingSGUFactory: NetworkManagerFactory {
         return SessionEventsNetworkManagerWithParsing(
             urlSource: urlSource,
             sessionEventsParser: SessionEventsHTMLParserSGU(),
-            scraper: DynamicScraper()
+            scraper: StaticScraper()
         )
     }
 

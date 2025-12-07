@@ -135,7 +135,7 @@ public struct LessonHTMLParserSGU: LessonHTMLParser {
             }
 
             let lesson = LessonDTO(subject: subject ?? "Error",
-                                   teacherFullName: teacherName ?? "Error",
+                                   teacherFullName: teacherName ?? "",
                                    teacherEndpoint: teacherEndpoint,
                                    lessonType: LessonType(rawValue: lessonType()) ?? .lecture,
                                    weekDay: Weekdays(dayNumber: dayNumber) ?? .monday,

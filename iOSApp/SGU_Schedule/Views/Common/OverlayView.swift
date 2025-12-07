@@ -10,14 +10,14 @@ import SwiftUI
 struct OverlayView<Content: View>: View {
     @Environment(\.colorScheme) var colorScheme
     @Environment(\.safeAreaInsets) private var safeAreaInsets
-    
+
     @EnvironmentObject var appearanceSettings: AppearanceSettingsStore
-    
+
     @Binding var isShowing: Bool
     @ViewBuilder let content: Content
-    
+
     @State private var widgetsViewOpacity = 0.2
-    
+
     var body: some View {
         ZStack {
             Color.clear
@@ -27,7 +27,7 @@ struct OverlayView<Content: View>: View {
                         isShowing.toggle()
                     }
                 }
-            
+
             Group {
                 if #available(iOS 26, *) {
                     VStack {
@@ -74,7 +74,7 @@ struct OverlayView<Content: View>: View {
             widgetsViewOpacity = 1
         }
     }
-    
+
     private var closeButton: some View {
         HStack {
             Button(action: {
@@ -91,7 +91,7 @@ struct OverlayView<Content: View>: View {
             Spacer()
         }
     }
-    
+
 }
 
 #Preview {

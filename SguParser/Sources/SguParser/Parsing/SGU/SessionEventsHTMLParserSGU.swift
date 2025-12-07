@@ -21,7 +21,7 @@ public struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
         
     }
     
-    private let baseXpath = "//div[@class='dialog-off-canvas-main-canvas']/main[@class='main']//div[@class='region region-content']/div[@class='block block-system block-system-main-block']/div[@class='schedule__choose schedule__wrap-session']/div[@class='container']/table/tbody"
+    private let baseXpath = "//div[@class='schedule__choose schedule__wrap-lection _active-wrap']/div[@class='container']/table/tbody"
 
     public func getSessionEventsFromSource(source html: String) throws -> [SessionEventDTO] {
         do {
@@ -89,15 +89,24 @@ public struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
         }
 
         let containsGroupType = elements!.count % 5 == 0
-
+        var offset = 0
+        
         for i in stride(from: 0, to: elements!.count, by: containsGroupType ? 5 : 6) {
-            let date = elements![i]
+            if elements![i] == "Заочная форма обучения" {
+                offset += 1
+            }
+            
+            if i + offset >= elements!.count {
+                break
+            }
+            
+            let date = elements![i + offset]
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .replacingOccurrences(of: "г. ", with: "")
-            let eventType = elements![i + 1]
-            let subject = elements![i + 2]
-            let group = elements![i + 3]
-            let cabinet = elements![i + (containsGroupType ? 4 : 5)]
+            let eventType = elements![i + 1 + offset]
+            let subject = elements![i + 2 + offset]
+            let group = elements![i + 3 + offset]
+            let cabinet = elements![i + (containsGroupType ? 4 : 5) + offset]
 
             sessionEvents.append(
                 SessionEventDTO(
