@@ -91,8 +91,8 @@ class NotificationManager: NSObject, ObservableObject {
                 [.day], from: lastUpdate, to: Date()
             ).day ?? 0
 
-            if daysSinceUpdate >= 30 {
-                logger.info("Token older than 30 days, will refresh")
+            if daysSinceUpdate >= 10 {
+                logger.info("Token older than 10 days, will refresh")
                 return true
             }
         } else {
