@@ -7,22 +7,21 @@
 
 import Foundation
 import SwiftUI
-
 class AppDelegate: NSObject, UIApplicationDelegate {
-    var notificationManager: NotificationManager?
+    weak var notificationManager: NotificationManager?  // ← weak!
 
-    func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data) {
-        // This is called by iOS when device successfully registers for push notifications
-        do {
-            try notificationManager?.setDeviceToken(deviceToken)
-        } catch let error {
-            print("Failed to set device token: \(error)")
-        }
+    func application(
+        _ application: UIApplication,
+        didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data
+    ) {
+        print("AppDelegate received token")
+        notificationManager?.didReceiveDeviceToken(deviceToken)
     }
 
-    func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        // This is called if registration fails
-        print("Failed to register for remote notifications: \(error)")
-        // You might want to show an alert to the user here
+    func application(
+        _ application: UIApplication,
+        didFailToRegisterForRemoteNotificationsWithError error: Error
+    ) {
+        print("APNS registration failed: \(error)")
     }
 }

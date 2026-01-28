@@ -24,4 +24,5 @@ public enum UserDefaultsKeys: String {
     case selectedAppStyle = "selectedAppStyle"
 
     case isRegisteredForNotifications = "isRegisteredForNotifications"
+    case lastTokenUpdateDate = "lastTokenUpdateDate"
 }

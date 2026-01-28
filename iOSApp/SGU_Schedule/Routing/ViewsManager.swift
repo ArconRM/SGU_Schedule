@@ -95,7 +95,7 @@ public final class ViewsManager: ObservableObject {
     }
 
     func requestNotifications() {
-        notificationManager.requestPermission()
+        notificationManager.requestPermissionIfNeeded()
     }
 
     // MARK: - Data Methods
@@ -148,9 +148,10 @@ public final class ViewsManager: ObservableObject {
     }
 
     func toggleNotifications(newValue: Bool) {
+        UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue,)
         do {
             if newValue {
-                try notificationManager.registerDevice()
+                notificationManager.requestPermissionIfNeeded()
             } else {
                 try notificationManager.unregisterDeviceFromNotiticationServer()
             }

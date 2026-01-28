@@ -9,7 +9,7 @@ import SwiftUI
 
 @main
 struct SGU_ScheduleApp: App {
-    @StateObject private var notificationManager = NotificationManager(groupPersistenceManager: GroupCoreDataManager())
+    @StateObject private var notificationManager: NotificationManager
     @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
 
     @State var widgetUrl: String?
@@ -20,20 +20,24 @@ struct SGU_ScheduleApp: App {
     @StateObject private var viewsManager: ViewsManager
 
     init() {
-        let notificationManager = NotificationManager(groupPersistenceManager: GroupCoreDataManager())
+        let notificationManagerInner = NotificationManager(groupPersistenceManager: GroupCoreDataManager())
+        _notificationManager = StateObject(wrappedValue: notificationManagerInner)
+
         let appearanceSettings = AppearanceSettingsStore()
         let persistentUserSettings = PersistentUserSettingsStore()
         let routingState = RoutingState()
 
         _viewsManager = StateObject(wrappedValue:
-            ViewsManagerWithParsingSGUFactory().makeViewsManager(
-                appearanceSettings: appearanceSettings,
-                persistentUserSettings: persistentUserSettings,
-                routingState: routingState,
-                notificationManager: notificationManager,
-                widgetUrl: nil
-            )
+                                        ViewsManagerWithParsingSGUFactory().makeViewsManager(
+                                            appearanceSettings: appearanceSettings,
+                                            persistentUserSettings: persistentUserSettings,
+                                            routingState: routingState,
+                                            notificationManager: notificationManagerInner,
+                                            widgetUrl: nil
+                                        )
         )
+
+        delegate.notificationManager = notificationManagerInner
     }
 
     var body: some Scene {
@@ -47,10 +51,9 @@ struct SGU_ScheduleApp: App {
                     widgetUrl = url.absoluteString
                 }
                 .onAppear {
-                    #if !targetEnvironment(simulator)
-                    delegate.notificationManager = notificationManager
-                    notificationManager.requestPermission()
-                    #endif
+#if !targetEnvironment(simulator)
+                    notificationManager.requestPermissionIfNeeded()
+#endif
                 }
         }
     }

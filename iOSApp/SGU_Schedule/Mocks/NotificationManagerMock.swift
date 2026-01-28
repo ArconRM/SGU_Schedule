@@ -8,7 +8,7 @@
 import Foundation
 
 class NotificationManagerMock: NotificationManager {
-    override func requestPermission() {
+    override func requestPermissionIfNeeded() {
         return
     }
 }
