@@ -106,7 +106,7 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                     Text("Загрузка...")
                         .font(.system(size: 19, design: .rounded))
                         .bold()
-                } else if viewModel.groupSchedule != nil {
+                } else if viewModel.groupSchedule != nil && viewModel.groupSchedule!.lessons.count > 0 {
                     ScrollView {
                         ForEach(1...8, id: \.self) { lessonNumber in
                             let scheduleEventsByNumber = viewModel.getScheduleEventsBySelectedDayAndNumber(lessonNumber: lessonNumber)
