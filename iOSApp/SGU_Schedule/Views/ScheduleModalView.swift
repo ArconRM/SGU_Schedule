@@ -107,36 +107,38 @@ struct ScheduleModalView<ViewModel>: View where ViewModel: ScheduleViewModel {
                         .font(.system(size: 19, design: .rounded))
                         .bold()
                 } else if viewModel.groupSchedule != nil && viewModel.groupSchedule!.lessons.count > 0 {
-                    ScrollView {
-                        ForEach(1...8, id: \.self) { lessonNumber in
-                            let scheduleEventsByNumber = viewModel.getScheduleEventsBySelectedDayAndNumber(lessonNumber: lessonNumber)
-                            if !scheduleEventsByNumber.isEmpty {
-                                if scheduleEventsByNumber.count == 1, let window = scheduleEventsByNumber.first as? TimeBreakDTO {
-                                    ScheduleSubview(window: window, subgroupsByLessons: viewModel.subgroupsByLessons)
-                                        .environmentObject(networkMonitor)
-                                        .environmentObject(viewsManager)
-                                        .id(UUID())
-                                } else {
-                                    ScheduleSubview(lessons: scheduleEventsByNumber as? [LessonDTO], subgroupsByLessons: viewModel.subgroupsByLessons)
-                                        .environmentObject(networkMonitor)
-                                        .environmentObject(viewsManager)
-                                        .id(UUID())
-                                        .contextMenu {
-                                            if !viewModel.isLoadingLessons, let lesson = scheduleEventsByNumber.first as? LessonDTO {
-                                                ShareLink(
-                                                    item: lesson.getTextDesciption(),
-                                                    preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
-                                                ) {
-                                                    Label("Поделиться парой", systemImage: "square.and.arrow.up")
+                    if viewModel.scheduleEventsBySelectedDay.count > 0 {
+                        ScrollView {
+                            ForEach(1...8, id: \.self) { lessonNumber in
+                                let scheduleEventsByNumber = viewModel.getScheduleEventsBySelectedDayAndNumber(lessonNumber: lessonNumber)
+                                if !scheduleEventsByNumber.isEmpty {
+                                    if scheduleEventsByNumber.count == 1, let window = scheduleEventsByNumber.first as? TimeBreakDTO {
+                                        ScheduleSubview(window: window, subgroupsByLessons: viewModel.subgroupsByLessons)
+                                            .environmentObject(networkMonitor)
+                                            .environmentObject(viewsManager)
+                                            .id(UUID())
+                                    } else {
+                                        ScheduleSubview(lessons: scheduleEventsByNumber as? [LessonDTO], subgroupsByLessons: viewModel.subgroupsByLessons)
+                                            .environmentObject(networkMonitor)
+                                            .environmentObject(viewsManager)
+                                            .id(UUID())
+                                            .contextMenu {
+                                                if !viewModel.isLoadingLessons, let lesson = scheduleEventsByNumber.first as? LessonDTO {
+                                                    ShareLink(
+                                                        item: lesson.getTextDesciption(),
+                                                        preview: SharePreview(lesson.title, image: Image(uiImage: UIImage(named: "AppIcon") ?? UIImage()))
+                                                    ) {
+                                                        Label("Поделиться парой", systemImage: "square.and.arrow.up")
+                                                    }
                                                 }
                                             }
-                                        }
+                                    }
                                 }
                             }
+                            .padding(.top, 5)
+                            .padding(.bottom, 50)
+                            .padding(.horizontal, 13)
                         }
-                        .padding(.top, 5)
-                        .padding(.bottom, 50)
-                        .padding(.horizontal, 13)
                     }
                 } else {
                     Text("Нет соединения с интернетом")

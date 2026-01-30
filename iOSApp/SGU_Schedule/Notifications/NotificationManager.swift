@@ -109,6 +109,8 @@ class NotificationManager: NSObject, ObservableObject {
         guard !token.isEmpty else { return }
 
         do {
+            try sendUnregisterDevice()
+
             guard let favouriteGroup = try groupPersistenceManager.getFavouriteGroupDTO() else {
                 logger.warning("No favourite group, skipping token registration")
                 return
@@ -154,7 +156,9 @@ class NotificationManager: NSObject, ObservableObject {
                 ]
 
                 sendToServer(endpoint: "/api/DeviceManager/UpdateFavouriteGroup", payload: payload) { result in
-                    if !result {
+                    if result {
+                        self.logger.info("Token successfully unregistered on server")
+                    } else {
                         self.logger.error("Failed to update favourite group with \(result)")
                     }
                 }
