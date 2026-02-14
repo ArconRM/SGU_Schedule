@@ -148,12 +148,14 @@ public final class ViewsManager: ObservableObject {
     }
 
     func toggleNotifications(newValue: Bool) {
-        UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue,)
+        UserDefaults.standard.set(newValue, forKey: UserDefaultsKeys.isRegisteredForNotifications.rawValue)
         do {
             if newValue {
                 notificationManager.requestPermissionIfNeeded()
+                persistentUserSettings.isRegisteredForNotifications = true
             } else {
                 try notificationManager.unregisterDeviceFromNotiticationServer()
+                persistentUserSettings.isRegisteredForNotifications = false
             }
         } catch let error {
             handleError(error)
