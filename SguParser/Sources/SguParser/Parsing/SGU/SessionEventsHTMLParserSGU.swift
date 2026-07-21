@@ -42,7 +42,6 @@ public struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
     }
 
     private func getSessionEventsByRowsFromSource(source html: String) throws -> [SessionEventDTO] {
-        var sessionEvents = [SessionEventDTO]()
         let doc = try HTML(html: html, encoding: .utf8)
 
         // Нормальный способ, но нахуевертили в верстке и это не для всех работает 😐
@@ -88,32 +87,53 @@ public struct SessionEventsHTMLParserSGU: SessionEventsHTMLParser {
             return []
         }
 
-        let containsGroupType = elements!.count % 5 == 0
-        var offset = 0
-        
-        for i in stride(from: 0, to: elements!.count, by: containsGroupType ? 5 : 6) {
+        var sessionEvents: [SessionEventDTO] = []
+        var i = 0
+
+        while i < elements!.count {
             if elements![i] == "Заочная форма обучения" {
-                offset += 1
+                i += 1
+                continue
             }
             
-            if i + offset >= elements!.count {
-                break
+            guard i + 4 < elements!.count else { break }
+            
+            let dateString = elements![i]
+            if !dateString.contains("20") || !dateString.contains(":") {
+                i += 1
+                continue
             }
             
-            let date = elements![i + offset]
+            let date = dateString
                 .trimmingCharacters(in: .whitespacesAndNewlines)
                 .replacingOccurrences(of: "г. ", with: "")
-            let eventType = elements![i + 1 + offset]
-            let subject = elements![i + 2 + offset]
-            let group = elements![i + 3 + offset]
-            let cabinet = elements![i + (containsGroupType ? 4 : 5) + offset]
-
+            let eventType = elements![i + 1]
+            let subject = elements![i + 2]
+            let teacher = elements![i + 3]
+            let cabinet = elements![i + 4]
+            
+            i += 5  // Сначала сдвигаемся
+            
+            // Теперь проверяем подгруппу ПОСЛЕ основных полей
+            var subgroup: String? = nil
+            if i < elements!.count &&
+               elements![i].hasPrefix("(") &&
+               elements![i].hasSuffix("под)") {
+                subgroup = elements![i]
+                i += 1  // Пропускаем подгруппу
+            }
+            
+            var finalSubject = subject
+            if let sub = subgroup {
+                finalSubject = "\(subject) \(sub)"
+            }
+            
             sessionEvents.append(
                 SessionEventDTO(
-                    title: subject,
+                    title: finalSubject,
                     date: date,
                     sessionEventType: SessionEventType(rawValue: eventType) ?? .exam,
-                    teacherFullName: group,
+                    teacherFullName: teacher,
                     cabinet: cabinet
                 )
             )

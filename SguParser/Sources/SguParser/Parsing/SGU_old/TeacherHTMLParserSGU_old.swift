@@ -17,10 +17,11 @@ public struct TeacherHTMLParserSGU_old: TeacherHTMLParser {
         do {
             let doc = try HTML(html: html, encoding: .utf8)
 
-            let fullName =
-            String(doc.xpath("//div[@class='field field-name-field-employee-surname field-type-text field-label-hidden']").first?.text ?? "Error") + " " +
-            String(doc.xpath("//div[@class='field field-name-field-employee-name field-type-text field-label-hidden']").first?.text ?? "Error") + " " +
-            String(doc.xpath("//div[@class='field field-name-field-employee-patronim field-type-text field-label-hidden']").first?.text ?? "Error")
+            let surname = String(doc.xpath("//div[@class='field field-name-field-employee-surname field-type-text field-label-hidden']").first?.text ?? "Error")
+            let name = String(doc.xpath("//div[@class='field field-name-field-employee-name field-type-text field-label-hidden']").first?.text ?? "Error")
+            let patronim = String(doc.xpath("//div[@class='field field-name-field-employee-patronim field-type-text field-label-hidden']").first?.text ?? "Error")
+            
+            let fullName = surname + " " + name + " " + patronim
 
             let departmentFullName = String(doc.xpath("//fieldset[@id='edit-older-subjects']/div[@class='fieldset-wrapper']/h2").first?.text ?? "Error")
 
